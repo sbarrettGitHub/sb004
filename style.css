@@ -56,8 +56,19 @@
   background-color:#E8E8E8;
   cursor:pointer;
 } 
-
-
+.quoteBuilder{
+  height:340px;
+  border:1px #C8C8C8 dashed;
+  background-color:#E8E8E8;
+  width:230px;
+  float:left;
+  margin:5px;
+}
+.quoteBuilder img{
+  width:100%;
+  max-height:300px;
+  cursor:pointer;
+}
 .addContainer{
   font-size:1.5em;
   color:#C8C8C8;

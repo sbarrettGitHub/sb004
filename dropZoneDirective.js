@@ -13,14 +13,15 @@
       link: function(scope, element, attrs) {
         var checkSize, isTypeValid, processDragOverOrEnter, validMimeTypes;
         processDragOverOrEnter = function(event) {
+			
           if (event != null) {
             event.preventDefault();
           }
           if(event.dataTransfer){
-            event.dataTransfer.effectAllowed = 'copy';  
+            event.dataTransfer.effectAllowed = 'move';  
           }
           if(event.originalEvent && event.originalEvent.dataTransfer){
-            event.originalEvent.dataTransfer.effectAllowed = 'copy';  
+            event.originalEvent.dataTransfer.effectAllowed = 'move';  
           }
           return false;
         };
@@ -49,6 +50,7 @@
           if (event != null) {
             event.preventDefault();
           }
+
           reader = new FileReader();
           reader.onload = function(evt) {
             if (checkSize(size) && isTypeValid(type)) {
@@ -67,7 +69,16 @@
               file = event.originalEvent.dataTransfer.files[0];
             }
           }
-          
+		  // URL to an image. Not a file
+			event.dataTransfer = event.originalEvent.dataTransfer;
+			var url = event.dataTransfer.getData('URL');
+			if(url.length==0){
+			  url = event.dataTransfer.getData('text');
+			}
+			if(url.length>0){
+				scope.$emit("Drop.Url", url);
+				return false;
+			}
           name = file.name;
           type = file.type;
           size = file.size;
