@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="sb004">
+
+<head>
+  <meta charset="utf-8" />
+  <title>AngularJS Plunker</title>
+  <link data-require="bootstrap@*" data-semver="3.2.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" />
+  <script data-require="jquery@*" data-semver="2.1.1" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script data-require="bootstrap@*" data-semver="3.2.0" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+  <script>
+    document.write('<base href="' + document.location + '" />');
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js"></script>
+  <script src="sharedDataService.js"></script>
+  <script src="searchCtrl.js"></script>
+  <script src="homeCtrl.js"></script>
+  <script src="newQuoteCtrl.js"></script>
+  <script src="dropZoneDirective.js"></script>
+</head>
+
+<body>
+  <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-controller="searchCtrl">
+    <form class="search" role="search">
+      <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <input type="text" class="form-control" placeholder="Search for quote" name="srch-term" id="srch-term">
+        <div class="input-group-btn">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default " data-toggle="collapse" data-target="#categories" ng-click="search()">
+              <span class="glyphicon glyphicon-search"></span>  <span class="caret"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="collapse  navbar navbar-default" id="categories">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Most Popular &nbsp;<span class="glyphicon glyphicon-star"></span></a>
+          </li>
+          <li><a href="#">Most Recent &nbsp;<span class="glyphicon glyphicon-calendar"></span></a>
+          </li>
+          <li><a href="#">Funny</a>
+          </li>
+          <li><a href="#">Thoughtful</a>
+          </li>
+          <li><a href="#">Inspirational</a>
+          </li>
+          <li><a href="#">Loving</a>
+          </li>
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#"></a>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+  <div ng-view=""></div>
+</body>
+
+</html>

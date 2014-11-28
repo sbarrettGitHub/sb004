@@ -1,0 +1,26 @@
+<div ng-controller="homeCtrl">
+  <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="container quoteContainer col-md-12 col-sm-12">
+      <div class="quote addQuote panel" title="Click here to add a new Quote" ng-click="addNewQuote()">
+        <div class="addContainer">
+          <div id="addQuote">Add</div>
+          <span class="glyphicon glyphicon-plus"></span>
+        </div>
+      </div>
+      <div class="quote panel" ng-repeat="quote in quotes" title="{{quote.description}}">
+        <div class="quoteHeader">
+          <span>{{quote.by}}</span>
+          <div class="when">{{quote.when}} (<span class="glyphicon glyphicon-heart" title="This quote has received {{quote.votes}} positive votes"></span> {{quote.votes}})</div> 
+        </div>
+        <img ng-src="{{quote.url}}" alt="{{quote.description}}" />
+        <div class="quoteFooter">
+          <div class="options">
+            <span class="glyphicon glyphicon-retweet" title="Requote this! Add a new quote based on this one."></span>
+            <span class="glyphicon glyphicon-star" title="Add this quote to my favourites!"></span>
+            <span class="glyphicon glyphicon-heart" title="Click to love this quote"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

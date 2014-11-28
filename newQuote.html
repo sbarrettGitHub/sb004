@@ -1,0 +1,22 @@
+<div ng-controller="newQuoteCtrl">
+  <input ng-model="imageUrl" type="text" name="imageUrl" id="imageUrl" placeholder="Drag and drop an image from another page into this box or paste the url of the image." class="form-control col-md-6 col-lg-6" />{{imageUrl}}
+  <!--<img ng-src="{{imageUrl}}" />-->
+  <span>{{imageUrl}}</span>
+
+
+
+  <div class="quote addQuote panel" title="Click here to add a new Quote" ng-click="addNewQuote()">
+    <div id="newQuoteBuilder" class="addContainer">
+
+    </div>
+  </div>
+  <div class="dropzone quote addQuote panel addContainer" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+    <div id="addQuote" ng-show="image==null">Drag and drop an image here from another site or from your computer</div>
+    <span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
+    <img ng-src={{image}} />
+  </div>
+  <div class="image-container">
+    
+    <span class="file-name">{{imageFileName}}</span>
+  </div>
+</div>

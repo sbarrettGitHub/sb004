@@ -1,0 +1,69 @@
+/* Put your css in here */
+.search{
+  margin-top:15px;
+  padding:15px;
+}
+.quoteContainer{
+  background-color:#F8F8F8 ;
+  padding:15px;
+}
+.quoteContainer .leftMargin{
+  width:80px;
+  height:150px;
+  float:left;
+}
+.quote{
+  width:230px;
+  float:left;
+  margin:5px;
+}
+.quote img{
+  width:100%;
+  max-height:300px;
+  cursor:pointer;
+}
+.quoteHeader{
+  margin-top:5px;
+  width:100%;
+  font-size:.8em;
+  color:#C8C8C8;
+  cursor:pointer;
+}
+.quoteHeader .when{
+  float:right;
+}
+.quoteFooter{
+  margin-top:5px;
+  width:100%;
+  font-size:1Sem;
+  color:#C8C8C8;
+  cursor:pointer;
+}
+.quoteFooter .options{
+  float:right;
+}
+.options span{
+  border:1px solid white;
+  padding:1px;
+}
+.options span:hover{
+  color:#888888;
+  border:1px solid #888888 ;
+}
+.addQuote{
+  height:340px;
+  border:1px #C8C8C8 dashed;
+  background-color:#E8E8E8;
+  cursor:pointer;
+} 
+
+
+.addContainer{
+  font-size:1.5em;
+  color:#C8C8C8;
+  width: 230px;
+  height: 300px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
