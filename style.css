@@ -56,20 +56,13 @@
   background-color:#E8E8E8;
   cursor:pointer;
 } 
-.quoteBuilder{
-  height:340px;
-  border:1px #C8C8C8 dashed;
-  background-color:#E8E8E8;
-  width:230px;
-  float:left;
-  margin:5px;
-}
-.quoteBuilder img{
+
+.quotePreview{
   width:100%;
   max-height:300px;
   cursor:pointer;
 }
-.addContainer{
+.addContainer{  
   font-size:1.5em;
   color:#C8C8C8;
   width: 230px;
@@ -77,4 +70,32 @@
   text-align: center;
   display: table-cell;
   vertical-align: middle;
+
+}
+#newQuote {
+  color:#555;
+}
+#quoteImageSelection 
+{
+	font-size:1.5em;
+  
+	text-align: center;
+  /*display: table-cell;*/
+  vertical-align: middle;
+  border:1px #C8C8C8 dashed;
+  background-color:#E8E8E8;
+}
+#quoteImageSelection .option
+{
+margin-bottom:50px;
+border-top: 1px #C8C8C8 dashed;
+width:100%;
+
+}
+#quoteImageSelection.input input
+{
+font-size:.75em;
+width:100%;
+text-align:center !important;
+height:auto !important;
 }

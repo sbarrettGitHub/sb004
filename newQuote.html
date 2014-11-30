@@ -1,9 +1,32 @@
-<div ng-controller="newQuoteCtrl">
-	<div class="quoteBuilder panel" title="Click here to add a new Quote">
-		<div class="dropzone addContainer" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
-			<div id="addQuote" ng-show="image==null">Drag and drop an image here from another site or from your computer</div>
-			<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
-			<img ng-src={{image}} />
-		</div>
+<div id="newQuote" ng-controller="newQuoteCtrl" class="container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" >
+	<div id="quoteImageSelection" ng-show="image==null">
+		<div class="dropzone " file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+			<div class="option " id="addQuote" ng-show="image==null">
+				<div>
+					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
+				</div>
+				<div>Drag and drop an image here from another site or your computer</div>				
+			</div>			
+			<div class="option" ng-show="image==null">
+				<div><span class="fa fa-folder-open" ng-show="image==null"></span></div>
+				<div>Or browse for a file on your computer</div>
+				<div id="browse" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+					<input type="file" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>
+				</div>
+			</div>
+			<div class="option" >
+				<div><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
+				<div>Or paste a link to an online image</div>
+				<div id="pasteInput" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+					<input type="text" ng-model="image" ng-show="image==null" placeholder="     Paste an image link into this box" class="form-control col-md-12"/>
+				</div>
+			
+			</div>
+			
+		</div>			
+	</div>	
+	<div id="quoteImagePreview" ng-hide="image==null">
+		<img ng-src={{image}} />
 	</div>
+	
 </div>

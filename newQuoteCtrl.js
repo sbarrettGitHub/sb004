@@ -3,7 +3,7 @@
 
   var newQuoteCtrl = function($scope, $timeout) {
 	$scope.image = null;
-	$scope.imageFileName = 'Load';
+	$scope.imageFileName = null;
 	$scope.$on("Drop.Url",function(event, url){
 		$timeout(function(){
 			$scope.image = url;
