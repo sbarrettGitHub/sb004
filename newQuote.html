@@ -11,7 +11,8 @@
 				<div><span class="fa fa-folder-open" ng-show="image==null"></span></div>
 				<div>Or browse for a file on your computer</div>
 				<div id="browse" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-					<input type="file" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>
+					<input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>					
+					<div ng-show="loading">Loading...Please wait</div>
 				</div>
 			</div>
 			<div class="option" >
