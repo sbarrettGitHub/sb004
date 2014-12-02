@@ -6,10 +6,12 @@ app.config(['$routeProvider',
       when('/home', {
         templateUrl: 'home.html',
         controller: 'homeCtrl'
-      }).
-      when('/new', {
+      }).when('/new', {
         templateUrl: 'newQuote.html',
         controller: 'newQuoteCtrl'
+      }).when('/quote/:id', {
+        templateUrl: 'quote.html',
+        controller: 'quoteCtrl'
       }).
       otherwise({
         redirectTo: '/home'

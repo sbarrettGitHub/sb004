@@ -1,12 +1,17 @@
 <div id="newQuote" ng-controller="newQuoteCtrl" class="container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" >
-	<div id="quoteImageSelection" ng-show="image==null">
-		<div class="dropzone " file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+	<div id="quoteImageSelection" class="img-rounded">
+		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+			<div>
+				<h3>Select an image to start with ...</h3>				
+			</div>	
+			<hr/>	
 			<div class="option " id="addQuote" ng-show="image==null">
 				<div>
 					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
 				</div>
 				<div>Drag and drop an image here from another site or your computer</div>				
-			</div>			
+			</div>	
+			<hr/>			
 			<div class="option" ng-show="image==null">
 				<div><span class="fa fa-folder-open" ng-show="image==null"></span></div>
 				<div>Or browse for a file on your computer</div>
@@ -14,20 +19,29 @@
 					<input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>					
 					<div ng-show="loading">Loading...Please wait</div>
 				</div>
-			</div>
+			</div>	
+			<hr/>	
 			<div class="option" >
 				<div><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
 				<div>Or paste a link to an online image</div>
 				<div id="pasteInput" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 					<input type="text" ng-model="image" ng-show="image==null" placeholder="     Paste an image link into this box" class="form-control col-md-12"/>
-				</div>
-			
+				</div>			
+			</div>			
+		</div>		
+		<div id="quoteImagePreview" ng-hide="image==null">
+			<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+				<h3>Would you like to proceed with this image?</h3>
 			</div>
-			
-		</div>			
+			<div class="col-lg-12 col-md-12 col-sm-12" >
+				<img ng-src={{image}} />
+			</div>
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<input type="button" value="Proceed" ng-click="proceed()"/>
+				<input type="button" value="Discard" ng-click="clear()"/>
+			</div>
+		</div>		
 	</div>	
-	<div id="quoteImagePreview" ng-hide="image==null">
-		<img ng-src={{image}} />
-	</div>
+
 	
 </div>

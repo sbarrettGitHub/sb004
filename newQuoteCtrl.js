@@ -1,7 +1,7 @@
 'use strict';
 (function() {
 
-  var newQuoteCtrl = function($scope, $timeout, fileReader) {
+  var newQuoteCtrl = function($scope, $timeout, $location, fileReader) {
 	$scope.image = null;
 	$scope.imageFileName = null;
 	$scope.file = null;
@@ -26,9 +26,20 @@
 	$scope.$on("fileProgress", function(e, progress) {
         $scope.loading = true;
     });
+	
+	$scope.clear = function () {
+		$scope.image = null;
+		$scope.imageFileName = null;
+		$scope.file = null;
+		$scope.loading = false;
+	};
+	
+	$scope.proceed = function () {
+		$location.path("quote/yY7Y75G7U67");
+	};
   }
 
   // Register the controller
-  app.controller('newQuoteCtrl', ["$scope", "$timeout", "fileReader", newQuoteCtrl]);
+  app.controller('newQuoteCtrl', ["$scope", "$timeout", "$location", "fileReader", newQuoteCtrl]);
 
 })();

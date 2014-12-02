@@ -29,11 +29,14 @@
       <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <input type="text" class="form-control" placeholder="Search for quote" name="srch-term" id="srch-term">
         <div class="input-group-btn">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default " data-toggle="collapse" data-target="#categories" ng-click="search()">
-              <span class="glyphicon glyphicon-search"></span>  <span class="caret"></span>
-            </button>
-          </div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default " ng-click="search()">
+				  <span class="glyphicon glyphicon-search"></span> 
+				</button>			 
+			</div>
+			<button type="button" class="btn btn-default " data-toggle="collapse" data-target="#categories" >
+			  <span class="fa fa-bars"></span>
+			</button>		  
         </div>
       </div>
       <div class="collapse  navbar navbar-default" id="categories">
