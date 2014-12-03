@@ -88,9 +88,16 @@
 }
 #quoteImageSelection .option
 {
-	margin-bottom:50px;
+	height: 100px;
 	width:100%;
 }
+#quoteImageSelection  label
+{
+	font-weight:normal;
+	padding-left:5px;
+	padding-right:5px;
+}
+
 #quoteImageSelection.input input
 {
 font-size:.75em;

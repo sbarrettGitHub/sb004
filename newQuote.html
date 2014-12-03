@@ -2,14 +2,14 @@
 	<div id="quoteImageSelection" class="img-rounded">
 		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
 			<div>
-				<h3>Select an image to start with ...</h3>				
+				<h3>To add a quote first select an image...</h3>				
 			</div>	
 			<hr/>	
-			<div class="option " id="addQuote" ng-show="image==null">
+			<div class="option " id="dropMessage" ng-show="image==null">
 				<div>
 					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
 				</div>
-				<div>Drag and drop an image here from another site or your computer</div>				
+				<label>Drag and drop an image here from another site or your computer</label>				
 			</div>	
 			<hr/>			
 			<div class="option" ng-show="image==null">
