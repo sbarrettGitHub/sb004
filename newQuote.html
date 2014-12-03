@@ -1,44 +1,46 @@
-<div id="newQuote" ng-controller="newQuoteCtrl" class="container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" >
+<div id="newQuote" ng-controller="newQuoteCtrl" class="container col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-xs-12" >
 	<div id="quoteImageSelection" class="img-rounded">
 		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
-			<div>
+			<div class="heading">
 				<h3>To add a quote first select an image...</h3>				
 			</div>	
 			<hr/>	
-			<div class="option " id="dropMessage" ng-show="image==null">
-				<div>
+			<div class="option hidden-xs" id="dropMessage" ng-show="image==null">
+				<div class="icon">
 					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
 				</div>
-				<label>Drag and drop an image here from another site or your computer</label>				
+				<div class="optionLabel">Drag and drop an image here from another site or your computer</div>				
 			</div>	
-			<hr/>			
+			<hr  class="hidden-xs"/>			
 			<div class="option" ng-show="image==null">
-				<div><span class="fa fa-folder-open" ng-show="image==null"></span></div>
-				<div>Or browse for a file on your computer</div>
-				<div id="browse" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+				<div class="icon hidden-xs">
+					<span class="fa fa-folder-open" ng-show="image==null"></span>
+				</div>
+				<div class="optionLabel">Or browse for a file on your computer</div>
+				<div id="browse" class="optionLabel">
 					<input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>					
 					<div ng-show="loading">Loading...Please wait</div>
 				</div>
 			</div>	
 			<hr/>	
-			<div class="option" >
-				<div><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
-				<div>Or paste a link to an online image</div>
-				<div id="pasteInput" class="input col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+			<div class="option hidden-xs" >
+				<div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
+				<div class="optionLabel">Or paste a link to an online image</div>
+				<div id="pasteInput" class="optionLabel">
 					<input type="text" ng-model="image" ng-show="image==null" placeholder="     Paste an image link into this box" class="form-control col-md-12"/>
 				</div>			
 			</div>			
 		</div>		
 		<div id="quoteImagePreview" ng-hide="image==null">
-			<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+			<div class="heading">
 				<h3>Would you like to proceed with this image?</h3>
 			</div>
-			<div class="col-lg-12 col-md-12 col-sm-12" >
+			<div class="imageContainer" >
 				<img ng-src={{image}} />
 			</div>
-			<div class="col-lg-12 col-md-12 col-sm-12">
-				<input type="button" value="Proceed" ng-click="proceed()"/>
-				<input type="button" value="Discard" ng-click="clear()"/>
+			<div class="buttons">				
+				<input class="pull-left" type="button" value="Clear" ng-click="clear()"/>
+				<input class="pull-right"type="button" value="Proceed" ng-click="proceed()"/>
 			</div>
 		</div>		
 	</div>	
