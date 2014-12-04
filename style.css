@@ -1,18 +1,5 @@
 /* Put your css in here */
-.search{
-  margin-top:15px;
-  padding:15px;
-}
-.quoteContainer{
-  background-color:#F8F8F8 ;
-  padding:15px;
-  border-radius: 12px;
-}
-.quoteContainer .leftMargin{
-  width:80px;
-  height:150px;
-  float:left;
-}
+
 .quote{
   width:230px;
   float:left;
@@ -58,8 +45,14 @@
   cursor:pointer;
 } 
 
-
-.addContainer{  
+.imageContainer
+{
+float:left;
+height: 345px;
+background-color:white;
+width:100%;
+}
+.qContainer{  
   font-size:1.5em;
   color:#C8C8C8;
   width: 230px;
@@ -68,6 +61,24 @@
   display: table-cell;
   vertical-align: middle;
 
+}
+.rounded
+{
+	border-radius: 12px;
+}
+/*-----------------------------------------------------------*/
+.search{
+  margin-top:15px;
+  padding:15px;
+}
+.searchResultsContainer{
+  background-color:#F8F8F8 ;
+  padding:15px;
+}
+.searchResultsContainer .leftMargin{
+  width:80px;
+  height:150px;
+  float:left;
 }
 /*-----------------------------------------------------------*/
 #newQuote {
@@ -81,9 +92,8 @@
 	margin-right: auto;
 	font-size:1.25em;
 	vertical-align: middle;
-	border:1px #C8C8C8 solid;
-	background-color:#F8F8F8;
-	border-radius: 12px;
+	border:3px #C8C8C8 solid;
+	background-color:#FEFEFE;
 }
 #quoteImageSelection  .heading
 {
@@ -126,13 +136,7 @@ margin-bottom:5px;
 width:100%;
 height:450px;
 }
-#quoteImagePreview .imageContainer
-{
-float:left;
-height: 345px;
-background-color:white;
-width:100%;
-}
+
 #quoteImagePreview img
 {	
 	float:left;
@@ -151,3 +155,13 @@ width:100%;
     text-align: center;
     width: 50%;
 }
+/*-----------------------------------------------------------*/
+#spawnQuote
+{
+}
+#spawnQuote #result{
+  height:340px;
+  border:1px #C8C8C8 solid;
+  background-color:#E8E8E8;
+  cursor:pointer;
+ }
