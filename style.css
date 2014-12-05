@@ -1,4 +1,30 @@
 /* Put your css in here */
+.blurry
+{
+-webkit-filter: blur(2px);
+}
+input 
+{
+height: 34px !important;
+}
+.modal {
+    display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height:auto;
+	top: 100px;
+	bottom:auto;
+	border-radius: 12px;
+}
+.modal-backdrop
+{
+opacity: 0.6;
+background-color: #FEFEFE;
+-webkit-filter: blur(6px);
+}
+.hide {
+    display: none;
+}
 
 .quote{
   width:230px;
@@ -86,13 +112,12 @@ width:100%;
 }
 #quoteImageSelection 
 {
-	width: 385px;
-	margin-top: 25px;
+	margin-top: 45px;
 	margin-left: auto;
 	margin-right: auto;
 	font-size:1.25em;
 	vertical-align: middle;
-	border:3px #C8C8C8 solid;
+
 	background-color:#FEFEFE;
 }
 #quoteImageSelection  .heading
@@ -110,7 +135,7 @@ height: 50px !important;
 {	
 	float: left;
 	font-size: 2em;
-	margin-left: 5px;
+	margin-left: 15px;
 	margin-right: 15px;
 	color: gray;
 	height: 60px;

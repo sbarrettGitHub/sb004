@@ -1,7 +1,7 @@
 'use strict';
 (function() {
   
-  var homeCtrl = function($scope, $location,$rootScope, sharedDataService) {
+  var homeCtrl = function($scope, $location,$rootScope,$dialog, sharedDataService) {
     $scope.quotes = sharedDataService.data.quoteSearch.results;
     $scope.searchTerm = "";
     $scope.searchCategory = "";
@@ -16,7 +16,20 @@
         ];*/
     }
     $scope.addNewQuote = function(){
-      $location.path("new");
+		//$location.path("new");
+		angular.element("#view").addClass("blurry");
+		var d = $dialog.dialog({
+		  backdrop: true,
+		  keyboard: true,
+		  backdropClick: false,
+		  templateUrl: "newQuote.html",
+		  controller: "newQuoteCtrl"
+		});
+		
+		d.open().then(function(result) {
+			angular.element("#view").removeClass("blurry");
+			console.log("d.open().then"); 
+		});
     }
     var dummyQuote = function(url, desc, cat, dAdded, votes, when, by){
     return {
@@ -40,6 +53,6 @@
   }
   
   // Register the controller
-  app.controller('homeCtrl', ["$scope","$location","$rootScope", "sharedDataService", homeCtrl]);
+  app.controller('homeCtrl', ["$scope","$location","$rootScope","$dialog", "sharedDataService", homeCtrl]);
 
 })();
