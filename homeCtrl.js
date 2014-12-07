@@ -18,7 +18,7 @@
     $scope.addNewQuote = function(){
 		//$location.path("new");
 		angular.element("#view").addClass("blurry");
-		var d = $dialog.dialog({
+		$scope.handle = $dialog.dialog({
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
@@ -26,7 +26,7 @@
 		  controller: "newQuoteCtrl"
 		});
 		
-		d.open().then(function(result) {
+		$scope.handle.open().then(function(result) {
 			angular.element("#view").removeClass("blurry");
 			console.log("d.open().then"); 
 		});
@@ -49,7 +49,11 @@
        
     });
    // $scope.search();
-    
+    $scope.init = function() {
+		$scope.handle = $dialog.dialog({});
+	  };
+  
+	$scope.init();
   }
   
   // Register the controller

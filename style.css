@@ -26,7 +26,17 @@ background-color: #FEFEFE;
 .hide {
     display: none;
 }
-
+.closeMe
+{
+float: right;
+margin-top: -50px;
+margin-right:10px;
+color:silver;
+cursor: pointer;
+}
+.closeMe:hover{
+color:darkgrey;
+}
 .quote{
   width:230px;
   float:left;
@@ -75,7 +85,7 @@ background-color: #FEFEFE;
 .imageContainer
 {
 float:left;
-height: 345px;
+height: 250px;
 background-color: #F8F8F8;
 width:100%;
 }
@@ -157,24 +167,27 @@ height:auto !important;
 #quoteImagePreview
 {
 margin-bottom:5px;
-width: 550px;
-height:450px;
+/*width: 550px;
+height:325px;*/
 }
 
 #quoteImagePreview img
 {	
 	float:left;
-	width:400px;
+	max-width:400px;
+	max-height:250px;
+	width: auto;
+    height: auto;
 	margin-left:75px;
 	
-	padding:15px;
-	margin-bottom:15px;
+	
 }
 #quoteImagePreview .buttons
 {
     float: left;
     margin-left: 25%;
     margin-top: 15px;
+	margin-bottom:15px;
     text-align: center;
     width: 50%;
 }
