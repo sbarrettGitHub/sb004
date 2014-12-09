@@ -26,8 +26,21 @@
 		  controller: "newQuoteCtrl"
 		});
 		
-		$scope.handle.open().then(function(result) {
-			angular.element("#view").removeClass("blurry");
+		$scope.handle.open().then(function(proceed) {
+			if(!proceed){
+				angular.element("#view").removeClass("blurry");
+				return;
+			}
+			var d = $dialog.dialog({
+			  backdrop: true,
+			  keyboard: true,
+			  backdropClick: false,
+			  templateUrl: "spawn.html",
+			  controller: "spawnCtrl"
+			});
+			d.open().then(function(proceed) {
+				angular.element("#view").removeClass("blurry");
+			});
 			console.log("d.open().then"); 
 		});
     }

@@ -38,10 +38,10 @@
 	};
 	
 	$scope.proceed = function () {
-		$location.path("quote/yY7Y75G7U67");
+		dialog.close(true);
 	};
 	$scope.closeMe = function(){
-		dialog.close(true);
+		dialog.close(false);
 	};
 	$scope.centerImage = function(){
 	$timeout(function(){
