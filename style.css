@@ -220,3 +220,15 @@ height:325px;*/
 	cursor: move;
 	padding:5px;
  }
+ #spawnQuote #comment:hover
+ {
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+ }
+ #spawnQuote .ui-draggable-dragging
+ {
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+ }
