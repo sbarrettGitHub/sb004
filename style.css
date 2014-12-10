@@ -194,10 +194,10 @@ height:325px;*/
 /*-----------------------------------------------------------*/
 #spawnQuote
 {
+height:340px;
 }
-#spawnQuote #result{
-  height:340px;
-  border:1px #C8C8C8 solid;
-  background-color:#E8E8E8;
-  cursor:pointer;
+
+ #spawnQuote .imageContainer
+ {
+	height:auto;
  }

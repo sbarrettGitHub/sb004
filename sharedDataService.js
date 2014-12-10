@@ -2,7 +2,13 @@
 (function () {
     var sharedDataService = function () {
         var data = {
-          quoteSearch:{searchTerm: "", results:[]}
+			quoteSearch:{searchTerm: "", results:[]},
+			seedImage:{
+				id:null,
+				image:null,
+				width:null,
+				height:null
+			}
         };
         
         return {

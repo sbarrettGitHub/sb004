@@ -1,10 +1,10 @@
-<div id="spawnQuote" ng-controller="spawnCtrl" class="container col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-xs-12">
-	<div id="result" class="quote rounded">
-		<div  class="imageContainer">
-			<img ng-src={{image}} />
-		</div>
+<div id="spawnQuote">
+	<div id="edit">
+		<input type="text" class="form-control"/>
 	</div>
-	<div id="edit" class="rounded">
-		.
+	<div  class="imageContainer">
+		<img ng-src={{seedImage.image}} style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
 	</div>
+
+
 </div>

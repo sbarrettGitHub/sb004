@@ -1,11 +1,12 @@
 'use strict';
 (function() {
 
-  var newQuoteCtrl = function($scope, $timeout, $location, fileReader, dialog) {
+  var newQuoteCtrl = function($scope, $timeout, $location, fileReader, dialog, sharedDataService) {
 	$scope.image = null;
 	$scope.imageFileName = null;
 	$scope.file = null;
 	$scope.loading = false;
+	
 	$scope.$on("Drop.Url",function(event, url){
 		$timeout(function(){
 			$scope.image = url;
@@ -43,10 +44,10 @@
 	$scope.closeMe = function(){
 		dialog.close(false);
 	};
-	$scope.centerImage = function(){
-	$timeout(function(){
-			centerPreviewImage()
-		},100);
+	$scope.imageSet = function(){
+		$timeout(function(){
+				centerPreviewImage()
+			},100);
 	};
 	function centerPreviewImage(){
 		var imageContainer = angular.element("#imageContainer");
@@ -55,10 +56,16 @@
 		var marginTop = (imageContainer.height() - imagePreview.height())/2;
 		imagePreview.css({ 'margin-left': marginLeft });
 		imagePreview.css({ 'margin-top': marginTop });
+		sharedDataService.data.seedImage= {
+			id:null,
+			image:$scope.image,
+			width: imagePreview.width(),
+			height:imagePreview.height(),
+		};
 	}
   }
 
   // Register the controller
-  app.controller('newQuoteCtrl', ["$scope", "$timeout", "$location", "fileReader", "dialog", newQuoteCtrl]);
+  app.controller('newQuoteCtrl', ["$scope", "$timeout", "$location", "fileReader", "dialog", "sharedDataService", newQuoteCtrl]);
 
 })();
