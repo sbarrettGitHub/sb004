@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>just s atest</title>
-  <head>
+  <meta charset="utf-8">
+  <title>resizable demo</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <style>
-		h1 {color:red;}
-		p {color:blue;}
-</style>
-  </head>
-  <body>
+  #resizable {
+    width: 100px;
+    height: 100px;
+    background: #ccc;
+}	</style>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+</head>
+<body>
  
-  </body>
- </html>
+<div id="resizable"></div>
+ 
+<script>
+$( "#resizable" ).resizable();
+</script>
+ 
+</body>
+</html>
