@@ -1,10 +1,21 @@
 <div id="spawnQuote">
+	<div class="heading">		
+		<h3>Add a comment to spawn a new quote</h3>		
+		<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+	</div>	
+	<div  class="imageContainer" data-drop="true" jqyoui-droppable>
+		<img ng-src={{seedImage.image}} 
+		style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
+		<div id="comment" class="" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}"		
+		>{{comment.text}}</div>
+	</div>
 	<div id="edit">
-		<input type="text" class="form-control"/>
+		<div id="toolbar">
+		</div>
+		<div id="commentText">
+			<textarea type="text" class="form-control" ng-model="comment.text"></textarea>
+		</div>
+		
 	</div>
-	<div  class="imageContainer">
-		<img ng-src={{seedImage.image}} style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-	</div>
-
 
 </div>

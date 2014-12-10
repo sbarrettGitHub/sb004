@@ -23,19 +23,25 @@ opacity: 0.6;
 background-color: #FEFEFE;
 -webkit-filter: blur(6px);
 }
+.heading
+{
+	text-align: center;
+}
 .hide {
     display: none;
 }
 .closeMe
 {
-float: right;
-margin-top: -50px;
-margin-right:10px;
-color:silver;
-cursor: pointer;
+	float: right;
+	margin-top: -50px;
+	margin-right:10px;
+	color:darkgrey;
+	cursor: pointer;
+	font-size: 1.5em;
 }
-.closeMe:hover{
-color:darkgrey;
+.closeMe span:hover{
+	background-color: darkgrey;
+	color:white;
 }
 .quote{
   width:230px;
@@ -129,10 +135,6 @@ width:100%;
 	vertical-align: middle;
 	background-color:#FEFEFE;
 }
-#quoteImageSelection  .heading
-{
-	text-align: center;
-}
 #quoteImageSelection .option
 {	height: 90px;
 	width:100%;
@@ -174,7 +176,7 @@ height:325px;*/
 #quoteImagePreview img
 {	
 	float:left;
-	max-width:400px;
+	max-width:375px;
 	max-height:250px;
 	width: auto;
     height: auto;
@@ -194,10 +196,27 @@ height:325px;*/
 /*-----------------------------------------------------------*/
 #spawnQuote
 {
-height:340px;
+	height:340px;
+	width:560px;
 }
 
  #spawnQuote .imageContainer
  {
-	height:auto;
+	height:100%;
+	width:auto;
+	max-width:375px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:5px;
+	padding-bottom:50px;
+ }
+ #spawnQuote #edit{
+	float: right;
+	width: 175px;
+	padding: 15px;
+ }
+ #spawnQuote #comment
+ {
+	cursor: move;
+	padding:5px;
  }

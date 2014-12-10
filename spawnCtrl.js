@@ -1,31 +1,36 @@
 'use strict';
 (function() {
   
-  var spawnCtrl = function($scope, $location,$rootScope,$timeout, sharedDataService) {
+  var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
+		$scope.comment = {
+			text:"Add text here and drag it into position",
+			position: {
+				align:"bottom",
+				x:0,
+				y:0
+			},
+			color:"black",
+			backgroundColor:"none"
+		}
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
-				$scope.seedImage=sharedDataService.data.seedImage;
-				
-				return;
+				$scope.seedImage=sharedDataService.data.seedImage;								
+			}else{
+				$scope.seedImage={
+					id:null,
+					image:'f4d493260.jpg',
+					width:'auto',
+					height:'auto'
+				}
 			}
 		}
-		$scope.seedImage={
-				id:null,
-				image:'f4d493260.jpg',
-				width:'auto',
-				height:'auto'
-		}
-		function centerPreviewImage(){
-			var imageContainer = angular.element("#imageContainer");
-			var imagePreview = angular.element("#imagePreview");
-			var marginLeft = (imageContainer.width() - imagePreview.width())/2;
-			var marginTop = (imageContainer.height() - imagePreview.height())/2;
-			imagePreview.css({ 'margin-left': marginLeft });
-			imagePreview.css({ 'margin-top': marginTop });			
-		}
+
+		$scope.closeMe = function(){
+			dialog.close(false);
+		};
   }
   
   // Register the controller
-  app.controller('spawnCtrl', ["$scope","$location","$rootScope","$timeout", "sharedDataService", spawnCtrl]);
+  app.controller('spawnCtrl', ["$scope","$location","$rootScope","$timeout", "dialog", "sharedDataService", spawnCtrl]);
 
 })();
