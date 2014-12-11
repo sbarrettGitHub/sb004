@@ -1,4 +1,4 @@
-var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngDragDrop']);
+var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap']);
 
 app.config(['$routeProvider',
   function($routeProvider) {

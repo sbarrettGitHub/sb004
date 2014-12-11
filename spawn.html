@@ -4,11 +4,11 @@
 		<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
-		<img ng-src={{seedImage.image}} data-drop="true" jqyoui-droppable
+		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
 		style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-		<div style="width:{{seedImage.width}}px;" data-drop="true" jqyoui-droppable>
+		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)">
 			<div id="comment" title="Drag me to relocate this text" 
-				data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}">
+				ngdraggableresizable ngresizeStop="resized(width, height)">
 				{{comment.text}}				
 			</div>
 		</div>
