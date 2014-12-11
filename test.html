@@ -3,23 +3,73 @@
 <head>
   <meta charset="utf-8">
   <title>resizable demo</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <style>
-  #resizable {
-    width: 100px;
-    height: 100px;
-    background: #ccc;
-}	</style>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+ <script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css"
+    href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 </head>
 <body>
  
-<div id="resizable"></div>
- 
+
+ <div id="output" style="border:1px solid black;width:500px;height:100px;">
+	<div>dimensions: <span id="dimensions"></span></div>
+	<div>position: <span id="position"></span></div>
+	<div>dropped: <span id="dragged"></span></div>
+	<div>dropped on: <span id="droppedOn"></span></div>
+ </div>
+ <div id="dropZone1" class="droppable" style="border:1px solid black;width:500px;height:100px;">Drop Zone 1</div>
+  <div id="dropZone2" class="droppable" style="border:1px solid black;width:500px;height:100px;margin-top:5px;">Drop Zone 2</div>
+  <div id="resizeOrDrag1" class="draggable" style="border:1px solid black;width:100px;height:100px;">
+	Drag or resize me 1
+</div>
+<div id="resizeOrDrag2" class="draggable" style="border:1px solid black;width:100px;height:100px;">
+	Drag or resize me 2
+</div>
 <script>
-$( "#resizable" ).resizable();
-</script>
- 
+$('.draggable')
+    .draggable({
+		start: function(e, ui) {
+			var pos = ui.helper.offset();
+            $("#position").html(pos.left + ' x ' + pos.top);
+        },
+		 revert: "invalid",
+		 scope: "dropable"
+	})
+    .resizable({
+        start: function(e, ui) {
+            $("#dimensions").html(ui.size.width + ' x ' + ui.size.height);
+        },
+        resize: function(e, ui) {
+         $("#dimensions").html(ui.size.width + ' x ' + ui.size.height);
+        },
+        stop: function(e, ui) {
+            $("#dimensions").html(ui.size.width + ' x ' + ui.size.height);
+        }
+    });
+$(".droppable")
+	.droppable({
+		scope: "dropable",            
+		drop: function (event, ui) {
+			$(this).css("background-color", "lightgreen")
+
+			
+			var pos = ui.draggable.offset(), dPos = $(this).offset();
+			posTop = pos.top - dPos.top;
+			posLeft = pos.left - dPos.left
+		
+            $("#position").html('Relative: ' + posLeft + ' x ' + posTop + ' => Absolute: ' + pos.left + ' x ' + pos.top);
+			$("#dragged").html(ui.draggable[0].id);
+			$("#droppedOn").html($(this).attr("id"));
+		},
+		over: function (event, ui) {
+			$(this).css("background-color", "green")
+		},
+		out: function (event, ui) {
+			$(this).css("background-color", "")
+		}
+	});
+</script> 
 </body>
 </html>
