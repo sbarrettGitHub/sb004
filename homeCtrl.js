@@ -40,6 +40,9 @@
        $scope.quotes = sharedDataService.data.quoteSearch.results;
        
     });
+	$scope.resized = function(width, height){
+		console.log(width + " X " + height);
+	};
    // $scope.search();
     $scope.init = function() {
 		$scope.handle = $dialog.dialog({});
