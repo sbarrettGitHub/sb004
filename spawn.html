@@ -5,7 +5,7 @@
 	</div>	
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
 		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
-		style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
+				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
 		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)">
 			<div id="comment" title="Drag me to relocate this text" 
 				ngdraggableresizable ngresizeStop="resized(width, height)">
@@ -18,7 +18,6 @@
 		</div>
 		<div id="commentText">
 			<input type="text" class="form-control" ng-model="comment.text"/>
-		</div>
-		
+		</div>		
 	</div>
 </div>

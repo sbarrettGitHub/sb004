@@ -5,16 +5,16 @@
 				<h3>To add a quote first select an image...</h3>	
 				<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 			</div>	
-			<hr/>	
-			<div class="option hidden-xs" id="dropMessage" ng-show="image==null">
-				<div class="icon">
-					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
-				</div>
-				<div class="optionLabel">Drag and drop an image here from another site or your computer</div>				
-			</div>	
-			<hr  class="hidden-xs"/>			
+			<div class="option" >
+				<div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
+				<div class="optionLabel">Paste a link to an online image</div>
+				<div id="pasteInput" class="optionLabel">
+					<input type="text" ng-model="image" ng-show="image==null" ng-change="imageSet()" placeholder="http://" class="form-control col-md-12"/>
+				</div>			
+			</div>
+			<hr />			
 			<div class="option" ng-show="image==null">
-				<div class="icon hidden-xs">
+				<div class="icon">
 					<span class="fa fa-folder-open" ng-show="image==null"></span>
 				</div>
 				<div class="optionLabel">Or browse for a file on your computer</div>
@@ -24,13 +24,14 @@
 				</div>
 			</div>	
 			<hr/>	
-			<div class="option hidden-xs" >
-				<div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
-				<div class="optionLabel">Or paste a link to an online image</div>
-				<div id="pasteInput" class="optionLabel">
-					<input type="text" ng-model="image" ng-show="image==null" ng-change="imageSet()" placeholder="Paste an image link into this box" class="form-control col-md-12"/>
-				</div>			
+			<div class="option" id="dropMessage" ng-show="image==null">
+				<div class="icon">
+					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
+				</div>
+				<div class="optionLabel">Or drag and drop an image here</div>				
 			</div>			
+			<hr/>	
+						
 		</div>		
 		<div id="quoteImagePreview" ng-hide="image==null">
 			<div class="heading">
