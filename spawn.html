@@ -7,16 +7,16 @@
 		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
 		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
-			<div id="comment" title="Drag me to relocate this text" 
+			<div id="comment" title="Drag me to relocate this text. Double click to edit." 
 				ngdraggableresizable ngresizeStop="resized(width, height)"
 				style="	font-family:{{comment.fontFamily}}; 
 						font-size:{{comment.fontSize}}; 
 						font-weight:{{comment.fontWeight}}; 
 						text-decoration:{{comment.textDecoration}}; 
 						color:{{comment.color}}; 
-						text-align:{{comment.textAlign}}">
+						text-align:{{comment.textAlign}};min-height:16px;">
 				<span ng-hide="editingComment" ng-dblclick="startEdit()" >{{comment.text}}</span>
-				<input type="text" class="form-control" ng-model="comment.text" placeholder="Add text here..." 
+				<input type="text" class="form-control" ng-model="comment.text" placeholder="Double click here to add your text ..." 
 						ng-show="editingComment" ng-blur="endEdit()"
 						style="	font-family:{{comment.fontFamily}}; 
 						font-size:{{comment.fontSize}}; 
@@ -24,7 +24,7 @@
 						text-decoration:{{comment.textDecoration}}; 
 						color:{{comment.color}}; 
 						background-color:{{comment.backgroundColor}};
-						text-align:{{comment.textAlign}}"/>				
+						text-align:{{comment.textAlign}}; min-height:16px;"/>				
 			</div>
 		</div>
 	</div>

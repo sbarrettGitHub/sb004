@@ -237,3 +237,7 @@ height:325px;*/
 	background-color: #428bca;
 	border-color: #357ebd;
  }
+  #spawnQuote #comment span{
+	min-height:32px;
+	min-width:32px;
+  }

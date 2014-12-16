@@ -4,7 +4,7 @@
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
 		$scope.editingComment=false;
 		$scope.comment = {
-			text:"Double click here to type ...",
+			text:"Double click here to add your text ...",
 			position: {
 				align:"bottom",
 				x:0,
