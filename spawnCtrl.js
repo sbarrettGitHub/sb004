@@ -2,18 +2,19 @@
 (function() {
   
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
+		$scope.editingComment=false;
 		$scope.comment = {
-			text:"",
+			text:"Double click here to type ...",
 			position: {
 				align:"bottom",
 				x:0,
 				y:0
 			},
 			color:"black",
-			backgroundColor:"none",
-			fontFamily:"Arial Black",			
+			backgroundColor:"white",
+			fontFamily:"Arial",			
 			fontSize: "15pt",
-			fontWeight: "normal",
+			fontWeight: "bold",
 			textDecoration: "none",
 			textAlign: "center"
 			
@@ -33,6 +34,12 @@
 
 		$scope.closeMe = function(){
 			dialog.close(false);
+		};
+		$scope.startEdit = function(){
+			$scope.editingComment = true;
+		};
+		$scope.endEdit = function(){
+			$scope.editingComment = false;
 		};
 	}
   

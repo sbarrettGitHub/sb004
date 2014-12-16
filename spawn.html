@@ -1,4 +1,4 @@
-<div id="spawnQuote">
+<div id="spawnQuote" ng-click="endEdit()">
 	<div class="heading">		
 		<h3>Add a comment to spawn a new quote</h3>		
 		<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
@@ -6,7 +6,7 @@
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
 		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)">
+		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
 			<div id="comment" title="Drag me to relocate this text" 
 				ngdraggableresizable ngresizeStop="resized(width, height)"
 				style="	font-family:{{comment.fontFamily}}; 
@@ -15,17 +15,18 @@
 						text-decoration:{{comment.textDecoration}}; 
 						color:{{comment.color}}; 
 						text-align:{{comment.textAlign}}">
-				{{comment.text}}				
+				<span ng-hide="editingComment" ng-dblclick="startEdit()" >{{comment.text}}</span>
+				<input type="text" class="form-control" ng-model="comment.text" placeholder="Add text here..." 
+						ng-show="editingComment" ng-blur="endEdit()"
+						style="	font-family:{{comment.fontFamily}}; 
+						font-size:{{comment.fontSize}}; 
+						font-weight:{{comment.fontWeight}}; 
+						text-decoration:{{comment.textDecoration}}; 
+						color:{{comment.color}}; 
+						background-color:{{comment.backgroundColor}};
+						text-align:{{comment.textAlign}}"/>				
 			</div>
 		</div>
-	</div>
-	<div id="edit">
-		<div id="toolbar">
-		</div>
-		<div id="commentText">
-			<div>Add your quote here</div>
-			<input type="text" class="form-control" ng-model="comment.text" placeholder="Add text here..."/>
-		</div>		
 	</div>
 	<div class="buttons">				
 		<input class="pull-left" type="button" value="Clear" ng-click="clear()"/>
