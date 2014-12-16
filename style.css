@@ -109,6 +109,16 @@ width:100%;
 {
 	border-radius: 12px;
 }
+.buttons
+{
+    float: left;
+    margin-left: 25%;
+    margin-top: 15px;
+	margin-bottom:15px;
+    text-align: center;
+	font-size:1.25em;
+    width: 50%;
+}
 /*-----------------------------------------------------------*/
 .search{
   margin-top:15px;
@@ -131,7 +141,6 @@ width:100%;
 {
 	margin-left: auto;
 	margin-right: auto;
-	font-size:1.25em;
 	vertical-align: middle;
 	background-color:#FEFEFE;
 }
@@ -184,15 +193,7 @@ height:325px;*/
 	
 	
 }
-#quoteImagePreview .buttons
-{
-    float: left;
-    margin-left: 25%;
-    margin-top: 15px;
-	margin-bottom:15px;
-    text-align: center;
-    width: 50%;
-}
+
 /*-----------------------------------------------------------*/
 #spawnQuote
 {
@@ -216,7 +217,8 @@ height:325px;*/
  #spawnQuote #edit{
 	float: right;
 	width: 100%;
-	padding: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
  }
  #spawnQuote #comment
  {

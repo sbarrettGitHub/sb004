@@ -3,14 +3,20 @@
   
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
 		$scope.comment = {
-			text:"Add text here and drag it into position",
+			text:"",
 			position: {
 				align:"bottom",
 				x:0,
 				y:0
 			},
 			color:"black",
-			backgroundColor:"none"
+			backgroundColor:"none",
+			fontFamily:"Arial Black",			
+			fontSize: "15pt",
+			fontWeight: "normal",
+			textDecoration: "none",
+			textAlign: "center"
+			
 		}
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){

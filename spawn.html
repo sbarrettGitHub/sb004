@@ -8,7 +8,13 @@
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
 		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)">
 			<div id="comment" title="Drag me to relocate this text" 
-				ngdraggableresizable ngresizeStop="resized(width, height)">
+				ngdraggableresizable ngresizeStop="resized(width, height)"
+				style="	font-family:{{comment.fontFamily}}; 
+						font-size:{{comment.fontSize}}; 
+						font-weight:{{comment.fontWeight}}; 
+						text-decoration:{{comment.textDecoration}}; 
+						color:{{comment.color}}; 
+						text-align:{{comment.textAlign}}">
 				{{comment.text}}				
 			</div>
 		</div>
@@ -17,7 +23,12 @@
 		<div id="toolbar">
 		</div>
 		<div id="commentText">
-			<input type="text" class="form-control" ng-model="comment.text"/>
+			<div>Add your quote here</div>
+			<input type="text" class="form-control" ng-model="comment.text" placeholder="Add text here..."/>
 		</div>		
 	</div>
+	<div class="buttons">				
+		<input class="pull-left" type="button" value="Clear" ng-click="clear()"/>
+		<input class="pull-right"type="button" value="Proceed" ng-click="proceed()"/>
+	</div>	
 </div>
