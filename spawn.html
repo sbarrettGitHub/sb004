@@ -15,8 +15,8 @@
 						text-decoration:{{comment.textDecoration}}; 
 						color:{{comment.color}}; 
 						text-align:{{comment.textAlign}};min-height:16px;">
-				<span ng-hide="editingComment" ng-dblclick="startEdit()" >{{comment.text}}</span>
-				<input type="text" class="form-control" ng-model="comment.text" placeholder="Double click here to add your text ..." 
+				<span ng-hide="editingComment" ng-click="startEdit()" >{{comment.text}}</span>
+				<input type="text" class="form-control" ng-model="comment.text" 
 						ng-show="editingComment" ng-blur="endEdit()"
 						style="	font-family:{{comment.fontFamily}}; 
 						font-size:{{comment.fontSize}}; 
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div class="buttons">				
-		<input class="pull-left" type="button" value="Clear" ng-click="clear()"/>
-		<input class="pull-right"type="button" value="Proceed" ng-click="proceed()"/>
+		<input class="pull-left" type="button" value="Close" ng-click="closeMe()"/>
+		<input class="pull-right"type="button" value="Publish" ng-click="publish()"/>
 	</div>	
 </div>

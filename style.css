@@ -92,7 +92,6 @@ background-color: #FEFEFE;
 {
 float:left;
 height: 250px;
-background-color: #F8F8F8;
 width:100%;
 }
 .qContainer{  
@@ -202,8 +201,8 @@ height:325px;*/
 }
  #spawnQuote .imageContainer
  {
-	height:100%;
-	/*width:auto;*/
+	/*height:100%;
+	width:auto;*/
 	max-width:375px;
 	padding-left:5px;
 	padding-right:5px;

@@ -4,20 +4,19 @@
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
 		$scope.editingComment=false;
 		$scope.comment = {
-			text:"Double click here to add your text ...",
+			text:"Click here to add your text ...",
 			position: {
 				align:"bottom",
 				x:0,
 				y:0
 			},
 			color:"black",
-			backgroundColor:"white",
+			backgroundColor:"none",
 			fontFamily:"Arial",			
 			fontSize: "15pt",
 			fontWeight: "bold",
 			textDecoration: "none",
-			textAlign: "center"
-			
+			textAlign: "center"			
 		}
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
@@ -31,7 +30,6 @@
 				}
 			}
 		}
-
 		$scope.closeMe = function(){
 			dialog.close(false);
 		};
@@ -40,6 +38,10 @@
 		};
 		$scope.endEdit = function(){
 			$scope.editingComment = false;
+		};
+		
+		$scope.toggleBold = function(){			
+			$scope.comment.fontWeight = $scope.comment.fontWeight == "bold" ? "normal" : "bold";			
 		};
 	}
   
