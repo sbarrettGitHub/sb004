@@ -3,29 +3,290 @@
 		<h3>Add a comment to spawn a new quote</h3>		
 		<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
+	<div id="toolbar" >
+		<div class="btn-group">
+		  <label class="btn btn-default ng-scope" name="bold" title="Bold">
+			<i class="fa fa-bold"></i>
+		  </label>
+		  <label type="button" class="btn btn-default ng-scope" name="italics" ng-disabled="isDisabled()" title="Italic">
+			<i class="fa fa-italic"></i>
+		  </label>
+		  <label type="button" class="btn btn-default ng-scope" name="underline" ng-disabled="isDisabled()" title="Underline">
+			<i class="fa fa-underline"></i>
+		  </label>
+		</div>
+		<!-- Single button -->
+		<div class="btn-group" title="Font">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<span style="font-family:arial">Arial</span>  <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+			<li><a href="#"><span style="font-family:arial">Arial</span></a>
+			</li>
+			<li><a href="#"><span style="font-family:times new roman, arial">Time New Roman</span></a>
+			</li>
+			<li><a href="#"><span style="font-family:Comic Sans MS, arial">Comic Sans MS</span></a>
+			</li>
+			<li><a href="#"><span style="font-family:Verdana, arial">Verdana</span></a>
+			</li>
+		  </ul>
+		</div>
+		<div class="btn-group" title="Font Size">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			15 pt <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+			<li><a href="#">5 pt</a>
+			</li>
+			<li><a href="#">6 pt</a>
+			</li>
+			<li><a href="#">7 pt</a>
+			</li>
+			<li><a href="#">8 pt</a>
+			</li>
+			<li><a href="#">9 pt</a>
+			</li>
+			<li><a href="#">10 pt</a>
+			</li>
+			<li><a href="#">11 pt</a>
+			</li>
+			<li><a href="#">12 pt</a>
+			</li>
+			<li><a href="#">13 pt</a>
+			</li>
+			<li><a href="#">14 pt</a>
+			</li>
+			<li><a href="#">15 pt</a>
+			</li>
+			<li><a href="#">16 pt</a>
+			</li>
+			<li><a href="#">17 pt</a>
+			</li>
+			<li><a href="#">18 pt</a>
+			</li>
+			<li><a href="#">19 pt</a>
+			</li>
+			<li><a href="#">20 pt</a>
+			</li>
+		  </ul>
+		</div>
+		<div class="btn-group" title="Background Color">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<i style="font-weight:bold;color:orange;" class="fa fa-square"></i>  <i class="caret"></i>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+			<li>
+			  <a href="#">
+				<div style="background-color:White;text-align:center;font-size:12px;border:0;" class="colorBar">None</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:White;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Silver;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Gray;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Black	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Red	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Green	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Purple;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+		  </ul>
+		</div>
+		<div class="btn-group" title="Font Color">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<i style="border-bottom:5px solid red;font-weight:bold;" class="fa fa-font"></i>  <i class="caret"></i>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+			<li>
+			  <a href="#">
+				<div style="background-color:White;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Silver;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Gray;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Black	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Red	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Green	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+			<li>
+			  <a href="#">
+				<div style="background-color:Purple;" class="colorBar">&nbsp;</div>
+			  </a>
+			</li>
+		  </ul>
+		</div>    
+		<div class="btn-group">
+		  <label class="btn btn-default ng-scope" title="Align Text Left">
+			<i class="fa fa-align-left"></i>
+		  </label>
+		  <label type="button" class="btn btn-default ng-scope" title="Align Text Center">
+			<i class="fa fa-align-center"></i>
+		  </label>
+		  <label type="button" class="btn btn-default ng-scope" title="Align Text Right">
+			<i class="fa fa-align-right"></i>
+		  </label>
+		</div>
+	  </div>		
+	<div id="commentContainer" style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignTop(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
+		<div id="comment" title="Drag me to relocate this text. Double click to edit." 
+			ngdraggableresizable ngresizeStop="resized(width, height)"
+			style="	font-family:{{comment.fontFamily}}; 
+					font-size:{{comment.fontSize}}; 
+					font-weight:{{comment.fontWeight}}; 
+					text-decoration:{{comment.textDecoration}}; 
+					color:{{comment.color}}; 
+					text-align:{{comment.textAlign}};min-height:16px;">
+			<span ng-hide="editingComment" ng-click="startEdit()" >{{comment.text}}</span>
+						
+			<input type="text" class="form-control" ng-model="comment.text" 
+					ng-show="editingComment" ng-blur="endEdit()"
+					style="	font-family:{{comment.fontFamily}}; 
+					font-size:{{comment.fontSize}}; 
+					font-weight:{{comment.fontWeight}}; 
+					text-decoration:{{comment.textDecoration}}; 
+					color:{{comment.color}}; 
+					background-color:{{comment.backgroundColor}};
+					text-align:{{comment.textAlign}}; min-height:16px;"/>				
+		</div>
+	</div>
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
 		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-		<div style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
-			<div id="comment" title="Drag me to relocate this text. Double click to edit." 
-				ngdraggableresizable ngresizeStop="resized(width, height)"
-				style="	font-family:{{comment.fontFamily}}; 
-						font-size:{{comment.fontSize}}; 
-						font-weight:{{comment.fontWeight}}; 
-						text-decoration:{{comment.textDecoration}}; 
-						color:{{comment.color}}; 
-						text-align:{{comment.textAlign}};min-height:16px;">
-				<span ng-hide="editingComment" ng-click="startEdit()" >{{comment.text}}</span>
-				<input type="text" class="form-control" ng-model="comment.text" 
-						ng-show="editingComment" ng-blur="endEdit()"
-						style="	font-family:{{comment.fontFamily}}; 
-						font-size:{{comment.fontSize}}; 
-						font-weight:{{comment.fontWeight}}; 
-						text-decoration:{{comment.textDecoration}}; 
-						color:{{comment.color}}; 
-						background-color:{{comment.backgroundColor}};
-						text-align:{{comment.textAlign}}; min-height:16px;"/>				
-			</div>
+		<div id="commentContainerBottom" style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
 		</div>
 	</div>
 	<div class="buttons">				

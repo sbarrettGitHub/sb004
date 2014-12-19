@@ -13,7 +13,7 @@
 			color:"black",
 			backgroundColor:"none",
 			fontFamily:"Arial",			
-			fontSize: "15pt",
+			fontSize: "10pt",
 			fontWeight: "bold",
 			textDecoration: "none",
 			textAlign: "center"			

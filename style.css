@@ -198,6 +198,7 @@ height:325px;*/
 {
 	height:340px;
 	width:560px;
+	max-height:340px;
 }
  #spawnQuote .imageContainer
  {
@@ -236,7 +237,30 @@ height:325px;*/
 	background-color: #428bca;
 	border-color: #357ebd;
  }
-  #spawnQuote #comment span{
+ #spawnQuote #commentContainer
+ {
+	margin-right:auto;
+	margin-left:auto;
+	width:450px;
+ }
+#spawnQuote #comment span{
 	min-height:32px;
 	min-width:32px;
-  }
+}
+#spawnQuote #toolbar
+{
+	margin-right:auto;
+	margin-left:auto;
+	width:450px;
+}
+#spawnQuote #toolbar .btn{
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:8px;
+	padding-right:8px;
+}
+#spawnQuote .colorBar{
+  width:150px;
+  height:11px;
+  border:1px solid black;
+}
