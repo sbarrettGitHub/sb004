@@ -261,7 +261,7 @@
 		  </label>
 		</div>
 	  </div>		
-	<div id="commentContainer" style="width:{{seedImage.width}}px;" ngdroppable ngdrop="alignTop(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
+	<div id="commentContainer" style="width:{{seedImage.width}}px;max-height:50px;" ngdroppable ngdrop="alignTop(left,top,relLeft,relRight,el)" onclick="event.stopPropagation();">
 		<div id="comment" title="Drag me to relocate this text. Double click to edit." 
 			ngdraggableresizable ngresizeStop="resized(width, height)"
 			style="	font-family:{{comment.fontFamily}}; 
