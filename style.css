@@ -264,3 +264,20 @@ height:325px;*/
   height:11px;
   border:1px solid black;
 }
+#spawnQuote .hoverOver
+{
+	border:1px dashed;
+}
+.dropdown-menu > li > span {
+display: block;
+padding: 3px 20px;
+clear: both;
+font-weight: normal;
+line-height: 1;
+color: #333;
+white-space: nowrap;
+cursor:pointer;
+}
+.dropdown-menu > li > span:hover {
+	background-color: #428bca;
+}

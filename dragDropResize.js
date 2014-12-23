@@ -50,12 +50,12 @@ app.directive('ngdroppable', function($parse) {
 			over: function (event, ui) {				
 				//console.log('ngdragover:Element: ' + ui.draggable[0].id);						
 				var invoker = $parse(attrs.ngdragover);
-				invoker(scope, {el:ui.draggable[0]});
+				invoker(scope, {el:ui.draggable[0], target:$(this)});
 			},
 			out: function (event, ui) {
 				//console.log('ngdragout:Element: ' + ui.draggable[0].id);						
 				var invoker = $parse(attrs.ngdragout);
-				invoker(scope, {el:ui.draggable[0]});
+				invoker(scope, {el:ui.draggable[0], target:$(this)});
 			}
 		});
     }

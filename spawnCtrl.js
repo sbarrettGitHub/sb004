@@ -43,6 +43,25 @@
 		$scope.toggleBold = function(){			
 			$scope.comment.fontWeight = $scope.comment.fontWeight == "bold" ? "normal" : "bold";			
 		};
+		
+		$scope.over=function(el, target){
+			target.addClass("hoverOver");
+		};
+		$scope.out=function(el, target){
+			target.removeClass("hoverOver");
+		};
+		$scope.fontSize = function(size){
+			$scope.comment.fontSize = size + "pt";
+		};
+		$scope.backColor = function(color){
+			$scope.comment.backgroundColor = color;
+		};
+		$scope.color = function(color){
+			$scope.comment.color = color;
+		};		
+		$scope.fontFamily = function(fontFamily){
+			$scope.comment.fontFamily = fontFamily;
+		};
 	}
   
   // Register the controller
