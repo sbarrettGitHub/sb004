@@ -16,6 +16,7 @@
 			fontSize: "10pt",
 			fontWeight: "bold",
 			textDecoration: "none",
+			fontStyle:"normal",
 			textAlign: "center"			
 		}
 		if(sharedDataService.data.seedImage){
@@ -40,9 +41,6 @@
 			$scope.editingComment = false;
 		};
 		
-		$scope.toggleBold = function(){			
-			$scope.comment.fontWeight = $scope.comment.fontWeight == "bold" ? "normal" : "bold";			
-		};
 		
 		$scope.over=function(el, target){
 			target.addClass("hoverOver");
@@ -61,6 +59,15 @@
 		};		
 		$scope.fontFamily = function(fontFamily){
 			$scope.comment.fontFamily = fontFamily;
+		};
+		$scope.bold = function(){
+			$scope.comment.fontWeight = $scope.comment.fontWeight == "bold"?"normal":"bold";
+		};
+		$scope.italic = function(){			
+			$scope.comment.fontStyle = $scope.comment.fontStyle == "italic"?"normal":"italic";
+		};
+		$scope.underline = function(){
+			$scope.comment.textDecoration = $scope.comment.textDecoration == "underline"?"none":"underline";
 		};
 	}
   

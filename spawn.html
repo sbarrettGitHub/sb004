@@ -5,13 +5,16 @@
 	</div>	
 	<div id="toolbar" >
 		<div class="btn-group">
-		  <label class="btn btn-default ng-scope" name="bold" title="Bold">
-			<i class="fa fa-bold"></i>
+		  <label class="btn btn-default ng-scope" name="bold" title="Bold"
+			ng-click="bold()">
+			<i class="fa fa-bold active "></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" name="italics" ng-disabled="isDisabled()" title="Italic">
+		  <label type="button" class="btn btn-default ng-scope" name="italics" title="Italic"
+			ng-click="italic()">
 			<i class="fa fa-italic"></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" name="underline" ng-disabled="isDisabled()" title="Underline">
+		  <label type="button" class="btn btn-default ng-scope" name="underline" title="Underline"
+			ng-click="underline()">
 			<i class="fa fa-underline"></i>
 		  </label>
 		</div>
@@ -58,15 +61,15 @@
 			</li>
 			<li><span span ng-click="fontSize(15)">15 pt</span>
 			</li>
-			<li><span span ng-click="fontSize(16)">16 pt</span>
-			</li>
-			<li><span span ng-click="fontSize(17)">17 pt</span>
-			</li>
 			<li><span span ng-click="fontSize(18)">18 pt</span>
 			</li>
-			<li><span span ng-click="fontSize(19)">19 pt</span>
-			</li>
 			<li><span span ng-click="fontSize(20)">20 pt</span>
+			</li>
+			<li><span span ng-click="fontSize(25)">25 pt</span>
+			</li>
+			<li><span span ng-click="fontSize(30)">30 pt</span>
+			</li>
+			<li><span span ng-click="fontSize(35)">35 pt</span>
 			</li>
 		  </ul>
 		</div>
@@ -268,6 +271,7 @@
 			style="	font-family:{{comment.fontFamily}}; 
 					font-size:{{comment.fontSize}}; 
 					font-weight:{{comment.fontWeight}}; 
+					font-style:{{comment.fontStyle}}; 
 					text-decoration:{{comment.textDecoration}}; 
 					color:{{comment.color}}; 
 					background-color:{{comment.backgroundColor}};
@@ -279,6 +283,7 @@
 					style="	font-family:{{comment.fontFamily}}; 
 					font-size:{{comment.fontSize}}; 
 					font-weight:{{comment.fontWeight}}; 
+					font-style:{{comment.fontStyle}}; 
 					text-decoration:{{comment.textDecoration}}; 
 					color:{{comment.color}}; 
 					background-color:{{comment.backgroundColor}};
