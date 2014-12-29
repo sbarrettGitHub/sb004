@@ -16,8 +16,8 @@
 			fontSize: "10pt",
 			fontWeight: "bold",
 			textDecoration: "none",
-			fontStyle:"normal",
-			textAlign: "left"			
+			fontStyle:"italic",
+			textAlign: "center"			
 		}
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
@@ -34,13 +34,22 @@
 		$scope.closeMe = function(){
 			dialog.close(false);
 		};
+		$scope.startAgain = function(){
+			dialog.close("StartAgain");
+		};
+		$scope.reset = function(){
+			dialog.close("Reset");		
+		};
 		$scope.startEdit = function(){
-			$scope.editingComment = true;
+			$scope.editingComment = true;	
+			angular.element('#comment').tooltip('destroy');			
 		};
 		$scope.endEdit = function(){
 			$scope.editingComment = false;
 		};
-		
+		$scope.startDrag = function(){
+			angular.element('#comment').tooltip('destroy');			
+		};
 		
 		$scope.over=function(el, target){
 			target.addClass("hoverOver");
@@ -72,6 +81,10 @@
 		$scope.align = function(alignment){
 			$scope.comment.textAlign = alignment;
 		};
+		
+		$timeout(function(){
+			angular.element('#comment').tooltip({placement: 'top',trigger: 'manual'}).tooltip('show');
+		}, 1000);		
 	}
   
   // Register the controller

@@ -1,6 +1,6 @@
 <div id="spawnQuote" ng-click="endEdit()">
 	<div class="heading">		
-		<h3>Add a comment to spawn a new quote</h3>		
+		<h3>Add text to spawn a new meme</h3>		
 		<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
 	<div id="toolbar" >
@@ -275,8 +275,18 @@
 	<div id="commentContainer" style="width:{{seedImage.width}}px;max-height:32px;" 
 		ngdroppable ngdrop="alignTop(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
 		onclick="event.stopPropagation();">
-		<div id="comment" title="Drag me to relocate this text. Double click to edit." 
-			ngdraggableresizable ngresizeStop="resized(width, height)"
+
+	</div>
+	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
+		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
+				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
+
+	</div>
+	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
+			ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
+			onclick="event.stopPropagation();">
+		<div id="comment" title="Click on the text below to edit. Then drag it onto the image." 
+			ngdraggableresizable ngresizeStop="resized(width, height)" ngdragstart="startDrag()"
 			style=";min-height:16px;">
 			<div  ng-click="startEdit()" 
 			style="	font-family:{{comment.fontFamily}}; 
@@ -288,22 +298,16 @@
 					background-color:{{comment.backgroundColor}};
 					text-align:{{comment.textAlign}};min-height:16px;"
 			>{{comment.text}}</div>
-						
-			<input type="text" class="form-control" ng-model="comment.text" 
-					ng-show="editingComment" ng-blur="endEdit()"
-					style=" min-height:16px;"/>				
-		</div>
-	</div>
-	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
-		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
-				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-		<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;" 
-				ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
-				onclick="event.stopPropagation();">
+					
+		<input type="text" class="form-control" ng-model="comment.text" 
+				ng-show="editingComment" ng-blur="endEdit()"
+				style=" min-height:16px;"/>				
 		</div>
 	</div>
 	<div class="buttons">				
-		<input class="pull-left" type="button" value="Close" ng-click="closeMe()"/>
-		<input class="pull-right"type="button" value="Publish" ng-click="publish()"/>
+		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
+		<input type="button" value="Start Again" ng-click="startAgain()" title="Begin again with a new image"/>
+		<input type="button" value="Reset Text" ng-click="reset()" title="Revert the text to its original state"/>
+		<input type="button" value="Procced" ng-click="publish()" title="Move on to the publish page with this Meme"/>
 	</div>	
 </div>

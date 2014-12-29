@@ -2,7 +2,7 @@
 	<div id="quoteImageSelection" class="rounded">
 		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
 			<div class="heading">
-				<h3>To add a quote first select an image...</h3>	
+				<h3>To add a meme first select an image...</h3>	
 				<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 			</div>	
 			<div class="option" >
@@ -41,9 +41,10 @@
 			<div id="imageContainer" class="imageContainer" >
 				<img id="imagePreview" ng-src={{image}} />
 			</div>
-			<div class="buttons">				
-				<input class="pull-left" type="button" value="Start Again" ng-click="clear()"/>
-				<input class="pull-right"type="button" value="Proceed" ng-click="proceed()"/>
+			<div class="buttons">	
+				<input type="button" value="Close" ng-click="closeMe()"/>			
+				<input type="button" value="Start Again" ng-click="clear()"/>
+				<input type="button" value="Proceed" ng-click="proceed()"/>
 			</div>
 		</div>		
 	</div>	
