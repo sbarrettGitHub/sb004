@@ -17,7 +17,7 @@
 			fontWeight: "bold",
 			textDecoration: "none",
 			fontStyle:"normal",
-			textAlign: "center"			
+			textAlign: "left"			
 		}
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
@@ -68,6 +68,9 @@
 		};
 		$scope.underline = function(){
 			$scope.comment.textDecoration = $scope.comment.textDecoration == "underline"?"none":"underline";
+		};
+		$scope.align = function(alignment){
+			$scope.comment.textAlign = alignment;
 		};
 	}
   

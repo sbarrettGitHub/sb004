@@ -5,16 +5,16 @@
 	</div>	
 	<div id="toolbar" >
 		<div class="btn-group">
-		  <label class="btn btn-default ng-scope" name="bold" title="Bold"
-			ng-click="bold()">
+		  <label class="btn btn-default" name="bold" title="Bold"
+			ng-click="bold()" ng-class="{'active': comment.fontWeight == 'bold'}" >
 			<i class="fa fa-bold active "></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" name="italics" title="Italic"
-			ng-click="italic()">
+		  <label type="button" class="btn btn-default" name="italics" title="Italic"
+			ng-click="italic()" ng-class="{'active': comment.fontStyle == 'italic'}">
 			<i class="fa fa-italic"></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" name="underline" title="Underline"
-			ng-click="underline()">
+		  <label type="button" class="btn btn-default" name="underline" title="Underline"
+			ng-click="underline()"  ng-class="{'active': comment.textDecoration == 'underline'}">
 			<i class="fa fa-underline"></i>
 		  </label>
 		</div>
@@ -24,14 +24,21 @@
 			<span style="font-family:{{comment.fontFamily}}">Font</span>  <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu">
-			<li><span ng-click="fontFamily('Arial')" style="font-family:arial">Arial</span>
-			</li>
-			<li><span ng-click="fontFamily('Times new roman')" style="font-family:times new roman, arial">Time New Roman</span>
-			</li>
-			<li><span ng-click="fontFamily('Comic Sans MS')" style="font-family:Comic Sans MS, arial">Comic Sans MS</span>
-			</li>
-			<li><span ng-click="fontFamily('Verdana')" style="font-family:Verdana, arial">Verdana</span>
-			</li>
+			<li><span ng-click="fontFamily('Arial')" style="font-family:arial">Arial</span></li>
+			<li><span ng-click="fontFamily('Arial Black')" style="font-family:Arial Black, arial">Arial Black</span></li>
+			<li><span ng-click="fontFamily('Arial Narrow')" style="font-family:Arial Narrow, arial">Arial Narrow</span></li>
+			<li><span ng-click="fontFamily('Century Gothic')" style="font-family:Century Gothic, arial">Century Gothic</span></li>
+			<li><span ng-click="fontFamily('Comic Sans MS')" style="font-family:Comic Sans MS, arial">Comic Sans MS</span></li>
+			<li><span ng-click="fontFamily('Courier New')" style="font-family:Courier New, arial">Courier New</span></li>
+			<li><span ng-click="fontFamily('Georgia')" style="font-family:Georgia, arial">Georgia</span></li>
+			<li><span ng-click="fontFamily('Impact')" style="font-family:Impact, arial">Impact</span></li>
+			<li><span ng-click="fontFamily('Lucida Console')" style="font-family:Lucida Console, arial">Lucida Console</span></li>
+			<li><span ng-click="fontFamily('Lucida Sans Unicode')" style="font-family:Lucida Sans Unicode, arial">Lucida Sans Unicode</span></li>
+			<li><span ng-click="fontFamily('Palatino Linotype')" style="font-family:Palatino Linotype, arial">Palatino Linotype</span></li>
+			<li><span ng-click="fontFamily('Tahoma')" style="font-family:Tahoma, arial">Tahoma</span></li>
+			<li><span ng-click="fontFamily('Times New Roman')" style="font-family:Times New Roman, arial">Times New Roman</span></li>
+			<li><span ng-click="fontFamily('Trebuchet MS')" style="font-family:Trebuchet MS, arial">Trebuchet MS</span></li>
+			<li><span ng-click="fontFamily('Verdana')" style="font-family:Verdana, arial">Verdana</span></li>
 		  </ul>
 		</div>
 		<div class="btn-group" title="Font Size">
@@ -75,7 +82,8 @@
 		</div>
 		<div class="btn-group" title="Background Color">
 		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i style="font-weight:bold;color:orange;" class="fa fa-square"></i>  <i class="caret"></i>
+			
+			<i style="border-bottom:5px solid {{comment.backgroundColor}};font-weight:bold;" class="fa fa-paint-brush"></i>  <i class="caret"></i>
 		  </button>
 		  <ul class="dropdown-menu" role="menu">
 			<li>
@@ -165,7 +173,7 @@
 		</div>
 		<div class="btn-group" title="Font Color">
 		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-			<i style="border-bottom:5px solid red;font-weight:bold;" class="fa fa-font"></i>  <i class="caret"></i>
+			<i style="border-bottom:5px solid {{comment.color}};font-weight:bold;" class="fa fa-font"></i>  <i class="caret"></i>
 		  </button>
 		  <ul class="dropdown-menu" role="menu">
 			<li>
@@ -250,13 +258,16 @@
 		  </ul>
 		</div>    
 		<div class="btn-group">
-		  <label class="btn btn-default ng-scope" title="Align Text Left">
+		  <label class="btn btn-default ng-scope" title="Align Text Left"
+			ng-click="align('left')"  ng-class="{'active': comment.textAlign == 'left'}">
 			<i class="fa fa-align-left"></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" title="Align Text Center">
+		  <label type="button" class="btn btn-default ng-scope" title="Align Text Center"
+			ng-click="align('center')"  ng-class="{'active': comment.textAlign == 'center'}">
 			<i class="fa fa-align-center"></i>
 		  </label>
-		  <label type="button" class="btn btn-default ng-scope" title="Align Text Right">
+		  <label type="button" class="btn btn-default ng-scope" title="Align Text Right"
+			ng-click="align('right')"  ng-class="{'active': comment.textAlign == 'right'}">
 			<i class="fa fa-align-right"></i>
 		  </label>
 		</div>
@@ -267,7 +278,7 @@
 		<div id="comment" title="Drag me to relocate this text. Double click to edit." 
 			ngdraggableresizable ngresizeStop="resized(width, height)"
 			style=";min-height:16px;">
-			<span ng-hide="editingComment" ng-click="startEdit()" 
+			<div  ng-click="startEdit()" 
 			style="	font-family:{{comment.fontFamily}}; 
 					font-size:{{comment.fontSize}}; 
 					font-weight:{{comment.fontWeight}}; 
@@ -276,18 +287,11 @@
 					color:{{comment.color}}; 
 					background-color:{{comment.backgroundColor}};
 					text-align:{{comment.textAlign}};min-height:16px;"
-			>{{comment.text}}</span>
+			>{{comment.text}}</div>
 						
 			<input type="text" class="form-control" ng-model="comment.text" 
 					ng-show="editingComment" ng-blur="endEdit()"
-					style="	font-family:{{comment.fontFamily}}; 
-					font-size:{{comment.fontSize}}; 
-					font-weight:{{comment.fontWeight}}; 
-					font-style:{{comment.fontStyle}}; 
-					text-decoration:{{comment.textDecoration}}; 
-					color:{{comment.color}}; 
-					background-color:{{comment.backgroundColor}};
-					text-align:{{comment.textAlign}}; min-height:16px;"/>				
+					style=" min-height:16px;"/>				
 		</div>
 	</div>
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">

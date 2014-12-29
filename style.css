@@ -118,6 +118,22 @@ width:100%;
 	font-size:1.25em;
     width: 50%;
 }
+.dropdown-menu > li > span {
+display: block;
+padding: 3px 20px;
+clear: both;
+font-weight: normal;
+line-height: 1;
+color: #333;
+white-space: nowrap;
+cursor:pointer;
+}
+.dropdown-menu > li > span:hover {
+	background-color: #428bca;
+}
+.red{
+	background-color: red;
+}
 /*-----------------------------------------------------------*/
 .search{
   margin-top:15px;
@@ -267,17 +283,4 @@ height:325px;*/
 #spawnQuote .hoverOver
 {
 	border:1px dashed;
-}
-.dropdown-menu > li > span {
-display: block;
-padding: 3px 20px;
-clear: both;
-font-weight: normal;
-line-height: 1;
-color: #333;
-white-space: nowrap;
-cursor:pointer;
-}
-.dropdown-menu > li > span:hover {
-	background-color: #428bca;
 }
