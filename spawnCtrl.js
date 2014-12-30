@@ -2,7 +2,7 @@
 (function() {
 	  function Comment (id) {
 		this.id = id;
-		this.text = "Click here to add your text ...";
+		this.text = "Double click here to change text ...";
 		this.position =  {
 			align:"bottom",
 			x:0,
@@ -14,32 +14,18 @@
 		this.fontSize =  "10pt";
 		this.fontWeight =  "bold";
 		this.textDecoration =  "none";
-		this.fontStyle = "italic";
-		this.textAlign =  "center";		
+		this.fontStyle = "normal";
+		this.textAlign =  "center";	
+		this.dropped = false;
+		this.selected = false;
 	}
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
 		
-		var comment1 = new Comment(1);
-		var comments = [comment1];
+		var intialComment = new Comment(0);
+		$scope.comments = [intialComment];
 		$scope.editingComment=false;
-		$scope.comment = comments[0];/*{
-			id:1,
-			text:"Click here to add your text ...",
-			position: {
-				align:"bottom",
-				x:0,
-				y:0
-			},
-			color:"black",
-			backgroundColor:"none",
-			fontFamily:"Arial",			
-			fontSize: "10pt",
-			fontWeight: "bold",
-			textDecoration: "none",
-			fontStyle:"italic",
-			textAlign: "center"			
-		}*/
-		
+		$scope.comment = $scope.comments[0];
+		$scope.selectedCommentId = 0;
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
 				$scope.seedImage=sharedDataService.data.seedImage;								
@@ -61,8 +47,15 @@
 		$scope.reset = function(){
 			dialog.close("Reset");		
 		};
-		$scope.startEdit = function(){
+		$scope.selectComment = function(id){			
+			$scope.comment = $scope.comments[id];
+			$scope.selectedCommentId = id;
+			angular.element('#comment').tooltip('destroy');			
+		};
+		$scope.startEdit = function(id){
 			$scope.editingComment = true;	
+			$scope.comment = $scope.comments[id];
+			$scope.selectedCommentId = id;
 			angular.element('#comment').tooltip('destroy');			
 		};
 		$scope.endEdit = function(){
@@ -103,7 +96,9 @@
 		$scope.align = function(alignment){
 			$scope.comment.textAlign = alignment;
 		};
-		
+		$scope.addComment = function(){			
+			$scope.comments.push(new Comment($scope.comments.length));
+		};
 		$timeout(function(){
 			angular.element('#comment').tooltip({placement: 'top',trigger: 'manual'}).tooltip('show');
 		}, 1000);		

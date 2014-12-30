@@ -256,12 +256,15 @@ height:325px;*/
  {
 	cursor: move;
 	padding:5px;
+	
  }
  #spawnQuote #comment:hover
  {
-	color: #fff;
-	background-color: #428bca;
-	border-color: #357ebd;
+	border:1px dashed;
+ }
+ #spawnQuote .selected
+ {
+	
  }
  #spawnQuote .ui-draggable-dragging
  {

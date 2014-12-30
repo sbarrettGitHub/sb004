@@ -285,23 +285,25 @@
 	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
 			ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
 			onclick="event.stopPropagation();">
-		<div id="comment" title="Click on the text below to edit. Then drag it onto the image." 
-			ngdraggableresizable ngresizeStop="resized(width, height)" ngdragstart="startDrag()"
+		<div id="comment" title="Double click on the text below to edit. Then drag it onto the image." 
+			ngdraggableresizable 
+			ngresizeStop="resized(width, height)" ngdragstart="startDrag(com.id)" ng-repeat="com in comments" ng-class="{'selected': selectedCommentId==com.id}"
+			data-cid="{{com.id}}"
 			style=";min-height:16px;">
-			<div class="dropComment" ng-show="editingComment" ng-click="dropComment()"><span class="fa fa-times"></span></div>
-			<div  ng-click="startEdit()" 
-			style="	font-family:{{comment.fontFamily}}; 
-					font-size:{{comment.fontSize}}; 
-					font-weight:{{comment.fontWeight}}; 
-					font-style:{{comment.fontStyle}}; 
-					text-decoration:{{comment.textDecoration}}; 
-					color:{{comment.color}}; 
-					background-color:{{comment.backgroundColor}};
-					text-align:{{comment.textAlign}};min-height:16px;"
-			>{{comment.text}}</div>
+			<div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="dropComment(com.id)"><span class="fa fa-times"></span></div>
+			<div ng-dblclick="startEdit(com.id)" ng-click="selectComment(com.id)"
+				style="	font-family:{{comments[com.id].fontFamily}}; 
+					font-size:{{comments[com.id].fontSize}}; 
+					font-weight:{{comments[com.id].fontWeight}}; 
+					font-style:{{comments[com.id].fontStyle}}; 
+					text-decoration:{{comments[com.id].textDecoration}}; 
+					color:{{comments[com.id].color}}; 
+					background-color:{{comments[com.id].backgroundColor}};
+					text-align:{{comments[com.id].textAlign}};min-height:16px;"
+			>{{comments[com.id].text}}</div>
 					
 		<input type="text" class="form-control" ng-model="comment.text" 
-				ng-show="editingComment" ng-blur="endEdit()"
+				ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
 				style=" min-height:16px;"/>				
 		</div>
 	</div>
@@ -309,6 +311,7 @@
 		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
 		<input type="button" value="Start Again" ng-click="startAgain()" title="Begin again with a new image"/>
 		<input type="button" value="Reset Text" ng-click="reset()" title="Revert the text to its original state"/>
+		<input type="button" value="Add Text" ng-click="addComment()" title="Add new comment"/>
 		<input type="button" value="Procced" ng-click="publish()" title="Move on to the publish page with this Meme"/>
 	</div>	
 </div>
