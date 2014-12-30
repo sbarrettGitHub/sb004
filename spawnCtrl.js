@@ -2,7 +2,7 @@
 (function() {
 	  function Comment (id) {
 		this.id = id;
-		this.text = "Double click here to change text ...";
+		this.text = "Double click here to edit text ...";
 		this.position =  {
 			align:"bottom",
 			x:0,
