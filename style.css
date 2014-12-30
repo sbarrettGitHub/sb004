@@ -43,6 +43,17 @@ background-color: #FEFEFE;
 	background-color: darkgrey;
 	color:white;
 }
+.dropComment{
+	float: right;
+	margin-top: -20px;
+	color:darkgrey;
+	cursor: pointer;
+	font-size: 1.5em;
+}
+.dropComment span:hover{
+	background-color: darkgrey;
+	color:white;
+}
 .quote{
   width:230px;
   float:left;
@@ -264,10 +275,6 @@ height:325px;*/
 	margin-left:auto;
 	width:450px;
  }
-#spawnQuote #comment span{
-	min-height:32px;
-	min-width:32px;
-}
 #spawnQuote #toolbar
 {
 	margin-right:auto;

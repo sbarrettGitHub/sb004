@@ -1,9 +1,29 @@
 'use strict';
 (function() {
-  
+	  function Comment (id) {
+		this.id = id;
+		this.text = "Click here to add your text ...";
+		this.position =  {
+			align:"bottom",
+			x:0,
+			y:0
+		};
+		this.color = "black";
+		this.backgroundColor = "none";
+		this.fontFamily = "Arial";			
+		this.fontSize =  "10pt";
+		this.fontWeight =  "bold";
+		this.textDecoration =  "none";
+		this.fontStyle = "italic";
+		this.textAlign =  "center";		
+	}
 	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
+		
+		var comment1 = new Comment(1);
+		var comments = [comment1];
 		$scope.editingComment=false;
-		$scope.comment = {
+		$scope.comment = comments[0];/*{
+			id:1,
 			text:"Click here to add your text ...",
 			position: {
 				align:"bottom",
@@ -18,7 +38,8 @@
 			textDecoration: "none",
 			fontStyle:"italic",
 			textAlign: "center"			
-		}
+		}*/
+		
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
 				$scope.seedImage=sharedDataService.data.seedImage;								
@@ -46,6 +67,7 @@
 		};
 		$scope.endEdit = function(){
 			$scope.editingComment = false;
+			angular.element('#comment').tooltip('destroy');
 		};
 		$scope.startDrag = function(){
 			angular.element('#comment').tooltip('destroy');			

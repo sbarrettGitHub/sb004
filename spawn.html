@@ -288,6 +288,7 @@
 		<div id="comment" title="Click on the text below to edit. Then drag it onto the image." 
 			ngdraggableresizable ngresizeStop="resized(width, height)" ngdragstart="startDrag()"
 			style=";min-height:16px;">
+			<div class="dropComment" ng-show="editingComment" ng-click="dropComment()"><span class="fa fa-times"></span></div>
 			<div  ng-click="startEdit()" 
 			style="	font-family:{{comment.fontFamily}}; 
 					font-size:{{comment.fontSize}}; 
