@@ -1,8 +1,9 @@
 'use strict';
 (function() {
-	  function Comment (id) {
+	var initialText = "Double click here to edit text ...";
+	function Comment (id) {
 		this.id = id;
-		this.text = "Double click here to edit text ...";
+		this.text = initialText;
 		this.position =  {
 			align:"bottom",
 			x:0,
@@ -13,19 +14,21 @@
 		this.fontFamily = "Arial";			
 		this.fontSize =  "10pt";
 		this.fontWeight =  "bold";
-		this.textDecoration =  "none";
+		this.textDecoration = "none";
 		this.fontStyle = "normal";
 		this.textAlign =  "center";	
 		this.dropped = false;
 		this.selected = false;
+		this.textShadow = "none";
 	}
-	var spawnCtrl = function($scope, $location,$rootScope,$timeout, dialog, sharedDataService) {
+	var spawnCtrl = function($scope, $location,$rootScope,$timeout,$window, dialog, sharedDataService) {
 		
 		var intialComment = new Comment(0);
 		$scope.comments = [intialComment];
 		$scope.editingComment=false;
 		$scope.comment = $scope.comments[0];
 		$scope.selectedCommentId = 0;
+		
 		if(sharedDataService.data.seedImage){
 			if(!sharedDataService.data.seedImage.id){
 				$scope.seedImage=sharedDataService.data.seedImage;								
@@ -38,6 +41,8 @@
 				}
 			}
 		}
+		
+		/*Control buttons*/
 		$scope.closeMe = function(){
 			dialog.close(false);
 		};
@@ -47,6 +52,11 @@
 		$scope.reset = function(){
 			dialog.close("Reset");		
 		};
+		$scope.addComment = function(){			
+			$scope.comments.push(new Comment($scope.comments.length));
+		};
+		
+		/*Drag, drop, Edit & delete*/
 		$scope.selectComment = function(id){			
 			$scope.comment = $scope.comments[id];
 			$scope.selectedCommentId = id;
@@ -72,18 +82,16 @@
 		$scope.out=function(el, target){
 			target.removeClass("hoverOver");
 		};
-		$scope.fontSize = function(size){
-			$scope.comment.fontSize = size + "pt";
+		$scope.dropComment=function(el, target){
+			if($scope.comment.text != initialText){
+				if(!$window.confirm("Removing this text will discard your changes. Are you sure you wish to continue?")){
+					return;
+				}
+			}
+			$scope.endEdit();
+			$scope.comment.dropped = true;
 		};
-		$scope.backColor = function(color){
-			$scope.comment.backgroundColor = color;
-		};
-		$scope.color = function(color){
-			$scope.comment.color = color;
-		};		
-		$scope.fontFamily = function(fontFamily){
-			$scope.comment.fontFamily = fontFamily;
-		};
+		/*Toolbar*/
 		$scope.bold = function(){
 			$scope.comment.fontWeight = $scope.comment.fontWeight == "bold"?"normal":"bold";
 		};
@@ -93,18 +101,31 @@
 		$scope.underline = function(){
 			$scope.comment.textDecoration = $scope.comment.textDecoration == "underline"?"none":"underline";
 		};
+		$scope.fontFamily = function(fontFamily){
+			$scope.comment.fontFamily = fontFamily;
+		};
+		$scope.fontSize = function(size){
+			$scope.comment.fontSize = size + "pt";
+		};
+		$scope.backColor = function(color){
+			$scope.comment.backgroundColor = color;
+		};
+		$scope.color = function(color){
+			$scope.comment.color = color;
+		};	
+		$scope.textShadow = function(textShadow){
+			$scope.comment.textShadow = textShadow;
+		};
 		$scope.align = function(alignment){
 			$scope.comment.textAlign = alignment;
 		};
-		$scope.addComment = function(){			
-			$scope.comments.push(new Comment($scope.comments.length));
-		};
+
 		$timeout(function(){
 			angular.element('#comment').tooltip({placement: 'top',trigger: 'manual'}).tooltip('show');
 		}, 1000);		
 	}
   
   // Register the controller
-  app.controller('spawnCtrl', ["$scope","$location","$rootScope","$timeout", "dialog", "sharedDataService", spawnCtrl]);
+  app.controller('spawnCtrl', ["$scope","$location","$rootScope","$timeout","$window", "dialog", "sharedDataService", spawnCtrl]);
 
 })();

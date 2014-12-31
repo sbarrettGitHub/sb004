@@ -30,6 +30,7 @@ background-color: #FEFEFE;
 .hide {
     display: none;
 }
+
 .closeMe
 {
 	float: right;
@@ -40,7 +41,11 @@ background-color: #FEFEFE;
 	font-size: 1.25em;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
-.closeMe span:hover{
+.closeIcon {
+	padding-left:2px;
+	padding-right:2px;
+}
+.closeIcon div:hover, .closeIcon span:hover{
 	background-color: darkgrey;
 	color:white;
 }
@@ -151,7 +156,18 @@ cursor:pointer;
 .dropdown-menu > li > span:hover {
 	background-color: #428bca;
 }
+.btnCollection{
+margin-left:1px !important;
+}
+.focus
+{
+  border-color: #66afe9;
+  outline-style: none;
+  outline-color: invert;
+  outline-width: 0;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 
+}
 /*-----------------------------------------------------------*/
 .search{
   margin-top:15px;
@@ -263,6 +279,7 @@ height:325px;*/
  #spawnQuote #comment:hover
  {
 	border:1px dashed;
+	padding:4px;
  }
  #spawnQuote .selected
  {
@@ -291,6 +308,7 @@ height:325px;*/
 	padding-bottom:2px;
 	padding-left:8px;
 	padding-right:8px;
+	height:28px;
 }
 #spawnQuote .colorBar{
   width:150px;
@@ -300,8 +318,4 @@ height:325px;*/
 #spawnQuote .hoverOver
 {
 	border:1px dashed;
-}
-#spawnQuote .btn-group+.btn-group{
-
-margin-left:1px ;
 }

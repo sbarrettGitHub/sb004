@@ -3,7 +3,7 @@
 		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
 			<div class="heading">
 				<h3>To add a meme first select an image...</h3>	
-				<div class="closeMe"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+				<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 			</div>	
 			<div class="option" >
 				<div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
@@ -36,7 +36,7 @@
 		<div id="quoteImagePreview" ng-hide="image==null">
 			<div class="heading">
 				<h3>Would you like to proceed with this image?</h3>
-				<div class="closeMe" ngclick="closeMe()"><span class="fa fa-times"></span></div>
+				<div class="closeMe closeIcon" ngclick="closeMe()"><span class="fa fa-times"></span></div>
 			</div>
 			<div id="imageContainer" class="imageContainer" >
 				<img id="imagePreview" ng-src={{image}} />
