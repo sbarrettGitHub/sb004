@@ -1,0 +1,42 @@
+<div id="spawnQuote" ng-click="endEdit()">
+	<div class="heading">		
+		<h3>Publish your new meme</h3>		
+		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+	</div>	
+
+		<div id="comment" title="Double click on the text below to edit. To move the text just drag it." 
+			ngdraggableresizable 
+			ng-hide="comments[com.id].dropped" ngresizeStop="resized(width, height)" ngdragstart="startDrag(com.id)" ng-repeat="com in comments" ng-class="{'focus': editingComment && selectedCommentId==com.id}"
+			data-cid="{{com.id}}"
+			style=";min-height:16px;">
+			<div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
+				<div class="closeIcon" title="Click here to remove this piece of text from the meme. You can add more text by clicking the Add More Text button.">
+					<span class="fa fa-times closeIcon"></span>
+				</div>
+			</div>
+			<div ng-dblclick="startEdit(com.id)" ng-click="selectComment(com.id)"
+				style="	
+					font-family:{{comments[com.id].fontFamily}}; 
+					font-size:{{comments[com.id].fontSize}}; 
+					font-weight:{{comments[com.id].fontWeight}}; 
+					font-style:{{comments[com.id].fontStyle}}; 
+					text-decoration:{{comments[com.id].textDecoration}}; 
+					color:{{comments[com.id].color}}; 
+					background-color:{{comments[com.id].backgroundColor}};
+					text-align:{{comments[com.id].textAlign}};
+					text-shadow: -1px 0 {{comments[com.id].textShadow}}, 0 1px {{comments[com.id].textShadow}}, 1px 0 {{comments[com.id].textShadow}}, 0 -1px {{comments[com.id].textShadow}};
+					min-height:16px;"
+			>{{comments[com.id].text}}</div>
+					
+		<input type="text" class="form-control" ng-model="comment.text" 
+				ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
+				style=" min-height:16px;"/>				
+		</div>
+	</div>
+	<div class="buttons">				
+		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
+		<input type="button" value="Start Again" ng-click="startAgain()" title="Begin again with a different image. This will discard all your changes!"/>
+		<input type="button" value="Return to Meme" ng-click="back()" title="Return to the page where you can update the text of the Meme."/>		
+		<input type="button" value="Publish" ng-click="proceed()" title="Move on to the publish page with this Meme"/>
+	</div>	
+</div>

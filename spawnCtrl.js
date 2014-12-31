@@ -54,8 +54,10 @@
 		};
 		$scope.addComment = function(){			
 			$scope.comments.push(new Comment($scope.comments.length));
+		};		
+		$scope.proceed = function(){
+			dialog.close("Proceed");
 		};
-		
 		/*Drag, drop, resize, Edit & delete*/
 		$scope.selectComment = function(id){			
 			$scope.comment = $scope.comments[id];
@@ -135,7 +137,7 @@
 		$scope.align = function(alignment){
 			$scope.comment.textAlign = alignment;
 		};
-
+		
 		$timeout(function(){
 			angular.element('#comment').tooltip({placement: 'top',trigger: 'manual'}).tooltip('show');
 		}, 1000);		

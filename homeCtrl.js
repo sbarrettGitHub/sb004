@@ -13,7 +13,13 @@
 		  templateUrl: "spawn.html",
 		  controller: "spawnCtrl"
 		});
-		
+	var publishDialog = $dialog.dialog({
+		  backdrop: true,
+		  keyboard: true,
+		  backdropClick: false,
+		  templateUrl: "publish.html",
+		  controller: "publishCtrl"
+		});	
     $scope.addNewQuote = function(){
 		//$location.path("new");
 		angular.element("#view").addClass("blurry");
@@ -47,7 +53,22 @@
 				if(action=="Reset"){
 					$scope.spawn();
 					return;
-				}						
+				}
+				if(action=="Proceed"){
+					$scope.publish();
+					return;
+				}					
+			}	
+			angular.element("#view").removeClass("blurry");		
+		});
+	}
+	$scope.publish = function(){
+		publishDialog.open().then(function(action) {
+			if(action){
+				if(action=="StartAgain"){
+					$scope.addNewQuote();
+					return;
+				}								
 			}	
 			angular.element("#view").removeClass("blurry");		
 		});

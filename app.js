@@ -12,6 +12,9 @@ app.config(['$routeProvider',
       }).when('/spawn/:id', {
         templateUrl: 'spawn.html',
         controller: 'spawnCtrl'
+      }).when('/publish/:id', {
+        templateUrl: 'publish.html',
+        controller: 'publishCtrl'
       }).
       otherwise({
         redirectTo: '/home'
