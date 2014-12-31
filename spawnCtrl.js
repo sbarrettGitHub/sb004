@@ -56,7 +56,7 @@
 			$scope.comments.push(new Comment($scope.comments.length));
 		};
 		
-		/*Drag, drop, Edit & delete*/
+		/*Drag, drop, resize, Edit & delete*/
 		$scope.selectComment = function(id){			
 			$scope.comment = $scope.comments[id];
 			$scope.selectedCommentId = id;
@@ -82,7 +82,23 @@
 		$scope.out=function(el, target){
 			target.removeClass("hoverOver");
 		};
-		$scope.dropComment=function(el, target){
+		$scope.dropped=function(left,top,relLeft,relTop,el){
+			var x= relLeft;
+			$scope.comment.position =  {
+				align:"none",
+				x:relLeft,
+				y:relTop
+			};
+		};		
+		$scope.alignBottom =function(left,top,relLeft,relTop,el){
+			var x= relLeft;
+			$scope.comment.position =  {
+				align:"bottom",
+				x:0,
+				y:0
+			};
+		};
+		$scope.deleteComment=function(el, target){
 			if($scope.comment.text != initialText){
 				if(!$window.confirm("Removing this text will discard your changes. Are you sure you wish to continue?")){
 					return;

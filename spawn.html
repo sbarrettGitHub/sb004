@@ -369,19 +369,19 @@
 
 	</div>
 	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
-		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relRight,el)"
+		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
 
 	</div>
 	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
-			ngdroppable ngdrop="alignBottom(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
+			ngdroppable ngdrop="alignBottom(left,top,relLeft,relTop,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
 			onclick="event.stopPropagation();">
 		<div id="comment" title="Double click on the text below to edit. To move the text just drag it." 
 			ngdraggableresizable 
 			ng-hide="comments[com.id].dropped" ngresizeStop="resized(width, height)" ngdragstart="startDrag(com.id)" ng-repeat="com in comments" ng-class="{'focus': editingComment && selectedCommentId==com.id}"
 			data-cid="{{com.id}}"
 			style=";min-height:16px;">
-			<div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="dropComment(com.id)">
+			<div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
 				<div class="closeIcon" title="Click here to remove this piece of text from the meme. You can add more text by clicking the Add More Text button.">
 					<span class="fa fa-times closeIcon"></span>
 				</div>
