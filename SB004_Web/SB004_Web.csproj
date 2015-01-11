@@ -112,9 +112,11 @@
     </Compile>
     <Compile Include="Controllers\MemeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SeedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Seed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

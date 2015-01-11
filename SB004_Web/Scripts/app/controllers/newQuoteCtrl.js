@@ -1,7 +1,7 @@
 'use strict';
 (function() {
 
-  var newQuoteCtrl = function($scope, $timeout, $location, fileReader, dialog, sharedDataService) {
+    var newQuoteCtrl = function($scope, $timeout, $location,$http, fileReader, dialog, sharedDataService) {
 	$scope.image = null;
 	$scope.imageFileName = null;
 	$scope.file = null;
@@ -39,7 +39,15 @@
 	};
 	
 	$scope.proceed = function () {
-		dialog.close(true);
+	    $http.post('/api/Seed', { id: null, image:$scope.image}).
+        success(function (data, status, headers, config) {
+            dialog.close(true);
+        }).
+        error(function (data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+		
 	};
 	$scope.closeMe = function(){
 		dialog.close(false);
@@ -66,6 +74,6 @@
   }
 
   // Register the controller
-  app.controller('newQuoteCtrl', ["$scope", "$timeout", "$location", "fileReader", "dialog", "sharedDataService", newQuoteCtrl]);
+    app.controller('newQuoteCtrl', ["$scope", "$timeout", "$location", "$http", "fileReader", "dialog", "sharedDataService", newQuoteCtrl]);
 
 })();
