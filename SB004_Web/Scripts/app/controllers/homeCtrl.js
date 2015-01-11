@@ -10,14 +10,14 @@
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
-		  templateUrl: "spawn.html",
+		  templateUrl: "/Scripts/app/views/spawn.html",
 		  controller: "spawnCtrl"
 		});
 	var publishDialog = $dialog.dialog({
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
-		  templateUrl: "publish.html",
+		  templateUrl: "/Scripts/app/views/publish.html",
 		  controller: "publishCtrl"
 		});	
     $scope.addNewQuote = function(){
@@ -27,7 +27,7 @@
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
-		  templateUrl: "newQuote.html",
+		  templateUrl: "/Scripts/app/views/newQuote.html",
 		  controller: "newQuoteCtrl"
 		});
 

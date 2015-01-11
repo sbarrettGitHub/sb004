@@ -4,16 +4,16 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
-        templateUrl: 'home.html',
+        templateUrl: '/Scripts/app/views/home.html',
         controller: 'homeCtrl'
       }).when('/quote/:id', {
-        templateUrl: 'quote.html',
+        templateUrl: 'views/quote.html',
         controller: 'quoteCtrl'
       }).when('/spawn/:id', {
-        templateUrl: 'spawn.html',
+        templateUrl: 'views/spawn.html',
         controller: 'spawnCtrl'
       }).when('/publish/:id', {
-        templateUrl: 'publish.html',
+        templateUrl: 'views/publish.html',
         controller: 'publishCtrl'
       }).
       otherwise({
