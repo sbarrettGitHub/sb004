@@ -21,8 +21,12 @@ namespace SB004.Controllers
         {
             return "value";
         }
-
-        // POST: api/Seed
+        
+        /// <summary>
+        /// POST: api/Seed
+        /// Save the seed image and generate seed id 
+        /// </summary>
+        /// <param name="seed">Seed id</param>
         public void Post([FromBody]Seed seed)
         {
             var s = seed;
