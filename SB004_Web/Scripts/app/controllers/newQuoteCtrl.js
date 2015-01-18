@@ -39,7 +39,13 @@
 	};
 	
 	$scope.proceed = function () {
-	    $http.post('/api/Seed', { id: null, image:$scope.image}).
+	    var imagePreview = angular.element("#imagePreview");
+	    $http.post('/api/Seed', {
+	        id: null,
+	        image: $scope.image,
+	        width: imagePreview.width(),
+	        height: imagePreview.height()
+	    }).
         success(function (data, status, headers, config) {
             dialog.close(true);
         }).

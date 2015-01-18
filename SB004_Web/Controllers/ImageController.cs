@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace SB004.Controllers
@@ -20,8 +21,8 @@ namespace SB004.Controllers
         public HttpResponseMessage Get(int id)
         {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(getImageBytes());
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            result.Content = new ByteArrayContent(getImageBytesFromCache());
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
             return result;
         }
 
@@ -39,7 +40,12 @@ namespace SB004.Controllers
         public void Delete(int id)
         {
         }
-
+        private byte[] getImageBytesFromCache()
+        {
+            byte[] imageBytes = (byte[])HttpContext.Current.Cache["test"];
+           
+            return imageBytes;
+        }
         private byte[] getImageBytes()
         {
             var webClient = new WebClient();

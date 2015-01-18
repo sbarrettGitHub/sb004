@@ -7,11 +7,12 @@ namespace SB004.unit.tests.SeedTests
     public class WhenAddingASeed
     {
         [TestMethod]
-        public void AcceptImageUrlAndReturnSeedId()
+        public void ImageUrlIsAcceptAndSeedIdReturned()
         {
+
         }
         [TestMethod]
-        public void AcceptBase64ImageAndReturnSeedId()
+        public void Base64ImageIsAcceptAndSeedIdReturned()
         {
         }
     }

@@ -5,13 +5,13 @@ using System.Web;
 
 namespace SB004.Business
 {
-    public class IdManager
+    public class IdManager : SB004.Business.IIdManager
     {
-        public string createGuid()
+        public string CreateGuid()
         {
             return Guid.NewGuid().ToString();
         }
-        public string Encode(string decodedGuid) 
+        public string EncodeGuid(string decodedGuid) 
         {
             var guid = new Guid(decodedGuid);
             string enc = Convert.ToBase64String(guid.ToByteArray());
@@ -19,7 +19,7 @@ namespace SB004.Business
             enc = enc.Replace("+", "-");
             return enc.Substring(0, 22);
         }
-        public string Decode(string encodedGuid)
+        public string DecodeGuid(string encodedGuid)
         {
             string encoded = encodedGuid.Replace("_", "/");
             encoded = encoded.Replace("-", "+");

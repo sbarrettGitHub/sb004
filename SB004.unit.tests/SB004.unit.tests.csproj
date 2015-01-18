@@ -50,9 +50,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="IdManager\UnitTest1.cs" />
+    <Compile Include="IdManagerTests\WhenDecodingAnEncodedGuid.cs" />
+    <Compile Include="IdManagerTests\WhenEncodingAGuid.cs" />
+    <Compile Include="IdManagerTests\WhenRequestingAGuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedTests\WhenAddingASeed.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SB004_Web\SB004_Web.csproj">
+      <Project>{f9c95046-1f8b-4ffb-8507-ddd6b12994d4}</Project>
+      <Name>SB004_Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

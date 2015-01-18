@@ -1,16 +1,28 @@
-﻿using System.Web.Http;
+﻿using Microsoft.Practices.Unity;
+using SB004.Business;
+using SB004.Data;
+using System.Web.Http;
 namespace SB004
 {
-  public class WebApiConfig
-  {
-    public static void Register(HttpConfiguration config)
+    public class WebApiConfig
     {
-      config.Routes.MapHttpRoute(
-          name: "DefaultApi",
-          routeTemplate: "api/{controller}/{id}",
-          defaults: new { id = RouteParameter.Optional }
+        public static void Register(HttpConfiguration config)
+        {
+            var container = new UnityContainer();
 
-      );
+            container.RegisterType<IIdManager, IdManager>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDownloader, Downloader>(new HierarchicalLifetimeManager());
+            container.RegisterType<IImageManager, ImageManager>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRepository, Repository>(new HierarchicalLifetimeManager());
+            
+            config.DependencyResolver = new UnityResolver(container);
+            
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+
+            );
+        }
     }
-  }
 }
