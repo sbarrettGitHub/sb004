@@ -50,9 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="IdManagerTests\WhenDecodingAnEncodedGuid.cs" />
-    <Compile Include="IdManagerTests\WhenEncodingAGuid.cs" />
-    <Compile Include="IdManagerTests\WhenRequestingAGuid.cs" />
+    <Compile Include="IdManagerTests\WhenRequestingAnId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedTests\WhenAddingASeed.cs" />
   </ItemGroup>

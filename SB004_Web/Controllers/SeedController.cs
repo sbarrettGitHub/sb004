@@ -12,65 +12,81 @@ using System.Web;
 
 namespace SB004.Controllers
 {
-    public class SeedController : ApiController
+  /// <summary>
+  /// A seed is an image from which an Meme is created. 
+  /// </summary>
+  public class SeedController : ApiController
+  {
+    readonly IRepository repository;
+    readonly IImageManager imageManager;
+    public SeedController(IRepository repository, IImageManager imageManager)
     {
-        IRepository repository;
-        IImageManager imageManager;
-        public SeedController(IRepository repository, IImageManager imageManager)
-        {
-            this.repository = repository;
-            this.imageManager = imageManager;
-        }
-        // GET: api/Seed
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Seed/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        /// <summary>
-        /// POST: api/Seed
-        /// Save the seed image and generate seed id 
-        /// </summary>
-        /// <param name="seed">Seed id</param>
-        public HttpResponseMessage Post([FromBody]SeedModel seedModel)
-        {
-            ISeed seed = new Seed 
-            { 
-                imageUrl = seedModel.image, 
-                sourceImageUrl = seedModel.image, 
-                height = seedModel.height, 
-                width = seedModel.width 
-            };
-
-            // Prime the image
-            seed = imageManager.PrimeSeed(seed);
-
-            HttpContext.Current.Cache.Insert("test", seed.imageData);
-
-            // Save the image
-            seed = repository.AddSeed(seed);
-
-            seedModel.id = seed.id;
-            seedModel.image = seed.imageUrl;
-
-            var response = Request.CreateResponse<SeedModel>(HttpStatusCode.Created, seedModel);
-            response.Headers.Location = new Uri(Request.RequestUri, "/api/seed/" + seed.id);
-            return response;
-        }
-        // PUT: api/Seed/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Seed/5
-        public void Delete(int id)
-        {
-        }
+      this.repository = repository;
+      this.imageManager = imageManager;
     }
+    // GET: api/Seed
+    public IEnumerable<string> Get()
+    {
+      return new string[] { "value1", "value2" };
+    }
+
+    // GET: api/Seed/5
+    public IHttpActionResult Get(string id)
+    {
+      ISeed seed = repository.GetSeed(id);
+      if (seed == null)
+      {
+        return this.NotFound();
+      }
+
+      return this.Ok(seed);
+    }
+
+    /// <summary>
+    /// POST: api/Seed
+    /// Save the seed image and generate seed id . Resuse exisiting seed if already added
+    /// <param name="seedModel">Seed to add</param>
+    /// </summary>
+    public HttpResponseMessage Post([FromBody]SeedModel seedModel)
+    {
+      ISeed seed = new Seed
+      {
+        SourceImageUrl = seedModel.image.IndexOf("http", StringComparison.Ordinal)>=0?seedModel.image:"",
+        Height = seedModel.height,
+        Width = seedModel.width
+      };
+
+      // Get the bytes of the image (Download from URL or load from base 64 data)
+      seed.ImageData = imageManager.GetImageData(seedModel.image);
+
+      // Check if seed already exists by generating a hash and checking against the repository
+      seed.ImageHash = imageManager.ImageHash(seed.ImageData, seedModel.width, seedModel.height);
+
+      // Check this seed image already exists
+      seed.Id = repository.GetSeedIdByHash(seed.ImageHash);
+      
+      // Add the seed if it does not already exist, otherwose continue with the existing seed image
+      if (seed.Id.Length == 0)
+      {
+        // Prime the image
+        seed = imageManager.PrimeSeed(seed);
+        
+        // Save the image
+        seed = repository.AddSeed(seed);
+      }
+
+      var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel { id = seed.Id, image = "/api/image/" + seed.Id });
+      response.Headers.Location = new Uri(Request.RequestUri, "/api/seed/" + seed.Id);
+      return response;
+    }
+    // PUT: api/Seed/5
+    public void Put(int id, [FromBody]string value)
+    {
+    }
+
+    // DELETE: api/Seed/5
+    public void Delete(int id)
+    {
+    }
+  }
 }

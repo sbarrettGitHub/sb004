@@ -1,8 +1,15 @@
-﻿using System;
-namespace SB004.Data
+﻿namespace SB004.Data
 {
-    public interface IRepository
-    {
-        SB004.Domain.ISeed AddSeed(SB004.Domain.ISeed seed);
-    }
+  using SB004.Domain;
+
+  public interface IRepository
+  {
+    ISeed AddSeed(ISeed seed);
+
+    string GetSeedIdByHash(string seedImageHash);
+
+    ISeed GetSeed(string seedId);
+
+    byte[] ImageBytes(string imageId);
+  }
 }
