@@ -105,7 +105,6 @@
     <Content Include="Scripts\app\controllers\homeCtrl.js" />
     <Content Include="Scripts\app\controllers\newQuoteCtrl.js" />
     <Content Include="Scripts\app\controllers\publishCtrl.js" />
-    <Content Include="Scripts\app\controllers\quoteCtrl.js" />
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
     <Content Include="Scripts\app\controllers\spawnCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
@@ -115,7 +114,6 @@
     <Content Include="Scripts\app\views\home.html" />
     <Content Include="Scripts\app\views\newQuote.html" />
     <Content Include="Scripts\app\views\publish.html" />
-    <Content Include="Scripts\app\views\quote.html" />
     <Content Include="Scripts\app\views\spawn.html" />
     <Content Include="Web.config" />
   </ItemGroup>

@@ -6,9 +6,6 @@ app.config(['$routeProvider',
       when('/home', {
         templateUrl: '/Scripts/app/views/home.html',
         controller: 'homeCtrl'
-      }).when('/quote/:id', {
-        templateUrl: 'views/quote.html',
-        controller: 'quoteCtrl'
       }).when('/spawn/:id', {
         templateUrl: 'views/spawn.html',
         controller: 'spawnCtrl'
