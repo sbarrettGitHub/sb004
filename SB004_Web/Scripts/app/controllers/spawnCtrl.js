@@ -30,12 +30,13 @@
 		$scope.selectedCommentId = 0;
 		
 		if(sharedDataService.data.seedImage){
-			if(!sharedDataService.data.seedImage.id){
-				$scope.seedImage=sharedDataService.data.seedImage;								
+			if(sharedDataService.data.seedImage.id){
+                // Get the seed image
+			    $scope.seedImage = sharedDataService.data.seedImage;
 			}else{
 				$scope.seedImage={
 					id:null,
-					image:'f4d493260.jpg',
+					image:'unknown.jpg',
 					width:'auto',
 					height:'auto'
 				}
