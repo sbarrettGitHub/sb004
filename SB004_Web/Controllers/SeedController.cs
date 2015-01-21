@@ -12,6 +12,7 @@ using System.Web;
 
 namespace SB004.Controllers
 {
+
   /// <summary>
   /// A seed is an image from which an Meme is created. 
   /// </summary>
@@ -25,9 +26,9 @@ namespace SB004.Controllers
       this.imageManager = imageManager;
     }
     // GET: api/Seed
-    public IEnumerable<string> Get()
+    public IHttpActionResult Get()
     {
-      return new string[] { "value1", "value2" };
+      return this.NotFound();
     }
 
     // GET: api/Seed/5
@@ -63,16 +64,20 @@ namespace SB004.Controllers
       seed.ImageHash = imageManager.ImageHash(seed.ImageData, seedModel.width, seedModel.height);
 
       // Check this seed image already exists
-      seed.Id = repository.GetSeedIdByHash(seed.ImageHash);
+      var existingSeed = repository.GetSeedByHash(seed.ImageHash);
       
       // Add the seed if it does not already exist, otherwose continue with the existing seed image
-      if (seed.Id.Length == 0)
+      if (existingSeed == null)
       {
         // Prime the image
         seed = imageManager.PrimeSeed(seed);
-        
+
         // Save the image
         seed = repository.AddSeed(seed);
+      }
+      else
+      {
+        seed = existingSeed;
       }
 
       var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel { id = seed.Id, image = "/api/image/" + seed.Id });

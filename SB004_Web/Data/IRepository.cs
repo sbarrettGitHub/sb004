@@ -6,7 +6,7 @@
   {
     ISeed AddSeed(ISeed seed);
 
-    string GetSeedIdByHash(string seedImageHash);
+    ISeed GetSeedByHash(string seedImageHash);
 
     ISeed GetSeed(string seedId);
 

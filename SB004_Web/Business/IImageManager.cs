@@ -8,5 +8,7 @@ namespace SB004.Business
     ISeed PrimeSeed(ISeed seed);
 
     string ImageHash(byte[] imageData, int width, int height);
+
+    string ImageHashCategry(string imageHash);
   }
 }

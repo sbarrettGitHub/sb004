@@ -132,6 +132,17 @@ namespace SB004.Business
       return returnedThumbnail;
     }
 
+    /// <summary>
+    /// Given an image hash categorizes it by size. 
+    /// Simply return the left 3 chars
+    /// </summary>
+    /// <param name="imageHash"></param>
+    /// <returns></returns>
+    public string ImageHashCategry(string imageHash)
+    {
+      return imageHash.Length > 2 ? imageHash.Substring(0, 3) : "0";
+    }
+
     // Resize a Bitmap  
     private Bitmap ResizeImage(Bitmap image, int width, int height)
     {
