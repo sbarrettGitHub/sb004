@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace SB004.unit.tests.IdManagerTests
+﻿namespace SB004.Unit.Tests.IdManagerTests
 {
-  using SB004.Business;
+  using Microsoft.VisualStudio.TestTools.UnitTesting;
+  using SB004.Utilities;
 
   [TestClass]
   public class WhenDeterminingPrefix

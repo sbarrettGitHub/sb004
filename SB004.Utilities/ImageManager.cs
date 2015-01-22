@@ -2,9 +2,9 @@
 using System;
 using System.Drawing;
 using System.IO;
-using SB004.Data;
+
 using SB004.Domain;
-namespace SB004.Business
+namespace SB004.Utilities
 {
   using System.Globalization;
   using System.Security.Cryptography;

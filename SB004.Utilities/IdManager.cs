@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SB004.Business
+namespace SB004.Utilities
 {
     public class IdManager : IIdManager
     {
@@ -67,7 +67,7 @@ namespace SB004.Business
         {
           case "s":
             return IdType.Seed;
-          case "u":
+          case "m":
             return IdType.Meme;
           default:
             return IdType.Unknown;

@@ -1,5 +1,4 @@
-﻿
-namespace SB004.Data
+﻿namespace SB004.Data
 {
   using System.Configuration;
   using System.IO;
@@ -7,7 +6,7 @@ namespace SB004.Data
   using Microsoft.WindowsAzure.Storage;
   using Microsoft.WindowsAzure.Storage.Blob;
   using Microsoft.WindowsAzure.Storage.Table;
-  using SB004.Business;
+  using SB004.Utilities;
   using SB004.Data.Entities;
   using SB004.Domain;
 

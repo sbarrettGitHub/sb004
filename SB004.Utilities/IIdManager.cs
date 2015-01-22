@@ -1,4 +1,4 @@
-﻿namespace SB004.Business
+﻿namespace SB004.Utilities
 {
   using SB004.Domain;
 

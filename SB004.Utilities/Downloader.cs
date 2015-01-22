@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-
-namespace SB004.Data
+﻿namespace SB004.Utilities
 {
-    public class Downloader : SB004.Data.IDownloader
+  using System.Net;
+
+  public class Downloader : IDownloader
     {
         public byte[] getBytes(string url)
         {

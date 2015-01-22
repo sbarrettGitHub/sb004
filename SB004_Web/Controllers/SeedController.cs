@@ -1,4 +1,7 @@
-﻿using SB004.Models;
+﻿namespace SB004.Controllers
+{
+  using SB004.Utilities;
+using SB004.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using SB004.Data;
 using SB004.Domain;
-using SB004.Business;
 using System.Web;
-
-namespace SB004.Controllers
-{
-
   /// <summary>
   /// A seed is an image from which an Meme is created. 
   /// </summary>

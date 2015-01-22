@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SB004</RootNamespace>
-    <AssemblyName>SB004_Web</AssemblyName>
+    <AssemblyName>SB004.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -137,11 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Business\IdManager.cs" />
-    <Compile Include="Business\IIdManager.cs" />
-    <Compile Include="Business\IImageManager.cs" />
-    <Compile Include="Business\ImageManager.cs" />
-    <Compile Include="Data\Downloader.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ImageController.cs">
       <SubType>Code</SubType>
@@ -149,14 +144,7 @@
     <Compile Include="Controllers\MemeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SeedController.cs" />
-    <Compile Include="Data\Entities\SeedEntity.cs" />
-    <Compile Include="Data\Entities\SeedHashEntity.cs" />
-    <Compile Include="Data\IDownloader.cs" />
-    <Compile Include="Data\IRepository.cs" />
-    <Compile Include="Data\Repository.cs" />
-    <Compile Include="Domain\ISeed.cs" />
     <Compile Include="App_Start\UnityResolver.cs" />
-    <Compile Include="Domain\Seed.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -165,6 +153,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Image\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SB004.Data\SB004.Data.csproj">
+      <Project>{0acb081f-1997-45f7-ab42-a7706790dea1}</Project>
+      <Name>SB004.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SB004.Domain\SB004.Domain.csproj">
+      <Project>{2fadaaef-7d05-4ea2-a3fc-568dd5e367f0}</Project>
+      <Name>SB004.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SB004.Utilities\SB004.Utilities.csproj">
+      <Project>{dd714333-70c8-4de7-b3bb-64101165028e}</Project>
+      <Name>SB004.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

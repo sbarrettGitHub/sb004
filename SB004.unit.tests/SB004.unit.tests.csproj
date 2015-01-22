@@ -6,8 +6,8 @@
     <ProjectGuid>{BC028261-AD17-4C81-A691-A5D2E22DC0DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SB004.unit.tests</RootNamespace>
-    <AssemblyName>SB004.unit.tests</AssemblyName>
+    <RootNamespace>SB004.Unit.Tests</RootNamespace>
+    <AssemblyName>SB004.Unit.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -57,9 +57,13 @@
     <Compile Include="SeedTests\WhenAddingASeed.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SB004_Web\SB004_Web.csproj">
+    <ProjectReference Include="..\SB004.Utilities\SB004.Utilities.csproj">
+      <Project>{dd714333-70c8-4de7-b3bb-64101165028e}</Project>
+      <Name>SB004.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SB004_Web\SB004.Web.csproj">
       <Project>{f9c95046-1f8b-4ffb-8507-ddd6b12994d4}</Project>
-      <Name>SB004_Web</Name>
+      <Name>SB004.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

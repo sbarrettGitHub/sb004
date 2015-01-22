@@ -1,10 +1,11 @@
-﻿using Microsoft.Practices.Unity;
-using SB004.Business;
-using SB004.Data;
-using System.Web.Http;
+﻿
 namespace SB004
 {
-    public class WebApiConfig
+  using SB004.Utilities;
+using Microsoft.Practices.Unity;
+using SB004.Data;
+using System.Web.Http;
+  public class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {

@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SB004.Business;
-namespace SB004.unit.tests.IdManagerTests
+﻿namespace SB004.Unit.Tests.IdManagerTests
 {
+  using Microsoft.VisualStudio.TestTools.UnitTesting;
+  using SB004.Utilities;
+
   [TestClass]
   public class WhenRequestingAnId
   {

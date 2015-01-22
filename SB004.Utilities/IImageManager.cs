@@ -1,6 +1,6 @@
 ﻿using SB004.Domain;
 
-namespace SB004.Business
+namespace SB004.Utilities
 {
   public interface IImageManager
   {
