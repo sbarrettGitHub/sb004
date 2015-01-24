@@ -10,6 +10,7 @@ using System.Web.Http;
 namespace SB004.Controllers
 {
   using SB004.Data;
+    using SB004.Domain;
 
   public class ImageController : ApiController
   {
@@ -30,13 +31,12 @@ namespace SB004.Controllers
     public HttpResponseMessage Get(string id)
     {
       HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-
-      byte[] imageData = repository.ImageBytes(id);
-      if (imageData == null)
+      ISeed seed = repository.GetSeed(id);
+      if (seed == null)
       {
         return this.Request.CreateResponse(HttpStatusCode.NotFound, "Invalid ID");
       }
-      result.Content = new ByteArrayContent(imageData);
+      result.Content = new ByteArrayContent(seed.ImageData);
       result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
       return result;
     }

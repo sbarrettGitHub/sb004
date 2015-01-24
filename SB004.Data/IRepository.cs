@@ -10,6 +10,5 @@
 
     ISeed GetSeed(string seedId);
 
-    byte[] ImageBytes(string imageId);
   }
 }

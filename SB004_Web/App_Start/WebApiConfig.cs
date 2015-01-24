@@ -11,7 +11,6 @@ using System.Web.Http;
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IIdManager, IdManager>(new HierarchicalLifetimeManager());
             container.RegisterType<IDownloader, Downloader>(new HierarchicalLifetimeManager());
             container.RegisterType<IImageManager, ImageManager>(new HierarchicalLifetimeManager());
             container.RegisterType<IRepository, Repository>(new HierarchicalLifetimeManager());

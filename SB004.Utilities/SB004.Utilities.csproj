@@ -41,9 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader.cs" />
-    <Compile Include="IdManager.cs" />
     <Compile Include="IDownloader.cs" />
-    <Compile Include="IIdManager.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="ImageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
