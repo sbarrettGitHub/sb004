@@ -10,5 +10,6 @@
 
     ISeed GetSeed(string seedId);
 
+    IMeme AddMeme(IMeme meme);
   }
 }

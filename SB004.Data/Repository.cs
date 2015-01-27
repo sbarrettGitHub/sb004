@@ -16,6 +16,7 @@
         private readonly MongoServer server;
         private readonly MongoDatabase database;
         private readonly MongoCollection<SeedEntity> seedCollection;
+        private readonly MongoCollection<MemeEntity> memeCollection;
 
         public Repository()
         {
@@ -23,10 +24,14 @@
             client = new MongoClient(connectionString);
             server = client.GetServer();
             database = server.GetDatabase(ConfigurationManager.AppSettings["Database"]);
-            seedCollection = database.GetCollection<SeedEntity>("entities");
+            
+            seedCollection = database.GetCollection<SeedEntity>("seed");
             seedCollection.CreateIndex(IndexKeys<SeedEntity>.Ascending(_ => _.ImageHash));
 
+            memeCollection = database.GetCollection<MemeEntity>("meme");
         }
+        #region Seed
+
         /// <summary>
         /// Persist the supplied seed and assign an ID
         /// </summary>
@@ -67,8 +72,23 @@
                 return null;
             }
 
-            return seedEntity.ToISeed();   
+            return seedEntity.ToISeed();
         }
-
+        #endregion
+        
+        #region Meme
+        /// <summary>
+        /// Persist the supplied seed and assign an ID
+        /// </summary>
+        /// <param name="seed"></param>
+        /// <returns></returns>
+        public IMeme AddMeme(IMeme meme)
+        {
+            MemeEntity memeEntity = new MemeEntity(meme);
+            memeCollection.Insert(memeEntity);
+            meme.Id = memeEntity.Id.ToString();
+            return meme;
+        }
+        #endregion
     }
 }
