@@ -121,10 +121,10 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\homeCtrl.js" />
-    <Content Include="Scripts\app\controllers\newQuoteCtrl.js" />
-    <Content Include="Scripts\app\controllers\publishCtrl.js" />
+    <Content Include="Scripts\app\controllers\memeSelectConfirmImageCtrl.js" />
+    <Content Include="Scripts\app\controllers\memePublishAndShareCtrl.js" />
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
-    <Content Include="Scripts\app\controllers\spawnCtrl.js" />
+    <Content Include="Scripts\app\controllers\memeApplyTextCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
     <Content Include="Scripts\app\services\sharedDataService.js" />

@@ -1,7 +1,7 @@
 'use strict';
 (function() {
 
-	var publishCtrl = function($scope, $location,$rootScope,$timeout,$window, dialog, sharedDataService) {
+	var memePublishAndShareCtrl = function($scope, $location,$rootScope,$timeout,$window, dialog, sharedDataService) {
 		
 		/*Control buttons*/
 		$scope.closeMe = function(){
@@ -18,6 +18,6 @@
 	}
   
   // Register the controller
-  app.controller('publishCtrl', ["$scope","$location","$rootScope","$timeout","$window", "dialog", "sharedDataService", publishCtrl]);
+  app.controller('memePublishAndShareCtrl', ["$scope","$location","$rootScope","$timeout","$window", "dialog", "sharedDataService", memePublishAndShareCtrl]);
 
 })();

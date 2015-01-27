@@ -6,32 +6,32 @@
     $scope.searchTerm = "";
     $scope.searchCategory = "";
 	
-	var spawnDialog = $dialog.dialog({
+	var memeApplyTextDialog = $dialog.dialog({
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
 		  templateUrl: "/Scripts/app/views/spawn.html",
-		  controller: "spawnCtrl"
+		  controller: "memeApplyTextCtrl"
 		});
-	var publishDialog = $dialog.dialog({
+	var memePublishAndShareDialog = $dialog.dialog({
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
 		  templateUrl: "/Scripts/app/views/publish.html",
-		  controller: "publishCtrl"
+		  controller: "memePublishAndShareCtrl"
 		});	
-    $scope.addNewQuote = function(){
+    $scope.memeSelectConfirmImage = function(){
 		//$location.path("new");
 		angular.element("#view").addClass("blurry");
-		var newQuoteDialog = $dialog.dialog({
+		var memeSelectConfirmImageDialog = $dialog.dialog({
 		  backdrop: true,
 		  keyboard: true,
 		  backdropClick: false,
 		  templateUrl: "/Scripts/app/views/newQuote.html",
-		  controller: "newQuoteCtrl"
+		  controller: "memeSelectConfirmImageCtrl"
 		});
 
-		newQuoteDialog.open().then(function(proceed) {
+		memeSelectConfirmImageDialog.open().then(function(proceed) {
 			if(!proceed){
 				angular.element("#view").removeClass("blurry");
 				return;
@@ -44,10 +44,10 @@
 		},400);
     }
 	$scope.spawn = function(){
-		spawnDialog.open().then(function(action) {
+		memeApplyTextDialog.open().then(function(action) {
 			if(action){
 				if(action=="StartAgain"){
-					$scope.addNewQuote();
+					$scope.memeSelectConfirmImage();
 					return;
 				}
 				if(action=="Reset"){
@@ -63,10 +63,10 @@
 		});
 	}
 	$scope.publish = function(){
-		publishDialog.open().then(function(action) {
+		memePublishAndShareDialog.open().then(function(action) {
 			if(action){
 				if(action=="StartAgain"){
-					$scope.addNewQuote();
+					$scope.memeSelectConfirmImage();
 					return;
 				}								
 			}	

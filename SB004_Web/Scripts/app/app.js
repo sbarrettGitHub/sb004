@@ -8,10 +8,10 @@ app.config(['$routeProvider',
         controller: 'homeCtrl'
       }).when('/spawn/:id', {
         templateUrl: 'views/spawn.html',
-        controller: 'spawnCtrl'
+        controller: 'memeApplyTextCtrl'
       }).when('/publish/:id', {
         templateUrl: 'views/publish.html',
-        controller: 'publishCtrl'
+        controller: 'memePublishAndShareCtrl'
       }).
       otherwise({
         redirectTo: '/home'
