@@ -1,11 +1,16 @@
 ﻿using System;
 namespace SB004.Domain
 {
-    public class PositionRef : IPositionRef
+  using System.Collections.Generic;
+
+  public class PositionRef : IPositionRef
     {
         public string Align { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Padding { get; set; }
     }
     public class Comment : IComment
     {
@@ -29,6 +34,6 @@ namespace SB004.Domain
         public byte[] ImageData { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
-        public IComment[] Comments { get; set; }
+        public List<IComment> Comments { get; set; }
     }
 }

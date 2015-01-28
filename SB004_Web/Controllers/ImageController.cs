@@ -28,12 +28,12 @@ namespace SB004.Controllers
     public HttpResponseMessage Get(string id)
     {
       HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-      ISeed seed = repository.GetSeed(id);
-      if (seed == null)
+      IMeme meme = repository.GetMeme(id);
+      if (meme == null)
       {
         return this.Request.CreateResponse(HttpStatusCode.NotFound, "Invalid ID");
       }
-      result.Content = new ByteArrayContent(seed.ImageData);
+      result.Content = new ByteArrayContent(meme.ImageData);
       result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
       return result;
     }

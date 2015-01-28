@@ -10,5 +10,7 @@ namespace SB004.Utilities
     string ImageHash(byte[] imageData, int width, int height);
 
     string ImageHashCategry(string imageHash);
+
+    byte[] GenerateMemeImage(IMeme meme, byte[] seedImage);
   }
 }

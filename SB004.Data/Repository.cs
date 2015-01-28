@@ -84,6 +84,22 @@
       meme.Id = memeEntity.Id.ToString();
       return meme;
     }
+    /// <summary>
+    /// Retrieve the meme
+    /// </summary>
+    /// <param name="memeId"></param>
+    /// <returns></returns>
+    public IMeme GetMeme(string memeId)
+    {
+      MemeEntity memeEntity = memeCollection.FindOne(Query<MemeEntity>.EQ(e => e.Id, new ObjectId(memeId)));
+      if (memeEntity == null)
+      {
+        return null;
+      }
+
+      return memeEntity.ToIMeme();
+    }
+
     #endregion
   }
 }

@@ -1,5 +1,7 @@
 ﻿namespace SB004.Controllers
 {
+  using System.Net.Http.Headers;
+
   using SB004.Utilities;
   using SB004.Models;
   using System;
@@ -28,15 +30,17 @@
     }
 
     // GET: api/Seed/5
-    public IHttpActionResult Get(string id)
+    public HttpResponseMessage Get(string id)
     {
+      HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
       ISeed seed = repository.GetSeed(id);
       if (seed == null)
       {
-        return this.NotFound();
+        return this.Request.CreateResponse(HttpStatusCode.NotFound, "Invalid ID");
       }
-
-      return this.Ok(seed);
+      result.Content = new ByteArrayContent(seed.ImageData);
+      result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+      return result;
     }
 
     /// <summary>
@@ -76,7 +80,7 @@
         seed = existingSeed;
       }
 
-      var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel { id = seed.Id, image = "/api/image/" + seed.Id });
+      var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel { id = seed.Id, image = "/api/seed/" + seed.Id });
       response.Headers.Location = new Uri(Request.RequestUri, "/api/seed/" + seed.Id);
       return response;
     }

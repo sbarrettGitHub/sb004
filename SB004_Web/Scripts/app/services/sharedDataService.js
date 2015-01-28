@@ -8,7 +8,10 @@
 				image:null,
 				width:null,
 				height:null
-			}
+			},
+            meme: {
+                
+            }
         };
         
         return {

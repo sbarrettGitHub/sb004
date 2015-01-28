@@ -11,5 +11,7 @@
     ISeed GetSeed(string seedId);
 
     IMeme AddMeme(IMeme meme);
+
+    IMeme GetMeme(string memeId);
   }
 }
