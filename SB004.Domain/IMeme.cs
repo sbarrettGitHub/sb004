@@ -4,8 +4,8 @@ namespace SB004.Domain
     public interface IPositionRef
     {
         string Align { get; set; }
-        int x { get; set; }
-        int y { get; set; }
+        int X { get; set; }
+        int Y { get; set; }
     }
     public interface IComment
     {

@@ -1,16 +1,14 @@
 ﻿namespace SB004.Controllers
 {
   using SB004.Utilities;
-using SB004.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using SB004.Data;
-using SB004.Domain;
-using System.Web;
+  using SB004.Models;
+  using System;
+  using System.Net;
+  using System.Net.Http;
+  using System.Web.Http;
+  using SB004.Data;
+  using SB004.Domain;
+
   /// <summary>
   /// A seed is an image from which an Meme is created. 
   /// </summary>
@@ -50,7 +48,7 @@ using System.Web;
     {
       ISeed seed = new Seed
       {
-        SourceImageUrl = seedModel.image.IndexOf("http", StringComparison.Ordinal)>=0?seedModel.image:"",
+        SourceImageUrl = seedModel.image.IndexOf("http", StringComparison.Ordinal) >= 0 ? seedModel.image : "",
         Height = seedModel.height,
         Width = seedModel.width
       };
@@ -63,7 +61,7 @@ using System.Web;
 
       // Check this seed image already exists
       var existingSeed = repository.GetSeedByHash(seed.ImageHash);
-      
+
       // Add the seed if it does not already exist, otherwose continue with the existing seed image
       if (existingSeed == null)
       {

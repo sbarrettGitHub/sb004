@@ -4,7 +4,7 @@
 
   public class Downloader : IDownloader
     {
-        public byte[] getBytes(string url)
+        public byte[] GetBytes(string url)
         {
             var webClient = new WebClient();
             byte[] imageBytes = webClient.DownloadData(url);

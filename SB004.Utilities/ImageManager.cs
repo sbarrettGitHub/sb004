@@ -31,7 +31,7 @@ namespace SB004.Utilities
       if (image.IndexOf("http", StringComparison.Ordinal) >= 0)
       {
         // Download
-        imageData = downloader.getBytes(image);
+        imageData = downloader.GetBytes(image);
       }
       else
       {

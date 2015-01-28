@@ -2,6 +2,6 @@
 {
   public interface IDownloader
     {
-        byte[] getBytes(string url);
+        byte[] GetBytes(string url);
     }
 }

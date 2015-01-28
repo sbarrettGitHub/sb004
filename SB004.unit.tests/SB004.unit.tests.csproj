@@ -54,16 +54,6 @@
     <Compile Include="SeedTests\WhenAddingASeed.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SB004.Utilities\SB004.Utilities.csproj">
-      <Project>{dd714333-70c8-4de7-b3bb-64101165028e}</Project>
-      <Name>SB004.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SB004_Web\SB004.Web.csproj">
-      <Project>{f9c95046-1f8b-4ffb-8507-ddd6b12994d4}</Project>
-      <Name>SB004.Web</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Choose>
