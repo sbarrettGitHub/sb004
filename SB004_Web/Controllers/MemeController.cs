@@ -11,7 +11,6 @@ namespace SB004.Controllers
   using SB004.Data;
   using SB004.Domain;
   using SB004.Models;
-  using SB004.Utilities;
 
   public class MemeController : ApiController
   {
