@@ -30,5 +30,6 @@
     public string Id { get; set; }
     public string SeedId { get; set; }
     public CommentModel[] Comments { get; set; }
+    public string ImageData { get; set; }
   }
 }

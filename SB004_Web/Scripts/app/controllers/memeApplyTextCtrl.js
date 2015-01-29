@@ -60,20 +60,30 @@
             $scope.comments.push(new Comment($scope.comments.length));
         };
         $scope.proceed = function () {
+            html2canvas(document.getElementById("meme"), {
+                letterRendering: true,
+                onrendered: function (canvas) {
+                    document.body.appendChild(canvas);
+                    var dataURL = canvas.toDataURL("image/png");
 
-            // Save the meme
-            $http.post('/api/Meme', {
-                SeedId: sharedDataService.data.seedImage.id,
-                Comments: $scope.comments
-            }).
-            success(function (data, status, headers, config) {
-                sharedDataService.data.meme = data;
-                dialog.close("Proceed");
-            }).
-            error(function (data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
+                    var memeImageData = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                    // Save the meme
+                    $http.post('/api/Meme', {
+                        SeedId: sharedDataService.data.seedImage.id,
+                        Comments: $scope.comments,
+                        ImageData: memeImageData
+                    }).
+                    success(function (data, status, headers, config) {
+                        sharedDataService.data.meme = data;
+                        dialog.close("Proceed");
+                    }).
+                    error(function (data, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                    });
+                }
             });
+            
             
         };
         /*Drag, drop, resize, Edit & delete*/

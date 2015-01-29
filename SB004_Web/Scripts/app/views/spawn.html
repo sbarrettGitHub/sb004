@@ -368,14 +368,9 @@
 		onclick="event.stopPropagation();">
 
 	</div>
-	<div  class="imageContainer" style="width:{{seedImage.width}}px;">
+	<div id="meme" class="imageContainer" style="width:{{seedImage.width}}px;">
 		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
 				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-
-	</div>
-	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
-			ngdroppable ngdrop="alignBottom(left,top,relLeft,relTop,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
-			onclick="event.stopPropagation();">
 		<div id="comment" title="Double click on the text below to edit. To move the text just drag it." 
 			ngdraggableresizable 
 			ng-hide="comments[com.id].dropped" ngresizeStop="resized(width, height)" ngdragstart="startDrag(com.id)" ng-repeat="com in comments" ng-class="{'focus': editingComment && selectedCommentId==com.id}"
@@ -396,7 +391,7 @@
 					color:{{comments[com.id].color}}; 
 					background-color:{{comments[com.id].backgroundColor}};
 					text-align:{{comments[com.id].textAlign}};
-					text-shadow: -1px 0 {{comments[com.id].textShadow}}, 0 1px {{comments[com.id].textShadow}}, 1px 0 {{comments[com.id].textShadow}}, 0 -1px {{comments[com.id].textShadow}};
+					text-shadow: -1px 1px 2px {{comments[com.id].textShadow}};
 					min-height:16px;"
 			>{{comments[com.id].text}}</div>
 					
@@ -404,6 +399,11 @@
 				ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
 				style=" min-height:16px;"/>				
 		</div>
+	</div>
+	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
+			ngdroppable ngdrop="alignBottom(left,top,relLeft,relTop,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
+			onclick="event.stopPropagation();">
+
 	</div>
 	<div class="buttons">				
 		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>

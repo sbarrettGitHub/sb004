@@ -16,11 +16,9 @@ namespace SB004.Controllers
   public class MemeController : ApiController
   {
     readonly IRepository repository;
-    readonly IImageManager imageManager;
-    public MemeController(IRepository repository, IImageManager imageManager)
+    public MemeController(IRepository repository)
     {
       this.repository = repository;
-      this.imageManager = imageManager;
     }
 
     public HttpResponseMessage Get(string id)
@@ -57,15 +55,10 @@ namespace SB004.Controllers
           Text = x.Text,
           TextAlign = x.TextAlign,
           TextDecoration = x.TextDecoration,
-          TextShadow = x.TextShadow
-        }).ToList()
+          TextShadow = x.TextShadow,
+        }).ToList(),
+        ImageData = Convert.FromBase64String(memeModel.ImageData)
       };
-
-      // Retrieve the seed data from the repository
-      ISeed seed = repository.GetSeed(meme.SeedId);
-
-      // Construct the meme image from the seed and meme comments
-      meme.ImageData = imageManager.GenerateMemeImage(meme, seed.ImageData);
 
       // Save the meme with the new image
       meme = repository.AddMeme(meme);
