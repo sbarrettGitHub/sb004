@@ -1,9 +1,11 @@
-<div id="spawnQuote" ng-click="endEdit()">
+<div id="publish">
 	<div class="heading">		
 		<h3>Publish your new meme</h3>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
-
+	<div id="meme" class="imageContainer">
+		<img ng-src="api/image/{{meme.Id}}"/>		
+	</div>
 	<div class="buttons">				
 		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
 		<input type="button" value="Start Again" ng-click="startAgain()" title="Begin again with a different image. This will discard all your changes!"/>

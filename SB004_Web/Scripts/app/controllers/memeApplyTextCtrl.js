@@ -36,6 +36,8 @@
             if (sharedDataService.data.seedImage.id) {
                 // Get the seed image
                 $scope.seedImage = sharedDataService.data.seedImage;
+                $scope.comment.position.width = $scope.seedImage.width;
+                $scope.comment.position.height = $scope.seedImage.height;
             } else {
                 $scope.seedImage = {
                     id: null,
@@ -57,14 +59,21 @@
             dialog.close("Reset");
         };
         $scope.addComment = function () {
-            $scope.comments.push(new Comment($scope.comments.length));
+            // Create new comment 
+            var c = new Comment($scope.comments.length);
+
+            // Position new comment
+            c.position.width = $scope.seedImage.width;
+
+            // Add new comment
+            $scope.comments.push(c);
         };
         $scope.proceed = function () {
             html2canvas(document.getElementById("meme"), {
                 letterRendering: true,
                 onrendered: function (canvas) {
-                    document.body.appendChild(canvas);
-                    var dataURL = canvas.toDataURL("image/png");
+                    
+                    var dataURL = canvas.toDataURL("image/jpg");
 
                     var memeImageData = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
                     // Save the meme
@@ -83,8 +92,8 @@
                     });
                 }
             });
-            
-            
+
+
         };
         /*Drag, drop, resize, Edit & delete*/
         $scope.selectComment = function (id) {

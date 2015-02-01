@@ -3,6 +3,8 @@
 
 	var memePublishAndShareCtrl = function($scope, $location,$rootScope,$timeout,$window, dialog, sharedDataService) {
 		
+		$scope.meme = sharedDataService.data.meme;
+		
 		/*Control buttons*/
 		$scope.closeMe = function(){
 			dialog.close(false);
