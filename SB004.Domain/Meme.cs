@@ -14,6 +14,7 @@ namespace SB004.Domain
     }
     public class Comment : IComment
     {
+        public int Id { get; set; }
         public IPositionRef Position { get; set; }
         public string Text { get; set; }
         public string Color { get; set; }

@@ -12,6 +12,7 @@
   }
   public class CommentModel
   {
+    public int Id { get; set; }
     public PositionRefModel Position;
     public string Text { get; set; }
     public string Color { get; set; }

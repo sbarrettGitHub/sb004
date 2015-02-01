@@ -48,6 +48,24 @@
             }
         }
 
+        // Reapply the comments from the saved meme
+        if (sharedDataService.data.meme && sharedDataService.data.meme.id) {
+            $scope.comments = sharedDataService.data.meme.comments;
+            $timeout(function () {
+                for (var i = 0; i < $scope.comments.length; i++) {
+                   // angular.element("#comment_" + i).position($scope.comments[i].position.x, $scope.comments[i].position.y);
+                    //angular.element("#comment_" + i)[0].style.position = "relative";
+                    //angular.element("#comment_" + i)[0].style.left = $scope.comments[i].position.x + "px";
+                    //angular.element("#comment_" + i)[0].style.top = $scope.comments[i].position.y + "px";
+                    //angular.element("#comment_" + i).parent().css({ position: 'relative' });
+                    angular.element("#comment_" + i).css({ top: $scope.comments[i].position.y, left: $scope.comments[i].position.x, position: 'absolute' });
+                    angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width});
+                }
+            }, 3000);
+            
+            $scope.comment = $scope.comments[0];
+        }
+
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -99,20 +117,20 @@
         $scope.selectComment = function (id) {
             $scope.comment = $scope.comments[id];
             $scope.selectedCommentId = id;
-            angular.element('#comment').tooltip('destroy');
+            angular.element('.comment').tooltip('destroy');
         };
         $scope.startEdit = function (id) {
             $scope.editingComment = true;
             $scope.comment = $scope.comments[id];
             $scope.selectedCommentId = id;
-            angular.element('#comment').tooltip('destroy');
+            angular.element('.comment').tooltip('destroy');
         };
         $scope.endEdit = function () {
             $scope.editingComment = false;
-            angular.element('#comment').tooltip('destroy');
+            angular.element('.comment').tooltip('destroy');
         };
         $scope.startDrag = function () {
-            angular.element('#comment').tooltip('destroy');
+            angular.element('.comment').tooltip('destroy');
         };
 
         $scope.over = function (el, target) {

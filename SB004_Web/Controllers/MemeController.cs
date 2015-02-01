@@ -12,6 +12,8 @@ namespace SB004.Controllers
     using SB004.Domain;
     using SB004.Models;
     using SB004.Utilities;
+    using System.Net.Http.Formatting;
+    using Newtonsoft.Json.Serialization;
 
     public class MemeController : ApiController
     {
@@ -42,6 +44,7 @@ namespace SB004.Controllers
                 SeedId = memeModel.SeedId,
                 Comments = memeModel.Comments.Select(x => (IComment)new Comment
                 {
+                    Id = x.Id,
                     BackgroundColor = x.BackgroundColor,
                     Color = x.Color,
                     FontFamily = x.FontFamily,
@@ -76,7 +79,15 @@ namespace SB004.Controllers
             //save the meme 
             meme = repository.AddMeme(meme);
 
-            var response = Request.CreateResponse(HttpStatusCode.Created, meme);
+            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
+            };
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, meme, jsonMediaTypeFormatter);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
             return response;
         }

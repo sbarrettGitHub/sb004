@@ -15,6 +15,7 @@ namespace SB004.Domain
     }
     public interface IComment
     {
+        int Id { get; set; }
         IPositionRef Position { get; set; }
         string Text { get; set; }
         string Color { get; set; }

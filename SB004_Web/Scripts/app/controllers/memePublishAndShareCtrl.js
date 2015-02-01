@@ -12,6 +12,9 @@
 		$scope.startAgain = function(){
 			dialog.close("StartAgain");
 		};
+		$scope.changeMeme = function(){
+			dialog.close("ChangeMeme");
+		};
 		
 		$scope.proceed = function(){
 			dialog.close("Proceed");

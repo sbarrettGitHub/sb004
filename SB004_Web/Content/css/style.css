@@ -270,7 +270,7 @@ height:325px;*/
 	padding-left: 15px;
 	padding-right: 15px;
  }
- #spawnQuote #comment
+ #spawnQuote .comment
  {
 	cursor: move;
 	padding:5px;

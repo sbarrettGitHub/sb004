@@ -68,7 +68,11 @@
 				if(action=="StartAgain"){
 					$scope.memeSelectConfirmImage();
 					return;
-				}								
+				}
+				if(action=="ChangeMeme"){
+					$scope.spawn();
+					return;
+				}				
 			}	
 			angular.element("#view").removeClass("blurry");		
 		});
