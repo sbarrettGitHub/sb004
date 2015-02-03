@@ -87,29 +87,14 @@
             $scope.comments.push(c);
         };
         $scope.proceed = function () {
-            html2canvas(document.getElementById("meme"), {
-                letterRendering: true,
-                onrendered: function (canvas) {
-                    
-                    var dataURL = canvas.toDataURL("image/jpg");
+            domvs();
+            domvas.toImage(document.getElementById("meme"), function (img) {
 
-                    var memeImageData = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                    // Save the meme
-                    $http.post('/api/Meme', {
-                        SeedId: sharedDataService.data.seedImage.id,
-                        Comments: $scope.comments,
-                        ImageData: memeImageData
-                    }).
-                    success(function (data, status, headers, config) {
-                        sharedDataService.data.meme = data;
-                        dialog.close("Proceed");
-                    }).
-                    error(function (data, status, headers, config) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                    });
-                }
-            });
+                sharedDataService.data.rawImage = img;
+                sharedDataService.data.meme.comments = $scope.comments;
+                dialog.close("Proceed");
+                
+            }, $scope.width, $scope.height);
 
 
         };

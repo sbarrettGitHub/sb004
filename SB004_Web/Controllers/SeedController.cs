@@ -80,7 +80,13 @@
         seed = existingSeed;
       }
 
-      var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel { id = seed.Id, image = "/api/seed/" + seed.Id });
+      var response = Request.CreateResponse(HttpStatusCode.Created, new SeedModel
+      {
+        id = seed.Id,
+        image = "data:image/jpg;base64," + Convert.ToBase64String(seed.ImageData,
+          0,
+          seed.ImageData.Length)
+      });
       response.Headers.Location = new Uri(Request.RequestUri, "/api/seed/" + seed.Id);
       return response;
     }

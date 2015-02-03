@@ -120,6 +120,7 @@
     <Content Include="Scripts\app\views\newQuote.html" />
     <Content Include="Scripts\app\views\publish.html" />
     <Content Include="Scripts\app\views\spawn.html" />
+    <Content Include="Scripts\domvas.js" />
     <Content Include="Scripts\html2canvas.js" />
     <Content Include="Web.config" />
   </ItemGroup>
