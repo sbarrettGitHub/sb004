@@ -27,17 +27,15 @@
     var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService) {
 
         var intialComment = new Comment(0);
-        $scope.comments = [intialComment];
+        
         $scope.editingComment = false;
-        $scope.comment = $scope.comments[0];
+        
         $scope.selectedCommentId = 0;
 
         if (sharedDataService.data.seedImage) {
             if (sharedDataService.data.seedImage.id) {
                 // Get the seed image
                 $scope.seedImage = sharedDataService.data.seedImage;
-                $scope.comment.position.width = $scope.seedImage.width;
-                $scope.comment.position.height = $scope.seedImage.height;
             } else {
                 $scope.seedImage = {
                     id: null,
@@ -49,21 +47,26 @@
         }
 
         // Reapply the comments from the saved meme
-        if (sharedDataService.data.meme && sharedDataService.data.meme.id) {
+        if (sharedDataService.data.meme && sharedDataService.data.meme.comments) {
             $scope.comments = sharedDataService.data.meme.comments;
-            $timeout(function () {
+            $timeout(function() {
                 for (var i = 0; i < $scope.comments.length; i++) {
-                   // angular.element("#comment_" + i).position($scope.comments[i].position.x, $scope.comments[i].position.y);
+                    // angular.element("#comment_" + i).position($scope.comments[i].position.x, $scope.comments[i].position.y);
                     //angular.element("#comment_" + i)[0].style.position = "relative";
                     //angular.element("#comment_" + i)[0].style.left = $scope.comments[i].position.x + "px";
                     //angular.element("#comment_" + i)[0].style.top = $scope.comments[i].position.y + "px";
                     //angular.element("#comment_" + i).parent().css({ position: 'relative' });
                     angular.element("#comment_" + i).css({ top: $scope.comments[i].position.y, left: $scope.comments[i].position.x, position: 'absolute' });
-                    angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width});
+                    angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width });
                 }
             }, 3000);
-            
+
             $scope.comment = $scope.comments[0];
+        } else {
+            $scope.comments = [intialComment];
+            $scope.comment = $scope.comments[0];
+            $scope.comment.position.width = $scope.seedImage.width;
+            $scope.comment.position.height = $scope.seedImage.height;
         }
 
         /*Control buttons*/
@@ -114,8 +117,10 @@
             $scope.editingComment = false;
             angular.element('.comment').tooltip('destroy');
         };
-        $scope.startDrag = function () {
+        $scope.startDrag = function (commentId) {
             angular.element('.comment').tooltip('destroy');
+            $scope.endEdit();
+            $scope.selectComment(commentId);
         };
 
         $scope.over = function (el, target) {
@@ -126,10 +131,11 @@
         };
         $scope.dropped = function (left, top, relLeft, relTop, el) {
             var x = relLeft;
-            $scope.comment.position.align = "none";
-            $scope.comment.position.x = relLeft;
-            $scope.comment.position.y = relTop;
-            
+            $scope.comments[$scope.comment.id].position.align = "none";
+            $scope.comments[$scope.comment.id].position.x = relLeft;
+            $scope.comments[$scope.comment.id].position.y = relTop;
+            console.log("dropped: " + $scope.comment.id + "-" + $scope.comment.position.x + " X " + $scope.comment.position.y);
+
         };
         $scope.alignBottom = function (left, top, relLeft, relTop, el) {
             $scope.comment.position.align = "bottom";
