@@ -46,8 +46,9 @@
 	$scope.spawn = function(){
 		memeApplyTextDialog.open().then(function(action) {
 			if(action){
-				if(action=="StartAgain"){
-					$scope.memeSelectConfirmImage();
+			    if (action == "StartAgain") {
+			        sharedDataService.resetMeme();
+			        $scope.memeSelectConfirmImage();
 					return;
 				}
 				if(action=="Reset"){
@@ -65,7 +66,8 @@
 	$scope.publish = function(){
 		memePublishAndShareDialog.open().then(function(action) {
 			if(action){
-				if(action=="StartAgain"){
+			    if (action == "StartAgain") {
+			        sharedDataService.resetMeme();
 					$scope.memeSelectConfirmImage();
 					return;
 				}

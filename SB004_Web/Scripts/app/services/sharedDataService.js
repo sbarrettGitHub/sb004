@@ -16,7 +16,10 @@
 			
             }
         };
-        
+        var resetMeme = function() {
+            data.meme = {};
+            data.seedImage = {};
+        }
         return {
             data:data
         }

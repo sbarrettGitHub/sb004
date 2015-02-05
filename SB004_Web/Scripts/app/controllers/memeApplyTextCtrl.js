@@ -2,6 +2,7 @@
 (function () {
     var initialText = "Your text goes here ...";
     function Comment(id) {
+        var self = this;
         this.id = id;
         this.text = initialText;
         this.position = {
@@ -23,6 +24,20 @@
         this.dropped = false;
         this.selected = false;
         this.textShadow = "none";
+        this.style = {},
+        this.location = {
+            apply : function() {
+                self.style.position = "absolute";
+                self.style.left = self.position.x + "px";
+                self.style.top = self.position.y + "px";
+            }
+        }
+        this.dimensions = {
+            apply: function () {
+                self.style.width = self.position.width + "px";
+                self.style.height = self.position.height + "px";
+            }
+        }
     }
     var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService) {
 
@@ -51,18 +66,17 @@
             $scope.comments = sharedDataService.data.meme.comments;
             $timeout(function() {
                 for (var i = 0; i < $scope.comments.length; i++) {
-                    // angular.element("#comment_" + i).position($scope.comments[i].position.x, $scope.comments[i].position.y);
-                    //angular.element("#comment_" + i)[0].style.position = "relative";
-                    //angular.element("#comment_" + i)[0].style.left = $scope.comments[i].position.x + "px";
-                    //angular.element("#comment_" + i)[0].style.top = $scope.comments[i].position.y + "px";
-                    //angular.element("#comment_" + i).parent().css({ position: 'relative' });
-                    angular.element("#comment_" + i).css({ top: $scope.comments[i].position.y, left: $scope.comments[i].position.x, position: 'absolute' });
-                    angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width });
+                    $scope.comments[i].location.apply();
+                    $scope.comments[i].dimensions.apply();
+                    //angular.element("#comment_" + i).css({ top: $scope.comments[i].position.y, left: $scope.comments[i].position.x, position: 'absolute' });
+                    //angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width });
                 }
-            }, 3000);
+            }, 500);
 
             $scope.comment = $scope.comments[0];
         } else {
+
+            // Default comment
             $scope.comments = [intialComment];
             $scope.comment = $scope.comments[0];
             $scope.comment.position.width = $scope.seedImage.width;
