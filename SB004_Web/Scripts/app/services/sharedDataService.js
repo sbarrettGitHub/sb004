@@ -21,6 +21,7 @@
             data.seedImage = {};
         }
         return {
+            resetMeme:resetMeme,
             data:data
         }
     };

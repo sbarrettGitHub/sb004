@@ -114,6 +114,7 @@
     <Content Include="Scripts\app\controllers\memeApplyTextCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
+    <Content Include="Scripts\app\services\renderingService.js" />
     <Content Include="Scripts\app\services\sharedDataService.js" />
     <Content Include="Scripts\app\services\upload.js" />
     <Content Include="Scripts\app\views\home.html" />
