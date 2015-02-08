@@ -1,17 +1,18 @@
 'use strict';
 (function () {
 
-    var memePublishAndShareCtrl = function ($scope, $timeout, $http, dialog, sharedDataService) {
+    var memePublishAndShareCtrl = function ($scope, $timeout, $http, dialog, sharedDataService, renderingService) {
 
         // Wait for the view load the render the meme
         $timeout(function () {
-            var canvas = document.getElementById("canvas"),
-            context = canvas.getContext('2d');
-            canvas.width = sharedDataService.data.seedImage.width;
-            canvas.height = sharedDataService.data.seedImage.height;
+            renderingService.render("canvas", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
+            //var canvas = document.getElementById("canvas"),
+            //context = canvas.getContext('2d');
+            //canvas.width = sharedDataService.data.seedImage.width;
+            //canvas.height = sharedDataService.data.seedImage.height;
 
-            // Otherwise, add the image to the canvas
-            context.drawImage(sharedDataService.data.rawImage, 0, 0);
+            //// Otherwise, add the image to the canvas
+            //context.drawImage(sharedDataService.data.rawImage, 0, 0);
         }, 2000);
 
         /*Control buttons*/
@@ -49,6 +50,6 @@
     }
 
     // Register the controller
-    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "dialog", "sharedDataService", memePublishAndShareCtrl]);
+    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "dialog", "sharedDataService", "renderingService", memePublishAndShareCtrl]);
 
 })();

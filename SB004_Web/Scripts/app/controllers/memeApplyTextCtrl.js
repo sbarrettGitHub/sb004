@@ -39,7 +39,7 @@
             }
         }
     }
-    var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService) {
+    var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService, renderingService) {
 
         var intialComment = new Comment(0);
         
@@ -104,14 +104,19 @@
             $scope.comments.push(c);
         };
         $scope.proceed = function () {
-            domvs();
-            domvas.toImage(document.getElementById("meme"), function (img) {
-
+            renderingService.capture("meme", $scope.width, $scope.height, function (img) {
                 sharedDataService.data.rawImage = img;
                 sharedDataService.data.meme.comments = $scope.comments;
                 dialog.close("Proceed");
+            });
+            //domvs();
+            //domvas.toImage(document.getElementById("meme"), function (img) {
+
+            //    sharedDataService.data.rawImage = img;
+            //    sharedDataService.data.meme.comments = $scope.comments;
+            //    dialog.close("Proceed");
                 
-            }, $scope.width, $scope.height);
+            //}, $scope.width, $scope.height);
 
 
         };
@@ -206,6 +211,6 @@
     }
 
     // Register the controller
-    app.controller('memeApplyTextCtrl', ["$scope", "$location", "$rootScope", "$timeout", "$window", "$http", "dialog", "sharedDataService", memeApplyTextCtrl]);
+    app.controller('memeApplyTextCtrl', ["$scope", "$location", "$rootScope", "$timeout", "$window", "$http", "dialog", "sharedDataService", "renderingService", memeApplyTextCtrl]);
 
 })();

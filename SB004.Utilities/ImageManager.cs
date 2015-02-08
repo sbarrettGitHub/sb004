@@ -38,7 +38,7 @@ namespace SB004.Utilities
             else
             {
                 // Not a url. Load the bytes from the base 64 data
-                imageData = Convert.FromBase64String(image);
+                imageData = Convert.FromBase64String(image.Replace("data:image/jpeg;base64,",""));
             }
 
             return imageData;
