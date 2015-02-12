@@ -109,16 +109,6 @@
                 sharedDataService.data.meme.comments = $scope.comments;
                 dialog.close("Proceed");
             });
-            //domvs();
-            //domvas.toImage(document.getElementById("meme"), function (img) {
-
-            //    sharedDataService.data.rawImage = img;
-            //    sharedDataService.data.meme.comments = $scope.comments;
-            //    dialog.close("Proceed");
-                
-            //}, $scope.width, $scope.height);
-
-
         };
         /*Drag, drop, resize, Edit & delete*/
         $scope.selectComment = function (id) {
