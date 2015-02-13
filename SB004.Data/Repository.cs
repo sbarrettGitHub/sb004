@@ -1,8 +1,8 @@
 ﻿namespace SB004.Data
 {
+  using System;
   using System.Configuration;
 
-  using SB004.Data.Entities;
   using SB004.Domain;
   using MongoDB.Bson;
   using MongoDB.Driver;
@@ -10,8 +10,8 @@
 
   public class Repository : IRepository
   {
-    private readonly MongoCollection<SeedEntity> seedCollection;
-    private readonly MongoCollection<MemeEntity> memeCollection;
+    private readonly MongoCollection<Seed> seedCollection;
+    private readonly MongoCollection<Meme> memeCollection;
 
     public Repository()
     {
@@ -20,10 +20,10 @@
       MongoServer server = client.GetServer();
       MongoDatabase database = server.GetDatabase(ConfigurationManager.AppSettings["Database"]);
 
-      seedCollection = database.GetCollection<SeedEntity>("seed");
-      seedCollection.CreateIndex(IndexKeys<SeedEntity>.Ascending(_ => _.ImageHash));
+      seedCollection = database.GetCollection<Seed>("seed");
+      seedCollection.CreateIndex(IndexKeys<Seed>.Ascending(_ => _.ImageHash));
 
-      memeCollection = database.GetCollection<MemeEntity>("meme");
+      memeCollection = database.GetCollection<Meme>("meme");
     }
     #region Seed
 
@@ -34,9 +34,8 @@
     /// <returns></returns>
     public ISeed AddSeed(ISeed seed)
     {
-      SeedEntity seedEntity = new SeedEntity(seed);
-      seedCollection.Insert(seedEntity);
-      seed.Id = seedEntity.Id.ToString();
+      seed.Id = Guid.NewGuid().ToString("N");
+      seedCollection.Insert(seed.ToBsonDocument());
       return seed;
     }
     /// <summary>
@@ -46,13 +45,13 @@
     /// <returns></returns>
     public ISeed GetSeedByHash(string seedImageHash)
     {
-      SeedEntity seedEntity = seedCollection.FindOne(Query<SeedEntity>.EQ(e => e.ImageHash, seedImageHash));
+      ISeed seedEntity = seedCollection.FindOne(Query<Seed>.EQ(e => e.ImageHash, seedImageHash));
       if (seedEntity == null)
       {
         return null;
       }
 
-      return seedEntity.ToISeed();
+      return seedEntity;
     }
     /// <summary>
     /// Retrieve the seed
@@ -61,13 +60,13 @@
     /// <returns></returns>
     public ISeed GetSeed(string seedId)
     {
-      SeedEntity seedEntity = seedCollection.FindOne(Query<SeedEntity>.EQ(e => e.Id, new ObjectId(seedId)));
+      Seed seedEntity = seedCollection.FindOne(Query<Seed>.EQ(e => e.Id, seedId));
       if (seedEntity == null)
       {
         return null;
       }
 
-      return seedEntity.ToISeed();
+      return seedEntity;
     }
     #endregion
 
@@ -79,9 +78,8 @@
     /// <returns></returns>
     public IMeme AddMeme(IMeme meme)
     {
-      MemeEntity memeEntity = new MemeEntity(meme);
-      memeCollection.Insert(memeEntity);
-      meme.Id = memeEntity.Id.ToString();
+      meme.Id = Guid.NewGuid().ToString("N");
+      memeCollection.Insert(meme.ToBsonDocument());
       return meme;
     }
     /// <summary>
@@ -91,13 +89,13 @@
     /// <returns></returns>
     public IMeme GetMeme(string memeId)
     {
-      MemeEntity memeEntity = memeCollection.FindOne(Query<MemeEntity>.EQ(e => e.Id, new ObjectId(memeId)));
+      Meme memeEntity = memeCollection.FindOne(Query<Meme>.EQ(e => e.Id, memeId));
       if (memeEntity == null)
       {
         return null;
       }
 
-      return memeEntity.ToIMeme();
+      return memeEntity;
     }
 
     #endregion
