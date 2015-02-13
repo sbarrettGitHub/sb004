@@ -2,9 +2,8 @@
 (function () {
     var renderingService = function () {
         var $ = angular.element;
-        var renderingEnum = { svg: 1, canvas: 2, other: 0 };
+        var renderingEnum = { svg: 1, image: 2, other: 0 };
         var currentRender;
-        var _canvas;
         function isCanvasSupported() {
             var elem = document.createElement('canvas');
             return !!(elem.getContext && elem.getContext('2d'));
@@ -32,13 +31,11 @@
             } else {
                 // SVG not supported. If  the canvas supported?
                 if (isCanvasSupported()) {
-                    currentRender = renderingEnum.canvas;
+                    currentRender = renderingEnum.image;
                     html2canvas(el, {
                         letterRendering: true,
                         onrendered: function(canvas) {
-
-                            var dataURL = canvas.toDataURL("image/jpg");
-                            callback(dataURL);
+                            callback(canvas.toDataURL("image/jpg"));
                         }
                     });
 
@@ -48,25 +45,20 @@
                 }
             }
         }
-        var render = function (canvasName, width, height, rawImage) {
-            var canvas = document.getElementById(canvasName),
-            context = canvas.getContext('2d');
-            canvas.width = width;
-            canvas.height = height;
-            if (currentRender == renderingEnum.svg ) {
-                
+        var render = function (canvasName, imageName, width, height, rawImage) {
+            
+            if (currentRender == renderingEnum.svg) {
+                $("#" + imageName).remove();
+                var canvas = document.getElementById(canvasName),
+                context = canvas.getContext('2d');
+                canvas.width = width;
+                canvas.height = height;
 
                 // Otherwise, add the image to the canvas
                 context.drawImage(rawImage, 0, 0);
-            } else if(currentRender == renderingEnum.canvas){
-                var img = new Image();
-                img.src = rawImage;
-
-                // when loaded, fire onload callback with actual image node
-                img.onload = function () {
-                    // Otherwise, add the image to the canvas
-                    context.drawImage(img, 0, 0);
-                };
+            } else if (currentRender == renderingEnum.image) {
+                $("#" + canvasName).remove();
+                $("#" + imageName).attr("src", rawImage);
             }
 
 

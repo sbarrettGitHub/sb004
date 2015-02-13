@@ -5,15 +5,8 @@
 
         // Wait for the view load the render the meme
         $timeout(function () {
-            renderingService.render("canvas", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
-            //var canvas = document.getElementById("canvas"),
-            //context = canvas.getContext('2d');
-            //canvas.width = sharedDataService.data.seedImage.width;
-            //canvas.height = sharedDataService.data.seedImage.height;
-
-            //// Otherwise, add the image to the canvas
-            //context.drawImage(sharedDataService.data.rawImage, 0, 0);
-        }, 2000);
+            renderingService.render("canvas","image", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
+        }, 500);
 
         /*Control buttons*/
         $scope.closeMe = function () {
@@ -37,10 +30,10 @@
                 Comments: sharedDataService.data.meme.comments,
                 ImageData: memeImageData
             }).
-            success(function (data, status, headers, config) {
+            success(function (data) {
                 sharedDataService.data.meme = data;
             }).
-            error(function (data, status, headers, config) {
+            error(function () {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
             });
