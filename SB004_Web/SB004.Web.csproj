@@ -112,12 +112,14 @@
     <Content Include="Scripts\app\controllers\memePublishAndShareCtrl.js" />
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
     <Content Include="Scripts\app\controllers\memeApplyTextCtrl.js" />
+    <Content Include="Scripts\app\controllers\securityCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
     <Content Include="Scripts\app\services\renderingService.js" />
     <Content Include="Scripts\app\services\sharedDataService.js" />
     <Content Include="Scripts\app\services\upload.js" />
     <Content Include="Scripts\app\views\home.html" />
+    <Content Include="Scripts\app\views\logIn.html" />
     <Content Include="Scripts\app\views\newQuote.html" />
     <Content Include="Scripts\app\views\publish.html" />
     <Content Include="Scripts\app\views\spawn.html" />
