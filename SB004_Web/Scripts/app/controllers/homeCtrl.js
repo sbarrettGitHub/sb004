@@ -19,7 +19,14 @@
 		  backdropClick: false,
 		  templateUrl: "/Scripts/app/views/publish.html",
 		  controller: "memePublishAndShareCtrl"
-		});	
+	});
+	var loginDialog = $dialog.dialog({
+	    backdrop: true,
+	    keyboard: true,
+	    backdropClick: false,
+	    templateUrl: "/Scripts/app/views/logIn.html",
+	    controller: "logInCtrl"
+	});
     $scope.memeSelectConfirmImage = function(){
 		//$location.path("new");
 		angular.element("#view").addClass("blurry");
@@ -74,10 +81,30 @@
 				if(action=="ChangeMeme"){
 					$scope.spawn();
 					return;
-				}				
+				}
+				if (action == "LogInAndSave") {
+				    $scope.logIn(function () {
+				        alert("Now Save");
+				    }, function () {
+				        $scope.publish();
+				    });
+				    return;
+				}
 			}	
 			angular.element("#view").removeClass("blurry");		
 		});
+	}
+	$scope.logIn = function (callBackSuccess, callBackFail) {
+	    loginDialog.open().then(function (action) {
+	        if (action == "Success") {
+	            callBackSuccess();
+	            return;
+	        }
+	        if (action == "Fail") {
+	            callBackFail();
+	            return;
+	        }
+	    });
 	}
     $rootScope.$on('quoteSearch.complete', function (event, data) {
       

@@ -95,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\LogInWithFacebook.png" />
+    <Content Include="Content\images\LogInWithGoogle.png" />
+    <Content Include="Content\images\LogInWithTwitter.png" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -112,7 +115,7 @@
     <Content Include="Scripts\app\controllers\memePublishAndShareCtrl.js" />
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
     <Content Include="Scripts\app\controllers\memeApplyTextCtrl.js" />
-    <Content Include="Scripts\app\controllers\securityCtrl.js" />
+    <Content Include="Scripts\app\controllers\logInCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
     <Content Include="Scripts\app\services\renderingService.js" />

@@ -25,6 +25,7 @@
             var memeImageData = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
 
             // Save the meme
+            /*
             $http.post('/api/Meme', {
                 SeedId: sharedDataService.data.seedImage.id,
                 Comments: sharedDataService.data.meme.comments,
@@ -36,8 +37,8 @@
             error(function () {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-            });
-            dialog.close("Proceed");
+            });*/
+            dialog.close("LogInAndSave");
         };
 
     }

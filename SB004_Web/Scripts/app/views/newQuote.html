@@ -42,9 +42,10 @@
 				<img id="imagePreview" ng-src={{image}} />
 			</div>
 			<div class="buttons">	
-				<input type="button" value="Close" ng-click="closeMe()"/>			
-				<input type="button" value="Start Again" ng-click="clear()"/>
-				<input type="button" value="Proceed" ng-click="proceed()"/>
+				<input type="button" value="Cancel" ng-click="closeMe()"/>			
+				<input type="button" value="<< Back" ng-click="clear()"/>
+				<input type="button" value="Next >>" ng-click="proceed()"/>
+                <input type="button" value="Publish" disabled="disabled" />
 			</div>
 		</div>		
 	</div>	

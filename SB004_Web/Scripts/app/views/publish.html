@@ -8,9 +8,9 @@
 	    <img id="image"/>
 	</div>
 	<div class="buttons">				
-		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
-		<input type="button" value="Start Again" ng-click="startAgain()" title="Begin again with a different image. This will discard all your changes!"/>
-		<input type="button" value="Return to Meme" ng-click="changeMeme()" title="Return to the page where you can update the text of the Meme."/>		
+		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>		
+		<input type="button" value="<< Back" ng-click="changeMeme()" title="Return to the page where you can update the text of the Meme."/>		
+        <input type="button" value="Next >>"  disabled="disabled" />		
 		<input type="button" value="Publish" ng-click="proceed()" title="Move on to the publish page with this Meme"/>
 	</div>	
 </div>
