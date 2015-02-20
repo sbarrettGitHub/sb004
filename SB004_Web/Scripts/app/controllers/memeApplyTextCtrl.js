@@ -16,14 +16,14 @@
         this.color = "black";
         this.backgroundColor = "none";
         this.fontFamily = "Arial";
-        this.fontSize = "10pt";
+        this.fontSize = "15pt";
         this.fontWeight = "bold";
         this.textDecoration = "none";
         this.fontStyle = "normal";
         this.textAlign = "center";
         this.dropped = false;
         this.selected = false;
-        this.textShadow = "none";
+        this.textShadow = "white";
         this.style = {},
 		this.innerStyle = function(){
 			return {
@@ -43,6 +43,11 @@
                 self.style.position = "absolute";
                 self.style.left = self.position.x + "px";
                 self.style.top = self.position.y + "px";
+            },
+            center : function(width, height) {
+                self.position.x = 0;
+                self.position.width = width;
+                self.position.y = (height - self.position.height) / 2;
             }
         }
         this.dimensions = {
@@ -81,10 +86,8 @@
                 for (var i = 0; i < $scope.comments.length; i++) {
                     $scope.comments[i].location.apply();
                     $scope.comments[i].dimensions.apply();
-                    //angular.element("#comment_" + i).css({ top: $scope.comments[i].position.y, left: $scope.comments[i].position.x, position: 'absolute' });
-                    //angular.element("#comment_" + i).css({ width: $scope.comments[i].position.width });
                 }
-            }, 500);
+            }, 1000);
 
             $scope.comment = $scope.comments[0];
         } else {
@@ -92,8 +95,10 @@
             // Default comment
             $scope.comments = [intialComment];
             $scope.comment = $scope.comments[0];
-            $scope.comment.position.width = $scope.seedImage.width;
-            $scope.comment.position.height = $scope.seedImage.height;
+            $scope.comment.location.center($scope.seedImage.width, $scope.seedImage.height);
+            $scope.comment.location.apply();
+            $scope.comment.dimensions.apply();
+            $scope.editingComment = true;
         }
 
         /*Control buttons*/
