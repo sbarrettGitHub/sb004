@@ -65,6 +65,17 @@
         
         $scope.selectedCommentId = 0;
 
+        $scope.toolbarStyle = function() {
+            if ($scope.comment) {
+                var width = $scope.comment.position.width / 2;
+
+                return {
+                    position: "absolute",
+                    left: ($scope.comment.position.x + width) + "px",
+                    top: ($scope.comment.position.y - 32) + "px"
+                };
+            }
+        }
         if (sharedDataService.data.seedImage) {
             if (sharedDataService.data.seedImage.id) {
                 // Get the seed image
