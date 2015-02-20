@@ -1,4 +1,8 @@
 /* Put your css in here */
+input[type="button"]:disabled{
+border: 1px rgb(221, 221, 221) solid;
+color: lightgrey;
+}
 .blurry
 {
 -webkit-filter: blur(2px);
