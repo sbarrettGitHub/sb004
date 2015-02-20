@@ -1,13 +1,15 @@
-<div id="publish">
-	<div class="heading">		
+<div id="publish" class="dialogPage">
+	<div class="heading dialogHead">		
 		<h3>Publish your new meme</h3>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
-	<div id="meme" class="imageContainer">
-	    <canvas id="canvas"></canvas>
-	    <img id="image"/>
-	</div>
-	<div class="buttons">				
+    <div class="dialogBody">
+        <div id="meme" class="imageContainer">
+            <canvas id="canvas"></canvas>
+            <img id="image" />
+        </div>
+    </div>
+	<div class="buttons dialogFoot">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>		
 		<input type="button" value="<< Back" ng-click="changeMeme()" title="Return to the page where you can update the text of the Meme."/>		
         <input type="button" value="Next >>"  disabled="disabled" />		

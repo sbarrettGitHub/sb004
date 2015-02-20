@@ -244,11 +244,21 @@ height:325px;*/
 }
 
 /*-----------------------------------------------------------*/
+.dialogPage {
+    height:360px;
+    width:560px;
+}
+.dialogHead {
+    height:40px;
+}
+.dialogBody {
+    height:280px;
+}
+.dialogFoot {
+    height:40px;
+}
 #spawnQuote
 {
-	height:340px;
-	width:560px;
-	max-height:340px;
 }
  #spawnQuote .imageContainer
  {

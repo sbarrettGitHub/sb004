@@ -1,54 +1,56 @@
 <div id="newQuote">
-	<div id="quoteImageSelection" class="rounded">
-		<div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
-			<div class="heading">
-				<h3>To add a meme first select an image...</h3>	
-				<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
-			</div>	
-			<div class="option" >
-				<div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>	
-				<div class="optionLabel">Paste a link to an online image</div>
-				<div id="pasteInput" class="optionLabel">
-					<input type="text" ng-model="image" ng-show="image==null" ng-change="imageSet()" placeholder="http://" class="form-control col-md-12"/>
-				</div>			
-			</div>
-			<hr />			
-			<div class="option" ng-show="image==null">
-				<div class="icon">
-					<span class="fa fa-folder-open" ng-show="image==null"></span>
-				</div>
-				<div class="optionLabel">Or browse for a file on your computer</div>
-				<div id="browse" class="optionLabel">
-					<input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important"/>					
-					<div ng-show="loading">Loading...Please wait</div>
-				</div>
-			</div>	
-			<hr/>	
-			<div class="option" id="dropMessage" ng-show="image==null">
-				<div class="icon">
-					<span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
-				</div>
-				<div class="optionLabel">Or drag and drop an image here</div>				
-			</div>			
-			<hr/>	
-						
-		</div>		
-		<div id="quoteImagePreview" ng-hide="image==null">
-			<div class="heading">
-				<h3>Would you like to proceed with this image?</h3>
-				<div class="closeMe closeIcon" ngclick="closeMe()"><span class="fa fa-times"></span></div>
-			</div>
-			<div id="imageContainer" class="imageContainer" >
-				<img id="imagePreview" ng-src={{image}} />
-			</div>
-			<div class="buttons">	
-				<input type="button" value="Cancel" ng-click="closeMe()"/>			
-				<input type="button" value="<< Back" ng-click="clear()"/>
-				<input type="button" value="Next >>" ng-click="proceed()"/>
-                <input type="button" value="Publish" disabled="disabled" />
-			</div>
-		</div>		
-	</div>	
+    <div id="quoteImageSelection" class="rounded">
+        <div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+            <div class="heading">
+                <h3>To add a meme first select an image...</h3>
+                <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+            </div>
+            <div class="option">
+                <div class="icon"><span class="fa fa-clipboard" ng-show="image==null"></span></div>
+                <div class="optionLabel">Paste a link to an online image</div>
+                <div id="pasteInput" class="optionLabel">
+                    <input type="text" ng-model="image" ng-show="image==null" ng-change="imageSet()" placeholder="http://" class="form-control col-md-12" />
+                </div>
+            </div>
+            <hr />
+            <div class="option" ng-show="image==null">
+                <div class="icon">
+                    <span class="fa fa-folder-open" ng-show="image==null"></span>
+                </div>
+                <div class="optionLabel">Or browse for a file on your computer</div>
+                <div id="browse" class="optionLabel">
+                    <input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important" />
+                    <div ng-show="loading">Loading...Please wait</div>
+                </div>
+            </div>
+            <hr />
+            <div class="option" id="dropMessage" ng-show="image==null">
+                <div class="icon">
+                    <span class="glyphicon glyphicon-picture" ng-show="image==null"></span>
+                </div>
+                <div class="optionLabel">Or drag and drop an image here</div>
+            </div>
+            <hr />
 
-	
+        </div>
+        <div id="quoteImagePreview" ng-hide="image==null" class="dialogPage">
+            <div class="heading dialogHead">
+                <h3>Would you like to proceed with this image?</h3>
+                <div class="closeMe closeIcon" ngclick="closeMe()"><span class="fa fa-times"></span></div>
+            </div>
+            <div class="dialogBody">
+                <div id="imageContainer" class="imageContainer">
+                    <img id="imagePreview" ng-src={{image}} />
+                </div>
+            </div>
+            <div class="buttons dialogFoot">
+                <input type="button" value="Cancel" ng-click="closeMe()" />
+                <input type="button" value="<< Back" ng-click="clear()" />
+                <input type="button" value="Next >>" ng-click="proceed()" />
+                <input type="button" value="Publish" disabled="disabled" />
+            </div>
+        </div>
+    </div>
+
+
 </div>

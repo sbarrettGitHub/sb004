@@ -25,6 +25,19 @@
         this.selected = false;
         this.textShadow = "none";
         this.style = {},
+		this.innerStyle = function(){
+			return {
+			'font-family':this.fontFamily,
+			 'font-size':this.fontSize,
+			 'font-weight':this.fontWeight,
+			 'font-style':this.fontStyle,
+			 'text-decoration':this.textDecoration,
+			 'color':this.color,
+			 'background-color':this.backgroundcColor,
+			 'text-align':this.textAlign,
+			 'text-shadow': '-1px 0 ' + this.textShadow + ' , 0 1px ' + this.textShadow + ' , 1px 0 ' + this.textShadow + ' , 0 -1px ' + this.textShadow
+			 }
+		},
         this.location = {
             apply : function() {
                 self.style.position = "absolute";
@@ -178,6 +191,7 @@
         };
         $scope.fontFamily = function (fontFamily) {
             $scope.comment.fontFamily = fontFamily;
+			console.log($scope.comment.innerStyle());
         };
         $scope.fontSize = function (size) {
             $scope.comment.fontSize = size + "pt";

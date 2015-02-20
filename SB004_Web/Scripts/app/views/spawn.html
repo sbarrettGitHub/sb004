@@ -1,415 +1,413 @@
-<div id="spawnQuote" ng-click="endEdit()">
-	<div class="heading">		
+<div id="spawnQuote" ng-click="endEdit()" class="dialogPage">
+	<div class="heading dialogHead">		
 		<h3>Add text to spawn a new meme</h3>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
-	<div id="toolbar" >
-		<div class="btn-group btnCollection">
-		  <label class="btn btn-default" name="bold" title="Bold"
-			ng-click="bold()" ng-class="{'active': comment.fontWeight == 'bold'}" >
-			<i class="fa fa-bold active "></i>
-		  </label>
-		  <label type="button" class="btn btn-default" name="italics" title="Italic"
-			ng-click="italic()" ng-class="{'active': comment.fontStyle == 'italic'}">
-			<i class="fa fa-italic"></i>
-		  </label>
-		  <label type="button" class="btn btn-default" name="underline" title="Underline"
-			ng-click="underline()"  ng-class="{'active': comment.textDecoration == 'underline'}">
-			<i class="fa fa-underline"></i>
-		  </label>
-		</div>
-		<div class="btn-group btnCollection">
-			<div class="btn-group" title="Font">
-			  <label type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				<span style="font-family:{{comment.fontFamily}}">Font</span>  <span class="caret"></span>
-			  </label>
-			  <ul class="dropdown-menu" role="menu">
-				<li><span ng-click="fontFamily('Arial')" style="font-family:arial">Arial</span></li>
-				<li><span ng-click="fontFamily('Arial Black')" style="font-family:Arial Black, arial">Arial Black</span></li>
-				<li><span ng-click="fontFamily('Arial Narrow')" style="font-family:Arial Narrow, arial">Arial Narrow</span></li>
-				<li><span ng-click="fontFamily('Century Gothic')" style="font-family:Century Gothic, arial">Century Gothic</span></li>
-				<li><span ng-click="fontFamily('Comic Sans MS')" style="font-family:Comic Sans MS, arial">Comic Sans MS</span></li>
-				<li><span ng-click="fontFamily('Courier New')" style="font-family:Courier New, arial">Courier New</span></li>
-				<li><span ng-click="fontFamily('Georgia')" style="font-family:Georgia, arial">Georgia</span></li>
-				<li><span ng-click="fontFamily('Impact')" style="font-family:Impact, arial">Impact</span></li>
-				<li><span ng-click="fontFamily('Lucida Console')" style="font-family:Lucida Console, arial">Lucida Console</span></li>
-				<li><span ng-click="fontFamily('Lucida Sans Unicode')" style="font-family:Lucida Sans Unicode, arial">Lucida Sans Unicode</span></li>
-				<li><span ng-click="fontFamily('Palatino Linotype')" style="font-family:Palatino Linotype, arial">Palatino Linotype</span></li>
-				<li><span ng-click="fontFamily('Tahoma')" style="font-family:Tahoma, arial">Tahoma</span></li>
-				<li><span ng-click="fontFamily('Times New Roman')" style="font-family:Times New Roman, arial">Times New Roman</span></li>
-				<li><span ng-click="fontFamily('Trebuchet MS')" style="font-family:Trebuchet MS, arial">Trebuchet MS</span></li>
-				<li><span ng-click="fontFamily('Verdana')" style="font-family:Verdana, arial">Verdana</span></li>
-			  </ul>
-			</div>
-			<div class="btn-group" title="Font Size">
-			  <label type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				{{comment.fontSize}} <span class="caret"></span>
-			  </label>
-			  <ul class="dropdown-menu" role="menu">
-				<li><span ng-click="fontSize(5)">5 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(6)">6 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(7)">7 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(8)">8 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(9)">9 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(10)">10 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(11)">11 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(12)">12 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(13)">13 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(14)">14 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(15)">15 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(18)">18 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(20)">20 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(25)">25 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(30)">30 pt</span>
-				</li>
-				<li><span span ng-click="fontSize(35)">35 pt</span>
-				</li>
-			  </ul>
-			</div>
-		</div>
-		<div class="btn-group btnCollection">
-			<div class="btn-group" title="Background Color">
-			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">			
-				<i style="border-bottom:5px solid {{comment.backgroundColor}};font-weight:bold;" class="fa fa-paint-brush"></i>  <i class="caret"></i>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-				<li>
-				  <span ng-click=backColor("none")>
-					<div style="background-color:White;text-align:center;font-size:12px;border:0;" class="colorBar">None</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Silver")>
-					<div style="background-color:Silver;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Gray")>
-					<div style="background-color:Gray;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Black")>
-					<div style="background-color:Black	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Red")>
-					<div style="background-color:Red	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Maroon")>
-					<div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Yellow")>
-					<div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Olive")>
-					<div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Lime")>
-					<div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Green")>
-					<div style="background-color:Green	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Aqua")>
-					<div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Teal")>
-					<div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Blue")>
-					<div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Navy")>
-					<div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Fuchsia")>
-					<div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=backColor("Purple")>
-					<div style="background-color:Purple;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-			  </ul>
-			</div>
-			<div class="btn-group" title="Font Color">
-			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				<i style="border-bottom:5px solid {{comment.color}};font-weight:bold;" class="fa fa-font"></i>  <i class="caret"></i>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-				<li>
-				  <span ng-click=color("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
-				</li>
-				<li>
-				  <span ng-click=color("Silver")>
-					<div style="background-color:Silver;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Gray")>
-					<div style="background-color:Gray;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Black")>
-					<div style="background-color:Black	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Red")>
-					<div style="background-color:Red	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Maroon")>
-					<div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Yellow")>
-					<div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Olive")>
-					<div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Lime")>
-					<div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Green")>
-					<div style="background-color:Green	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Aqua")>
-					<div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Teal")>
-					<div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Blue")>
-					<div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Navy")>
-					<div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Fuchsia")>
-					<div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=color("Purple")>
-					<div style="background-color:Purple;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-			  </ul>
-			</div>    
-			<div class="btn-group" title="Text Shadow. Select a color to act as an outline border to your text.">
-			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				<i style="border-bottom:5px solid {{comment.textShadow}};font-weight:bold;" class="fa fa-sun-o"></i>  <i class="caret"></i>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-				<li>
-				  <span ng-click=textShadow("none")>
-					<div style="background-color:White;text-align:center;font-size:12px;border:0;" class="colorBar">None</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Silver")>
-					<div style="background-color:Silver;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Gray")>
-					<div style="background-color:Gray;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Black")>
-					<div style="background-color:Black	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Red")>
-					<div style="background-color:Red	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Maroon")>
-					<div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Yellow")>
-					<div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Olive")>
-					<div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Lime")>
-					<div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Green")>
-					<div style="background-color:Green	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Aqua")>
-					<div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Teal")>
-					<div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Blue")>
-					<div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Navy")>
-					<div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Fuchsia")>
-					<div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-				<li>
-				  <span ng-click=textShadow("Purple")>
-					<div style="background-color:Purple;" class="colorBar">&nbsp;</div>
-				  </span>
-				</li>
-			  </ul>
-			</div> 
-		</div>
-		<div class="btn-group btnCollection">
-		  <label class="btn btn-default ng-scope" title="Align Text Left"
-			ng-click="align('left')"  ng-class="{'active': comment.textAlign == 'left'}">
-			<i class="fa fa-align-left"></i>
-		  </label>
-		  <label type="button" class="btn btn-default ng-scope" title="Align Text Center"
-			ng-click="align('center')"  ng-class="{'active': comment.textAlign == 'center'}">
-			<i class="fa fa-align-center"></i>
-		  </label>
-		  <label type="button" class="btn btn-default ng-scope" title="Align Text Right"
-			ng-click="align('right')"  ng-class="{'active': comment.textAlign == 'right'}">
-			<i class="fa fa-align-right"></i>
-		  </label>
-		</div>
-	  </div>		
-	<div id="commentContainer" style="width:{{seedImage.width}}px;max-height:32px;" 
-		ngdroppable ngdrop="alignTop(left,top,relLeft,relRight,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
-		onclick="event.stopPropagation();">
+    <div class="dialogBody">
+        <div id="toolbar">
+            <div class="btn-group btnCollection">
+                <label class="btn btn-default" name="bold" title="Bold"
+                       ng-click="bold()" ng-class="{'active': comment.fontWeight == 'bold'}">
+                    <i class="fa fa-bold active "></i>
+                </label>
+                <label type="button" class="btn btn-default" name="italics" title="Italic"
+                       ng-click="italic()" ng-class="{'active': comment.fontStyle == 'italic'}">
+                    <i class="fa fa-italic"></i>
+                </label>
+                <label type="button" class="btn btn-default" name="underline" title="Underline"
+                       ng-click="underline()" ng-class="{'active': comment.textDecoration == 'underline'}">
+                    <i class="fa fa-underline"></i>
+                </label>
+            </div>
+            <div class="btn-group btnCollection">
+                <div class="btn-group" title="Font">
+                    <label type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span style="font-family:{{comment.fontFamily}}">Font</span>  <span class="caret"></span>
+                    </label>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><span ng-click="fontFamily('Arial')" style="font-family:arial">Arial</span></li>
+                        <li><span ng-click="fontFamily('Arial Black')" style="font-family:Arial Black, arial">Arial Black</span></li>
+                        <li><span ng-click="fontFamily('Arial Narrow')" style="font-family:Arial Narrow, arial">Arial Narrow</span></li>
+                        <li><span ng-click="fontFamily('Century Gothic')" style="font-family:Century Gothic, arial">Century Gothic</span></li>
+                        <li><span ng-click="fontFamily('Comic Sans MS')" style="font-family:Comic Sans MS, arial">Comic Sans MS</span></li>
+                        <li><span ng-click="fontFamily('Courier New')" style="font-family:Courier New, arial">Courier New</span></li>
+                        <li><span ng-click="fontFamily('Georgia')" style="font-family:Georgia, arial">Georgia</span></li>
+                        <li><span ng-click="fontFamily('Impact')" style="font-family:Impact, arial">Impact</span></li>
+                        <li><span ng-click="fontFamily('Lucida Console')" style="font-family:Lucida Console, arial">Lucida Console</span></li>
+                        <li><span ng-click="fontFamily('Lucida Sans Unicode')" style="font-family:Lucida Sans Unicode, arial">Lucida Sans Unicode</span></li>
+                        <li><span ng-click="fontFamily('Palatino Linotype')" style="font-family:Palatino Linotype, arial">Palatino Linotype</span></li>
+                        <li><span ng-click="fontFamily('Tahoma')" style="font-family:Tahoma, arial">Tahoma</span></li>
+                        <li><span ng-click="fontFamily('Times New Roman')" style="font-family:Times New Roman, arial">Times New Roman</span></li>
+                        <li><span ng-click="fontFamily('Trebuchet MS')" style="font-family:Trebuchet MS, arial">Trebuchet MS</span></li>
+                        <li><span ng-click="fontFamily('Verdana')" style="font-family:Verdana, arial">Verdana</span></li>
+                    </ul>
+                </div>
+                <div class="btn-group" title="Font Size">
+                    <label type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {{comment.fontSize}} <span class="caret"></span>
+                    </label>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <span ng-click="fontSize(5)">5 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(6)">6 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(7)">7 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(8)">8 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(9)">9 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(10)">10 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(11)">11 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(12)">12 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(13)">13 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(14)">14 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(15)">15 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(18)">18 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(20)">20 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(25)">25 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(30)">30 pt</span>
+                        </li>
+                        <li>
+                            <span span ng-click="fontSize(35)">35 pt</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn-group btnCollection">
+                <div class="btn-group" title="Background Color">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i style="border-bottom:5px solid {{comment.backgroundColor}};font-weight:bold;" class="fa fa-paint-brush"></i>  <i class="caret"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <span ng-click=backColor("none")>
+                                <div style="background-color:White;text-align:center;font-size:12px;border:0;" class="colorBar">None</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Silver")>
+                                <div style="background-color:Silver;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Gray")>
+                                <div style="background-color:Gray;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Black")>
+                                <div style="background-color:Black	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Red")>
+                                <div style="background-color:Red	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Maroon")>
+                                <div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Yellow")>
+                                <div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Olive")>
+                                <div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Lime")>
+                                <div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Green")>
+                                <div style="background-color:Green	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Aqua")>
+                                <div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Teal")>
+                                <div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Blue")>
+                                <div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Navy")>
+                                <div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Fuchsia")>
+                                <div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=backColor("Purple")>
+                                <div style="background-color:Purple;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group" title="Font Color">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i style="border-bottom:5px solid;color:{{comment.color}};font-weight:bold;" class="fa fa-font"></i>  <i class="caret"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <span ng-click=color("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Silver")>
+                                <div style="background-color:Silver;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Gray")>
+                                <div style="background-color:Gray;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Black")>
+                                <div style="background-color:Black	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Red")>
+                                <div style="background-color:Red	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Maroon")>
+                                <div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Yellow")>
+                                <div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Olive")>
+                                <div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Lime")>
+                                <div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Green")>
+                                <div style="background-color:Green	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Aqua")>
+                                <div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Teal")>
+                                <div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Blue")>
+                                <div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Navy")>
+                                <div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Fuchsia")>
+                                <div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=color("Purple")>
+                                <div style="background-color:Purple;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group" title="Text Shadow. Select a color to act as an outline border to your text.">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i style="border-bottom:5px solid {{comment.textShadow}};font-weight:bold;" class="fa fa-sun-o"></i>  <i class="caret"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <span ng-click=textShadow("none")>
+                                <div style="background-color:White;text-align:center;font-size:12px;border:0;" class="colorBar">None</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("White")><div style="background-color:White;" class="colorBar">&nbsp;</div></span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Silver")>
+                                <div style="background-color:Silver;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Gray")>
+                                <div style="background-color:Gray;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Black")>
+                                <div style="background-color:Black	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Red")>
+                                <div style="background-color:Red	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Maroon")>
+                                <div style="background-color:Maroon	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Yellow")>
+                                <div style="background-color:Yellow	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Olive")>
+                                <div style="background-color:Olive	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Lime")>
+                                <div style="background-color:Lime	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Green")>
+                                <div style="background-color:Green	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Aqua")>
+                                <div style="background-color:Aqua	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Teal")>
+                                <div style="background-color:Teal	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Blue")>
+                                <div style="background-color:Blue	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Navy")>
+                                <div style="background-color:Navy	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Fuchsia")>
+                                <div style="background-color:Fuchsia	;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                        <li>
+                            <span ng-click=textShadow("Purple")>
+                                <div style="background-color:Purple;" class="colorBar">&nbsp;</div>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn-group btnCollection">
+                <label class="btn btn-default ng-scope" title="Align Text Left"
+                       ng-click="align('left')" ng-class="{'active': comment.textAlign == 'left'}">
+                    <i class="fa fa-align-left"></i>
+                </label>
+                <label type="button" class="btn btn-default ng-scope" title="Align Text Center"
+                       ng-click="align('center')" ng-class="{'active': comment.textAlign == 'center'}">
+                    <i class="fa fa-align-center"></i>
+                </label>
+                <label type="button" class="btn btn-default ng-scope" title="Align Text Right"
+                       ng-click="align('right')" ng-class="{'active': comment.textAlign == 'right'}">
+                    <i class="fa fa-align-right"></i>
+                </label>
+            </div>
+        </div>
+        <div id="meme" class="imageContainer" style="width:{{seedImage.width}}px;position:relative;">
+            <img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
+                 style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;" />
+            <div id="comment_{{com.id}}" class="comment" title="Double click on the text below to edit. To move the text just drag it."
+                 ngdraggableresizable
+                 ng-hide="comments[com.id].dropped"
+                 ngresizestop="resized(width, height)" ngdragstart="startDrag(com.id)"
+                 ng-repeat="com in comments" ng-class="{'focus': editingComment && selectedCommentId==com.id}"
+                 ng-style="comments[com.id].style"
+                 data-cid="{{com.id}}"
+                 style=";min-height:16px;">
+                <div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
+                    <div class="closeIcon" title="Click here to remove this piece of text from the meme. You can add more text by clicking the Add More Text button.">
+                        <span class="fa fa-times closeIcon"></span>
+                    </div>
+                </div>
+                <div ng-dblclick="startEdit(com.id)" ng-click="selectComment(com.id)"
+                     style="
+                     min-height:16px;" 
+					 ng-style="comments[com.id].innerStyle()">{{comments[com.id].text}}</div>
 
-	</div>	
-	<div id="meme" class="imageContainer" style="width:{{seedImage.width}}px;position:relative;">
-		<img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
-				style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;"/>
-		<div id="comment_{{com.id}}" class="comment" title="Double click on the text below to edit. To move the text just drag it." 
-			ngdraggableresizable 
-			ng-hide="comments[com.id].dropped" 
-			ngresizeStop="resized(width, height)" ngdragstart="startDrag(com.id)" 
-			ng-repeat="com in comments" ng-class="{'focus': editingComment && selectedCommentId==com.id}"
-			ng-style = "comments[com.id].style"
-			data-cid="{{com.id}}"
-			style=";min-height:16px;">
-			<div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
-				<div class="closeIcon" title="Click here to remove this piece of text from the meme. You can add more text by clicking the Add More Text button.">
-					<span class="fa fa-times closeIcon"></span>
-				</div>
-			</div>
-			<div ng-dblclick="startEdit(com.id)" ng-click="selectComment(com.id)"
-				style="	
-					font-family:{{comments[com.id].fontFamily}}; 
-					font-size:{{comments[com.id].fontSize}}; 
-					font-weight:{{comments[com.id].fontWeight}}; 
-					font-style:{{comments[com.id].fontStyle}}; 
-					text-decoration:{{comments[com.id].textDecoration}}; 
-					color:{{comments[com.id].color}}; 
-					background-color:{{comments[com.id].backgroundColor}};
-					text-align:{{comments[com.id].textAlign}};
-					text-shadow: -1px 0 {{comments[com.id].textShadow}}, 0 1px {{comments[com.id].textShadow}}, 1px 0 {{comments[com.id].textShadow}}, 0 -1px {{comments[com.id].textShadow}};
-					min-height:16px;"
-			>{{comments[com.id].text}}</div>
-					
-		<input type="text" class="commentText form-control" ng-model="comment.text" 
-				ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
-				style=" min-height:16px;"/>				
-		</div>
-	</div>
-	<div id="commentContainerBottom" style="width:{{seedImage.width}}px;height:32px;max-height:32px;margin-left: auto;margin-right: auto;margin-top: 5px;" 
-			ngdroppable ngdrop="alignBottom(left,top,relLeft,relTop,el)" ngdragover="over(el, target);" ngdragout="out(el, target);"
-			onclick="event.stopPropagation();">
-            <input type="button" value="Reset Meme" ng-click="reset()" title="Revert the meme to its original state. This will discard all your changes!" />
-            <input type="button" value="Add More Text" ng-click="addComment()" title="Add new text to this meme." />
-	</div>
-	<div class="buttons">				
+                <input type="text" class="commentText form-control" ng-model="comment.text"
+                       ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
+                       style=" min-height:16px;" />
+            </div>
+        </div>
+    </div>
+	<div class="buttons dialogFoot">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>
 		<input type="button" value="<< Back" ng-click="startAgain()" title="Begin again with a different image. This will discard all your changes!"/>
 		<input type="button" value="Next >>" ng-click="proceed()" title="Move on to the publish page with this Meme"/>
