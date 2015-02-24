@@ -10,7 +10,7 @@
             x: 0,
             y: 0,
             width: 0,
-            height: 0,
+            height: 32,
             padding: 0
         };
         this.color = "black";
@@ -64,7 +64,9 @@
         $scope.editingComment = false;
         
         $scope.selectedCommentId = 0;
-
+		
+		$scope.propertiesHinted = false;
+		
         $scope.toolbarStyle = function() {
             if ($scope.comment) {
                 var width = $scope.comment.position.width / 2;
@@ -72,7 +74,7 @@
                 return {
                     position: "absolute",
                     left: ($scope.comment.position.x + width) + "px",
-                    top: ($scope.comment.position.y - 32) + "px"
+                    top: ($scope.comment.position.y) + "px"
                 };
             }
         }
@@ -109,7 +111,6 @@
             $scope.comment.location.center($scope.seedImage.width, $scope.seedImage.height);
             $scope.comment.location.apply();
             $scope.comment.dimensions.apply();
-            $scope.editingComment = true;
         }
 
         /*Control buttons*/
@@ -143,16 +144,25 @@
         $scope.selectComment = function (id) {
             $scope.comment = $scope.comments[id];
             $scope.selectedCommentId = id;
+			$scope.propertiesHinted = true;
             angular.element('.comment').tooltip('destroy');
+        };
+		$scope.unselectComment = function (id) {
+			$timeout(function () {
+				$scope.propertiesHinted = false;
+			}, 250);
+			
         };
         $scope.startEdit = function (id) {
             $scope.editingComment = true;
+			$scope.propertiesHinted = false;
             $scope.comment = $scope.comments[id];
             $scope.selectedCommentId = id;
             angular.element('.comment').tooltip('destroy');
         };
         $scope.endEdit = function () {
             $scope.editingComment = false;
+			$scope.selectedCommentId = -1;
             angular.element('.comment').tooltip('destroy');
         };
         $scope.startDrag = function (commentId) {

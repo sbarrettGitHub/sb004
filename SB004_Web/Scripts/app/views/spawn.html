@@ -6,24 +6,11 @@
     <div class="dialogBody">
 
         <div id="meme" class="imageContainer" style="width:{{seedImage.width}}px;position:relative;">
-			<div id="toolbar" ng-style="toolbarStyle()" ng-show="editingComment">
-				<div class="btn-group btnCollection">
-					<label class="btn btn-default" name="bold" title="Bold"
-						   ng-click="bold()" ng-class="{'active': comment.fontWeight == 'bold'}">
-						<i class="fa fa-bold active "></i>
-					</label>
-					<label type="button" class="btn btn-default" name="italics" title="Italic"
-						   ng-click="italic()" ng-class="{'active': comment.fontStyle == 'italic'}">
-						<i class="fa fa-italic"></i>
-					</label>
-					<label type="button" class="btn btn-default" name="underline" title="Underline"
-						   ng-click="underline()" ng-class="{'active': comment.textDecoration == 'underline'}">
-						<i class="fa fa-underline"></i>
-					</label>
-				</div>
+			<div id="toolbar" ng-style="toolbarStyle()" ng-show="propertiesHinted || editingComment" ng-class="{'faded': propertiesHinted && !editingComment}" 
+					ng-click="$event.stopPropagation();" ng-mouseover="editingComment=true;">	
 				<div class="btn-group btnCollection">
 					<div class="btn-group" title="Font">
-						<label type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<label type="button" class="btn btn-default dropdown-toggle fontDropdown" data-toggle="dropdown" aria-expanded="false">
 							<span style="font-family:{{comment.fontFamily}}">Font</span>  <span class="caret"></span>
 						</label>
 						<ul class="dropdown-menu" role="menu">
@@ -100,6 +87,20 @@
 						</ul>
 					</div>
 				</div>
+			<div class="btn-group btnCollection">
+					<label class="btn btn-default textDecoration" name="bold" title="Bold"
+						   ng-click="bold()" ng-class="{'active': comment.fontWeight == 'bold'}">
+						<i class="fa fa-bold active "></i>
+					</label>
+					<label type="button" class="btn btn-default textDecoration" name="italics" title="Italic"
+						   ng-click="italic()" ng-class="{'active': comment.fontStyle == 'italic'}">
+						<i class="fa fa-italic"></i>
+					</label>
+					<label type="button" class="btn btn-default textDecoration" name="underline" title="Underline"
+						   ng-click="underline()" ng-class="{'active': comment.textDecoration == 'underline'}">
+						<i class="fa fa-underline"></i>
+					</label>
+				</div>				
 				<div class="btn-group btnCollection">
 					<div class="btn-group" title="Background Color">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -277,7 +278,7 @@
 						</ul>
 					</div>
 					<div class="btn-group" title="Text Shadow. Select a color to act as an outline border to your text.">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<button type="button" class="btn btn-default dropdown-toggle textShadowDropdown" data-toggle="dropdown" aria-expanded="false">
 							<i style="border-bottom:5px solid {{comment.textShadow}};font-weight:bold;" class="fa fa-sun-o"></i>  <i class="caret"></i>
 						</button>
 						<ul class="dropdown-menu" role="menu">
@@ -393,17 +394,19 @@
                  data-cid="{{com.id}}"
                  style=";min-height:16px;">
                 <div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
-                    <div class="closeIcon" title="Click here to remove this piece of text from the meme. You can add more text by clicking the Add More Text button.">
+                    <div class="closeIcon">
                         <span class="fa fa-times closeIcon"></span>
                     </div>
                 </div>
-                <div ng-click="startEdit(com.id)" ng-click="selectComment(com.id)"
+                <div ng-click="startEdit(com.id);$event.stopPropagation();" ng-mouseover="selectComment(com.id)" ng-mouseout="unselectComment(com.id)"
                      style="min-height:16px;" 
 					 ng-style="comments[com.id].innerStyle()">
 					 {{comments[com.id].text}}
 				</div>
-                <input type="text" class="commentText form-control" ng-model="comment.text"
-                       ng-show="editingComment && selectedCommentId==com.id" ng-blur="endEdit(com.id)"
+                <input type="text" class="commentText form-control" ng-model="comment.text" 
+					   ng-click="$event.stopPropagation();" ng-mouseover="editingComment=true;"
+                       ng-show="(propertiesHinted || (editingComment && selectedCommentId==com.id))" 
+					   ng-class="{'faded': propertiesHinted && !editingComment}"
                        style=" min-height:16px;" />
             </div>
         </div>

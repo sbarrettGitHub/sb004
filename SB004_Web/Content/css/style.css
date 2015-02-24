@@ -27,6 +27,9 @@ opacity: 0.6;
 background-color: #FEFEFE;
 -webkit-filter: blur(6px);
 }
+.faded{
+opacity: 0.6;
+}
 .heading
 {
 	text-align: center;
@@ -313,9 +316,10 @@ height:325px;*/
  }
 #spawnQuote #toolbar
 {
-	margin-right:auto;
-	margin-left:auto;
-	width:250px;
+	margin-top:-64px;
+	width:246px;
+	border:1px solid darkgrey;
+	background-color:silver;
 }
 #spawnQuote #toolbar .btn{
 	padding-top:2px;
@@ -323,6 +327,15 @@ height:325px;*/
 	padding-left:8px;
 	padding-right:8px;
 	height:28px;
+}
+#spawnQuote #toolbar .fontDropdown{
+	width:86px;
+}
+#spawnQuote #toolbar .textShadowDropdown{
+	width:58px;
+}
+#spawnQuote #toolbar .textDecoration{
+	width:32px;
 }
 #spawnQuote .colorBar{
   width:150px;

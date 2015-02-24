@@ -21,6 +21,7 @@
                 currentRender = renderingEnum.svg;
                 // Must remove the hidden input per comment to make this work with Forefox 28.0
                 $(".commentText").remove();
+				$("#toolbar").remove();
 
                 // Use domvas
                 domvs();
