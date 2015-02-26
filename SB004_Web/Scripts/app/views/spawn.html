@@ -397,7 +397,7 @@
 				</div>
 			</div>
             <img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
-                 style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;z-index: -1;" />
+                 style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;z-index: -100;position:relative;" />
             <div id="comment_{{com.id}}" class="comment"
                  ngdraggableresizable
                  ng-hide="comments[com.id].dropped"
@@ -407,7 +407,7 @@
 				 ng-class="{'focus': (editingComment && selectedCommentId==com.id)}"
                  ng-style="comments[com.id].style"
                  data-cid="{{com.id}}"
-                 style=";min-height:16px;z-index:1;">
+                 style=";min-height:16px;z-index:-1;">
                 <div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
                     <div class="closeIcon">
                         <span class="fa fa-times closeIcon"></span>
