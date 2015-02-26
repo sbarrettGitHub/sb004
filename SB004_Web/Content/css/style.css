@@ -28,7 +28,7 @@ background-color: #FEFEFE;
 -webkit-filter: blur(6px);
 }
 .faded{
-opacity: 0.6;
+opacity: 0.6 !important;
 }
 .heading
 {
@@ -291,7 +291,7 @@ height:325px;*/
  {
 	cursor: move;
 	padding:5px;
-	
+	z-index:1;
  }
  #spawnQuote #comment:hover
  {
@@ -320,6 +320,7 @@ height:325px;*/
 	width:246px;
 	border:1px solid darkgrey;
 	background-color:silver;
+	z-index: 0;
 }
 #spawnQuote #toolbar .btn{
 	padding-top:2px;
@@ -345,6 +346,14 @@ height:325px;*/
 #spawnQuote .hoverOver
 {
 	border:1px dashed;
+}
+#spawnQuote #sideBar{
+	position:absolute;
+	left: 510px;
+	padding-top: 5px;
+}
+#spawnQuote #sideBar .sideBarButton{
+	margin-bottom: 3px;
 }
  #publish .imageContainer
  {

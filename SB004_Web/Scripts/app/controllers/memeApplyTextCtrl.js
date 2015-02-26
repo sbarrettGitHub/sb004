@@ -35,7 +35,8 @@
 			 'color':this.color,
 			 'background-color':this.backgroundcColor,
 			 'text-align':this.textAlign,
-			 'text-shadow': '-1px 0 ' + this.textShadow + ' , 0 1px ' + this.textShadow + ' , 1px 0 ' + this.textShadow + ' , 0 -1px ' + this.textShadow
+			 'text-shadow': '-1px 0 ' + this.textShadow + ' , 0 1px ' + this.textShadow + ' , 1px 0 ' + this.textShadow + ' , 0 -1px ' + this.textShadow,
+			 'z-index':1
 			 }
 		},
         this.location = {
@@ -74,7 +75,8 @@
                 return {
                     position: "absolute",
                     left: ($scope.comment.position.x + width) + "px",
-                    top: ($scope.comment.position.y) + "px"
+                    top: ($scope.comment.position.y) + "px",
+					'z-index':0,
                 };
             }
         }
@@ -121,6 +123,9 @@
             dialog.close("StartAgain");
         };
         $scope.reset = function () {
+			if (!$window.confirm("This will reset the meme to it's original state, discarding your changes. Are you sure you wish to continue?")) {
+				return;
+            }
             dialog.close("Reset");
         };
         $scope.addComment = function () {
@@ -150,14 +155,16 @@
 		$scope.unselectComment = function (id) {
 			$timeout(function () {
 				$scope.propertiesHinted = false;
-			}, 250);
+			}, 500);
 			
         };
         $scope.startEdit = function (id) {
             $scope.editingComment = true;
 			$scope.propertiesHinted = false;
-            $scope.comment = $scope.comments[id];
-            $scope.selectedCommentId = id;
+			if(id){
+				$scope.comment = $scope.comments[id];
+				$scope.selectedCommentId = id;
+			}            
             angular.element('.comment').tooltip('destroy');
         };
         $scope.endEdit = function () {

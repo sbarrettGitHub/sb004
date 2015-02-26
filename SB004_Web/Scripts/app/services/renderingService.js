@@ -17,11 +17,14 @@
             var el = document.getElementById(elName);
             // Is SVG supported?
             if (supportsSvg()) {
-
+				
+				// Rendering using svg
                 currentRender = renderingEnum.svg;
-                // Must remove the hidden input per comment to make this work with Forefox 28.0
+                
+				// Clean the image of editing mark up
                 $(".commentText").remove();
 				$("#toolbar").remove();
+				$(".comment").removeClass("focus");
 
                 // Use domvas
                 domvs();
