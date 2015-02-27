@@ -52,8 +52,8 @@ namespace SB004.Utilities
         public ISeed PrimeSeed(ISeed seed)
         {
 
-            // Resize to required dimensions (converting to JPeg)
-            seed.ImageData = CreateThumbnail(seed.ImageData, seed.Width > seed.Height ? seed.Width : seed.Height, System.Drawing.Imaging.ImageFormat.Jpeg);
+          // Resize to required dimensions (converting to JPeg). Resize to width or height whichever is greater, keeping aspect ratio. 
+            seed.ImageData = ResizeImage(seed.ImageData, seed.Width > seed.Height ? seed.Width : seed.Height, ImageFormat.Jpeg);
 
             return seed;
         }
@@ -160,7 +160,7 @@ namespace SB004.Utilities
         /// <param name="largestSide"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private byte[] CreateThumbnail(byte[] passedImage, int largestSide, System.Drawing.Imaging.ImageFormat format)
+        private byte[] ResizeImage(byte[] passedImage, int largestSide, ImageFormat format)
         {
             byte[] returnedThumbnail;
 

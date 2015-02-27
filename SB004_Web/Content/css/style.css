@@ -399,3 +399,50 @@ height:325px;*/
 #logIn #logInWithTwitter {
     background-image:url("../images/LogInWithTwitter.png")
 }
+.logInButton{
+	background-repeat:no-repeat;
+	height:41px; 
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 10px;
+	border-radius: 3px;
+	cursor:pointer;
+}
+.logInInner{
+	margin-left:43px;	
+	height:100%;
+}
+.logInText{
+	padding-left:18px;
+	padding-top:13px;
+	font-family:sans-serif;
+	font-weight: bold;
+	font-size:11pt;
+	text-align: left;
+	color:white
+}
+.logInInnerFaceBook{
+	background-color: rgb(81, 114, 180);
+	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
+}
+.logInButtonFacebook{
+	background-image: url('../images/Facebook.png');
+	border: 1px solid navy;
+}		
+.logInInnerGoogle{
+	background-color: rgb(227, 66, 66);
+	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
+}
+.logInButtonGoogle{
+	background-image: url('../images/GooglePlus.png');
+	border: 1px solid rgb(248, 116, 116);
+}
+.logInInnerTwitter{
+	background-color: rgb(28, 128, 168);
+	background-image: linear-gradient(rgb(94, 189, 228), rgb(28, 128, 168));
+}
+.logInButtonTwitter{
+	background-image: url('../images/Twitter.png');
+	border: 1px solid rgb(32, 145, 189);
+}
