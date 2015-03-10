@@ -20,7 +20,10 @@ namespace SB004.Utilities
         {
             this.downloader = downloader;
         }
-
+        public ImageManager()
+        {
+          this.downloader = new Downloader();
+        }
         /// <summary>
         /// Accecpts an image string which can be an image URL or base64 encoded image data
         /// </summary>

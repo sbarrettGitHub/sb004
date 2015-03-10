@@ -23,6 +23,11 @@
       this.repository = repository;
       this.imageManager = imageManager;
     }
+    public SeedController()
+    {
+      this.repository = new Repository();
+      this.imageManager = new ImageManager();
+    }
     // GET: api/Seed
     public IHttpActionResult Get()
     {
