@@ -21,7 +21,6 @@ namespace SB004.Controllers
 
   public class AccountController : ApiController
   {
-    private const string facebookAuthOptionsAppId = "";
 
     [HttpGet]
     public HttpResponseMessage Get(string id)
@@ -79,12 +78,12 @@ namespace SB004.Controllers
 
       var verifyTokenEndPoint = "";
 
-      if (provider == "Facebook")
+      if (provider == "facebook")
       {
         //You can get it from here: https://developers.facebook.com/tools/accesstoken/
         //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-        var appToken = "xxxxxx";
-        verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
+        var appToken = ConfigurationManager.AppSettings["facebookAuthOptions.AppId"];
+        verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", appToken, accessToken);
       }
       else if (provider == "Google")
       {

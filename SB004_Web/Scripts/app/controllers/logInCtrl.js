@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var logInCtrl = function ($scope, dialog, hello) {
+    var logInCtrl = function ($scope, dialog, hello, securityService) {
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close("Fail");
@@ -17,7 +17,14 @@
             hello(auth.network).api('/me').success(function (profile) {
 
                 var x = profile;
-                alert("Hello " + profile.name);
+                
+                securityService.connect(auth.network, auth.authResponse.access_token)
+                    .success(function() {
+                       alert("Hello " + profile.name); 
+                    })
+                    .error(function() {
+                    alert("Error");
+                });
 
             });
             
@@ -27,6 +34,6 @@
   
 
     // Register the controller
-    app.controller('logInCtrl', ["$scope", "dialog", "hello", logInCtrl]);
+    app.controller('logInCtrl', ["$scope", "dialog", "hello", "securityService", logInCtrl]);
 
 })();
