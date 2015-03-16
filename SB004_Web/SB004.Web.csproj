@@ -126,6 +126,7 @@
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
+    <Content Include="Scripts\app\services\helloService.js" />
     <Content Include="Scripts\app\services\renderingService.js" />
     <Content Include="Scripts\app\services\sharedDataService.js" />
     <Content Include="Scripts\app\services\upload.js" />
@@ -135,6 +136,7 @@
     <Content Include="Scripts\app\views\publish.html" />
     <Content Include="Scripts\app\views\spawn.html" />
     <Content Include="Scripts\domvas.js" />
+    <Content Include="Scripts\hello.js" />
     <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\iframe2image.js" />
     <Content Include="Web.config">
@@ -188,7 +190,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59645</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59645/</IISUrl>
+          <IISUrl>http://localhost:51665/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -48,6 +48,7 @@ namespace SB004.Controllers
       // Find the user in our repository
       //IdentityUser user = await _repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
       User user = this.GetUser(provider, verifiedAccessToken.user_id);
+
       bool hasRegistered = user != null;
 
       if (!hasRegistered)
@@ -61,7 +62,12 @@ namespace SB004.Controllers
       return Ok(accessTokenResponse);
 
     }
-
+    /// <summary>
+    /// Retrieve the user for the given provider access token
+    /// </summary>
+    /// <param name="provider"></param>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
     private User GetUser(string provider, string accessToken)
     {
       return new User();
