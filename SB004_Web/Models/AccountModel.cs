@@ -16,5 +16,6 @@ namespace SB004.Models
   {
     public string user_id { get; set; }
     public string app_id { get; set; }
+    public string username { get; set; }
   }
 }
