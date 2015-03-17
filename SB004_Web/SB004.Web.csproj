@@ -126,6 +126,8 @@
     <Content Include="Scripts\app\controllers\searchCtrl.js" />
     <Content Include="Scripts\app\directives\dragDropResize.js" />
     <Content Include="Scripts\app\directives\dropZoneDirective.js" />
+    <Content Include="Scripts\app\services\angular-local-storage.min.js" />
+    <Content Include="Scripts\app\services\authInterceptorService.js" />
     <Content Include="Scripts\app\services\helloService.js" />
     <Content Include="Scripts\app\services\renderingService.js" />
     <Content Include="Scripts\app\services\securityService.js" />

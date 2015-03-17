@@ -19,12 +19,12 @@
                 var x = profile;
                 
                 securityService.connect(auth.network, auth.authResponse.access_token)
-                    .success(function() {
-                       alert("Hello " + profile.name); 
+                    .then(function() {
+                        dialog.close("Success");
                     })
-                    .error(function() {
-                    alert("Error");
-                });
+                    .catch(function(e) {
+                        dialog.close("Fail");
+                    });
 
             });
             

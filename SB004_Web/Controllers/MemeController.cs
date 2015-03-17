@@ -37,6 +37,7 @@ namespace SB004.Controllers
         /// Save the meme and generate seed id . 
         /// <param name="memeModel">Meme to add</param> 
         /// </summary>
+        [Authorize]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
             IMeme meme = new Meme

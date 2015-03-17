@@ -1,11 +1,11 @@
 'use strict';
 (function () {
 
-    var memePublishAndShareCtrl = function ($scope, $timeout, $http, dialog, sharedDataService, renderingService) {
+    var memePublishAndShareCtrl = function ($scope, $timeout, $http, $q, dialog, sharedDataService, renderingService, securityService) {
 
         // Wait for the view load the render the meme
         $timeout(function () {
-            renderingService.render("canvas","image", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
+            renderingService.render("canvas", "image", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
         }, 500);
 
         /*Control buttons*/
@@ -25,25 +25,50 @@
             var memeImageData = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
 
             // Save the meme
-            /*
+            if (securityService.currentUser.isAuthenticated) {
+                saveMeme(memeImageData)
+                    .then(function () {
+                        dialog.close("Saved");
+                    })
+                    .catch(function (e) {
+                        alert(e);
+                    });
+            } else {
+                securityService.logIn()
+                .then(function () {
+                    saveMeme(memeImageData)
+                    .then(function () {
+                        dialog.close("Saved");
+                    })
+                    .catch(function (e) {
+                        alert(e);
+                    });
+                });
+
+                
+            }
+
+
+        };
+        var saveMeme = function (memeImageData) {
+            var deferred = $q.defer();
             $http.post('/api/Meme', {
                 SeedId: sharedDataService.data.seedImage.id,
                 Comments: sharedDataService.data.meme.comments,
                 ImageData: memeImageData
             }).
-            success(function (data) {
-                sharedDataService.data.meme = data;
-            }).
-            error(function () {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });*/
-            dialog.close("LogInAndSave");
+                success(function (data) {
+                    sharedDataService.data.meme = data;
+                    deferred.resolve();
+                }).
+                error(function (e) {
+                    deferred.reject(e);
+                });
+            return deferred.promise;
         };
-
     }
 
     // Register the controller
-    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "dialog", "sharedDataService", "renderingService", memePublishAndShareCtrl]);
+    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "$q", "dialog", "sharedDataService", "renderingService", "securityService", memePublishAndShareCtrl]);
 
 })();
