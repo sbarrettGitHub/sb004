@@ -14,6 +14,8 @@ namespace SB004.Controllers
     using SB004.Utilities;
     using System.Net.Http.Formatting;
     using Newtonsoft.Json.Serialization;
+    using System.Collections.Generic;
+    using System.Security.Claims;
 
     public class MemeController : ApiController
     {
@@ -40,6 +42,8 @@ namespace SB004.Controllers
         [Authorize]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
+            Models.User user = new Models.User(User.Identity);
+
             IMeme meme = new Meme
             {
                 SeedId = memeModel.SeedId,

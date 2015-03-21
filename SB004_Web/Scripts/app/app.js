@@ -20,7 +20,12 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
               redirectTo: '/home'
           });
         $httpProvider.interceptors.push('authInterceptorService');
-    });
+
+    })
+    .run(function (securityService)
+    {
+        securityService.testStillLoggedIn();
+    }); 
 
 app.directive("ngFileSelect", function () {
 

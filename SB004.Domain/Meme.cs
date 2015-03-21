@@ -31,6 +31,7 @@ namespace SB004.Domain
     public class Meme : IMeme
     {
         public string Id { get; set; }
+        public string CreatedByUserId { get; set; }
         public string SeedId { get; set; }
         public byte[] ImageData { get; set; }
         public DateTime DateCreated { get; set; }

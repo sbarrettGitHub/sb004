@@ -22,10 +22,21 @@ namespace SB004.Controllers
     public class AccountController : ApiController
     {
 
+        /// <summary>
+        /// Test that the user is authenticated
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public HttpResponseMessage Get(string id)
         {
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            Models.User user = new Models.User(User.Identity);
+            if (user.UserId == id)
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            return new HttpResponseMessage(HttpStatusCode.Unauthorized);
         }
         [AllowAnonymous]
         [HttpGet]
@@ -70,9 +81,9 @@ namespace SB004.Controllers
         /// <param name="provider"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        private User GetUser(string provider, string userId)
+        private User GetUser(string provider, string providerUserId)
         {
-            return new User { UserId = userId, UserName = "test User" };
+            return new User { UserId = Guid.NewGuid().ToString("N"), UserName = "test User" };
         }
 
         private async Task<ParsedExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
