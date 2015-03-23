@@ -12,6 +12,14 @@ input
 {
 height: 34px !important;
 }
+.waiting{
+	width:100%;
+	margin-right:auto;
+	margin-left:auto;
+}
+.loader{
+	 background-image:url("../images/loading.gif")
+}
 .modal {
     display: block;
 	margin-left: auto;
@@ -263,6 +271,15 @@ height:325px;*/
 }
 .dialogFoot {
     height:40px;
+}
+.dialogWaiting{
+height:369px;
+}
+.dialogLoader{
+	height: 128px;
+  margin-top: 100px;
+  width: 128px;
+  margin-left: 200px;
 }
 #spawnQuote
 {

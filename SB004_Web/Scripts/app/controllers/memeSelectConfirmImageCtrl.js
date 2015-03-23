@@ -40,6 +40,7 @@
 
         $scope.proceed = function () {
             var imagePreview = angular.element("#imagePreview");
+			$scope.loading = true;
             $http.post('/api/Seed', {
                 id: null,
                 image: $scope.image,
@@ -49,11 +50,13 @@
             success(function (data, status, headers, config) {
                 sharedDataService.data.seedImage.id = data.id;
                 sharedDataService.data.seedImage.image = data.image;
+				$scope.loading = false;
                 dialog.close(true);
             }).
             error(function (data, status, headers, config) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
+				$scope.loading = false;
             });
 
         };

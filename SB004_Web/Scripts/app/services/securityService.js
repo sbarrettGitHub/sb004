@@ -66,7 +66,12 @@
                         deferred.resolve(data);
                     }).
                     error(function () {
-                        currentUser.clear();
+                        currentUser.isAuthenticated = false;
+                        currentUser.userName = "";
+                        currentUser.userId = "";
+                        currentUser.accessToken = "";
+                        currentUser.provider = "";
+                        currentUser.thumbnail = "";
                         deferred.reject();
                     });
                 }

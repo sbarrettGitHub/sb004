@@ -1,6 +1,6 @@
 <div id="newQuote">
     <div id="quoteImageSelection" class="rounded">
-        <div class="dropzone " ng-show="image==null" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+        <div class="dropzone " ng-show="image==null && !loading" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
             <div class="heading">
                 <h3>To add a meme first select an image...</h3>
                 <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
@@ -33,7 +33,7 @@
             <hr />
 
         </div>
-        <div id="quoteImagePreview" ng-hide="image==null" class="dialogPage">
+        <div id="quoteImagePreview" ng-hide="image==null || loading" class="dialogPage">
             <div class="heading dialogHead">
                 <h3>Would you like to proceed with this image?</h3>
                 <div class="closeMe closeIcon" ngclick="closeMe()"><span class="fa fa-times"></span></div>
@@ -50,7 +50,14 @@
                 <input type="button" value="Publish" disabled="disabled" />
             </div>
         </div>
-    </div>
+    	<div id="waiting" ng-show="loading" class="waiting dialogWaiting">
+			<div class="heading">
+                <h3>Please wait...</h3>
+                <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+            </div>
+			<div class="loader dialogLoader"/>
+		</div>
+	</div>
 
 
 </div>
