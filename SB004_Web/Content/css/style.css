@@ -12,13 +12,17 @@ input
 {
 height: 34px !important;
 }
-.waiting{
+.waitingContainer{
 	width:100%;
 	margin-right:auto;
 	margin-left:auto;
 }
-.loader{
+.waitGraphic{
 	 background-image:url("../images/loading.gif")
+}
+.waitMessage{
+	width:100%;
+	text-align:center;
 }
 .modal {
     display: block;
@@ -272,14 +276,14 @@ height:325px;*/
 .dialogFoot {
     height:40px;
 }
-.dialogWaiting{
-height:369px;
+.dialogWaitConainer{
+	height:369px;
 }
-.dialogLoader{
+.dialogWaitGraphic{
 	height: 128px;
-  margin-top: 100px;
-  width: 128px;
-  margin-left: 200px;
+	margin-top: 100px;
+	width: 128px;
+	margin-left: 200px;
 }
 #spawnQuote
 {

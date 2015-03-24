@@ -1,9 +1,9 @@
 <div id="spawnQuote" ng-click="endEdit()" class="dialogPage">
-	<div class="heading dialogHead">		
+	<div class="heading dialogHead" ng-hide="waiting">		
 		<h3>Add text to spawn a new meme</h3>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
-    <div class="dialogBody">
+    <div class="dialogBody" ng-hide="waiting">
 		<div id="sideBar">
 			<div id="addComment" class="btn btn-default sideBarButton" title="Add new text to the meme"
 				ng-click="addComment()">
@@ -428,10 +428,18 @@
             </div>
         </div>
     </div>
-	<div class="buttons dialogFoot">				
+	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>
 		<input type="button" value="<< Back" ng-click="startAgain()" title="Begin again with a different image. This will discard all your changes!"/>
 		<input type="button" value="Next >>" ng-click="proceed()" title="Move on to the publish page with this Meme"/>
 		<input type="button" value="Publish" disabled="disabled"/>
 	</div>	
+	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
+		<div class="heading">
+			<h3>{{waitHeading}}</h3>
+			<div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		</div>
+		<div class="waitGraphic dialogWaitGraphic"/>
+		<div class="waitMessage">{{waitMessage}}</div>
+	</div>
 </div>

@@ -60,13 +60,14 @@
     }
     var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService, renderingService) {
 
-        var intialComment = new Comment(0);
-        
-        $scope.editingComment = false;
-        
-        $scope.selectedCommentId = 0;
-		
+        var intialComment = new Comment(0);        
+        $scope.editingComment = false;        
+        $scope.selectedCommentId = 0;		
 		$scope.propertiesHinted = false;
+		
+		$scope.waiting = false;
+		$scope.waitHeading = "Please wait...";
+		$scope.waitingMessage = "";
 		
         $scope.toolbarStyle = function() {
             if ($scope.comment) {
@@ -139,9 +140,11 @@
             $scope.comments.push(c);
         };
         $scope.proceed = function () {
+			startWaiting("Please wait...","");
             renderingService.capture("meme", $scope.width, $scope.height, function (img) {
                 sharedDataService.data.rawImage = img;
                 sharedDataService.data.meme.comments = $scope.comments;
+				endWaiting();
                 dialog.close("Proceed");
             });
         };
@@ -245,6 +248,17 @@
         $timeout(function () {
             angular.element('#comment').tooltip({ placement: 'top', trigger: 'manual' }).tooltip('show');
         }, 1000);
+	
+		function startWaiting(heading, message){
+			$scope.waiting = true;
+			$scope.waitHeading = heading;
+			$scope.waitingMessage = message;
+		}
+		function endWaiting(){
+			$scope.waiting = false;
+			$scope.waitHeading = "";
+			$scope.waitingMessage = "";
+		}
     }
 
     // Register the controller

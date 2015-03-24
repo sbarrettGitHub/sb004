@@ -1,18 +1,26 @@
 <div id="publish" class="dialogPage">
-	<div class="heading dialogHead">		
+	<div class="heading dialogHead" ng-hide="waiting">		
 		<h3>Publish your new meme</h3>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
-    <div class="dialogBody">
+    <div class="dialogBody" ng-hide="waiting">
         <div id="meme" class="imageContainer">
             <canvas id="canvas"></canvas>
             <img id="image" />
         </div>
     </div>
-	<div class="buttons dialogFoot">				
+	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>		
 		<input type="button" value="<< Back" ng-click="changeMeme()" title="Return to the page where you can update the text of the Meme."/>		
         <input type="button" value="Next >>"  disabled="disabled" />		
 		<input type="button" value="Publish" ng-click="proceed()" title="Move on to the publish page with this Meme"/>
+	</div>	
+	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
+		<div class="heading">
+			<h3>{{waitHeading}}</h3>
+			<div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		</div>
+		<div class="waitGraphic dialogWaitGraphic"/>
+		<div class="waitMessage">{{waitMessage}}</div>
 	</div>	
 </div>

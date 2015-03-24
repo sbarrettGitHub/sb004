@@ -5,8 +5,10 @@
         $scope.image = null;
         $scope.imageFileName = null;
         $scope.file = null;
-        $scope.loading = false;
-
+        $scope.waiting = false;
+		$scope.waitHeading = "Please wait...";
+		$scope.waitingMessage = "";
+		
         $scope.$on("Drop.Url", function (event, url) {
             $timeout(function () {
                 $scope.image = url;
@@ -14,12 +16,12 @@
             }, 100);
         });
         $scope.getFile = function () {
-            $scope.loading = true;
+			startWaiting("Please wait...","");
             $timeout(function () {
                 fileReader.readAsDataUrl($scope.file, $scope)
                 .then(function (result) {
                     $scope.image = result;
-                    $scope.loading = false;
+                    endWaiting();
                     $timeout(function () {
                         centerPreviewImage();
                     }, 100);
@@ -28,19 +30,19 @@
 
         };
         $scope.$on("fileProgress", function (e, progress) {
-            $scope.loading = true;
+            startWaiting("Please wait...","");
         });
 
         $scope.clear = function () {
             $scope.image = null;
             $scope.imageFileName = null;
             $scope.file = null;
-            $scope.loading = false;
+			endWaiting();
         };
 
         $scope.proceed = function () {
             var imagePreview = angular.element("#imagePreview");
-			$scope.loading = true;
+			startWaiting("Please wait...","");
             $http.post('/api/Seed', {
                 id: null,
                 image: $scope.image,
@@ -50,13 +52,13 @@
             success(function (data, status, headers, config) {
                 sharedDataService.data.seedImage.id = data.id;
                 sharedDataService.data.seedImage.image = data.image;
-				$scope.loading = false;
+				$scope.waiting = false;
                 dialog.close(true);
             }).
             error(function (data, status, headers, config) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-				$scope.loading = false;
+				endWaiting();
             });
 
         };
@@ -82,6 +84,16 @@
                 height: imagePreview.height(),
             };
         }
+		function startWaiting(heading, message){
+			$scope.waiting = true;
+			$scope.waitHeading = heading;
+			$scope.waitingMessage = message;
+		}
+		function endWaiting(){
+			$scope.waiting = false;
+			$scope.waitHeading = "";
+			$scope.waitingMessage = "";
+		}
     }
 
     // Register the controller

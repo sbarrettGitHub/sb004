@@ -1,6 +1,6 @@
 <div id="newQuote">
     <div id="quoteImageSelection" class="rounded">
-        <div class="dropzone " ng-show="image==null && !loading" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
+        <div class="dropzone " ng-show="image==null && !waiting" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="30">
             <div class="heading">
                 <h3>To add a meme first select an image...</h3>
                 <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
@@ -19,8 +19,8 @@
                 </div>
                 <div class="optionLabel">Or browse for a file on your computer</div>
                 <div id="browse" class="optionLabel">
-                    <input ng-hide="loading" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important" />
-                    <div ng-show="loading">Loading...Please wait</div>
+                    <input ng-hide="waiting" type="file" ng-file-select="onFileSelect($files)" placeholder="Or browse for a file on your computer" class="form-control" style="height:auto !important" />
+                    <div ng-show="waiting">Loading...Please wait</div>
                 </div>
             </div>
             <hr />
@@ -33,7 +33,7 @@
             <hr />
 
         </div>
-        <div id="quoteImagePreview" ng-hide="image==null || loading" class="dialogPage">
+        <div id="quoteImagePreview" ng-hide="image==null || waiting" class="dialogPage">
             <div class="heading dialogHead">
                 <h3>Would you like to proceed with this image?</h3>
                 <div class="closeMe closeIcon" ngclick="closeMe()"><span class="fa fa-times"></span></div>
@@ -50,12 +50,13 @@
                 <input type="button" value="Publish" disabled="disabled" />
             </div>
         </div>
-    	<div id="waiting" ng-show="loading" class="waiting dialogWaiting">
+    	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
 			<div class="heading">
-                <h3>Please wait...</h3>
+                <h3>{{waitHeading}}</h3>
                 <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
             </div>
-			<div class="loader dialogLoader"/>
+			<div class="waitGraphic dialogWaitGraphic"/>
+			<div class="waitMessage">{{waitMessage}}</div>
 		</div>
 	</div>
 

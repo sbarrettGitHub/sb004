@@ -3,6 +3,10 @@
 
     var memePublishAndShareCtrl = function ($scope, $timeout, $http, $q, dialog, sharedDataService, renderingService, securityService) {
 
+		$scope.waiting = false;
+		$scope.waitHeading = "Please wait...";
+		$scope.waitingMessage = "";
+		
         // Wait for the view load the render the meme
         $timeout(function () {
             renderingService.render("canvas", "image", sharedDataService.data.seedImage.width, sharedDataService.data.seedImage.height, sharedDataService.data.rawImage);
@@ -43,15 +47,12 @@
                     .catch(function (e) {
                         alert(e);
                     });
-                });
-
-                
+                });                
             }
-
-
         };
         var saveMeme = function (memeImageData) {
             var deferred = $q.defer();
+			startWaiting();
             $http.post('/api/Meme', {
                 SeedId: sharedDataService.data.seedImage.id,
                 Comments: sharedDataService.data.meme.comments,
@@ -59,13 +60,25 @@
             }).
                 success(function (data) {
                     sharedDataService.data.meme = data;
+					endWaiting();
                     deferred.resolve();
                 }).
                 error(function (e) {
+					endWaiting();
                     deferred.reject(e);
                 });
             return deferred.promise;
         };
+		function startWaiting(heading, message){
+			$scope.waiting = true;
+			$scope.waitHeading = !heading ? "Please wait..." : heading;
+			$scope.waitingMessage = !message ? "" : message;
+		}
+		function endWaiting(){
+			$scope.waiting = false;
+			$scope.waitHeading = "";
+			$scope.waitingMessage = "";
+		}
     }
 
     // Register the controller
