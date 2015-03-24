@@ -38,6 +38,7 @@
                         alert(e);
                     });
             } else {
+				
                 securityService.logIn()
                 .then(function () {
                     saveMeme(memeImageData)

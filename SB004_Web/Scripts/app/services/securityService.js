@@ -7,15 +7,7 @@
             userId: "",
             accessToken: "",
             provider: "",
-            thumbnail: "",
-            clear: function () {
-                isAuthenticated = false;
-                userName = "";
-                userId = "";
-                accessToken = "";
-                provider = "";
-                thumbnail = "";
-            }
+            thumbnail: ""
         }
         var loginDialog = $dialog.dialog({
             backdrop: true,
@@ -60,7 +52,12 @@
             var authData = localStorageService.get('authorizationData');
             if (authData) {
                 if (authData.userData) {
-                    currentUser = authData.userData;
+					currentUser.isAuthenticated = authData.userData.isAuthenticated;
+                    currentUser.userName = authData.userData.userName;
+					currentUser.userId = authData.userData.userId
+					currentUser.accessToken = authData.userData.accessToken;
+					currentUser.provider = authData.userData.provider;
+					currentUser.thumbnail = authData.userData.thumbnail;
                     $http.get('/api/Account/' + currentUser.userId).
                     success(function (data) {
                         deferred.resolve(data);
