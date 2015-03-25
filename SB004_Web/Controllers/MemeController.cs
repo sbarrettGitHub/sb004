@@ -11,6 +11,7 @@ namespace SB004.Controllers
     using SB004.Data;
     using SB004.Domain;
     using SB004.Models;
+    using SB004.User;
     using SB004.Utilities;
     using System.Net.Http.Formatting;
     using Newtonsoft.Json.Serialization;
@@ -42,7 +43,8 @@ namespace SB004.Controllers
         [Authorize]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
-            Models.User user = new Models.User(User.Identity);
+          string userId = User.Identity.UserId();
+          string userName = User.Identity.Name;
 
             IMeme meme = new Meme
             {

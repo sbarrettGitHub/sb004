@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿
 
 namespace SB004.Controllers
 {
-    using System.Configuration;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using System.Web.Http.Results;
+  using System;
+  using System.Configuration;
+  using System.Net;
+  using System.Net.Http;
+  using System.Security.Claims;
+  using System.Threading.Tasks;
+  using System.Web.Http;
+  using Microsoft.Owin.Security;
+  using Microsoft.Owin.Security.OAuth;
+  using Newtonsoft.Json.Linq;
+  using SB004.Models;
+  using SB004.User;
 
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.OAuth;
-
-    using Newtonsoft.Json.Linq;
-
-    using SB004.Models;
-
-    public class AccountController : ApiController
+  public class AccountController : ApiController
     {
 
         /// <summary>
@@ -31,8 +27,7 @@ namespace SB004.Controllers
         [Authorize]
         public HttpResponseMessage Get(string id)
         {
-            Models.User user = new Models.User(User.Identity);
-            if (user.UserId == id)
+            if (User.Identity.UserId() == id)
             {
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
