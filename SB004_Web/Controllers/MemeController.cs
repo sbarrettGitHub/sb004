@@ -84,7 +84,7 @@ namespace SB004.Controllers
             }
             
             //save the meme 
-            meme = repository.AddMeme(meme);
+            meme = repository.SaveMeme(meme);
 
             var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
             {

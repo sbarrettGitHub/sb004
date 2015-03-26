@@ -7,13 +7,7 @@ using System.Web;
 
 namespace SB004.Models
 {
-  public class User
-  {
-    public string UserName { get; set; }
 
-    public string UserId { get; set; }
-
-  }
   public class ParsedExternalAccessToken
   {
     public string user_id { get; set; }

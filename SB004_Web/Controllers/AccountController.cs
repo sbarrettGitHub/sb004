@@ -2,22 +2,28 @@
 
 namespace SB004.Controllers
 {
-  using System;
-  using System.Configuration;
-  using System.Net;
-  using System.Net.Http;
-  using System.Security.Claims;
-  using System.Threading.Tasks;
-  using System.Web.Http;
-  using Microsoft.Owin.Security;
-  using Microsoft.Owin.Security.OAuth;
-  using Newtonsoft.Json.Linq;
-  using SB004.Models;
-  using SB004.User;
+    using System;
+    using System.Configuration;
+    using System.Net;
+    using System.Net.Http;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.OAuth;
+    using Newtonsoft.Json.Linq;
+    using SB004.Models;
+    using SB004.User;
+    using SB004.Domain;
+    using SB004.Data;
 
-  public class AccountController : ApiController
+    public class AccountController : ApiController
     {
-
+        readonly IRepository repository;
+        public AccountController(IRepository repository)
+        {
+            this.repository = repository;
+        }
         /// <summary>
         /// Test that the user is authenticated
         /// </summary>
@@ -46,21 +52,24 @@ namespace SB004.Controllers
 
             // Verify that the access token supplied is valid
             ParsedExternalAccessToken verifiedAccessToken = await VerifyExternalAccessToken(provider, externalAccessToken);
-            
+
             if (verifiedAccessToken == null)
             {
                 return BadRequest("Invalid Provider or External Access Token");
             }
 
             // Find the user in our repository
-            // IdentityUser user = await _repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
-            User user = this.GetUser(provider, verifiedAccessToken.user_id);
+            IUser user = repository.GetUser(verifiedAccessToken.user_id, provider); 
 
-            bool hasRegistered = user != null;
-
-            if (!hasRegistered)
+            if (user == null)
             {
-                return BadRequest("External user is not registered");
+                // Register now
+                user = repository.SaveUser(
+                    new User { 
+                        AuthenticationUserId = verifiedAccessToken.user_id,
+                        AuthenticationProvider = provider,
+                        UserName = verifiedAccessToken.username
+                    });
             }
 
             //generate access token response
@@ -70,17 +79,13 @@ namespace SB004.Controllers
             return Ok(accessTokenResponse);
 
         }
+      
         /// <summary>
-        /// Retrieve the user for the given provider access token
+        /// Verify the access token supplied against the authentication provider
         /// </summary>
         /// <param name="provider"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        private User GetUser(string provider, string providerUserId)
-        {
-            return new User { UserId = Guid.NewGuid().ToString("N"), UserName = "test User" };
-        }
-
         private async Task<ParsedExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
         {
             ParsedExternalAccessToken parsedToken = null;
@@ -160,7 +165,7 @@ namespace SB004.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private JObject GenerateLocalAccessTokenResponse(User user)
+        private JObject GenerateLocalAccessTokenResponse(IUser user)
         {
 
             var tokenExpiration = TimeSpan.FromDays(1);
@@ -168,7 +173,7 @@ namespace SB004.Controllers
             ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
             identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
             identity.AddClaim(new Claim("role", "user"));
 
             var props = new AuthenticationProperties()
@@ -183,7 +188,7 @@ namespace SB004.Controllers
 
             JObject tokenResponse = new JObject(
                                         new JProperty("userName", user.UserName),
-                                        new JProperty("userId", user.UserId),
+                                        new JProperty("userId", user.Id),
                                         new JProperty("access_token", accessToken),
                                         new JProperty("token_type", "bearer"),
                                         new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
