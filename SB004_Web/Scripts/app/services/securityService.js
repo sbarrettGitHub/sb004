@@ -7,7 +7,8 @@
             userId: "",
             accessToken: "",
             provider: "",
-            thumbnail: ""
+            thumbnail: "",
+            profile: {}
         }
         var loginDialog = $dialog.dialog({
             backdrop: true,
@@ -23,16 +24,16 @@
             success(function (data) {
 
                 currentUser.isAuthenticated = true;
-                currentUser.userId = data.userId;
-                currentUser.userName = data.userName;
-                currentUser.accessToken = data.access_token;
-
+                currentUser.userId = data.token.userId;
+                currentUser.userName = data.token.userName;
+                currentUser.accessToken = data.token.access_token;
+                currentUser.profile = data.profile;
                 // Add bearer token to local storage for inclusion with future requests to the server
                 localStorageService.set('authorizationData',
                     {
-                        token: data.access_token,
-                        userName: data.userName,
-                        userId: data.userId,
+                        token: data.token.access_token,
+                        userName: data.token.userName,
+                        userId: data.token.userId,
                         refreshToken: "",
                         useRefreshTokens: false,
                         userData: currentUser
@@ -60,6 +61,7 @@
 					currentUser.thumbnail = authData.userData.thumbnail;
                     $http.get('/api/Account/' + currentUser.userId).
                     success(function (data) {
+                        currentUser.profile = data;
                         deferred.resolve(data);
                     }).
                     error(function () {
@@ -69,6 +71,7 @@
                         currentUser.accessToken = "";
                         currentUser.provider = "";
                         currentUser.thumbnail = "";
+                        currentUser.profile = {};
                         deferred.reject();
                     });
                 }

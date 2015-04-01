@@ -28,16 +28,21 @@ namespace SB004.Controllers
         /// Test that the user is authenticated
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>User profile</returns>
         [HttpGet]
         [Authorize]
-        public HttpResponseMessage Get(string id)
+        public IHttpActionResult Get(string id)
         {
             if (User.Identity.UserId() == id)
             {
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                IUser profile = repository.GetUser(id);
+
+                if (profile != null)
+                {
+                    return Ok(profile);
+                }                
             }
-            return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            return BadRequest("User not authorized");
         }
         [AllowAnonymous]
         [HttpGet]
@@ -76,7 +81,7 @@ namespace SB004.Controllers
             var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
             // Return success with the bearer token for authorized access
-            return Ok(accessTokenResponse);
+            return Ok(new {token = accessTokenResponse, profile=user});
 
         }
       
