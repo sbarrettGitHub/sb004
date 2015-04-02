@@ -27,6 +27,13 @@
             templateUrl: "/Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
+		var memeViewDialog = $dialog.dialog({
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/memeView.html",
+            controller: "memeViewCtrl"
+        });
         $scope.memeSelectConfirmImage = function () {
             //$location.path("new");
             angular.element("#view").addClass("blurry");
@@ -101,6 +108,10 @@
                 }
             });
         }
+		$scope.viewMeme = function(memeId){
+			memeViewDialog.open();
+		}
+		
         $rootScope.$on('quoteSearch.complete', function (event, data) {
 
             $scope.quotes = sharedDataService.data.quoteSearch.results;

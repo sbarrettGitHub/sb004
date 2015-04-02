@@ -9,15 +9,15 @@
 				width:null,
 				height:null
 			},
-            meme: {
-                
+            currentMeme: {
+                id:null
             },
             rawImage:{
 			
             }
         };
         var resetMeme = function() {
-            data.meme = {};
+            data.currentMeme = {};
             data.seedImage = {};
         }
         return {
