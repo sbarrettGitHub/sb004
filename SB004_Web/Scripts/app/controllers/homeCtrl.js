@@ -108,7 +108,9 @@
                 }
             });
         }
-		$scope.viewMeme = function(memeId){
+		$scope.viewMeme = function(memeId)
+		{
+			sharedDataService.data.currentMeme.id = memeId;
 			memeViewDialog.open();
 		}
 		

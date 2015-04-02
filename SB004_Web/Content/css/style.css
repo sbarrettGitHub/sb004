@@ -467,3 +467,14 @@ height:325px;*/
 	background-image: url('../images/Twitter.png');
 	border: 1px solid rgb(32, 145, 189);
 }
+#memeView{
+}
+#memeViewInternal{
+  min-height: 350px;
+}
+#leftBar{
+}
+#middle{
+}
+#rightBar{
+}
