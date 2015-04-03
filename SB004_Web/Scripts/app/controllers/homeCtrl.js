@@ -32,7 +32,8 @@
             keyboard: true,
             backdropClick: false,
             templateUrl: "/Scripts/app/views/memeView.html",
-            controller: "memeViewCtrl"
+            controller: "memeViewCtrl",
+			dialogClass: 'modal dialog-wide'
         });
         $scope.memeSelectConfirmImage = function () {
             //$location.path("new");

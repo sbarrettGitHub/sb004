@@ -285,6 +285,9 @@ height:325px;*/
 	width: 128px;
 	margin-left: 200px;
 }
+.dialog-wide{
+	width:80%;
+}
 #spawnQuote
 {
 }
@@ -473,6 +476,10 @@ height:325px;*/
   min-height: 350px;
 }
 #leftBar{
+	border-right: 1px solid silver;
+	width: 150px;
+	margin-top: -50px;
+	height: 350px;
 }
 #middle{
 }
