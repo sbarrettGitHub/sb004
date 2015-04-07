@@ -286,7 +286,7 @@ height:325px;*/
 	margin-left: 200px;
 }
 .dialog-wide{
-	width:80%;
+	width:75%;
 }
 #spawnQuote
 {
@@ -437,7 +437,7 @@ height:325px;*/
 	margin-left:43px;	
 	height:100%;
 }
-.logInText{
+.socialMediaText{
 	padding-left:18px;
 	padding-top:13px;
 	font-family:sans-serif;
@@ -446,7 +446,7 @@ height:325px;*/
 	text-align: left;
 	color:white
 }
-.logInInnerFaceBook{
+.innerFaceBook{
 	background-color: rgb(81, 114, 180);
 	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
 }
@@ -454,7 +454,7 @@ height:325px;*/
 	background-image: url('../images/Facebook.png');
 	border: 1px solid navy;
 }		
-.logInInnerGoogle{
+.innerGoogle{
 	background-color: rgb(227, 66, 66);
 	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
 }
@@ -462,7 +462,7 @@ height:325px;*/
 	background-image: url('../images/GooglePlus.png');
 	border: 1px solid rgb(248, 116, 116);
 }
-.logInInnerTwitter{
+.innerTwitter{
 	background-color: rgb(28, 128, 168);
 	background-image: linear-gradient(rgb(94, 189, 228), rgb(28, 128, 168));
 }
@@ -473,15 +473,65 @@ height:325px;*/
 #memeView{
 }
 #memeViewInternal{
-  min-height: 350px;
+  min-height: 400px;
 }
 #leftBar{
 	border-right: 1px solid silver;
-	width: 150px;
+	width: 25%;	
 	margin-top: -50px;
-	height: 350px;
+	float: left;
+}
+#socialMedia{
+	margin-top: 25px;
+}
+
+#socialMedia .shareOption{
+	width:80%;
+	height: 41px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	background-repeat: no-repeat;	
+	padding-left: 45px;
+	cursor:pointer;
+	border-radius: 6px;
+}
+#socialMedia .shareOption:hover{
+	width:95%;
+}
+
+.shareText{
+	float:left;
+}
+.shareCount{
+	float:right;
+	margin-right:2px;
+}
+.faceBook{
+	background-image: url('../images/Facebook.png');	
+	border: 1px solid navy;
+}
+.twitter{
+	background-image: url('../images/Twitter.png');	
+	border: 1px solid rgb(32, 145, 189);
+}
+.google{
+	background-image: url('../images/GooglePlus.png');
+	border: 1px solid rgb(248, 116, 116);
+}
+#responseToMeme{
+	border: 1px solid silver;
+	height: 96px;
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
 }
 #middle{
 }
 #rightBar{
+	border-left: 1px solid silver;
+	width: 25%;
+	margin-top: -50px;
+	float: right;
+	min-height:inherit;
 }

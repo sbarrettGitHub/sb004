@@ -6,7 +6,7 @@
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
         $scope.waitingMessage = "";
-
+		$scope.title = "Untitled";
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
