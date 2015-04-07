@@ -1,6 +1,7 @@
 ﻿namespace SB004.Models
 {
   using SB004.Domain;
+    using System.Collections.Generic;
   public class PositionRefModel:IPositionRef
   {
     public string Align { get; set; }
@@ -32,5 +33,7 @@
     public string SeedId { get; set; }
     public CommentModel[] Comments { get; set; }
     public string ImageData { get; set; }
+    public string ResponseToId { get; set; }
+    public List<string> ReplyIds { get; set; }
   }
 }

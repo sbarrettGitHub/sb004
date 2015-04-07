@@ -79,22 +79,21 @@
             });
         }
         $scope.publish = function () {
-            memePublishAndShareDialog.open().then(function (action) {
-                if (action) {
-                    if (action == "StartAgain") {
+            memePublishAndShareDialog.open().then(function (data) {
+                if (data) {
+                    if (data == "StartAgain") {
                         sharedDataService.resetMeme();
                         $scope.memeSelectConfirmImage();
                         return;
                     }
-                    if (action == "ChangeMeme") {
+                    if (data == "ChangeMeme") {
                         $scope.spawn();
                         return;
-                    }
-                    if (action == "Saved") {
-                        alert("Meme saved");
-                    }                   
+                    }                    
                 }
-                angular.element("#view").removeClass("blurry");
+				// Saved
+				alert("Meme saved: " + data);                
+				$scope.viewMeme(data);
             });
         }
         $scope.logIn = function (callBackSuccess, callBackFail) {

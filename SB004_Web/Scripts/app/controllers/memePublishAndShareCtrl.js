@@ -31,8 +31,8 @@
             // Save the meme
             if (securityService.currentUser.isAuthenticated) {
                 saveMeme(memeImageData)
-                    .then(function () {
-                        dialog.close("Saved");
+                    .then(function (id) {
+                        dialog.close(id);
                     })
                     .catch(function (e) {
                         alert(e);
@@ -42,8 +42,8 @@
                 securityService.logIn()
                 .then(function () {
                     saveMeme(memeImageData)
-                    .then(function () {
-                        dialog.close("Saved");
+                    .then(function (id) {
+                        dialog.close(id);
                     })
                     .catch(function (e) {
                         alert(e);
@@ -56,13 +56,13 @@
 			startWaiting();
             $http.post('/api/Meme', {
                 SeedId: sharedDataService.data.seedImage.id,
-                Comments: sharedDataService.data.meme.comments,
+                Comments: sharedDataService.data.currentMeme.comments,
                 ImageData: memeImageData
             }).
                 success(function (data) {
-                    sharedDataService.data.meme = data;
+                    sharedDataService.data.currentMeme = data;
 					endWaiting();
-                    deferred.resolve();
+                    deferred.resolve(data.id);
                 }).
                 error(function (e) {
 					endWaiting();

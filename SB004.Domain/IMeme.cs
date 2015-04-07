@@ -38,5 +38,7 @@ namespace SB004.Domain
         DateTime DateCreated { get; set; }
         string CreatedBy { get; set; }
         List<IComment> Comments { get; set; }
+        string ResponseToId { get; set; }
+        List<string> ReplyIds { get; set; }
     }
 }

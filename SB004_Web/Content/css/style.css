@@ -476,7 +476,6 @@ height:325px;*/
   min-height: 400px;
 }
 #leftBar{
-	border-right: 1px solid silver;
 	width: 25%;	
 	margin-top: -50px;
 	float: left;
@@ -505,7 +504,7 @@ height:325px;*/
 }
 .shareCount{
 	float:right;
-	margin-right:2px;
+	margin-right:5px;
 }
 .faceBook{
 	background-image: url('../images/Facebook.png');	
@@ -528,8 +527,7 @@ height:325px;*/
 }
 #middle{
 }
-#rightBar{
-	border-left: 1px solid silver;
+#rightBar{	
 	width: 25%;
 	margin-top: -50px;
 	float: right;

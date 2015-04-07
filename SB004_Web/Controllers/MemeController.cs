@@ -27,14 +27,28 @@ namespace SB004.Controllers
             this.repository = repository;
             this.imageManager = imageManager;
         }
-
-        public HttpResponseMessage Get(string id)
+        /// <summary>
+        /// Get: api/meme/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult Get(string id)
         {
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(getImageBytes());
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-            return result;
+            IMeme meme = repository.GetMeme(id);
+            if (meme == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new MemeModel 
+            { 
+                Id = meme.Id,
+                ImageData = "data:image/jpeg;base64," + Convert.ToBase64String(meme.ImageData),
+                ResponseToId = meme.ResponseToId,
+                ReplyIds = meme.ReplyIds
+            });
         }
+
         /// <summary>
         /// POST: api/Meme
         /// Save the meme and generate seed id . 

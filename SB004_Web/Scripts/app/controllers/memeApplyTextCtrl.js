@@ -96,7 +96,7 @@
         }
 
         // Reapply the comments from the saved meme
-        if (sharedDataService.data.meme && sharedDataService.data.meme.comments) {
+        if (sharedDataService.data.currentMeme && sharedDataService.data.currentMeme.comments) {
             $scope.comments = sharedDataService.data.meme.comments;
             $timeout(function() {
                 for (var i = 0; i < $scope.comments.length; i++) {
@@ -143,7 +143,7 @@
 			startWaiting("Please wait...","");
             renderingService.capture("meme", $scope.width, $scope.height, function (img) {
                 sharedDataService.data.rawImage = img;
-                sharedDataService.data.meme.comments = $scope.comments;
+                sharedDataService.data.currentMeme.comments = $scope.comments;
 				endWaiting();
                 dialog.close("Proceed");
             });
