@@ -1,7 +1,7 @@
 ﻿<div id="memeView">
     <div id="memeViewInternal" class="rounded">
 		<div class="heading dialogHead" ng-hide="waiting">		
-			<h3>{{title}}</h3>		
+			<h3>{{meme.Title}}</h3>		
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	
 		<div id="leftBar">
@@ -13,22 +13,25 @@
 					<div class="hidden-sm hidden-xs shareCount">698</div>
 				</div>
 				<div id="twitter" class="shareOption twitter innerTwitter socialMediaText">
-					<div class="hidden-xs shareText"> Share</div>
+					<div class="hidden-xs shareText"> Tweet</div>
 					<div class="hidden-sm hidden-xs shareCount">55K</div>
 				</div>
 				<div id="google" class="shareOption google innerGoogle socialMediaText">
 					<div class="hidden-xs shareText"> Share</div>
 					<div class="hidden-sm hidden-xs shareCount">18</div>					
 				</div>
-				<div id="pinterest" class="shareOption"></div>
+				<div id="pinterest" class="shareOption pinterest innerPinterest socialMediaText">
+					<div class="hidden-xs shareText"> Pin it</div>
+					<div class="hidden-sm hidden-xs shareCount">18</div>	
+				</div>
 				<div id="more" class="shareOption"></div>
 			</div>
 		</div>
 		<div id="middle">
 			<div id="moveToPreviousMeme"></div>
 			<div id="currentMemeContainer">
-				<div id="currentMemeInfo" class="imageContainer">
-					<img ng-src="{{meme.ImageData}}" />
+				<img ng-src="api/image/{{meme.Id}}" />
+				<div id="currentMemeInfo" class="imageContainer">					
 					<div id="user"></div>
 					<div id="views"></div>
 					<div id="likes"></div>

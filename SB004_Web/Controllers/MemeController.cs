@@ -40,12 +40,12 @@ namespace SB004.Controllers
                 return NotFound();
             }
 
-            return Ok(new MemeModel 
+            return Ok(new  
             { 
-                Id = meme.Id,
-                ImageData = "data:image/jpeg;base64," + Convert.ToBase64String(meme.ImageData),
-                ResponseToId = meme.ResponseToId,
-                ReplyIds = meme.ReplyIds
+                meme.Id,
+                meme.Title,
+                meme.ResponseToId,
+                meme.ReplyIds
             });
         }
 

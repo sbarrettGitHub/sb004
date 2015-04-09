@@ -446,29 +446,34 @@ height:325px;*/
 	text-align: left;
 	color:white
 }
-.innerFaceBook{
-	background-color: rgb(81, 114, 180);
-	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
-}
 .logInButtonFacebook{
 	background-image: url('../images/Facebook.png');
 	border: 1px solid navy;
 }		
-.innerGoogle{
-	background-color: rgb(227, 66, 66);
-	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
-}
+
 .logInButtonGoogle{
 	background-image: url('../images/GooglePlus.png');
 	border: 1px solid rgb(248, 116, 116);
+}
+.logInButtonTwitter{
+	background-image: url('../images/Twitter.png');
+	border: 1px solid rgb(32, 145, 189);
+}
+.innerFaceBook{
+	background-color: rgb(81, 114, 180);
+	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
+}
+.innerGoogle{
+	background-color: rgb(227, 66, 66);
+	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
 }
 .innerTwitter{
 	background-color: rgb(28, 128, 168);
 	background-image: linear-gradient(rgb(94, 189, 228), rgb(28, 128, 168));
 }
-.logInButtonTwitter{
-	background-image: url('../images/Twitter.png');
-	border: 1px solid rgb(32, 145, 189);
+.innerPinterest{
+	background-color: red;
+	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
 }
 #memeView{
 }
@@ -518,6 +523,10 @@ height:325px;*/
 	background-image: url('../images/GooglePlus.png');
 	border: 1px solid rgb(248, 116, 116);
 }
+.pinterest{
+	background-image: url('../images/Pinterest.png');
+	border: 1px solid rgb(248, 116, 116);
+}
 #responseToMeme{
 	border: 1px solid silver;
 	height: 96px;
@@ -526,7 +535,13 @@ height:325px;*/
 	margin-right:auto;
 }
 #middle{
+  width: 50%;
+  float: left;
 }
+#middle #currentMemeContainer{
+  margin-left: 25%;
+  margin-right: 25%;
+  }
 #rightBar{	
 	width: 25%;
 	margin-top: -50px;

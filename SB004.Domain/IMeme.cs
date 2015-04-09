@@ -32,6 +32,7 @@ namespace SB004.Domain
     public interface IMeme
     {
         string Id { get; set; }
+        string Title { get; set; }
         string CreatedByUserId { get; set; }
         string SeedId { get; set; }
         byte[] ImageData { get; set; }
