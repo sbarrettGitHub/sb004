@@ -496,36 +496,56 @@ height:325px;*/
 	margin-left: auto;
 	margin-right: auto;
 	background-repeat: no-repeat;	
-	padding-left: 45px;
 	cursor:pointer;
 	border-radius: 6px;
 }
 #socialMedia .shareOption:hover{
 	width:95%;
 }
-
+.shareIcon{
+	float:left;
+	width:43px;
+	height:41px;
+	border-radius: 6px;
+}
+ .shareIconLittle{
+ 	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	cursor:pointer;
+	border-radius: 6px;
+	width:80%;
+	background-repeat: no-repeat;
+ }
 .shareText{
 	float:left;
+	font-family:sans-serif;
+	font-weight: bold;
+	font-size:11pt;
+	text-align: left;
+	color:white;
+	margin-top: 11px;
+	margin-left:5px;
 }
 .shareCount{
-	float:right;
-	margin-right:5px;
+	float:right !important;
+	margin-right:5px !important;
 }
 .faceBook{
 	background-image: url('../images/Facebook.png');	
-	border: 1px solid navy;
+	border-left: 1px solid navy;
 }
 .twitter{
 	background-image: url('../images/Twitter.png');	
-	border: 1px solid rgb(32, 145, 189);
+	border-left: 1px solid rgb(32, 145, 189);
 }
 .google{
 	background-image: url('../images/GooglePlus.png');
-	border: 1px solid rgb(248, 116, 116);
+	border-left: 1px solid rgb(248, 116, 116);
 }
 .pinterest{
 	background-image: url('../images/Pinterest.png');
-	border: 1px solid rgb(248, 116, 116);
+	border-left: 1px solid rgb(248, 116, 116);
 }
 #responseToMeme{
 	border: 1px solid silver;
@@ -535,12 +555,13 @@ height:325px;*/
 	margin-right:auto;
 }
 #middle{
-  width: 50%;
   float: left;
+  width:500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #middle #currentMemeContainer{
-  margin-left: 25%;
-  margin-right: 25%;
+
   }
 #rightBar{	
 	width: 25%;
