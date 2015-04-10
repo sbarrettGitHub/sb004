@@ -481,8 +481,7 @@ height:325px;*/
   min-height: 400px;
 }
 #leftBar{
-	width: 25%;	
-	margin-top: -50px;
+	width: 200px;	
 	float: left;
 }
 #socialMedia{
@@ -556,7 +555,6 @@ height:325px;*/
 }
 #middle{
   float: left;
-  width:500px;
   margin-left: auto;
   margin-right: auto;
 }

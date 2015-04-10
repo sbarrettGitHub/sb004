@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$http,$q, dialog, sharedDataService) {
+    var memeViewCtrl = function ($scope,$http,$q, dialog, sharedDataService, memeId) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -41,7 +41,7 @@
         }
 		
 		startWaiting();
-		getMeme(sharedDataService.data.currentMeme.id)
+		getMeme(memeId)
 			.then(function (data) {
 				$scope.meme = data;
 				endWaiting();
@@ -53,6 +53,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "dialog", "sharedDataService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "dialog", "sharedDataService","memeId", memeViewCtrl]);
 
 })();

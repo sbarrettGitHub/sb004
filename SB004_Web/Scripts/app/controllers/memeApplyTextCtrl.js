@@ -58,7 +58,7 @@
             }
         }
     }
-    var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService, renderingService) {
+    var memeApplyTextCtrl = function ($scope, $location, $rootScope, $timeout, $window, $http, dialog, sharedDataService, renderingService, memeData) {
 
         var intialComment = new Comment(0);        
         $scope.editingComment = false;        
@@ -81,23 +81,13 @@
                 };
             }
         }
-        if (sharedDataService.data.seedImage) {
-            if (sharedDataService.data.seedImage.id) {
-                // Get the seed image
-                $scope.seedImage = sharedDataService.data.seedImage;
-            } else {
-                $scope.seedImage = {
-                    id: null,
-                    image: 'unknown.jpg',
-                    width: 'auto',
-                    height: 'auto'
-                }
-            }
+        if (memeData) {
+            $scope.seedImage = memeData.seedImage;
         }
 
         // Reapply the comments from the saved meme
-        if (sharedDataService.data.currentMeme && sharedDataService.data.currentMeme.comments) {
-            $scope.comments = sharedDataService.data.meme.comments;
+        if (memeData.comments) {
+            $scope.comments = memeData.comments;
             $timeout(function() {
                 for (var i = 0; i < $scope.comments.length; i++) {
                     $scope.comments[i].location.apply();
@@ -121,13 +111,16 @@
             dialog.close(false);
         };
         $scope.startAgain = function () {
-            dialog.close("StartAgain");
+            dialog.close({action:"startAgain"});
         };
         $scope.reset = function () {
 			if (!$window.confirm("This will reset the meme to it's original state, discarding your changes. Are you sure you wish to continue?")) {
 				return;
             }
-            dialog.close("Reset");
+            dialog.close({
+						action:"reset", 
+						data:memeData
+					});
         };
         $scope.addComment = function () {
             // Create new comment 
@@ -142,10 +135,15 @@
         $scope.proceed = function () {
 			startWaiting("Please wait...","");
             renderingService.capture("meme", $scope.width, $scope.height, function (img) {
-                sharedDataService.data.rawImage = img;
-                sharedDataService.data.currentMeme.comments = $scope.comments;
+                sharedDataService.data.rawImage = img;                
+				sharedDataService.data.currentMeme.comments = $scope.comments;
+				memeData.rawImage = img;
+				memeData.comments = $scope.comments;
 				endWaiting();
-                dialog.close("Proceed");
+                dialog.close({
+						action:"proceed", 
+						data:memeData
+					});
             });
         };
         /*Drag, drop, resize, Edit & delete*/
@@ -262,6 +260,6 @@
     }
 
     // Register the controller
-    app.controller('memeApplyTextCtrl', ["$scope", "$location", "$rootScope", "$timeout", "$window", "$http", "dialog", "sharedDataService", "renderingService", memeApplyTextCtrl]);
+    app.controller('memeApplyTextCtrl', ["$scope", "$location", "$rootScope", "$timeout", "$window", "$http", "dialog", "sharedDataService", "renderingService", "memeData", memeApplyTextCtrl]);
 
 })();

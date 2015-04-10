@@ -10,7 +10,6 @@
 				height:null
 			},
             currentMeme: {
-                id:null
             },
             rawImage:{
 			

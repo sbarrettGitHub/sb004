@@ -13,6 +13,13 @@
             templateUrl: "/Scripts/app/views/spawn.html",
             controller: "memeApplyTextCtrl"
         });
+        var memeApplyTextDialogOpts = {
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/spawn.html",
+            controller: "memeApplyTextCtrl"
+        };		
         var memePublishAndShareDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
@@ -27,14 +34,15 @@
             templateUrl: "/Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
-		var memeViewDialog = $dialog.dialog({
+		var memeViewDialogOpts = {
             backdrop: true,
             keyboard: true,
             backdropClick: false,
             templateUrl: "/Scripts/app/views/memeView.html",
             controller: "memeViewCtrl",
 			dialogClass: 'modal dialog-wide'
-        });
+        };
+		
         $scope.memeSelectConfirmImage = function () {
             //$location.path("new");
             angular.element("#view").addClass("blurry");
@@ -46,39 +54,40 @@
                 controller: "memeSelectConfirmImageCtrl"
             });
 
-            memeSelectConfirmImageDialog.open().then(function (proceed) {
-                if (!proceed) {
+            memeSelectConfirmImageDialog.open().then(function (dialogResult) {
+                if (!dialogResult.action == "proceed") {
                     angular.element("#view").removeClass("blurry");
                     return;
                 }
-                $scope.spawn();
+                $scope.spawn(dialogResult.data);
             });
 
             $timeout(function () {
                 angular.element('#pasteInput>input').focus();
             }, 400);
         }
-        $scope.spawn = function () {
-            memeApplyTextDialog.open().then(function (action) {
-                if (action) {
-                    if (action == "StartAgain") {
+        $scope.spawn = function (seedData) {
+			memeApplyTextDialogOpts.resolve = {memeData : function() {return angular.copy(seedData);}};
+			$dialog.dialog(memeApplyTextDialogOpts).open().then(function (dialogResult) {
+                if (dialogResult) {
+                    if (dialogResult.action == "startAgain") {
                         sharedDataService.resetMeme();
                         $scope.memeSelectConfirmImage();
                         return;
                     }
-                    if (action == "Reset") {
-                        $scope.spawn();
+                    if (dialogResult.action == "reset") {
+                        $scope.spawn(dialogResult.data);
                         return;
                     }
-                    if (action == "Proceed") {
-                        $scope.publish();
+                    if (dialogResult.action == "proceed") {
+                        $scope.publish(dialogResult.data);
                         return;
                     }
                 }
                 angular.element("#view").removeClass("blurry");
             });
         }
-        $scope.publish = function () {
+        $scope.publish = function (memeData) {
             memePublishAndShareDialog.open().then(function (data) {
                 if (data) {
                     if (data == "StartAgain") {
@@ -110,8 +119,8 @@
         }
 		$scope.viewMeme = function(memeId)
 		{
-			sharedDataService.data.currentMeme.id = memeId;
-			memeViewDialog.open();
+			memeViewDialogOpts.resolve = {memeId : function() {return angular.copy(memeId);}};
+			$dialog.dialog(memeViewDialogOpts).open();
 		}
 		
         $rootScope.$on('quoteSearch.complete', function (event, data) {

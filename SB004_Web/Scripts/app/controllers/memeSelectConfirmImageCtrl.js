@@ -53,7 +53,15 @@
                 sharedDataService.data.seedImage.id = data.id;
                 sharedDataService.data.seedImage.image = data.image;
 				$scope.waiting = false;
-                dialog.close(true);
+                dialog.close(
+					{
+						action:proceed, 
+						data:
+						{
+							seedId:data.id,
+							seedImage: data.image
+						}
+					});
             }).
             error(function (data, status, headers, config) {
                 // called asynchronously if an error occurs
@@ -63,7 +71,7 @@
 
         };
         $scope.closeMe = function () {
-            dialog.close(false);
+            dialog.close({action:cancel});
         };
         $scope.imageSet = function () {
             $timeout(function () {
