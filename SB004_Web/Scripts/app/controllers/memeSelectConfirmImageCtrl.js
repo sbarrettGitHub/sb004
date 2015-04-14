@@ -42,12 +42,14 @@
 
         $scope.proceed = function () {
             var imagePreview = angular.element("#imagePreview");
+			var width = imagePreview.width();
+			var height = imagePreview.height();
 			startWaiting("Please wait...","");
             $http.post('/api/Seed', {
                 id: null,
                 image: $scope.image,
-                width: imagePreview.width(),
-                height: imagePreview.height()
+                width: width,
+                height: height
             }).
             success(function (data, status, headers, config) {
                 sharedDataService.data.seedImage.id = data.id;
@@ -62,8 +64,8 @@
 							{
 								id:data.id,
 								image:data.image,
-								width:imagePreview.width(),
-								height:imagePreview.height()
+								width: width,
+								height: height
 							}
 						}
 					});

@@ -81,10 +81,6 @@
                 };
             }
         }
-        /*if (memeData) {
-            $scope.seedImage = memeData.seedImage;
-			$scope.seedId = memeData.seedImage.id;
-        }*/
 
         // Reapply the comments from the saved meme
         if ($scope.memeData.comments) {
@@ -136,9 +132,7 @@
         $scope.proceed = function () {
 			startWaiting("Please wait...","");
             renderingService.capture("meme", $scope.width, $scope.height, function (img) {
-                sharedDataService.data.rawImage = img;                
-				sharedDataService.data.currentMeme.comments = $scope.memeData.comments;
-				memeData.rawImage = img;
+                sharedDataService.data.rawImage = img; // cannot add to memeData to pass to next dialog because of encoding issues of base 64                							
 				memeData.comments = $scope.memeData.comments;
 				endWaiting();
                 dialog.close({

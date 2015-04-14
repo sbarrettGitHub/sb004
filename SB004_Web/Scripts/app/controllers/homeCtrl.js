@@ -27,6 +27,13 @@
             templateUrl: "/Scripts/app/views/publish.html",
             controller: "memePublishAndShareCtrl"
         });
+		var memePublishAndShareDialogOpts ={
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/publish.html",
+            controller: "memePublishAndShareCtrl"
+        };
         var loginDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
@@ -88,21 +95,25 @@
             });
         }
         $scope.publish = function (memeData) {
-            memePublishAndShareDialog.open().then(function (data) {
-                if (data) {
-                    if (data == "StartAgain") {
+			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}};
+            $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
+                if (dialogResult) {
+                    if (dialogResult.action == "startAgain") {
                         sharedDataService.resetMeme();
                         $scope.memeSelectConfirmImage();
-                        return;
+                        return;memeData
                     }
-                    if (data == "ChangeMeme") {
+                    if (dialogResult.action == "changeMeme") {
                         $scope.spawn(memeData);
                         return;
-                    }                    
+                    } 
+					if (dialogResult.action == "close") {
+                        return;
+                    } 					
                 }
 				// Saved
-				alert("Meme saved: " + data);                
-				$scope.viewMeme(data);
+				alert("Meme saved: " + dialogResult.data.id);                
+				$scope.viewMeme(dialogResult.data.id);
             });
         }
         $scope.logIn = function (callBackSuccess, callBackFail) {
