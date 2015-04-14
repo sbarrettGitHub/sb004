@@ -96,7 +96,7 @@
                         return;
                     }
                     if (data == "ChangeMeme") {
-                        $scope.spawn();
+                        $scope.spawn(memeData);
                         return;
                     }                    
                 }

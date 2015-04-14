@@ -55,11 +55,16 @@
 				$scope.waiting = false;
                 dialog.close(
 					{
-						action:proceed, 
+						action:"proceed", 
 						data:
 						{
-							seedId:data.id,
-							seedImage: data.image
+							seedImage: 
+							{
+								id:data.id,
+								image:data.image,
+								width:imagePreview.width(),
+								height:imagePreview.height()
+							}
 						}
 					});
             }).

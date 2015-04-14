@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using SB004.Domain;
-namespace SB004.Models
+﻿namespace SB004.Models
 {
     public class SeedModel
     {

@@ -68,7 +68,7 @@
 		$scope.waiting = false;
 		$scope.waitHeading = "Please wait...";
 		$scope.waitingMessage = "";
-		
+		$scope.memeData = memeData;
         $scope.toolbarStyle = function() {
             if ($scope.comment) {
                 var width = $scope.comment.position.width / 2;
@@ -81,27 +81,28 @@
                 };
             }
         }
-        if (memeData) {
+        /*if (memeData) {
             $scope.seedImage = memeData.seedImage;
-        }
+			$scope.seedId = memeData.seedImage.id;
+        }*/
 
         // Reapply the comments from the saved meme
-        if (memeData.comments) {
-            $scope.comments = memeData.comments;
+        if ($scope.memeData.comments) {
+            //$scope.memeData.comments = memeData.comments;
             $timeout(function() {
-                for (var i = 0; i < $scope.comments.length; i++) {
-                    $scope.comments[i].location.apply();
-                    $scope.comments[i].dimensions.apply();
+                for (var i = 0; i < $scope.memeData.comments.length; i++) {
+                    $scope.memeData.comments[i].location.apply();
+                    $scope.memeData.comments[i].dimensions.apply();
                 }
             }, 1000);
 
-            $scope.comment = $scope.comments[0];
+            $scope.comment = $scope.memeData.comments[0];
         } else {
 
             // Default comment
-            $scope.comments = [intialComment];
-            $scope.comment = $scope.comments[0];
-            $scope.comment.location.center($scope.seedImage.width, $scope.seedImage.height);
+            $scope.memeData.comments = [intialComment];
+            $scope.comment = $scope.memeData.comments[0];
+            $scope.comment.location.center($scope.memeData.seedImage.width, $scope.memeData.seedImage.height);
             $scope.comment.location.apply();
             $scope.comment.dimensions.apply();
         }
@@ -124,21 +125,21 @@
         };
         $scope.addComment = function () {
             // Create new comment 
-            var c = new Comment($scope.comments.length);
+            var c = new Comment($scope.memeData.comments.length);
 
             // Position new comment
-            c.position.width = $scope.seedImage.width;
+            c.position.width = $scope.memeData.seedImage.width;
 
             // Add new comment
-            $scope.comments.push(c);
+            $scope.memeData.comments.push(c);
         };
         $scope.proceed = function () {
 			startWaiting("Please wait...","");
             renderingService.capture("meme", $scope.width, $scope.height, function (img) {
                 sharedDataService.data.rawImage = img;                
-				sharedDataService.data.currentMeme.comments = $scope.comments;
+				sharedDataService.data.currentMeme.comments = $scope.memeData.comments;
 				memeData.rawImage = img;
-				memeData.comments = $scope.comments;
+				memeData.comments = $scope.memeData.comments;
 				endWaiting();
                 dialog.close({
 						action:"proceed", 
@@ -148,7 +149,7 @@
         };
         /*Drag, drop, resize, Edit & delete*/
         $scope.selectComment = function (id) {
-            $scope.comment = $scope.comments[id];
+            $scope.comment = $scope.memeData.comments[id];
             $scope.selectedCommentId = id;
 			$scope.propertiesHinted = true;
             angular.element('.comment').tooltip('destroy');
@@ -163,7 +164,7 @@
             $scope.editingComment = true;
 			$scope.propertiesHinted = false;
 			if(id){
-				$scope.comment = $scope.comments[id];
+				$scope.comment = $scope.memeData.comments[id];
 				$scope.selectedCommentId = id;
 			}            
             angular.element('.comment').tooltip('destroy');
@@ -187,9 +188,9 @@
         };
         $scope.dropped = function (left, top, relLeft, relTop, el) {
             var x = relLeft;
-            $scope.comments[$scope.comment.id].position.align = "none";
-            $scope.comments[$scope.comment.id].position.x = relLeft;
-            $scope.comments[$scope.comment.id].position.y = relTop;
+            $scope.memeData.comments[$scope.comment.id].position.align = "none";
+            $scope.memeData.comments[$scope.comment.id].position.x = relLeft;
+            $scope.memeData.comments[$scope.comment.id].position.y = relTop;
             console.log("dropped: " + $scope.comment.id + "-" + $scope.comment.position.x + " X " + $scope.comment.position.y);
 
         };

@@ -14,7 +14,7 @@
 				<i class="fa fa-undo"></i>
 			</div>
 		</div>
-        <div id="meme" class="imageContainer" style="width:{{seedImage.width}}px;position:relative;z-index:1;">
+        <div id="meme" class="imageContainer" style="width:{{memeData.seedImage.width}}px;position:relative;z-index:1;">
 			<div id="toolbar" style="z-index:0;"
 					ng-style="toolbarStyle()" 
 					ng-show="(propertiesHinted || editingComment)" 
@@ -396,16 +396,16 @@
 					</label>
 				</div>
 			</div>
-            <img ng-src={{seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
-                 style="width:{{seedImage.width}}px; height:{{seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;z-index: -100;position:relative;" />
+            <img ng-src={{memeData.seedImage.image}} ngdroppable ngdrop="dropped(left,top,relLeft,relTop,el)"
+                 style="width:{{memeData.seedImage.width}}px; height:{{memeData.seedImage.height}}px; margin-left:auto;margin-right:auto;display:block;z-index: -100;position:relative;" />
             <div id="comment_{{com.id}}" class="comment"
                  ngdraggableresizable
-                 ng-hide="comments[com.id].dropped"
+                 ng-hide="memeData.comments[com.id].dropped"
                  ngresizestop="resized(width, height)" 
 				 ngdragstart="startDrag(com.id)"
-                 ng-repeat="com in comments" 
+                 ng-repeat="com in memeData.comments" 
 				 ng-class="{'focus': (editingComment && selectedCommentId==com.id)}"
-                 ng-style="comments[com.id].style"
+                 ng-style="memeData.comments[com.id].style"
                  data-cid="{{com.id}}"
                  style=";min-height:16px;z-index:-1;">
                 <div class="dropComment" ng-show="editingComment && selectedCommentId==com.id" ng-click="deleteComment(com.id)">
@@ -415,8 +415,8 @@
                 </div>
                 <div ng-click="startEdit(com.id);$event.stopPropagation();" ng-mouseover="selectComment(com.id)" ng-mouseout="unselectComment(com.id)"
                      style="min-height:16px;z-index:1;" 
-					 ng-style="comments[com.id].innerStyle()">
-					 {{comments[com.id].text}}
+					 ng-style="memeData.comments[com.id].innerStyle()">
+					 {{memeData.comments[com.id].text}}
 				</div>
                 <input type="text" class="commentText form-control" ng-model="comment.text" 
 					   ng-click="$event.stopPropagation();" 
