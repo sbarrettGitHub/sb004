@@ -393,6 +393,10 @@ height:325px;*/
 	margin-right:auto;
 	float: none;
  }
+ #publish .imageContainer .image{
+	display:block;
+    margin:auto;
+ }
 #publish img{margin-left:auto;margin-right:auto;display:block;}
   
 #logIn #logInOptions{

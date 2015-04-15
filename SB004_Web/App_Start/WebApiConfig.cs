@@ -1,10 +1,14 @@
 ﻿namespace SB004
 {
   using System.Web.Http;
+
+  using Newtonsoft.Json.Serialization;
+
   public class WebApiConfig
   {
     public static void Register(HttpConfiguration config)
     {
+       config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
