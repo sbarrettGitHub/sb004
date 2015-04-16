@@ -6,11 +6,11 @@ namespace SB004.Domain
   public interface IPositionRef
     {
         string Align { get; set; }
-        int X { get; set; }
-        int Y { get; set; }
-        int Width { get; set; }
-        int Height { get; set; }
-        int Padding { get; set; }
+        float X { get; set; }
+        float Y { get; set; }
+        float Width { get; set; }
+        float Height { get; set; }
+        float Padding { get; set; }
 
     }
     public interface IComment

@@ -113,7 +113,7 @@ namespace SB004.Utilities
                 StringFormat strFormat = new StringFormat();
                 foreach (IComment comment in memeData.Comments)
                 {
-                    int x = comment.Position.X, width = comment.Position.Width, y = comment.Position.Y, height = comment.Position.Height;
+                    float x = comment.Position.X, width = comment.Position.Width, y = comment.Position.Y, height = comment.Position.Height;
 
                     //ToDo: Apply formmating
                     strFormat.Alignment = StringAlignment.Near;

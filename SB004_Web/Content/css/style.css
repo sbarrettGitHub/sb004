@@ -264,7 +264,6 @@ height:325px;*/
 
 /*-----------------------------------------------------------*/
 .dialogPage {
-    height:460px;
     width:560px;
 }
 .dialogHead {
@@ -393,9 +392,9 @@ height:325px;*/
 	margin-right:auto;
 	float: none;
  }
- #publish .imageContainer .image{
+.imageContainer .image{
 	display:block;
-    margin:auto;
+    margin:auto !important;
  }
 #publish img{margin-left:auto;margin-right:auto;display:block;}
   
@@ -480,15 +479,22 @@ height:325px;*/
 	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
 }
 #memeView{
+  max-height: 520px;
+  overflow: hidden;
 }
 #memeViewInternal{
   min-height: 400px;
 }
-#leftBar{
-	width: 200px;	
-	float: left;
+#memeViewInternal .closeMe{
+  margin-top: -15px;
 }
-#socialMedia{
+#leftBar{
+	width: 25%;
+	float: left;
+	min-height:325px;
+	border-right:1px solid #C8C8C8;
+}
+#leftBar #socialMedia{
 	margin-top: 25px;
 }
 
@@ -551,7 +557,7 @@ height:325px;*/
 	border-left: 1px solid rgb(248, 116, 116);
 }
 #responseToMeme{
-	border: 1px solid silver;
+	border: 1px solid #C8C8C8;
 	height: 96px;
 	width:80%;
 	margin-left:auto;
@@ -567,7 +573,8 @@ height:325px;*/
   }
 #rightBar{	
 	width: 25%;
-	margin-top: -50px;
 	float: right;
-	min-height:inherit;
+	min-height:325px;
+	border-left:1px solid #C8C8C8;
+	background-color: #F8F8F8;
 }

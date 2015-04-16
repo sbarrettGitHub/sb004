@@ -55,6 +55,7 @@ namespace SB004.Controllers
         /// <param name="memeModel">Meme to add</param> 
         /// </summary>
         [Authorize]
+        [HttpPost]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
           string userId = User.Identity.UserId();
