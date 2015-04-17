@@ -78,7 +78,7 @@
 
         };
         $scope.closeMe = function () {
-            dialog.close({action:cancel});
+            dialog.close({action:"cancel"});
         };
         $scope.imageSet = function () {
             $timeout(function () {

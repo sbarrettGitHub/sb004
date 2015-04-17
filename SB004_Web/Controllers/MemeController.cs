@@ -50,6 +50,17 @@ namespace SB004.Controllers
         }
 
         /// <summary>
+        /// Get: api/meme/
+        /// Return default search of memes for the given user if authenticated or general search if not
+        /// </summary>
+        /// <returns></returns>
+        public IHttpActionResult Get()
+        {
+          string userId = User.Identity.UserId();
+          IEnumerable<IMeme> searchResults = repository.SearchMeme(0, 10);
+          return Ok(searchResults);
+        }
+        /// <summary>
         /// POST: api/Meme
         /// Save the meme and generate seed id . 
         /// <param name="memeModel">Meme to add</param> 
@@ -113,11 +124,6 @@ namespace SB004.Controllers
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
             return response;
         }
-        private byte[] getImageBytes()
-        {
-            var webClient = new WebClient();
-            byte[] imageBytes = webClient.DownloadData("http://www.google.com/images/logos/ps_logo2.png");
-            return imageBytes;
-        }
+
     }
 }

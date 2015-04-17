@@ -51,8 +51,9 @@
         };
 		
         $scope.memeSelectConfirmImage = function () {
-            //$location.path("new");
-            angular.element("#view").addClass("blurry");
+
+            dialogsViewBegin();
+			
             var memeSelectConfirmImageDialog = $dialog.dialog({
                 backdrop: true,
                 keyboard: true,
@@ -62,11 +63,11 @@
             });
 
             memeSelectConfirmImageDialog.open().then(function (dialogResult) {
-                if (!dialogResult.action == "proceed") {
-                    angular.element("#view").removeClass("blurry");
+                if (dialogResult.action == "proceed") {
+					$scope.spawn(dialogResult.data);                    
                     return;
                 }
-                $scope.spawn(dialogResult.data);
+                allDialogsComplete();
             });
 
             $timeout(function () {
@@ -91,7 +92,7 @@
                         return;
                     }
                 }
-                angular.element("#view").removeClass("blurry");
+                allDialogsComplete();
             });
         }
         $scope.publish = function (memeData) {
@@ -111,8 +112,7 @@
                         return;
                     } 					
                 }
-				// Saved
-				alert("Meme saved: " + dialogResult.data.id);                
+				// Saved. Open the meme in a dialog              
 				$scope.viewMeme(dialogResult.data.id);
             });
         }
@@ -131,7 +131,9 @@
 		$scope.viewMeme = function(memeId)
 		{
 			memeViewDialogOpts.resolve = {memeId : function() {return angular.copy(memeId);}};
-			$dialog.dialog(memeViewDialogOpts).open();
+			$dialog.dialog(memeViewDialogOpts).open().then(function (dialogResult) {
+				allDialogsComplete();
+			});
 		}
 		
         $rootScope.$on('quoteSearch.complete', function (event, data) {
@@ -148,6 +150,13 @@
         };
 
         $scope.init();
+		
+		function dialogsViewBegin(){
+			angular.element("#view").addClass("blurry");
+		}
+		function allDialogsComplete(){
+			angular.element("#view").removeClass("blurry");			
+		}
     }
 
     // Register the controller

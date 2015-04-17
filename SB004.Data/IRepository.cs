@@ -1,6 +1,8 @@
 ﻿namespace SB004.Data
 {
-    using SB004.Domain;
+  using System.Collections.Generic;
+
+  using SB004.Domain;
 
     public interface IRepository
     {
@@ -14,9 +16,11 @@
 
         IMeme GetMeme(string memeId);
 
+        List<IMeme> SearchMeme(int skip, int take);
+
         IUser SaveUser(IUser user);
         
-        IUser GetUser(string authenticationUserId, string AuthenticationProvider);
+        IUser GetUser(string authenticationUserId, string authenticationProvider);
         
         IUser GetUser(string userId);
     }
