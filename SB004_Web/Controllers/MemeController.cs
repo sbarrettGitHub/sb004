@@ -43,6 +43,9 @@ namespace SB004.Controllers
             return Ok(new  
             { 
                 meme.Id,
+                meme.CreatedBy,
+                meme.CreatedByUserId,
+                DateCreated = meme.DateCreated.ToLocalTime(),
                 meme.Title,
                 meme.ResponseToId,
                 meme.ReplyIds
@@ -74,6 +77,9 @@ namespace SB004.Controllers
 
             IMeme meme = new Meme
             {
+                CreatedByUserId = User.Identity.UserId(),
+                CreatedBy = User.Identity.Name,
+                DateCreated = DateTime.Now.ToUniversalTime(),
                 SeedId = memeModel.SeedId,
                 Comments = memeModel.Comments.Select(x => (IComment)new Comment
                 {
