@@ -11,7 +11,7 @@ namespace SB004
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<IRepository, Repository>();
+            container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             container.RegisterType<IImageManager, ImageManager>();
             container.RegisterType<IDownloader, Downloader>();
 
