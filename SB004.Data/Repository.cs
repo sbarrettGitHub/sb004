@@ -5,6 +5,8 @@
   using System.Configuration;
   using System.Linq;
 
+  using MongoDB.Bson.Serialization;
+
   using SB004.Domain;
   using MongoDB.Bson;
   using MongoDB.Driver;
@@ -29,6 +31,32 @@
       memeCollection = database.GetCollection<Meme>("meme");
 
       userCollection = database.GetCollection<User>("user");
+
+//      BsonClassMap.RegisterClassMap<Meme>(cm =>
+//      {
+//        cm.AutoMap();
+//        cm.MapProperty<List<IComment>>(c => (List<IComment>)c.Comments);
+//      });
+      try
+      {
+        if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
+        {
+          BsonClassMap.RegisterClassMap<List<IComment>>();
+        }
+        if (!BsonClassMap.IsClassMapRegistered(typeof(Comment)))
+        {
+          BsonClassMap.RegisterClassMap<Comment>();
+        }
+        if (!BsonClassMap.IsClassMapRegistered(typeof(PositionRef)))
+        {
+          BsonClassMap.RegisterClassMap<PositionRef>();
+        }
+      }
+      catch (Exception ex)
+      {
+        
+        throw;
+      }
     }
     #region Seed
 
@@ -110,18 +138,26 @@
     /// <returns></returns>
     public List<IMeme> SearchMeme(int skip, int take)
     {
-      var query = new QueryDocument();
-      List<IMeme> memes = new List<IMeme>();
-
-      var cursor =
-            memeCollection.FindAllAs<Meme>().SetSortOrder(SortBy.Descending("DateCreated")).SetLimit(take);
-
-      foreach (Meme entity in cursor)
+      try
       {
-        memes.Add(entity);
-      }
+        var query = new QueryDocument();
+        List<IMeme> memes = new List<IMeme>();
 
-      return memes;
+        var cursor =
+              memeCollection.FindAllAs<Meme>().SetSortOrder(SortBy.Descending("DateCreated")).SetLimit(take);
+
+        foreach (Meme entity in cursor)
+        {
+          memes.Add(entity);
+        }
+
+        return memes;
+      }
+      catch (Exception ex)
+      {
+        
+        throw;
+      }
     }
 
     #endregion
