@@ -9,8 +9,8 @@
       </div>
       <div class="quote panel" ng-repeat="quote in quotes" title="{{quote.title}}">
         <div class="quoteHeader">
-          <span>{{quote.by}}</span>
-          <div class="when">{{quote.dateCreated}} (<span class="glyphicon glyphicon-heart" title="This meme has received {{quote.votes}} positive votes"></span> {{quote.votes}})</div> 
+          <span>{{quote.createdBy}}</span>
+          <div class="when">{{quote.dateCreated  | date:'longDate'}} (<span class="glyphicon glyphicon-heart" title="This meme has received {{quote.upVotes}} positive votes"></span> {{quote.votes}})</div> 
         </div>
         <img ng-src="api/image/{{quote.id}}" alt="{{quote.title}}" ng-click="viewMeme(quote.id)"/>
         <div class="quoteFooter">

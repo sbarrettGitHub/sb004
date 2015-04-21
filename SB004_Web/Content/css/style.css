@@ -81,7 +81,6 @@ opacity: 0.6 !important;
 	color:white;
 }
 .quote{
-  width:230px;
   float:left;
   margin:5px;
 }
@@ -485,8 +484,9 @@ height:325px;*/
 #memeViewInternal{
   min-height: 400px;
 }
+
 #memeViewInternal .closeMe{
-  margin-top: -15px;
+
 }
 #leftBar{
 	width: 25%;
@@ -569,6 +569,9 @@ height:325px;*/
 #middle #currentMemeContainer{
 
   }
+ #middle #currentMemeInfo{
+ margin-top: 5px;
+ }
 #rightBar{	
 	width: 25%;
 	float: right;
