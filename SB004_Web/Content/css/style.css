@@ -506,7 +506,6 @@ height:325px;*/
 	margin-right: auto;
 	background-repeat: no-repeat;	
 	cursor:pointer;
-	border-radius: 6px;
 }
 #socialMedia .shareOption:hover{
 	width:95%;
@@ -515,7 +514,6 @@ height:325px;*/
 	float:left;
 	width:43px;
 	height:41px;
-	border-radius: 6px;
 }
  .shareIconLittle{
  	margin-top: 10px;
