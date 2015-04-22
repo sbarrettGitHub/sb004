@@ -5,7 +5,7 @@
 			
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	
-		<div id="leftBar" class="hidden-sm hidden-xs">
+		<div id="leftBar" class="hidden-sm hidden-xs section">
 			<div id="responseToMeme">
 			</div>
 			<div id="socialMedia">
@@ -33,21 +33,21 @@
 		</div>
 		<div id="middle" class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
 			<div id="moveToPreviousMeme"></div>
-			<div id="currentMemeContainer" class="imageContainer">
+			<div id="currentMemeContainer" class="imageContainer section">
 				<img ng-src="api/image/{{meme.id}}" class="image"/>
 					<div id="replyToMeme"></div>
 					<div id="upVoteMeme"></div>
 					<div id="downVoteMeme"></div>
 					<div id="reportMeme"></div>
-					<div id="addMemeToFavourites"></div>
-				
+					<div id="addMemeToFavourites"></div>				
 			</div>
-			<div id="currentMemeInfo">					
-					<div id="createdBy">{{meme.createdBy}} </div>
-					<div id="dateCreated" class="when">{{meme.dateCreated | date:'longDate'}}</div>								
+			<div id="currentMemeInfo">		
+					<div id="createdBy">{{meme.title}} </div>
+					<div id="createdBy">By: {{meme.createdBy}} </div>
+					<div id="dateCreated" class="when">On: {{meme.dateCreated | date:'medium'}}</div>								
 			</div>
 		</div>
-		<div id="rightBar" class="hidden-sm hidden-xs">
+		<div id="rightBar" class="hidden-sm hidden-xs section">
 			<div id="moveToPreviousReplies"></div>
 			<div id="currentMemeReplies">
 				<div class="reply"></div>

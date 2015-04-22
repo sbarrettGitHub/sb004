@@ -482,17 +482,22 @@ height:325px;*/
   overflow: hidden;
 }
 #memeViewInternal{
-  min-height: 400px;
+  min-height: 425px;
 }
 
 #memeViewInternal .closeMe{
 
 }
+#memeViewInternal .section{
+	padding: 10px;
+	border-radius: 6px;
+	background-color: whitesmoke;
+}
 #leftBar{
 	width: 25%;
 	float: left;
 	min-height:325px;
-	border-right:1px solid #C8C8C8;
+	
 }
 #leftBar #socialMedia{
 	margin-top: 25px;
@@ -567,7 +572,9 @@ height:325px;*/
   margin-right: auto;
 }
 #middle #currentMemeContainer{
-
+	padding: 10px;
+	border-radius: 6px;
+	
   }
  #middle #currentMemeInfo{
  margin-top: 5px;
@@ -576,6 +583,5 @@ height:325px;*/
 	width: 25%;
 	float: right;
 	min-height:325px;
-	border-left:1px solid #C8C8C8;
-	background-color: #F8F8F8;
+	background-color: whitesmoke;
 }
