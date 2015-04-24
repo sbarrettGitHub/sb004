@@ -284,7 +284,7 @@ height:325px;*/
 	margin-left: 200px;
 }
 .dialog-wide{
-	width:75%;
+	width:65%;
 }
 #spawnQuote
 {
@@ -478,110 +478,38 @@ height:325px;*/
 	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
 }
 #memeView{
-  max-height: 520px;
   overflow: hidden;
+  background-color: whitesmoke;
 }
 #memeViewInternal{
-  min-height: 425px;
+  
 }
 
 #memeViewInternal .closeMe{
-
+  margin-top: 5px;
 }
 #memeViewInternal .section{
 	padding: 10px;
 	border-radius: 6px;
 	background-color: whitesmoke;
 }
-#leftBar{
-	width: 25%;
-	float: left;
-	min-height:325px;
-	
-}
-#leftBar #socialMedia{
-	margin-top: 25px;
-}
 
-#socialMedia .shareOption{
-	width:80%;
-	height: 41px;
-	margin-top: 10px;
-	margin-left: auto;
-	margin-right: auto;
-	background-repeat: no-repeat;	
-	cursor:pointer;
-}
-#socialMedia .shareOption:hover{
-	width:95%;
-}
-.shareIcon{
-	float:left;
-	width:43px;
-	height:41px;
-}
- .shareIconLittle{
- 	margin-top: 10px;
-	margin-left: auto;
-	margin-right: auto;
-	cursor:pointer;
-	border-radius: 6px;
-	width:80%;
-	background-repeat: no-repeat;
- }
-.shareText{
-	float:left;
-	font-family:sans-serif;
-	font-weight: bold;
-	font-size:11pt;
-	text-align: left;
-	color:white;
-	margin-top: 11px;
-	margin-left:5px;
-}
-.shareCount{
-	float:right !important;
-	margin-right:5px !important;
-}
-.faceBook{
-	background-image: url('../images/Facebook.png');	
-	border-left: 1px solid navy;
-}
-.twitter{
-	background-image: url('../images/Twitter.png');	
-	border-left: 1px solid rgb(32, 145, 189);
-}
-.google{
-	background-image: url('../images/GooglePlus.png');
-	border-left: 1px solid rgb(248, 116, 116);
-}
-.pinterest{
-	background-image: url('../images/Pinterest.png');
-	border-left: 1px solid rgb(248, 116, 116);
-}
-#responseToMeme{
-	border: 1px solid #C8C8C8;
-	height: 96px;
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-}
-#middle{
+#main{
   float: left;
   margin-left: auto;
   margin-right: auto;
+  background-color: whitesmoke;
+  
 }
-#middle #currentMemeContainer{
+#main #currentMemeContainer{
 	padding: 10px;
 	border-radius: 6px;
-	
+	background-color: white;
   }
- #middle #currentMemeInfo{
+ #main #currentMemeInfo{
  margin-top: 5px;
  }
 #rightBar{	
-	width: 25%;
-	float: right;
 	min-height:325px;
-	background-color: whitesmoke;
+	background-color: white;	
 }

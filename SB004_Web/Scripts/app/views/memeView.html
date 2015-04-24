@@ -5,35 +5,9 @@
 			
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	
-		<div id="leftBar" class="hidden-sm hidden-xs section">
-			<div id="responseToMeme">
-			</div>
-			<div id="socialMedia">
-				<div id="faceBook" class="shareOption innerFaceBook">
-					<div class="shareIcon faceBook"/>
-					<div class="shareText"> Share</div>
-					<div class="shareText shareCount">698</div>
-				</div>
-				<div id="twitter" class="shareOption innerTwitter">
-					<div class="shareIcon twitter"/>
-					<div class="shareText"> Tweet</div>
-					<div class="hidden-xs shareText shareCount">55K</div>
-				</div>
-				<div id="google" class="shareOption innerGoogle hidden-xs">
-					<div class="shareIcon google"/>
-					<div class="shareText"> Share</div>
-					<div class="hidden-xs shareText shareCount">18</div>					
-				</div>
-				<div id="pinterest" class="shareOption innerPinterest">
-					<div class="shareIcon pinterest"/>
-					<div class="shareText"> Pin it</div>
-					<div class="shareText shareCount">18</div>	
-				</div>
-			</div>
-		</div>
-		<div id="middle" class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+		<div id="main" class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
 			<div id="moveToPreviousMeme"></div>
-			<div id="currentMemeContainer" class="imageContainer section">
+			<div id="currentMemeContainer" class="imageContainer">
 				<img ng-src="api/image/{{meme.id}}" class="image"/>
 					<div id="replyToMeme"></div>
 					<div id="upVoteMeme"></div>
@@ -47,7 +21,7 @@
 					<div id="dateCreated" class="when">On: {{meme.dateCreated | date:'medium'}}</div>								
 			</div>
 		</div>
-		<div id="rightBar" class="hidden-sm hidden-xs section">
+		<div id="rightBar" class="col-md-3 col-lg-3 hidden-sm hidden-xs">
 			<div id="moveToPreviousReplies"></div>
 			<div id="currentMemeReplies">
 				<div class="reply"></div>
