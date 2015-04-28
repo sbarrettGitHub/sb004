@@ -503,18 +503,30 @@ height:325px;*/
 }
 #main #socialMedia{
 	padding-top:10px;
-	position: absolute;
 	cursor:pointer;
 }
 #main #socialMedia .share{
-	
-	width:48px;
-	height:48px;
+	float:left;
+	width:48px;	
 	color: white;
-	background-color: #cecccc;
 	text-align:center;
-	padding: 5px;
-	margin-bottom: 3px;
+	padding: 2px;
+	margin: 5px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.facebook{
+	background-color: #3C5A98;
+}
+.twitter{
+	background-color: #47c7fa;
+}
+.google{
+	background-color: #dd4b39;
+}
+.pinterest{
+	background-color: #cb2027;
 }
 #main .imageContainer{
 	height:auto;

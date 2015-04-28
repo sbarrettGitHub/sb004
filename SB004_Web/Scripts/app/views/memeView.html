@@ -1,41 +1,37 @@
 ﻿<div id="memeView">
     <div id="memeViewInternal" class="rounded">
-		<div class="heading dialogHead" ng-hide="waiting">				
-			
-			
+		<!--<div class="heading dialogHead" ng-hide="waiting">
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
-		</div>	
+		</div>	-->
 		<div id="main" class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
 			<div id="moveToPreviousMeme"></div>
 			<div id="currentMemeInfo" class="section">		
-					<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
-						<span class="fa fa-user"></span> {{meme.createdBy}} 
-					</div>
-					<div id="dateCreated" class="when col-md-6 col-lg-6 hidden-sm hidden-xs text-right">
-						<span class="fa fa-clock-o"></span> {{meme.dateCreated | date:'medium'}}
-					</div>
-					<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center">
-						<span class="fa fa-user"></span> {{meme.createdBy}} 
-					</div>					
+				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+					<span class="fa fa-user"></span> {{meme.createdBy}} 
 				</div>
-			<div id="currentMemeContainer" class="imageContainer section">		
-				<div id="socialMedia">
-					<div title="Click here to share on Facebook" class="share">
-						<span class="fa fa-facebook"></span><div>7K</div>
-					</div>
-					<div title="Click here to tweet on twitter" class="share">
-						<span class="fa fa-twitter"></span><div>62K</div>
-					</div>
-					<div title="Click here to share in Google+" class="share">
-						<span class="fa fa-google-plus"></span><div>62K</div>
-					</div>
-					<div title="Click here to pin on Pinterest" class="share">
-						<span class="fa fa-pinterest-p"></span><div>62K</div>
-					</div>
+				<div id="dateCreated" class="when col-md-6 col-lg-6 hidden-sm hidden-xs text-right">
+					<span class="fa fa-clock-o"></span> {{meme.dateCreated | date:'medium'}}
 				</div>
-
-				<img ng-src="api/image/{{meme.id}}" class="image"/>		
-				
+				<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center">
+					<span class="fa fa-user"></span> {{meme.createdBy}} 
+				</div>					
+			</div>
+			<div id="socialMedia" class="section">
+				<div title="Click here to share on Facebook" class="share facebook">
+					<span class="fa fa-facebook"></span><div>7K</div>
+				</div>
+				<div title="Click here to tweet on twitter" class="share twitter">
+					<span class="fa fa-twitter"></span><div>62K</div>
+				</div>
+				<div title="Click here to share in Google+" class="share google" >
+					<span class="fa fa-google-plus"></span><div>129</div>
+				</div>
+				<div title="Click here to pin on Pinterest" class="share pinterest">
+					<span class="fa fa-pinterests"></span><div>560</div>
+				</div>
+			</div>			
+			<div id="currentMemeContainer" class="imageContainer section">	
+				<img ng-src="api/image/{{meme.id}}" class="image"/>						
 			</div>
 			<div id="currentMemeOptions" class="section text-center">	
 				<button title="Click to respond to this meme, with a meme of your own">
