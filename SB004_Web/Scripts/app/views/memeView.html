@@ -5,7 +5,7 @@
 		</div>	-->
 		<div id="main" class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
 			<div id="moveToPreviousMeme"></div>
-			<div id="currentMemeInfo" class="section">		
+			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
 				</div>
@@ -16,24 +16,51 @@
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
 				</div>					
 			</div>
-			<div id="socialMedia" class="section">
-				<div title="Click here to share on Facebook" class="share facebook">
-					<span class="fa fa-facebook"></span><div>7K</div>
-				</div>
-				<div title="Click here to tweet on twitter" class="share twitter">
-					<span class="fa fa-twitter"></span><div>62K</div>
-				</div>
-				<div title="Click here to share in Google+" class="share google" >
-					<span class="fa fa-google-plus"></span><div>129</div>
-				</div>
-				<div title="Click here to pin on Pinterest" class="share pinterest">
-					<span class="fa fa-pinterests"></span><div>560</div>
-				</div>
-			</div>			
-			<div id="currentMemeContainer" class="imageContainer section">	
+			<div id="" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">
+				<div id="socialMedia" class="col-md-7 col-lg-7 hidden-sm hidden-xs">
+					<div title="Click here to share on Facebook" class="info share facebook">
+						<span class="fa fa-facebook"></span><div>7K</div>
+					</div>
+					<div title="Click here to tweet on twitter" class="info share twitter">
+						<span class="fa fa-twitter"></span><div>62K</div>
+					</div>
+					<div title="Click here to share in Google+" class="info share google" >
+						<span class="fa fa-google-plus"></span><div>129</div>
+					</div>
+					<div title="Click here to pin on Pinterest" class="info share pinterest">
+						<span class="fa fa-pinterest"></span><div>560</div>
+					</div>
+				</div>	
+				<div id="currentMemeStats" class="col-md-5 col-lg-5 hidden-sm hidden-xs">
+					<div title="The number times this meme has been shared" class="info stat">
+						<span class="fa fa-share-alt"></span><div>70K</div>
+					</div>
+					<div title="The number times this meme has been liked or approved" class="info stat">
+						<span class="fa fa-heart"></span><div>110K</div>
+					</div>	
+					<div title="The number times this meme has been viewed" class="info stat">
+						<span class="fa fa-eye"></span><div>120K</div>
+					</div>				
+				</div>	
+				<div id="socialMediaTiny" class=" text-center hidden-lg hidden-md col-lg-12 col-sm-12 col-xs-12">
+					<button title="Click here to share on Facebook">
+						<span class="fa fa-facebook"></span>
+					</button>
+					<button title="Click here to tweet on twitter">
+						<span class="fa fa-twitter"></span>
+					</button>
+					<button title="Click here to share in Google+">
+						<span class="fa fa-google-plus"></span>
+					</button>				
+					<button title="Click here to pin on Pinterest">
+						<span class="fa fa-pinterest"></span>
+					</button>							
+				</div>					
+			</div>
+			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<img ng-src="api/image/{{meme.id}}" class="image"/>						
 			</div>
-			<div id="currentMemeOptions" class="section text-center">	
+			<div id="currentMemeOptions" class="section text-center col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<button title="Click to respond to this meme, with a meme of your own">
 					<span class="fa fa-reply"></span><span class="hidden-xs ">&nbsp; Respond</span>
 				</button>
@@ -41,10 +68,9 @@
 					<span class="fa fa-recycle"></span><span class="hidden-xs ">&nbsp; Recycle</span>
 				</button>
 				<button title="Click to approve this meme. Most approved memes are ranked highest.">
-					<span class="glyphicon glyphicon-heart"></span><span class="hidden-xs ">&nbsp; Approve</span>
+					<span class="fa fa-heart"></span><span class="hidden-xs ">&nbsp; Approve</span>
 				</button>				
-				<button title="Are you insulted or offended by this? If so click here to report this image. 
-							   Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
+				<button title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
 					<span class="fa fa-exclamation-triangle"></span><span class="hidden-xs ">&nbsp; Report</span>
 				</button>				
 			</div>

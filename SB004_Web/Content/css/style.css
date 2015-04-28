@@ -501,20 +501,28 @@ height:325px;*/
   background-color: whitesmoke;
   
 }
-#main #socialMedia{
-	padding-top:10px;
-	cursor:pointer;
-}
-#main #socialMedia .share{
-	float:left;
-	width:48px;	
-	color: white;
+
+#main .info{			
 	text-align:center;
 	padding: 2px;
 	margin: 5px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+}
+#main .share{
+	float:left;
+	
+	cursor:pointer;
+	color: white;
+}
+#main #socialMedia .share{
+	width:48px;	
+}
+#main #socialMediaTiny{
+	display:block;
+	margin:0 auto;	
+	width: 100%;
+}
+#main #socialMediaTiny .share{
+	width:32px;	
 }
 .facebook{
 	background-color: #3C5A98;
@@ -528,6 +536,11 @@ height:325px;*/
 .pinterest{
 	background-color: #cb2027;
 }
+#main #currentMemeStats{
+}
+#main #currentMemeStats .stat{
+	float:right;
+}
 #main .imageContainer{
 	height:auto;
 	float:left;
@@ -535,7 +548,6 @@ height:325px;*/
 }
 #main .section{
 	float:left;
-	width:100%;
 	padding: 5px;
 	border-radius: 6px;
 	background-color: white;
