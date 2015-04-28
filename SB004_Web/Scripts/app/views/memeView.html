@@ -16,6 +16,23 @@
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
 				</div>					
 			</div>
+			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
+				<img ng-src="api/image/{{meme.id}}" class="image"/>						
+			</div>
+			<div id="currentMemeOptions" class="section text-center col-md-12 col-lg-12 col-sm-12 col-xs-12">	
+				<button title="Click to respond to this meme, with a meme of your own">
+					<span class="fa fa-reply"></span><span class="hidden-xs ">&nbsp; Respond</span>
+				</button>
+				<button title="Requote this meme and begin a new thread of discussion among your followers.">
+					<span class="fa fa-recycle"></span><span class="hidden-xs ">&nbsp; Recycle</span>
+				</button>
+				<button title="Click to approve this meme. Most approved memes are ranked highest.">
+					<span class="fa fa-heart"></span><span class="hidden-xs ">&nbsp; Approve</span>
+				</button>				
+				<button id="report" title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
+					<span class="fa fa-exclamation-triangle"></span><span class="hidden-xs ">&nbsp; Report</span>
+				</button>				
+			</div>
 			<div id="" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">
 				<div id="socialMedia" class="col-md-7 col-lg-7 hidden-sm hidden-xs">
 					<div title="Click here to share on Facebook" class="info share facebook">
@@ -57,26 +74,12 @@
 					</button>							
 				</div>					
 			</div>
-			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<img ng-src="api/image/{{meme.id}}" class="image"/>						
-			</div>
-			<div id="currentMemeOptions" class="section text-center col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<button title="Click to respond to this meme, with a meme of your own">
-					<span class="fa fa-reply"></span><span class="hidden-xs ">&nbsp; Respond</span>
-				</button>
-				<button title="Requote this meme and begin a new thread of discussion among your followers.">
-					<span class="fa fa-recycle"></span><span class="hidden-xs ">&nbsp; Recycle</span>
-				</button>
-				<button title="Click to approve this meme. Most approved memes are ranked highest.">
-					<span class="fa fa-heart"></span><span class="hidden-xs ">&nbsp; Approve</span>
-				</button>				
-				<button title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
-					<span class="fa fa-exclamation-triangle"></span><span class="hidden-xs ">&nbsp; Report</span>
-				</button>				
-			</div>
+
+			
 			
 		</div>
 		<div id="rightBar" class="col-md-3 col-lg-3 hidden-sm hidden-xs">
+			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
 			<div id="moveToPreviousReplies"></div>
 			<div id="currentMemeReplies">
 				<div class="reply"></div>
