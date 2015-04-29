@@ -39,6 +39,7 @@ namespace SB004.Controllers
             {
                 return NotFound();
             }
+          ISeed seed = repository.GetSeed(meme.SeedId);
 
             return Ok(new  
             { 
@@ -47,8 +48,15 @@ namespace SB004.Controllers
                 meme.CreatedByUserId,
                 DateCreated = meme.DateCreated.ToLocalTime(),
                 meme.Title,
+                meme.Comments,
                 meme.ResponseToId,
-                meme.ReplyIds
+                meme.ReplyIds,
+                seedImage = new
+                {
+                 seed.Width,
+                 seed.Height,
+                 image = "data:image/jpeg;base64," + imageManager.GetImageData(seed.ImageData)
+                }
             });
         }
 

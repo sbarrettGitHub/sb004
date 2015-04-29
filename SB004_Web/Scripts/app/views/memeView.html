@@ -3,7 +3,7 @@
 		<!--<div class="heading dialogHead" ng-hide="waiting">
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	-->
-		<div id="main" class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+		<div id="main">
 			<div id="moveToPreviousMeme"></div>
 			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
@@ -14,6 +14,7 @@
 				</div>
 				<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center">
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
+					<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
 				</div>					
 			</div>
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
@@ -74,21 +75,14 @@
 					</button>							
 				</div>					
 			</div>
-
-			
-			
 		</div>
-		<div id="rightBar" class="col-md-3 col-lg-3 hidden-sm hidden-xs">
-			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
-			<div id="moveToPreviousReplies"></div>
-			<div id="currentMemeReplies">
-				<div class="reply"></div>
-				<div class="reply"></div>
-				<div class="reply"></div>
-				<div class="reply"></div>
-				<div class="reply"></div>
+		<div class="closeMe closeIcon hidden-sm hidden-xs"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		<div class="quote addQuote panel" title="Click here to respond to this meme" ng-click="respond()">
+			<div class="qContainer">
+			  <div id="addQuote">No responses yet. Be the first to respond.</div>
+			  <span class="fa fa-reply"></span>
 			</div>
-			<div id="moveToNextReplies"></div>
-		</div>
+		  </div>
+		<!--Meme responses-->
     </div>
 </div>

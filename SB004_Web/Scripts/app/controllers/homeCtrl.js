@@ -74,7 +74,7 @@
                 angular.element('#pasteInput>input').focus();
             }, 400);
         }
-        $scope.spawn = function (seedData) {
+        $scope.spawn = function (seedData, respondingToMemeId) {
 			memeApplyTextDialogOpts.resolve = {memeData : function() {return angular.copy(seedData);}};
 			$dialog.dialog(memeApplyTextDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
@@ -84,19 +84,19 @@
                         return;
                     }
                     if (dialogResult.action == "reset") {
-                        $scope.spawn(dialogResult.data);
+                        $scope.spawn(dialogResult.data, respondingToMemeId);
                         return;
                     }
                     if (dialogResult.action == "proceed") {
-                        $scope.publish(dialogResult.data);
+                        $scope.publish(dialogResult.data, respondingToMemeId);
                         return;
                     }
                 }
                 allDialogsComplete();
             });
         }
-        $scope.publish = function (memeData) {
-			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}};
+        $scope.publish = function (memeData, respondingToMemeId) {
+			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : respondingToMemeId};
             $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
                     if (dialogResult.action == "startAgain") {
@@ -105,7 +105,7 @@
                         return;memeData
                     }
                     if (dialogResult.action == "changeMeme") {
-                        $scope.spawn(memeData);
+                        $scope.spawn(memeData, respondingToMemeId);
                         return;
                     } 
 					if (dialogResult.action == "close") {
@@ -132,6 +132,12 @@
 		{
 			memeViewDialogOpts.resolve = {memeId : function() {return angular.copy(memeId);}};
 			$dialog.dialog(memeViewDialogOpts).open().then(function (dialogResult) {
+				if (dialogResult) {
+                    if (dialogResult.action == "respond") {
+                        $scope.spawn(dialogResult.data, memeId);
+                        return;
+                    }
+				}
 				allDialogsComplete();
 			});
 		}

@@ -45,6 +45,15 @@ namespace SB004.Utilities
         }
 
         /// <summary>
+        /// Accecpts an image image data and returns base64 encoded  string
+        /// </summary>
+        /// <param name="image">byte array</param>
+        /// <returns></returns>
+        public string GetImageData( byte[] image)
+        {
+          return Convert.ToBase64String(image);
+        }
+        /// <summary>
         /// Resize seed image to required dimensions. Convert to JPeg
         /// </summary>
         /// <param name="seed"></param>

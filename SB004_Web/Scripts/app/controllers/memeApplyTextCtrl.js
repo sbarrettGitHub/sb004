@@ -1,23 +1,23 @@
 'use strict';
 (function () {
     var initialText = "Your text goes here ...";
-    function Comment(id) {
+    function Comment(id, c) {
         var self = this;
         this.id = id;
-        this.text = initialText;        
-        this.color = "black";
-        this.backgroundColor = "none";
-        this.fontFamily = "Arial";
-        this.fontSize = "15pt";
-        this.fontWeight = "bold";
-        this.textDecoration = "none";
-        this.fontStyle = "normal";
-        this.textAlign = "center";
-        this.dropped = false;
+        this.text = c ? c.text : initialText;        
+        this.color = c ? c.color :"black";
+        this.backgroundColor = c ? c.backgroundColor :"none";
+        this.fontFamily = c ? c.fontFamily :"Arial";
+        this.fontSize = c ? c.fontSize :"15pt";
+        this.fontWeight = c ? c.fontWeight :"bold";
+        this.textDecoration = c ? c.textDecoration :"none";
+        this.fontStyle = c ? c.fontStyle :"normal";
+        this.textAlign = c ? c.textAlign :"center";
+        this.dropped = c ? c.dropped :false;
         this.selected = false;
-        this.textShadow = "white";
+        this.textShadow = c ? c.textShadow :"white";
         this.style = {};
-		this.Position = {
+		this.position = c ? c.position :{
             align: "bottom",
             x: 0,
             y: 0,
@@ -42,19 +42,19 @@
         this.location = {
             apply : function() {
                 self.style.position = "absolute";
-                self.style.left = self.Position.x + "px";
-                self.style.top = self.Position.y + "px";
+                self.style.left = self.position.x + "px";
+                self.style.top = self.position.y + "px";
             },
             center : function(width, height) {
-                self.Position.x = 0;
-                self.Position.width = width;
-                self.Position.y = (height - self.Position.height) / 2;
+                self.position.x = 0;
+                self.position.width = width;
+                self.position.y = (height - self.position.height) / 2;
             }
         }
         this.dimensions = {
             apply: function () {
-                self.style.width = self.Position.width + "px";
-                self.style.height = self.Position.height + "px";
+                self.style.width = self.position.width + "px";
+                self.style.height = self.position.height + "px";
             }
         }
     }
@@ -71,12 +71,12 @@
 		$scope.memeData = memeData;
         $scope.toolbarStyle = function() {
             if ($scope.comment) {
-                var width = $scope.comment.Position.width / 2;
+                var width = $scope.comment.position.width / 2;
 
                 return {
                     position: "absolute",
-                    left: ($scope.comment.Position.x + width) + "px",
-                    top: ($scope.comment.Position.y) + "px",
+                    left: ($scope.comment.position.x + width) + "px",
+                    top: ($scope.comment.position.y) + "px",
 					'z-index':0,
                 };
             }
@@ -84,7 +84,13 @@
 
         // Reapply the comments from the saved meme
         if ($scope.memeData.comments) {
-            //$scope.memeData.comments = memeData.comments;
+			var comments = [];
+            for (var i = 0; i < $scope.memeData.comments.length; i++) {
+				comments.push(new Comment($scope.memeData.comments[i].id, $scope.memeData.comments[i]));
+            }
+			// Replace the meme comment data supplied with proper Comment objects
+			$scope.memeData.comments = comments;
+			
             $timeout(function() {
                 for (var i = 0; i < $scope.memeData.comments.length; i++) {
                     $scope.memeData.comments[i].location.apply();
@@ -124,7 +130,7 @@
             var c = new Comment($scope.memeData.comments.length);
 
             // Position new comment
-            c.Position.width = $scope.memeData.seedImage.width;
+            c.position.width = $scope.memeData.seedImage.width;
 
             // Add new comment
             $scope.memeData.comments.push(c);
@@ -182,21 +188,21 @@
         };
         $scope.dropped = function (left, top, relLeft, relTop, el) {
             var x = relLeft;
-            $scope.memeData.comments[$scope.comment.id].Position.align = "none";
-            $scope.memeData.comments[$scope.comment.id].Position.x = relLeft;
-            $scope.memeData.comments[$scope.comment.id].Position.y = relTop;
-            console.log("dropped: " + $scope.comment.id + "-" + $scope.comment.Position.x + " X " + $scope.comment.Position.y);
+            $scope.memeData.comments[$scope.comment.id].position.align = "none";
+            $scope.memeData.comments[$scope.comment.id].position.x = relLeft;
+            $scope.memeData.comments[$scope.comment.id].position.y = relTop;
+            console.log("dropped: " + $scope.comment.id + "-" + $scope.comment.position.x + " X " + $scope.comment.position.y);
 
         };
         $scope.alignBottom = function (left, top, relLeft, relTop, el) {
-            $scope.comment.Position.align = "bottom";
-            $scope.comment.Position.x = 0;
-            $scope.comment.Position.y = 0;
+            $scope.comment.position.align = "bottom";
+            $scope.comment.position.x = 0;
+            $scope.comment.position.y = 0;
         };
         $scope.resized= function (width, height)
         {
-            $scope.comment.Position.width = width;
-            $scope.comment.Position.height = height;
+            $scope.comment.position.width = width;
+            $scope.comment.position.height = height;
         }
         $scope.deleteComment = function (el, target) {
             if ($scope.comment.text != initialText) {

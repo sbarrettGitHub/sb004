@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var memePublishAndShareCtrl = function ($scope, $timeout, $http, $q, dialog, sharedDataService, renderingService, securityService, memeData) {
+    var memePublishAndShareCtrl = function ($scope, $timeout, $http, $q, dialog, sharedDataService, renderingService, securityService, memeData, respondingToMemeId) {
 
 		$scope.waiting = false;
 		$scope.waitHeading = "Please wait...";
@@ -68,7 +68,8 @@
             $http.post('/api/Meme', {
                 SeedId: $scope.memeData.seedImage.id,
                 Comments: $scope.memeData.comments,
-                ImageData: $scope.memeData.imageData
+                ImageData: $scope.memeData.imageData,
+				ResponseToId: respondingToMemeId
             }).
                 success(function (data) {
                     sharedDataService.data.currentMeme = data;
@@ -94,6 +95,6 @@
     }
 
     // Register the controller
-    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "$q", "dialog", "sharedDataService", "renderingService", "securityService", "memeData", memePublishAndShareCtrl]);
+    app.controller('memePublishAndShareCtrl', ["$scope", "$timeout", "$http", "$q", "dialog", "sharedDataService", "renderingService", "securityService", "memeData", "respondingToMemeId", memePublishAndShareCtrl]);
 
 })();

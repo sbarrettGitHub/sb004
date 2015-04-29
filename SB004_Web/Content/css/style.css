@@ -12,6 +12,9 @@ input
 {
 height: 34px !important;
 }
+button:hover{
+	color:cornflowerblue;
+ }
 .waitingContainer{
 	width:100%;
 	margin-right:auto;
@@ -496,16 +499,14 @@ height:325px;*/
 
 #main{
   float: left;
-  margin-left: auto;
-  margin-right: auto;
   background-color: whitesmoke;
-  
+  max-width:450px;
 }
 
 #main .info{			
 	text-align:center;
 	padding: 2px;
-	margin: 5px;
+	margin: 2px;
 }
 #main .share{
 	float:left;
@@ -566,12 +567,6 @@ height:325px;*/
 	border-radius: 6px;
 	background-color: white;
 	margin-bottom: 5px;
- }
-#currentMemeOptions button:hover{
-	color:cornflowerblue;
- }
- #report hover{
-	color:darkred !important;
  }
 #rightBar{	
 	min-height:325px;

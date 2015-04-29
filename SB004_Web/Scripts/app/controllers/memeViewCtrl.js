@@ -13,7 +13,12 @@
         $scope.closeMe = function () {
             dialog.close(false);
         };
-		
+		$scope.respond = function () {
+            dialog.close({
+							action:"respond", 
+							data:$scope.meme
+						});
+        };
 		function getMeme(id){
 			var deferred = $q.defer();
 			startWaiting();
