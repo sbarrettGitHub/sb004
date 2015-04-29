@@ -47,7 +47,7 @@
             backdropClick: false,
             templateUrl: "/Scripts/app/views/memeView.html",
             controller: "memeViewCtrl",
-			dialogClass: 'modal dialog-wide'
+			dialogClass: 'modal dialog-meme'
         };
 		
         $scope.memeSelectConfirmImage = function () {
@@ -96,7 +96,7 @@
             });
         }
         $scope.publish = function (memeData, respondingToMemeId) {
-			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : respondingToMemeId};
+			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : function(){ return respondingToMemeId;}};
             $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
                     if (dialogResult.action == "startAgain") {
@@ -130,7 +130,7 @@
         }
 		$scope.viewMeme = function(memeId)
 		{
-			memeViewDialogOpts.resolve = {memeId : function() {return angular.copy(memeId);}};
+			/*memeViewDialogOpts.resolve = {memeId : function() {return angular.copy(memeId);}};
 			$dialog.dialog(memeViewDialogOpts).open().then(function (dialogResult) {
 				if (dialogResult) {
                     if (dialogResult.action == "respond") {
@@ -139,7 +139,8 @@
                     }
 				}
 				allDialogsComplete();
-			});
+			});*/
+			 $location.path('/meme/' + memeId);
 		}
 		
         $rootScope.$on('quoteSearch.complete', function (event, data) {

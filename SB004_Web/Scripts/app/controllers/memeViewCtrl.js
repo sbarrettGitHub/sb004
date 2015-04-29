@@ -1,14 +1,14 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$http,$q, dialog, sharedDataService, memeId) {
+    var memeViewCtrl = function ($scope,$http,$q, $routeParams, sharedDataService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
         $scope.waitingMessage = "";
 		$scope.title = "Untitled";
 		$scope.meme = {};
-		
+		var memeId = $routeParams.id;
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -58,6 +58,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "dialog", "sharedDataService","memeId", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "$routeParams", "sharedDataService", memeViewCtrl]);
 
 })();

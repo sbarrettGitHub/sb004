@@ -9,6 +9,9 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
           when('/home', {
               templateUrl: '/Scripts/app/views/home.html',
               controller: 'homeCtrl'
+          }).when('/meme/:id', {
+              templateUrl: '/Scripts/app/views/memeView.html',
+              controller: 'memeViewCtrl'
           }).when('/spawn/:id', {
               templateUrl: 'views/spawn.html',
               controller: 'memeApplyTextCtrl'
