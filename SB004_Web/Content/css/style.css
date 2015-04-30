@@ -487,14 +487,14 @@ height:325px;*/
   overflow: hidden;
   background-color: whitesmoke;
 }
-#memeViewInternal{
+#memeViewCurrent{
   
 }
 
-#memeViewInternal .closeMe{
+#memeViewCurrent .closeMe{
   margin-top: 5px;
 }
-#memeViewInternal .section{
+#memeViewCurrent .section{
 	padding: 10px;
 	border-radius: 6px;
 	background-color: whitesmoke;
