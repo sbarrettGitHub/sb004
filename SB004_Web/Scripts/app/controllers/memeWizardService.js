@@ -1,12 +1,7 @@
 'use strict';
 (function () {
-
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService) {
-        $scope.quotes = sharedDataService.data.quoteSearch.results;
-        $scope.searchTerm = "";
-        $scope.searchCategory = "";
-
-        var memeApplyTextDialog = $dialog.dialog({
+    var memeWizardService = function ($dialog, $timeout) {
+		var memeApplyTextDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
             backdropClick: false,
@@ -41,7 +36,7 @@
             templateUrl: "/Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
-        $scope.memeSelectConfirmImage = function () {
+		var memeSelectConfirmImage = function () {
 
             dialogsViewBegin();
 			
@@ -65,28 +60,27 @@
                 angular.element('#pasteInput>input').focus();
             }, 400);
         }
-        $scope.spawn = function (seedData, respondingToMemeId) {
+		var spawn = function (seedData, respondingToMemeId) {
 			memeApplyTextDialogOpts.resolve = {memeData : function() {return angular.copy(seedData);}};
 			$dialog.dialog(memeApplyTextDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
                     if (dialogResult.action == "startAgain") {
-                        sharedDataService.resetMeme();
-                        $scope.memeSelectConfirmImage();
+                        memeSelectConfirmImage();
                         return;
                     }
                     if (dialogResult.action == "reset") {
-                        $scope.spawn(dialogResult.data, respondingToMemeId);
+                        spawn(dialogResult.data, respondingToMemeId);
                         return;
                     }
                     if (dialogResult.action == "proceed") {
-                        $scope.publish(dialogResult.data, respondingToMemeId);
+                        publish(dialogResult.data, respondingToMemeId);
                         return;
                     }
                 }
                 allDialogsComplete();
             });
         }
-        $scope.publish = function (memeData, respondingToMemeId) {
+		var publish = function (memeData, respondingToMemeId) {
 			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : function(){ return respondingToMemeId;}};
             $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
@@ -104,10 +98,10 @@
                     } 					
                 }
 				// Saved. Open the meme in a dialog              
-				$scope.viewMeme(dialogResult.data.id);
+				viewMeme(dialogResult.data.id);
             });
         }
-        $scope.logIn = function (callBackSuccess, callBackFail) {
+		var logIn = function (callBackSuccess, callBackFail) {
             loginDialog.open().then(function (action) {
                 if (action == "Success") {
                     callBackSuccess();
@@ -119,35 +113,25 @@
                 }
             });
         }
-		$scope.viewMeme = function(memeId)
+		var viewMeme = function(memeId)
 		{
 			 $location.path('/meme/' + memeId);
 		}
-		
-        $rootScope.$on('quoteSearch.complete', function (event, data) {
-
-            $scope.quotes = sharedDataService.data.quoteSearch.results;
-
-        });
-        $scope.resized = function (width, height) {
-            console.log(width + " X " + height);
-        };
-        // $scope.search();
-        $scope.init = function () {
-            $scope.handle = $dialog.dialog({});
-        };
-
-        $scope.init();
-		
 		function dialogsViewBegin(){
 			angular.element("#view").addClass("blurry");
 		}
 		function allDialogsComplete(){
 			angular.element("#view").removeClass("blurry");			
-		}
-    }
+		}		
+        return {
+			memeSelectConfirmImage: memeSelectConfirmImage,
+			spawn: spawn,
+			publish: publish,
+			logIn: logIn
+        }
+    };
 
-    // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", homeCtrl]);
+    // Register the service
+    app.factory('memeWizardService', ["$dialog", "$timeout", memeWizardService]);
 
 })();

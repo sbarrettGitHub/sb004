@@ -15,6 +15,13 @@ height: 34px !important;
 button:hover{
 	color:cornflowerblue;
  }
+ .hot{	
+	
+ }
+ .hot:hover{
+	cursor: pointer;
+	color:cornflowerblue;
+ }
 .waitingContainer{
 	width:100%;
 	margin-right:auto;
@@ -511,15 +518,26 @@ height:325px;*/
 	padding: 2px;
 	margin: 2px;
 }
-#main .share{
-	float:left;
-	
+.share{
+	float:left;	
 	cursor:pointer;
 	color: white;
 }
-#main #socialMedia .share{
-	width:48px;	
-	background-color: rgb(200, 200, 200);
+#socialMedia{
+	width: 100px;
+	background-color: white;
+	margin-right: 5px;
+}
+#socialMedia span{
+font-size: larger;
+}
+#socialMedia .share{
+  width: 64px;
+  background-color: rgb(200, 200, 200);
+  margin-bottom: 5px;
+   margin-left: 10px;
+  height: 64px;
+  padding: 23px;
 }
 #main #socialMediaTiny{
 	display:block;
@@ -542,16 +560,27 @@ height:325px;*/
 	background-color: #cb2027 !important;
 }
 #main #currentMemeStats{
+	margin-top: 2px;
 }
-#main #currentMemeStats .stat{
-	float:right;
+#currentMemeContainer #currentMemeStats .stat{
+	margin: 5px;
+	float:left;
+}
+#currentMemeContainer #currentMemeStats .hot{
+	border:1px solid white;
+}
+#currentMemeContainer #currentMemeStats .hot:hover{
+	border:1px solid cornflowerblue;
+}
+#currentMemeContainer #currentMemeStats i{
+	margin-right:2px;
 }
 #main .imageContainer{
 	height:auto;
 	float:left;
 	width:100%;
 }
-#main .section{
+.section{
 	float:left;
 	padding: 5px;
 	border-radius: 6px;

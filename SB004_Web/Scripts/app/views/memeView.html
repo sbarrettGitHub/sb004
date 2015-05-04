@@ -3,11 +3,21 @@
 		<!--<div class="heading dialogHead" ng-hide="waiting">
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	-->
-		<div id="inResponseTo" class="section col-lg-3 col-md-3 col-sm-3 hidden-xs">
-		
+		<div id="socialMedia" class="text-center section hidden-sm hidden-xs">
+			<div title="Click here to share on Facebook" class="info share facebook">
+				<span class="fa fa-facebook"></span><div>7K</div>
+			</div>
+			<div title="Click here to tweet on twitter" class="info share twitter">
+				<span class="fa fa-twitter"></span><div>62K</div>
+			</div>
+			<div title="Click here to share in Google+" class="info share google" >
+				<span class="fa fa-google-plus"></span><div>129</div>
+			</div>
+			<div title="Click here to pin on Pinterest" class="info share pinterest">
+				<span class="fa fa-pinterest"></span><div>560</div>
+			</div>
 		</div>
 		<div id="main">
-			<div id="moveToPreviousMeme"></div>
 			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
@@ -21,7 +31,26 @@
 				</div>					
 			</div>
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<img ng-src="api/image/{{meme.id}}" class="image"/>						
+				<img ng-src="api/image/{{meme.id}}" class="image"/>	
+				<div id="currentMemeStats" class="col-md-12 col-lg-12 hidden-sm hidden-xs">
+					<div class="pull-left">
+						<div title="Click here to like this meme" class="info stat hot">
+							<i class="fa fa-thumbs-o-up"></i><span>110K</span>
+						</div>	
+						<div title="Click here to add this meme to your favorites" class="info stat hot">
+							<i class="fa fa-star"></i><span>32</span>
+						</div>					
+					</div>
+					<div  class="pull-right">
+						<div title="The number times this meme has been viewed" class="info stat">
+							<i class="fa fa-eye"></i><span>120K</span>
+						</div>	
+						
+						<div title="The number times this meme has been shared" class="info stat">
+							<i class="fa fa-share-alt"></i><span>70K</span>
+						</div>						
+					</div>				
+				</div>					
 			</div>
 			<div id="currentMemeOptions" class="section text-center col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<button title="Click to respond to this meme, with a meme of your own" ng-click="respond()">
@@ -29,40 +58,12 @@
 				</button>
 				<button title="Requote this meme and begin a new thread of discussion among your followers.">
 					<span class="fa fa-recycle"></span><span class="hidden-xs ">&nbsp; Recycle</span>
-				</button>
-				<button title="Click to approve this meme. Most approved memes are ranked highest.">
-					<span class="fa fa-heart"></span><span class="hidden-xs ">&nbsp; Approve</span>
-				</button>				
+				</button>			
 				<button id="report" title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
 					<span class="fa fa-exclamation-triangle"></span><span class="hidden-xs ">&nbsp; Report</span>
 				</button>				
 			</div>
-			<div id="" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">
-				<div id="socialMedia" class="col-md-7 col-lg-7 hidden-sm hidden-xs">
-					<div title="Click here to share on Facebook" class="info share facebook">
-						<span class="fa fa-facebook"></span><div>7K</div>
-					</div>
-					<div title="Click here to tweet on twitter" class="info share twitter">
-						<span class="fa fa-twitter"></span><div>62K</div>
-					</div>
-					<div title="Click here to share in Google+" class="info share google" >
-						<span class="fa fa-google-plus"></span><div>129</div>
-					</div>
-					<div title="Click here to pin on Pinterest" class="info share pinterest">
-						<span class="fa fa-pinterest"></span><div>560</div>
-					</div>
-				</div>	
-				<div id="currentMemeStats" class="col-md-5 col-lg-5 hidden-sm hidden-xs">
-					<div title="The number times this meme has been shared" class="info stat">
-						<span class="fa fa-share-alt"></span><div>70K</div>
-					</div>
-					<div title="The number times this meme has been liked or approved" class="info stat">
-						<span class="fa fa-heart"></span><div>110K</div>
-					</div>	
-					<div title="The number times this meme has been viewed" class="info stat">
-						<span class="fa fa-eye"></span><div>120K</div>
-					</div>				
-				</div>	
+			<div id="" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<div id="socialMediaTiny" class=" text-center hidden-lg hidden-md col-lg-12 col-sm-12 col-xs-12">
 					<button title="Click here to share on Facebook">
 						<span class="fa fa-facebook"></span>
