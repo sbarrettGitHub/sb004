@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    var memeWizardService = function ($dialog, $timeout) {
+    var memeWizardService = function ($q, $dialog, $timeout) {
 		var memeApplyTextDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
@@ -36,6 +36,10 @@
             templateUrl: "/Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
+		var begin = function(){
+			var deferred = $q.defer();
+		}
+
 		var memeSelectConfirmImage = function () {
 
             dialogsViewBegin();
@@ -127,11 +131,13 @@
 			memeSelectConfirmImage: memeSelectConfirmImage,
 			spawn: spawn,
 			publish: publish,
-			logIn: logIn
+			logIn: logIn,
+			begin: begin,
+			beginWithMeme: beginWithMeme
         }
     };
 
     // Register the service
-    app.factory('memeWizardService', ["$dialog", "$timeout", memeWizardService]);
+    app.factory('memeWizardService', ["$q", "$dialog", "$timeout", memeWizardService]);
 
 })();
