@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$http,$q, $routeParams, sharedDataService) {
+    var memeViewCtrl = function ($scope,$http,$q, $routeParams, sharedDataService, memeWizardService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -14,10 +14,15 @@
             dialog.close(false);
         };
 		$scope.respond = function () {
-            dialog.close({
-							action:"respond", 
-							data:$scope.meme
-						});
+			memeWizardService.beginWithMeme($scope.meme,memeId)
+			.then(function(){
+				alert("Resolved");
+				getMeme(memeId);
+			},
+			function(){
+				alert("Rejected");
+			});
+         
         };
 		function getMeme(id){
 			var deferred = $q.defer();
@@ -58,6 +63,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "$routeParams", "sharedDataService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$http", "$q", "$routeParams", "sharedDataService","memeWizardService", memeViewCtrl]);
 
 })();

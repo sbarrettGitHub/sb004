@@ -36,13 +36,10 @@
             templateUrl: "/Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
-		var begin = function(){
-			var deferred = $q.defer();
-		}
-
+	
 		var memeSelectConfirmImage = function () {
-
-            dialogsViewBegin();
+			var deferred = $q.defer();
+            
 			
             var memeSelectConfirmImageDialog = $dialog.dialog({
                 backdrop: true,
@@ -54,22 +51,37 @@
 
             memeSelectConfirmImageDialog.open().then(function (dialogResult) {
                 if (dialogResult.action == "proceed") {
-					$scope.spawn(dialogResult.data);                    
+					spawn(dialogResult.data) 
+					.then(function(data){
+							deferred.resolve(data);
+						},
+						function(){
+							deferred.reject();
+						});
                     return;
                 }
-                allDialogsComplete();
+				deferred.reject();
             });
 
             $timeout(function () {
                 angular.element('#pasteInput>input').focus();
             }, 400);
+			
+			return deferred.promise;
         }
 		var spawn = function (seedData, respondingToMemeId) {
+			var deferred = $q.defer();
 			memeApplyTextDialogOpts.resolve = {memeData : function() {return angular.copy(seedData);}};
 			$dialog.dialog(memeApplyTextDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
                     if (dialogResult.action == "startAgain") {
-                        memeSelectConfirmImage();
+                        memeSelectConfirmImage()
+						.then(function(data){
+							deferred.resolve(data);
+						},
+						function(){
+							deferred.reject();
+						});
                         return;
                     }
                     if (dialogResult.action == "reset") {
@@ -77,33 +89,55 @@
                         return;
                     }
                     if (dialogResult.action == "proceed") {
-                        publish(dialogResult.data, respondingToMemeId);
+                        publish(dialogResult.data, respondingToMemeId)
+						.then(function(data){
+							deferred.resolve(data);
+						},
+						function(){
+							deferred.reject();
+						});
                         return;
                     }
-                }
-                allDialogsComplete();
+                }                
+				deferred.reject();
             });
+			
+			return deferred.promise;
         }
 		var publish = function (memeData, respondingToMemeId) {
+			var deferred = $q.defer();
 			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : function(){ return respondingToMemeId;}};
             $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
                 if (dialogResult) {
                     if (dialogResult.action == "startAgain") {
                         sharedDataService.resetMeme();
-                        $scope.memeSelectConfirmImage();
-                        return;memeData
+                        memeSelectConfirmImage()
+						.then(function(data){
+							deferred.resolve(data);
+						},
+						function(){
+							deferred.reject();
+						});
+                        return;
                     }
                     if (dialogResult.action == "changeMeme") {
-                        $scope.spawn(memeData, respondingToMemeId);
+                        spawn(memeData, respondingToMemeId)
+						.then(function(data){
+							deferred.resolve(data);
+						},
+						function(){
+							deferred.reject();
+						});
                         return;
                     } 
 					if (dialogResult.action == "close") {
+						deferred.reject();
                         return;
                     } 					
                 }
-				// Saved. Open the meme in a dialog              
-				viewMeme(dialogResult.data.id);
+				deferred.resolve(dialogResult.data.id);
             });
+			return deferred.promise;
         }
 		var logIn = function (callBackSuccess, callBackFail) {
             loginDialog.open().then(function (action) {
@@ -121,17 +155,29 @@
 		{
 			 $location.path('/meme/' + memeId);
 		}
-		function dialogsViewBegin(){
-			angular.element("#view").addClass("blurry");
+
+			
+		var begin = function(){
+			var deferred = $q.defer();
+			memeSelectConfirmImage()
+			.then(function(data){
+				deferred.resolve(data);
+			},function(){
+				deferred.reject();
+			});
+			return deferred.promise;
 		}
-		function allDialogsComplete(){
-			angular.element("#view").removeClass("blurry");			
-		}		
-        return {
-			memeSelectConfirmImage: memeSelectConfirmImage,
-			spawn: spawn,
-			publish: publish,
-			logIn: logIn,
+		var beginWithMeme = function(seedData, respondingToMemeId){
+			var deferred = $q.defer();
+			spawn(seedData, respondingToMemeId)
+			.then(function(data){
+				deferred.resolve(data);
+			},function(){
+				deferred.reject();
+			});
+			return deferred.promise;
+		}
+        return {			
 			begin: begin,
 			beginWithMeme: beginWithMeme
         }

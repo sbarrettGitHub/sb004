@@ -1,129 +1,35 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService) {
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService, memeWizardService) {
         $scope.quotes = sharedDataService.data.quoteSearch.results;
         $scope.searchTerm = "";
         $scope.searchCategory = "";
 
-        var memeApplyTextDialog = $dialog.dialog({
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "/Scripts/app/views/spawn.html",
-            controller: "memeApplyTextCtrl"
-        });
-        var memeApplyTextDialogOpts = {
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "/Scripts/app/views/spawn.html",
-            controller: "memeApplyTextCtrl"
-        };		
-        var memePublishAndShareDialog = $dialog.dialog({
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "/Scripts/app/views/publish.html",
-            controller: "memePublishAndShareCtrl"
-        });
-		var memePublishAndShareDialogOpts ={
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "/Scripts/app/views/publish.html",
-            controller: "memePublishAndShareCtrl"
-        };
-        var loginDialog = $dialog.dialog({
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "/Scripts/app/views/logIn.html",
-            controller: "logInCtrl"
-        });
+        
         $scope.memeSelectConfirmImage = function () {
-
-            dialogsViewBegin();
 			
-            var memeSelectConfirmImageDialog = $dialog.dialog({
-                backdrop: true,
-                keyboard: true,
-                backdropClick: false,
-                templateUrl: "/Scripts/app/views/newQuote.html",
-                controller: "memeSelectConfirmImageCtrl"
-            });
-
-            memeSelectConfirmImageDialog.open().then(function (dialogResult) {
-                if (dialogResult.action == "proceed") {
-					$scope.spawn(dialogResult.data);                    
-                    return;
-                }
-                allDialogsComplete();
-            });
-
-            $timeout(function () {
-                angular.element('#pasteInput>input').focus();
-            }, 400);
+			dialogsViewBegin();
+			memeWizardService.begin()
+			.then(
+				function(newMemeId){
+					// New meme added
+					allDialogsComplete();
+					
+					// Move to new meme
+					$scope.viewMeme(newMemeId);
+				},
+				function(){
+					// Cancelled
+					allDialogsComplete();
+				}				
+			);
         }
-        $scope.spawn = function (seedData, respondingToMemeId) {
-			memeApplyTextDialogOpts.resolve = {memeData : function() {return angular.copy(seedData);}};
-			$dialog.dialog(memeApplyTextDialogOpts).open().then(function (dialogResult) {
-                if (dialogResult) {
-                    if (dialogResult.action == "startAgain") {
-                        sharedDataService.resetMeme();
-                        $scope.memeSelectConfirmImage();
-                        return;
-                    }
-                    if (dialogResult.action == "reset") {
-                        $scope.spawn(dialogResult.data, respondingToMemeId);
-                        return;
-                    }
-                    if (dialogResult.action == "proceed") {
-                        $scope.publish(dialogResult.data, respondingToMemeId);
-                        return;
-                    }
-                }
-                allDialogsComplete();
-            });
-        }
-        $scope.publish = function (memeData, respondingToMemeId) {
-			memePublishAndShareDialogOpts.resolve = {memeData : function() {return angular.copy(memeData);}, respondingToMemeId : function(){ return respondingToMemeId;}};
-            $dialog.dialog(memePublishAndShareDialogOpts).open().then(function (dialogResult) {
-                if (dialogResult) {
-                    if (dialogResult.action == "startAgain") {
-                        sharedDataService.resetMeme();
-                        $scope.memeSelectConfirmImage();
-                        return;memeData
-                    }
-                    if (dialogResult.action == "changeMeme") {
-                        $scope.spawn(memeData, respondingToMemeId);
-                        return;
-                    } 
-					if (dialogResult.action == "close") {
-                        return;
-                    } 					
-                }
-				// Saved. Open the meme in a dialog              
-				$scope.viewMeme(dialogResult.data.id);
-            });
-        }
-        $scope.logIn = function (callBackSuccess, callBackFail) {
-            loginDialog.open().then(function (action) {
-                if (action == "Success") {
-                    callBackSuccess();
-                    return;
-                }
-                if (action == "Fail") {
-                    callBackFail();
-                    return;
-                }
-            });
-        }
+        
 		$scope.viewMeme = function(memeId)
 		{
 			 $location.path('/meme/' + memeId);
 		}
-		
         $rootScope.$on('quoteSearch.complete', function (event, data) {
 
             $scope.quotes = sharedDataService.data.quoteSearch.results;
@@ -148,6 +54,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", "memeWizardService", homeCtrl]);
 
 })();
