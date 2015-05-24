@@ -8,16 +8,24 @@
         $scope.waitingMessage = "";
 		$scope.title = "Untitled";
 		$scope.meme = {};
+		$scope.replies = [];
+		$scope.myReplies = [];
 		var memeId = $routeParams.id;
+		var viewingCount = 10;
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
         };
 		$scope.respond = function () {
 			memeWizardService.beginWithMeme($scope.meme,memeId)
-			.then(function(){
-				alert("Resolved");
-				getMeme(memeId);
+			.then(function(newMemeId){
+				alert("Resolved: " + newMemeId);
+				if(!$scope.meme.replyIds){
+					$scope.meme.replyIds = [];
+				}
+				$scope.meme.replyIds.unshift(newMemeId);
+				//refresh();
+				$scope.myReplies.unshift(newMemeId);
 			},
 			function(){
 				alert("Rejected");
@@ -49,17 +57,31 @@
             $scope.waitHeading = "";
             $scope.waitingMessage = "";
         }
-		
-		startWaiting();
-		getMeme(memeId)
+		var refresh = function(){
+			startWaiting();
+			getMeme(memeId)
 			.then(function (data) {
+				
 				$scope.meme = data;
+				if(data.replyIds){
+					$scope.replies = [];
+					for(var i=0;i<data.replyIds.length && i<viewingCount;i++){
+						getMeme(data.replyIds[i])
+						.then(function(replyData){
+							$scope.replies.push(replyData);
+						});
+					}					
+				}
+
 				endWaiting();
             })
 			.catch(function (e) {
                 endWaiting();
 				alert(e);
-            });	
+            });
+		}
+		
+		refresh();
 	}
 
     // Register the controller

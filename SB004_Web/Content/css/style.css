@@ -497,7 +497,9 @@ height:325px;*/
 #memeViewCurrent{
   
 }
-
+#memeViewCurrent .addQuote{
+  height:290px;
+  }
 #memeViewCurrent .closeMe{
   margin-top: 5px;
 }

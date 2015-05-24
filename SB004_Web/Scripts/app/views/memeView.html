@@ -3,6 +3,13 @@
 		<!--<div class="heading dialogHead" ng-hide="waiting">
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	-->
+
+		<div class="quote addQuote panel" title="Click here to respond to this meme" ng-click="respond()">
+			<div class="qContainer">
+			  <div id="addQuote">No responses yet. Be the first to respond.</div>
+			  <span class="fa fa-reply"></span>
+			</div>
+		</div>	
 		<div id="socialMedia" class="text-center section hidden-sm hidden-xs">
 			<div title="Click here to share on Facebook" class="info share facebook">
 				<span class="fa fa-facebook"></span><div>7K</div>
@@ -16,7 +23,7 @@
 			<div title="Click here to pin on Pinterest" class="info share pinterest">
 				<span class="fa fa-pinterest"></span><div>560</div>
 			</div>
-		</div>
+		</div>		
 		<div id="main">
 			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
@@ -81,15 +88,14 @@
 			</div>
 		</div>
 		<div class="closeMe closeIcon hidden-sm hidden-xs"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
-		<div class="quote addQuote panel" title="Click here to respond to this meme" ng-click="respond()">
-			<div class="qContainer">
-			  <div id="addQuote">No responses yet. Be the first to respond.</div>
-			  <span class="fa fa-reply"></span>
-			</div>
-		</div>		
+			
 		<div id="responseFilter" class="section col-lg-3 col-md-3 col-sm-3 hidden-xs">
 		
+			<div ng-repeat="reponseId in myReplies | orderBy: '-created_at'">
+			Start {{reponseId}}
+				<img ng-src="api/image/{{reponseId}}" class="image"/>	
+			
+			</div>
 		</div>
-    </div>
 	<!--Meme responses-->
 </div>
