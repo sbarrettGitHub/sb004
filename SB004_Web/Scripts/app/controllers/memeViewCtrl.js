@@ -23,9 +23,16 @@
 				if(!$scope.meme.replyIds){
 					$scope.meme.replyIds = [];
 				}
-				$scope.meme.replyIds.unshift(newMemeId);
-				//refresh();
-				$scope.myReplies.unshift(newMemeId);
+				$scope.meme.replyIds.unshift(newMemeId);				
+				$http({ method: 'PATCH', url: '/api/Meme/' + memeId + "/reply/" + newMemeId, data: {}})
+				.success(function (data) {  
+					refresh();
+					//$scope.myReplies.unshift(newMemeId);					
+                }).error(function (e) {
+					alert(e);
+					return;
+                });
+					
 			},
 			function(){
 				alert("Rejected");
@@ -70,10 +77,10 @@
 						.then(function(replyData){
 							$scope.replies.push(replyData);
 						});
-					}					
+					}
+					endWaiting();					
 				}
-
-				endWaiting();
+				
             })
 			.catch(function (e) {
                 endWaiting();

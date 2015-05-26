@@ -6,7 +6,6 @@ namespace SB004.Controllers
 {
     using System;
     using System.Linq;
-    using System.Net.Http.Headers;
 
     using SB004.Data;
     using SB004.Domain;
@@ -16,9 +15,9 @@ namespace SB004.Controllers
     using System.Net.Http.Formatting;
     using Newtonsoft.Json.Serialization;
     using System.Collections.Generic;
-    using System.Security.Claims;
 
-    public class MemeController : ApiController
+  [RoutePrefix("api/meme")]
+  public class MemeController : ApiController
     {
         readonly IRepository repository;
         readonly IImageManager imageManager;
@@ -32,6 +31,7 @@ namespace SB004.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Route("{id}")] 
         public IHttpActionResult Get(string id)
         {
             IMeme meme = repository.GetMeme(id);
@@ -65,9 +65,10 @@ namespace SB004.Controllers
         /// Return default search of memes for the given user if authenticated or general search if not
         /// </summary>
         /// <returns></returns>
+        [Route("")]
         public IHttpActionResult Get()
         {
-          string userId = User.Identity.UserId();
+          //string userId = User.Identity.UserId();
           IEnumerable<IMeme> searchResults = repository.SearchMeme(0, 10);
           return Ok(searchResults);
         }
@@ -78,10 +79,11 @@ namespace SB004.Controllers
         /// </summary>
         [Authorize]
         [HttpPost]
+        [Route("")]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
-          string userId = User.Identity.UserId();
-          string userName = User.Identity.Name;
+//          string userId = User.Identity.UserId();
+//          string userName = User.Identity.Name;
 
             IMeme meme = new Meme
             {
@@ -111,7 +113,8 @@ namespace SB004.Controllers
                     TextDecoration = x.TextDecoration,
                     TextShadow = x.TextShadow,
                 }).ToList(),
-                ImageData = Convert.FromBase64String(memeModel.ImageData)
+                ImageData = Convert.FromBase64String(memeModel.ImageData),
+                ReplyIds = new List<string>()
             };
 
             // Fall back on adding the text manually to the seed if mem image not supplied by client
@@ -134,10 +137,45 @@ namespace SB004.Controllers
                 }
             };
 
-            var response = Request.CreateResponse(HttpStatusCode.Created, meme, jsonMediaTypeFormatter);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, meme, jsonMediaTypeFormatter);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
             return response;
         }
 
+      /// <summary>
+      ///
+      /// </summary>
+      [HttpPatch]
+      [Route("{id}/reply/{replyMemeId}")]
+      public HttpResponseMessage AddReply(string id, string replyMemeId)
+      {
+        IMeme meme = repository.GetMeme(id);
+        
+        if (meme == null)
+        {
+          return Request.CreateResponse(HttpStatusCode.NotFound); 
+        }
+        if (meme.ReplyIds == null)
+        {
+          meme.ReplyIds = new List<string>();
+        }
+
+        // Add the repy id to the top of the list of replies
+        meme.ReplyIds.Insert(0, replyMemeId);
+        
+        // Update the meme
+        repository.SaveMeme(meme);
+
+        var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
+        {
+          SerializerSettings =
+          {
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+          }
+        };
+        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme, jsonMediaTypeFormatter);
+        response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+        return response;
+      }
     }
 }

@@ -8,7 +8,9 @@
   {
     public static void Register(HttpConfiguration config)
     {
-       config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+      config.MapHttpAttributeRoutes();
+
+      config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
@@ -16,6 +18,7 @@
           defaults: new { id = RouteParameter.Optional }
 
       );
+
     }
   }
 }
