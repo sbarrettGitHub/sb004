@@ -16,7 +16,7 @@ namespace SB004.Controllers
     using SB004.User;
     using SB004.Domain;
     using SB004.Data;
-
+    [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
         readonly IRepository repository;
@@ -31,6 +31,7 @@ namespace SB004.Controllers
         /// <returns>User profile</returns>
         [HttpGet]
         [Authorize]
+        [Route("{id}")]
         public IHttpActionResult Get(string id)
         {
             if (User.Identity.UserId() == id)

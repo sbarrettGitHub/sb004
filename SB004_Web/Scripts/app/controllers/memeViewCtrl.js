@@ -53,7 +53,20 @@
                 });
             return deferred.promise;
 		}
-		
+		function getMemeLite(id){
+			var deferred = $q.defer();
+			startWaiting();
+            $http.get('/api/Meme/Lite/' + id).
+                success(function (data) {
+					endWaiting();
+                    deferred.resolve(data);
+                }).
+                error(function (e) {
+					endWaiting();
+                    deferred.reject(e);
+                });
+            return deferred.promise;
+		}
         function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
@@ -73,7 +86,7 @@
 				if(data.replyIds){
 					$scope.replies = [];
 					for(var i=0;i<data.replyIds.length && i<viewingCount;i++){
-						getMeme(data.replyIds[i])
+						getMemeLite(data.replyIds[i])
 						.then(function(replyData){
 							$scope.replies.push(replyData);
 						});

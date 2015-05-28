@@ -53,13 +53,39 @@ namespace SB004.Controllers
                 meme.ReplyIds,
                 seedImage = new
                 {
+                 seed.Id,
                  seed.Width,
                  seed.Height,
                  image = "data:image/jpeg;base64," + imageManager.GetImageData(seed.ImageData)
                 }
             });
         }
+        /// <summary>
+        /// Get: api/meme/lite/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("lite/{id}")]
+        public IHttpActionResult GetLiteMeme(string id)
+        {
+            IMeme meme = repository.GetMeme(id);
+            if (meme == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(new
+            {
+                meme.Id,
+                meme.CreatedBy,
+                meme.CreatedByUserId,
+                DateCreated = meme.DateCreated.ToLocalTime(),
+                meme.Title,
+                meme.Comments,
+                meme.ResponseToId,
+                replyCount = meme.ReplyIds.Count
+            });
+        }
         /// <summary>
         /// Get: api/meme/
         /// Return default search of memes for the given user if authenticated or general search if not

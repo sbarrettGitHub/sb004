@@ -91,11 +91,12 @@
 			
 		<div id="responseFilter" class="section col-lg-3 col-md-3 col-sm-3 hidden-xs">
 		
-			<div ng-repeat="reponseId in myReplies | orderBy: '-created_at'">
-			Start {{reponseId}}
-				<img ng-src="api/image/{{reponseId}}" class="image"/>	
-			
-			</div>
+
 		</div>
 	<!--Meme responses-->
+	<div id="memeResponses" class="section col-lg-12 col-md-12 col-sm-12">
+		<div ng-repeat="reply in replies | orderBy: '-created_at'" class="pull-left">
+			<img ng-src="api/image/{{reply.id}}" class="image"/>	
+		</div>
+	</div>
 </div>
