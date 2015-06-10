@@ -4,7 +4,7 @@
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	-->
 
-		<div class="quote addQuote panel" title="Click here to respond to this meme" ng-click="respond()">
+		<div class="quote addQuote panel hidden-sm hidden-xs" title="Click here to respond to this meme" ng-click="respond()">
 			<div class="qContainer">
 			  <div id="addQuote">No responses yet. Be the first to respond.</div>
 			  <span class="fa fa-reply"></span>
@@ -87,16 +87,13 @@
 				</div>					
 			</div>
 		</div>
-		<div class="closeMe closeIcon hidden-sm hidden-xs"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
-			
+		<div class="closeMe closeIcon hidden-sm hidden-xs" ng-click="closeMe()"><span class="fa fa-times"></span></div>			
 		<div id="responseFilter" class="section col-lg-3 col-md-3 col-sm-3 hidden-xs">
-		
-
 		</div>
 	<!--Meme responses-->
 	<div id="memeResponses" class="section col-lg-12 col-md-12 col-sm-12">
-		<div ng-repeat="reply in replies | orderBy: '-created_at'" class="pull-left">
-			<img ng-src="api/image/{{reply.id}}" class="image"/>	
+		<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
+			<div ng-memelink ng-model="reply"></div>
 		</div>
 	</div>
 </div>

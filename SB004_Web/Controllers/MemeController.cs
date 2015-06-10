@@ -80,8 +80,6 @@ namespace SB004.Controllers
                 meme.CreatedBy,
                 meme.CreatedByUserId,
                 DateCreated = meme.DateCreated.ToLocalTime(),
-                meme.Title,
-                meme.Comments,
                 meme.ResponseToId,
                 replyCount = meme.ReplyIds.Count
             });
