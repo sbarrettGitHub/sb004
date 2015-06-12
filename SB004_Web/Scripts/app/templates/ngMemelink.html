@@ -1,7 +1,15 @@
-<div>
-	<div class="quoteHeader">
-	  <div class="pull-left">{{ngModel.createdBy}}</div>
+<div class="memeLinkContainer pull-left rounded">
+	<img ng-src="api/image/{{ngModel.id}}" class="image"/>
+	<div class="created">
+	  <div class="pull-left"><span>{{ngModel.createdBy}}</span></div>
 	  <div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
 	</div>
-  <img ng-src="api/image/{{ngModel.id}}" class="image"/>
+	<div class="stats">
+		<div title="Click here to like this" class="hot pull-left">
+			<i class="fa fa-thumbs-o-up"></i><span>110K</span>
+		</div>
+		<div title="The number replies" class="pull-right">
+			<i class="fa fa-reply"></i><span>120K</span>
+		</div>	
+	</div>		
 </div>
