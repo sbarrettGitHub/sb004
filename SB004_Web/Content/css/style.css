@@ -219,19 +219,23 @@ margin-left:1px !important;
 }
 .memeLinkContainer img{
 	margin:5px;
+	cursor:pointer;
 }
 .memeLinkContainer .created{
 	margin-left: 10px;
 	margin-right: 10px;
 	font-size: small;
 	border-bottom: 1px solid #C8C8C8;
-	height: 20px;
+	height: 25px;
+	margin-top: 10px;
+	font-weight:bold;
 }
 .memeLinkContainer .stats{
 	margin-left: 10px;
 	margin-right: 10px;
 	font-size: small;
 	height: 20px;
+	
 }
 
 #newQuote {
@@ -535,6 +539,7 @@ height:325px;*/
   float: left;
   background-color: whitesmoke;
   max-width:450px;
+  margin-left: 5px;
 }
 
 #main .info{			
@@ -547,8 +552,22 @@ height:325px;*/
 	cursor:pointer;
 	color: white;
 }
+#bigOptions{
+	width: 316px;
+	cursor:pointer;
+}
+#bigOptions .return {
+	text-align:left;
+	font-weight:bold;
+}
+#bigOptions .return:hover {
+	background-color:green;
+	color:white;
+}
+#bigOptions .return .fa{
+	margin-left: 10px;
+}
 #socialMedia{
-	width: 100px;
 	background-color: white;
 	margin-right: 5px;
 }
@@ -615,14 +634,16 @@ font-size: larger;
 	padding: 10px;
 	border-radius: 6px;
 	background-color: white;
+
   }
  #main #currentMemeInfo{
 	float:left;
 	width:100%;
-	padding: 5px;
+	height:40px;
 	border-radius: 6px;
 	background-color: white;
 	margin-bottom: 5px;
+	
  }
 #rightBar{	
 	min-height:325px;

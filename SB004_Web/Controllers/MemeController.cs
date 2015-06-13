@@ -138,6 +138,7 @@ namespace SB004.Controllers
                     TextShadow = x.TextShadow,
                 }).ToList(),
                 ImageData = Convert.FromBase64String(memeModel.ImageData),
+                ResponseToId = memeModel.ResponseToId,
                 ReplyIds = new List<string>()
             };
 
