@@ -41,11 +41,23 @@
         };
 		$scope.viewMeme = function(memeId)
 		{
-			 $location.path('/meme/' + memeId);
+			if(memeId){
+				$location.path('/meme/' + memeId);
+			}else{
+				$location.path("home");
+			}
 		}
 		$scope.likeMeme = function(memeId)
 		{
 			 alert("Like:" + memeId);
+		}		
+		$scope.dislikeMeme = function(memeId)
+		{
+			 alert("Dislike:" + memeId);
+		}		
+		$scope.addMemeToFavourites = function(memeId)
+		{
+			 alert("Add to Favourites:" + memeId);
 		}
 		function getMeme(id){
 			var deferred = $q.defer();

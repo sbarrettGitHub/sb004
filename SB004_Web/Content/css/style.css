@@ -234,8 +234,10 @@ margin-left:1px !important;
 	margin-left: 10px;
 	margin-right: 10px;
 	font-size: small;
-	height: 20px;
-	
+	height: 20px;	
+}
+.memeLinkContainer .stats div{
+	margin-right:10px;
 }
 
 #newQuote {
@@ -556,15 +558,19 @@ height:325px;*/
 	width: 316px;
 	cursor:pointer;
 }
-#bigOptions .return {
+#bigOptions .option {
 	text-align:left;
 	font-weight:bold;
 }
-#bigOptions .return:hover {
+#bigOptions .option:hover {
 	background-color:green;
 	color:white;
 }
-#bigOptions .return .fa{
+#bigOptions #report:hover {
+	background-color:red;
+	color:white;
+}
+#bigOptions .option .fa{
 	margin-left: 10px;
 }
 #socialMedia{
@@ -582,13 +588,16 @@ font-size: larger;
   height: 64px;
   padding: 23px;
 }
-#main #socialMediaTiny{
+#main #smallOptions{
 	display:block;
 	margin:0 auto;	
 	width: 100%;
 }
-#main #socialMediaTiny .share{
+#main #smallOptions .share{
 	width:32px;	
+}
+#main #smallOptions #socialButtonsSmall{
+margin-top:2px;
 }
 .facebook:hover{
 	background-color: #3C5A98 !important;
@@ -634,7 +643,12 @@ font-size: larger;
 	padding: 10px;
 	border-radius: 6px;
 	background-color: white;
-
+	min-height: 270px;
+  display: table;
+  }
+  #main #currentMemeContainer #frame{
+  	display: table-cell;
+	vertical-align: middle;
   }
  #main #currentMemeInfo{
 	float:left;

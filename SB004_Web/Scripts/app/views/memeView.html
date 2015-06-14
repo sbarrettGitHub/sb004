@@ -4,10 +4,12 @@
 			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 		</div>	-->
 		<div id="bigOptions" class="pull-left hidden-sm hidden-xs">
-			<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="return text-center section col-lg-12 col-md-12 hidden-sm hidden-xs">
+			<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
+							title="Return to the post that this is in response to.">
 				<i class="fa fa-arrow-circle-o-left"></i><span >&nbsp; Back to conversation</span>
 			</div>
-			<div id="home" ng-show="meme.responseToId==null" ng-click="viewMeme(meme.responseToId)" class="return text-center section col-lg-12 col-md-12 hidden-sm hidden-xs">
+			<div id="home" ng-show="meme.responseToId==null" ng-click="viewMeme(meme.responseToId)" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
+							title="This is the first post in this conversation. Click here to return to the home page.">
 				<i class="fa fa-home"></i><span>&nbsp; Home</span>
 			</div>			
 			<div id="socialMedia" class="col-lg-12 col-md-12 text-center section hidden-sm hidden-xs">
@@ -24,6 +26,22 @@
 					<span class="fa fa-pinterest"></span><div>560</div>
 				</div>
 			</div>
+			<div id="respond" ng-click="respond()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
+				title="Respond to this with a new post.">
+				<i class="fa fa-reply"></i><span>&nbsp; Respond</span>
+			</div>	
+			<div id="respondFromFavourites" ng-click="respondFromFavourites()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
+				title="Respond to this with an existing post from your list of favourites.">
+				<i class="fa fa-reply"></i><span>&nbsp; Respond from favourites</span><i class="fa fa-star"></i>
+			</div>				
+			<div id="repost" ng-click="repost()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+					title="Repost this, and begin a new discussion thread among your followers.">
+				<i class="fa fa-recycle"></i><span>&nbsp; Repost</span>
+			</div>
+			<div id="report" ng-click="report()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+					title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
+				<i class="fa fa-exclamation-triangle"></i><span>&nbsp; Report</span>
+			</div>
 		</div>		
 		<div id="main">
 			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
@@ -34,64 +52,81 @@
 					<span class="fa fa-clock-o"></span> {{meme.dateCreated | date:'medium'}}
 				</div>
 				<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center">
-					<span class="fa fa-user"></span> {{meme.createdBy}} 
-					<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>
+					<span class="fa fa-user"></span> {{meme.createdBy}} | {{meme.dateCreated | date:'short'}}					
 				</div>					
 			</div>
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<img ng-src="api/image/{{meme.id}}" class="image"/>	
-				<div id="currentMemeStats" class="col-md-12 col-lg-12 hidden-sm hidden-xs">
-					<div class="pull-left">
-						<div ng-click="likeMeme(meme.id)" title="Click here to like this meme" class="info stat hot">
-							<i class="fa fa-thumbs-o-up"></i><span>110K</span>
-						</div>	
-						<div title="Click here to add this meme to your favorites" class="info stat hot">
-							<i class="fa fa-star"></i><span>32</span>
-						</div>					
-					</div>
-					<div  class="pull-right">
-						<div title="The number times this meme has been viewed" class="info stat">
-							<i class="fa fa-eye"></i><span>120K</span>
-						</div>	
-						
-						<div title="The number times this meme has been shared" class="info stat">
-							<i class="fa fa-share-alt"></i><span>70K</span>
-						</div>						
-					</div>				
-				</div>					
-			</div>
-			<div id="currentMemeOptions" class="section text-center col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<button title="Click to respond to this meme, with a meme of your own" ng-click="respond()">
-					<span class="fa fa-reply"></span><span class="hidden-xs ">&nbsp; Respond</span>
-				</button>
-				<button title="Requote this meme and begin a new thread of discussion among your followers.">
-					<span class="fa fa-recycle"></span><span class="hidden-xs ">&nbsp; Recycle</span>
-				</button>			
-				<button id="report" title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful memes are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
-					<span class="fa fa-exclamation-triangle"></span><span class="hidden-xs ">&nbsp; Report</span>
-				</button>				
+				<div id="frame">
+					<img ng-src="api/image/{{meme.id}}" class="image"/>	
+					<div id="currentMemeStats" class="col-md-12 col-lg-12">
+						<div class="pull-left">
+							<div ng-click="likeMeme(meme.id)" title="I like this post" class="info stat hot">
+								<i class="fa fa-thumbs-o-up"></i><span>110K</span>
+							</div>	
+							<div ng-click="dislikeMeme(meme.id)" title="I dislike this post" class="info stat hot">
+								<i class="fa fa-thumbs-o-down"></i><span>75</span>
+							</div>	
+							<div ng-click="addMemeToFavourites(meme.id)" title="Add to my favorites" class="info stat hot">
+								<i class="fa fa-star"></i><span>32</span>
+							</div>					
+						</div>
+						<div  class="pull-right">
+							<div title="The number times this meme has been viewed" class="info stat">
+								<i class="fa fa-eye"></i><span>120K</span>
+							</div>	
+							
+							<div title="The number times this meme has been shared" class="info stat">
+								<i class="fa fa-share-alt"></i><span>70K</span>
+							</div>						
+						</div>				
+					</div>					
+				</div>
 			</div>
 			<div id="" class="section hidden-lg hidden-md col-md-12 col-lg-12 col-sm-12 col-xs-12">	
-				<div id="socialMediaTiny" class=" text-center hidden-lg hidden-md col-lg-12 col-sm-12 col-xs-12">
-					<button title="Click here to share on Facebook">
-						<span class="fa fa-facebook"></span>
+				<div id="smallOptions" class=" text-center hidden-lg hidden-md col-lg-12 col-sm-12 col-xs-12">
+					<button ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)"title="">
+							<span class="fa fa-arrow-circle-o-left"></span>
 					</button>
-					<button title="Click here to tweet on twitter">
-						<span class="fa fa-twitter"></span>
+					<button ng-show="meme.responseToId==null" ng-click="viewMeme(meme.responseToId)"title="">
+							<span class="fa fa-home"></span>
 					</button>
-					<button title="Click here to share in Google+">
-						<span class="fa fa-google-plus"></span>
-					</button>				
-					<button title="Click here to pin on Pinterest">
-						<span class="fa fa-pinterest"></span>
-					</button>							
+					<button ng-click="respond()" title="Respond to this with a new post.">
+							<span class="fa fa-reply"></span>
+					</button>
+					<button ng-click="respond()" title="Respond to this with an existing post form you list of favourites.">
+							<span class="fa fa-reply">*</span>
+					</button>	
+					<button ng-click="repost()" title="Repost this, and begin a new discussion thread among your followers.">
+							<span class="fa fa-recycle"></span>
+					</button>		
+					<button ng-click="report()" title="Report this, and begin a new discussion thread among your followers.">
+							<span class="fa fa-exclamation-triangle"></span>
+					</button>
+					<div id="socialButtonsSmall">
+						<button title="Click here to share on Facebook">
+							<span class="fa fa-facebook"></span>
+						</button>
+						<button title="Click here to tweet on twitter">
+							<span class="fa fa-twitter"></span>
+						</button>
+						<button title="Click here to share in Google+">
+							<span class="fa fa-google-plus"></span>
+						</button>				
+						<button title="Click here to pin on Pinterest">
+							<span class="fa fa-pinterest"></span>
+						</button>
+					</div>
 				</div>					
 			</div>				
 		</div>	
 	<!--Meme responses-->
 	<div id="memeResponses" class="section col-lg-12 col-md-12 col-sm-12">
 		<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
-			<div ng-memelink ng-model="reply" on-click="viewMeme(reply.id)" on-like="likeMeme(reply.id)"></div>
+			<div ng-memelink ng-model="reply" 
+							on-click="viewMeme(reply.id)" 
+							on-like="likeMeme(reply.id)"
+							on-dislike="dislikeMeme(reply.id)"
+							on-addtofavourites="addMemeToFavourites(reply.id)"></div>
 		</div>
 	</div>
 </div>
