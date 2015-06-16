@@ -212,7 +212,7 @@ margin-left:1px !important;
 }
 /*-----------------------------------------------------------*/
 .memeLinkContainer{
-	background-color:whitesmoke;
+	background-color:white;
 	min-width:230px;
 	margin-right:5px;
 	color:#C8C8C8;
@@ -524,7 +524,7 @@ height:325px;*/
   background-color: whitesmoke;
 }
 #memeViewCurrent{
-  
+
 }
 #memeViewCurrent .addQuote{
   height:290px;
@@ -540,8 +540,9 @@ height:325px;*/
 #main{
   float: left;
   background-color: whitesmoke;
-  max-width:450px;
+  width:450px;
   margin-left: 5px;
+  margin-right: 5px;
 }
 
 #main .info{			
@@ -570,9 +571,6 @@ height:325px;*/
 	background-color:red;
 	color:white;
 }
-#bigOptions .option .fa{
-	margin-left: 10px;
-}
 #socialMedia{
 	background-color: white;
 	margin-right: 5px;
@@ -584,9 +582,10 @@ font-size: larger;
   width: 64px;
   background-color: rgb(200, 200, 200);
   margin-bottom: 5px;
-   margin-left: 10px;
+  margin-left: 5px;
   height: 64px;
   padding: 23px;
+  margin-right: 5px;
 }
 #main #smallOptions{
 	display:block;
@@ -644,7 +643,7 @@ margin-top:2px;
 	border-radius: 6px;
 	background-color: white;
 	min-height: 270px;
-  display: table;
+	display: table;
   }
   #main #currentMemeContainer #frame{
   	display: table-cell;
@@ -659,7 +658,30 @@ margin-top:2px;
 	margin-bottom: 5px;
 	
  }
-#rightBar{	
-	min-height:325px;
-	background-color: white;	
+#memeViewCurrent #relatedContainer{
+	margin-left:5px;
+	width: auto;
+	overflow:auto;
+}
+#memeViewCurrent #relatedContainer #relatedItems{
+	height: 270px;
+}
+#memeResponses{
+}
+#memeResponses .section{
+	padding: 10px;
+	border-radius: 6px;
+}
+#memeResponses #commentsContainer{
+	width: 316px;
+	margin-right:5px;
+}
+#memeResponses #commentsContainer #commentsHeading{
+	font-weight:bold;
+}
+#memeResponses #commentsContainer #comments{
+	min-height: 270px;
+}
+#memeResponses #repliesContainer{
+overflow:auto;
 }

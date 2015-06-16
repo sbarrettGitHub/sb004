@@ -1,8 +1,5 @@
 ﻿<div id="memeView" class="container searchResultsContainer rounded col-md-12 col-sm-12">
-    <div id="memeViewCurrent" class="container searchResultsContainer rounded col-md-12 col-sm-12">
-		<!--<div class="heading dialogHead" ng-hide="waiting">
-			<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
-		</div>	-->
+	<div id="memeViewCurrent" class="container rounded col-md-12 col-sm-12">
 		<div id="bigOptions" class="pull-left hidden-sm hidden-xs">
 			<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
 							title="Return to the post that this is in response to.">
@@ -43,7 +40,7 @@
 				<i class="fa fa-exclamation-triangle"></i><span>&nbsp; Report</span>
 			</div>
 		</div>		
-		<div id="main">
+		<div id="main" class="pull-left">
 			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
@@ -57,7 +54,7 @@
 			</div>
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<div id="frame">
-					<img ng-src="api/image/{{meme.id}}" class="image"/>	
+					<img ng-src="/api/image/{{meme.id}}" class="image"/>	
 					<div id="currentMemeStats" class="col-md-12 col-lg-12">
 						<div class="pull-left">
 							<div ng-click="likeMeme(meme.id)" title="I like this post" class="info stat hot">
@@ -119,14 +116,35 @@
 				</div>					
 			</div>				
 		</div>	
-	<!--Meme responses-->
-	<div id="memeResponses" class="section col-lg-12 col-md-12 col-sm-12">
-		<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
-			<div ng-memelink ng-model="reply" 
-							on-click="viewMeme(reply.id)" 
-							on-like="likeMeme(reply.id)"
-							on-dislike="dislikeMeme(reply.id)"
-							on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+		<div id="relatedContainer" class="hidden-sm hidden-xs">
+			<div id="relatedHeading" class="rounded option section col-lg-12 col-md-12">
+				<i class="fa fa-link"></i><span >&nbsp; Related</span>
+			</div>
+			<div id="relatedItems" class="rounded option section col-lg-12 col-md-12">
+			</div>
 		</div>
 	</div>
+	<!--All responses-->
+	<div id="memeResponses" class="container rounded col-lg-12 col-md-12 col-sm-12">
+		<div id="commentsContainer" class="pull-left">
+			<div id="commentsHeading" class="rounded option section col-lg-12 col-md-12">
+				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
+			</div>
+			<div id="comments" class="rounded option section col-lg-12 col-md-12">
+			</div>			
+		</div>
+		<div id="repliesContainer">
+			<div id="repliesHeading" class="rounded option section col-lg-12 col-md-12">
+				<i class="fa fa-inbox"></i><span >&nbsp; Replies</span>
+			</div>
+			<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
+				<div ng-memelink ng-model="reply" 
+								on-click="viewMeme(reply.id)" 
+								on-like="likeMeme(reply.id)"
+								on-dislike="dislikeMeme(reply.id)"
+								on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+			</div>
+		</div>
+	</div>
+
 </div>

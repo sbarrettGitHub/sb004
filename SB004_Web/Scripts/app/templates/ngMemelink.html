@@ -1,5 +1,5 @@
 <div class="memeLinkContainer pull-left rounded">
-	<img ng-src="api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image"/>
+	<img ng-src="/api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image"/>
 	<div class="created">
 	  <div class="pull-left"><span>{{ngModel.createdBy}}</span></div>
 	  <div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
@@ -11,15 +11,10 @@
 		<div ng-click="onDislike(meme.id)" title="I dislike this post" class="hot pull-left info stat">
 			<i class="fa fa-thumbs-o-down"></i><span>75</span>
 		</div>	
-		<div ng-click="onAddtofavourites(meme.id)"title="Add to my favorites" class="hot pull-left info stat hot">
-			<i class="fa fa-star"></i><span>49</span>
-		</div>		
+	
 		<div title="The number replies" class="pull-right info stat">
 			<i class="fa fa-reply"></i><span>120K</span>
 		</div>		
-		<div title="The number times this meme has been shared" class="pull-right info stat">
-			<i class="fa fa-share-alt"></i><span>70K</span>
-		</div>
 		<div title="The number times this meme has been viewed" class="pull-right info stat">
 			<i class="fa fa-eye"></i><span>120K</span>
 		</div>

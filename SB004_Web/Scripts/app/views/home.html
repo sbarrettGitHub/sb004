@@ -12,7 +12,7 @@
           <span>{{quote.createdBy}}</span>
           <div class="when">{{quote.dateCreated  | date:'longDate'}} (<span class="glyphicon glyphicon-heart" title="This meme has received {{quote.upVotes}} positive votes"></span> {{quote.votes}})</div> 
         </div>
-        <img ng-src="api/image/{{quote.id}}" alt="{{quote.title}}" ng-click="viewMeme(quote.id)"/>
+        <img ng-src="/api/image/{{quote.id}}" alt="{{quote.title}}" ng-click="viewMeme(quote.id)"/>
         <div class="quoteFooter">
           <div class="options">
             <span class="fa fa-recycle" title="Requote this! Add a new meme based on this one."></span>
