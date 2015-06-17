@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams, sharedDataService, memeWizardService) {
+    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams, memeWizardService, securityService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -10,6 +10,7 @@
 		$scope.meme = {};
 		$scope.replies = [];
 		$scope.myReplies = [];
+		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
 		var memeId = $routeParams.id;
 		var viewingCount = 10;
         /*Control buttons*/
@@ -125,6 +126,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams", "sharedDataService","memeWizardService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","memeWizardService", "securityService", memeViewCtrl]);
 
 })();

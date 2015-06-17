@@ -678,10 +678,26 @@ margin-top:2px;
 }
 #memeResponses #commentsContainer #commentsHeading{
 	font-weight:bold;
+	background-color: rgb(200, 200, 200);
+	color: white;
 }
 #memeResponses #commentsContainer #comments{
 	min-height: 270px;
 }
+#memeResponses #commentsContainer #comments input{
+	width: 275px;
+}
 #memeResponses #repliesContainer{
 overflow:auto;
+}
+#memeResponses #repliesContainer #repliesHeading{
+
+}
+.sectionHeading{
+	font-weight:bold;
+  background-color: rgb(200, 200, 200);
+  color: white;
+  padding: 10px;
+	border-radius: 6px;
+	margin-bottom:5px;
 }

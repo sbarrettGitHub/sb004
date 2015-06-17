@@ -127,15 +127,22 @@
 	<!--All responses-->
 	<div id="memeResponses" class="container rounded col-lg-12 col-md-12 col-sm-12">
 		<div id="commentsContainer" class="pull-left">
-			<div id="commentsHeading" class="rounded option section col-lg-12 col-md-12">
+			<div id="commentsHeading" class="rounded option sectionHeading col-lg-12 col-md-12">
 				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
 			</div>
-			<div id="comments" class="rounded option section col-lg-12 col-md-12">
-			</div>			
+			<div id="comments" class="rounded option section  col-lg-12 col-md-12">			
+				<div id="addComment">
+					<div ><i class="fa fa-user"></i><span >&nbsp; {{userName}}</span></div>
+					<div>
+						<input type="text" value="" placeholder="Enter you comment here"/>
+						<i class="fa fa-send"></i>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="repliesContainer">
-			<div id="repliesHeading" class="rounded option section col-lg-12 col-md-12">
-				<i class="fa fa-inbox"></i><span >&nbsp; Replies</span>
+			<div id="repliesHeading" class="rounded option sectionHeading col-lg-12 col-md-12">
+				<i class="fa fa-inbox"></i><span >&nbsp; Responses</span>
 			</div>
 			<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
 				<div ng-memelink ng-model="reply" 
