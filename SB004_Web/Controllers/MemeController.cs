@@ -81,7 +81,9 @@ namespace SB004.Controllers
                 meme.CreatedByUserId,
                 DateCreated = meme.DateCreated.ToLocalTime(),
                 meme.ResponseToId,
-                replyCount = meme.ReplyIds.Count
+                replyCount = meme.ReplyIds.Count,
+                userCommentCount = repository.GetUserCommentCount(id)
+                
             });
         }
         /// <summary>
@@ -106,7 +108,7 @@ namespace SB004.Controllers
         [Route("")]
         public HttpResponseMessage Post([FromBody]MemeModel memeModel)
         {
-//          string userId = User.Identity.UserId();
+          string userId = User.Identity.UserId();
 //          string userName = User.Identity.Name;
 
             IMeme meme = new Meme

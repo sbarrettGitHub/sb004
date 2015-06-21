@@ -36,4 +36,8 @@
     public string ResponseToId { get; set; }
     public List<string> ReplyIds { get; set; }
   }
+  public class UserCommentModel {
+      public string MemeId { get; set; }
+      public string Comment { get; set; }
+  }
 }

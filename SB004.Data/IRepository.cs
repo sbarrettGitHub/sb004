@@ -23,5 +23,11 @@
         IUser GetUser(string authenticationUserId, string authenticationProvider);
         
         IUser GetUser(string userId);
+
+        List<IUserComment> GetUserComments(string memeId, int skip, int take);
+
+        long GetUserCommentCount(string memeId);
+
+        IUserComment SaveUserComment(IUserComment userComment);
     }
 }

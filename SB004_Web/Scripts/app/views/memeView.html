@@ -118,7 +118,7 @@
 		</div>	
 		<div id="relatedContainer" class="hidden-sm hidden-xs">
 			<div id="relatedHeading" class="rounded option section col-lg-12 col-md-12">
-				<i class="fa fa-link"></i><span >&nbsp; Related</span>
+				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
 			</div>
 			<div id="relatedItems" class="rounded option section col-lg-12 col-md-12">
 			</div>
@@ -134,8 +134,22 @@
 				<div id="addComment">
 					<div ><i class="fa fa-user"></i><span >&nbsp; {{userName}}</span></div>
 					<div>
-						<input type="text" value="" placeholder="Enter you comment here"/>
-						<i class="fa fa-send"></i>
+						<input type="text" value="" placeholder="Enter you comment here" 
+							ng-model="edItem" 
+							ng-keypress="($event.which === 13)?addComment(edItem):0"/>
+					</div>
+				</div>
+				<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left">
+					<div>
+						<div>
+							{{userComment.userName.length>0?userComment.userName :"Anonymous"}}
+						</div>
+						<div>
+							{{userComment.dateCreated | date:'short'}}
+						</div>
+					</div>
+					<div class="userComment">					
+						{{userComment.comment}}
 					</div>
 				</div>
 			</div>
