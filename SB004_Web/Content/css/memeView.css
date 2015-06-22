@@ -65,6 +65,8 @@ margin-top:2px;
 
 #main #currentMemeStats{
 	margin-top: 2px;
+	  position: absolute;
+  bottom: 0;
 }
 #currentMemeContainer #currentMemeStats .stat{
 	margin: 5px;
