@@ -9,20 +9,6 @@
 							title="This is the first post in this conversation. Click here to return to the home page.">
 				<i class="fa fa-home"></i><span>&nbsp; Home</span>
 			</div>			
-			<div id="socialMedia" class="col-lg-12 col-md-12 text-center section hidden-sm hidden-xs">
-				<div title="Click here to share on Facebook" class="info share facebook">
-					<span class="fa fa-facebook"></span><div>7K</div>
-				</div>
-				<div title="Click here to tweet on twitter" class="info share twitter">
-					<span class="fa fa-twitter"></span><div>62K</div>
-				</div>
-				<div title="Click here to share in Google+" class="info share google" >
-					<span class="fa fa-google-plus"></span><div>129</div>
-				</div>
-				<div title="Click here to pin on Pinterest" class="info share pinterest">
-					<span class="fa fa-pinterest"></span><div>560</div>
-				</div>
-			</div>
 			<div id="respond" ng-click="respond()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
 				title="Respond to this with a new post.">
 				<i class="fa fa-reply"></i><span>&nbsp; Respond</span>
@@ -40,8 +26,22 @@
 				<i class="fa fa-exclamation-triangle"></i><span>&nbsp; Report</span>
 			</div>
 		</div>		
+		<div id="socialMedia" class="text-center hidden-sm hidden-xs">
+			<div title="Click here to share on Facebook" class="info share facebook">
+				<span class="fa fa-facebook"></span><div>7K</div>
+			</div>
+			<div title="Click here to tweet on twitter" class="info share twitter">
+				<span class="fa fa-twitter"></span><div>62K</div>
+			</div>
+			<div title="Click here to share in Google+" class="info share google" >
+				<span class="fa fa-google-plus"></span><div>129</div>
+			</div>
+			<div title="Click here to pin on Pinterest" class="info share pinterest">
+				<span class="fa fa-pinterest"></span><div>560</div>
+			</div>
+		</div>
 		<div id="main" class="pull-left">
-			<div id="currentMemeInfo" class="section col-md-12 col-lg-12 col-sm-12 col-xs-12">		
+			<div id="currentMemeInfo" class="sectionHeading col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
 					<span class="fa fa-user"></span> {{meme.createdBy}} 
 				</div>
@@ -77,7 +77,32 @@
 							</div>						
 						</div>				
 					</div>					
+				</div>			
+				
+			</div>
+			<div id="Options" class="section col-lg-12 col-md-12">
+				<div class="text-center col-lg-4 col-md-4">
+					<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="option text-center"
+									title="Return to the post that this is in response to.">
+						<i class="fa fa-arrow-circle-o-left"></i><span >&nbsp; Back to conversation</span>
+					</div>
+					<div id="home" ng-show="meme.responseToId==null" ng-click="viewMeme(meme.responseToId)" class="option text-center"
+									title="This is the first post in this conversation. Click here to return to the home page.">
+						<i class="fa fa-home"></i><span>&nbsp; Home</span>
+					</div>	
 				</div>
+				<div class="text-center col-lg-4 col-md-4">
+					<div id="repost" ng-click="repost()" class="option text-center" 
+							title="Repost this, and begin a new discussion thread among your followers.">
+						<i class="fa fa-recycle"></i><span>&nbsp; Repost</span>
+					</div>
+				</div>
+				<div class="text-center col-lg-4 col-md-4">
+					<div id="report" ng-click="report()" class="option text-center" 
+							title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
+						<i class="fa fa-exclamation-triangle"></i><span>&nbsp; Report</span>
+					</div>	
+				</div>				
 			</div>
 			<div id="" class="section hidden-lg hidden-md col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<div id="smallOptions" class=" text-center hidden-lg hidden-md col-lg-12 col-sm-12 col-xs-12">
@@ -115,22 +140,11 @@
 					</div>
 				</div>					
 			</div>				
-		</div>	
-		<div id="relatedContainer" class="hidden-sm hidden-xs">
-			<div id="relatedHeading" class="rounded option section col-lg-12 col-md-12">
+			<div id="commentsContainer" class="pull-left col-lg-12 col-md-12 col-sm-12">
+			<div id="commentsHeading" class="rounded sectionHeading">
 				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
 			</div>
-			<div id="relatedItems" class="rounded option section col-lg-12 col-md-12">
-			</div>
-		</div>
-	</div>
-	<!--All responses-->
-	<div id="memeResponses" class="container rounded col-lg-12 col-md-12 col-sm-12">
-		<div id="commentsContainer" class="pull-left">
-			<div id="commentsHeading" class="rounded option sectionHeading col-lg-12 col-md-12">
-				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
-			</div>
-			<div id="comments" class="rounded option section  col-lg-12 col-md-12">			
+			<div id="comments" class="rounded section">			
 				<div id="addComment">
 					<div ><i class="fa fa-user"></i><span >&nbsp; {{userName}}</span></div>
 					<div>
@@ -139,6 +153,7 @@
 							ng-keypress="($event.which === 13)?addComment(edItem):0"/>
 					</div>
 				</div>
+
 				<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left">
 					<div>
 						<div>
@@ -153,19 +168,34 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="repliesContainer">
-			<div id="repliesHeading" class="rounded option sectionHeading col-lg-12 col-md-12">
+		</div>			
+		</div>	
+		<div id="repliesContainer" class="hidden-sm hidden-xs">
+			<div id="repliesHeading" class="rounded sectionHeading col-lg-12 col-md-12">
 				<i class="fa fa-inbox"></i><span >&nbsp; Responses</span>
-			</div>
-			<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
-				<div ng-memelink ng-model="reply" 
-								on-click="viewMeme(reply.id)" 
-								on-like="likeMeme(reply.id)"
-								on-dislike="dislikeMeme(reply.id)"
-								on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+			</div>			
+			<div id="Replies" class="rounded section col-lg-12 col-md-12">	
+				<div class="text-center col-lg-12 col-md-12">
+					<div id="respond" ng-click="respond()" class="option text-center col-lg-4 col-md-4"
+					title="Respond to this with a new post.">
+						<i class="fa fa-reply"></i><span>&nbsp; Respond</span>
+					</div>	
+					<div id="respondFromFavourites" ng-click="respondFromFavourites()" class="option text-center col-lg-4 col-md-4 pull-right"
+						title="Respond to this with an existing post from your list of favourites.">
+						<i class="fa fa-reply"></i><span>&nbsp; Respond &nbsp;</span><i class="fa fa-star"></i>
+					</div>
+				</div>	
+				<div id="noReplies" class="rounded sectionHeading col-lg-12 col-md-12">
+					No reponses yet! Be the first.
+				</div>
+				<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
+					<div ng-memelink ng-model="reply" 
+									on-click="viewMeme(reply.id)" 
+									on-like="likeMeme(reply.id)"
+									on-dislike="dislikeMeme(reply.id)"
+									on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </div>

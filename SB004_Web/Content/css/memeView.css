@@ -1,0 +1,226 @@
+#memeView{
+  overflow: hidden;
+  background-color: whitesmoke;
+}
+#memeViewCurrent{
+
+}
+#memeViewCurrent .addQuote{
+  height:290px;
+  }
+#memeViewCurrent .closeMe{
+  margin-top: 5px;
+}
+#memeViewCurrent .section{
+	padding: 10px;
+	border-radius: 6px;
+}
+
+#main{
+  float: left;
+  background-color: whitesmoke;
+  width:700px;
+    margin-left: 100px;
+  margin-right: 5px;
+}
+
+#main .info{			
+	text-align:center;
+	padding: 2px;
+	margin: 2px;
+}
+.share{
+	float:left;	
+	cursor:pointer;
+	color: white;
+}
+#bigOptions{
+	width: 316px;
+	cursor:pointer;
+	display:none;
+}
+.option{
+	border-radius:3px;
+	border: 1px solid rgb(200,200,200);
+	background-color:whitesmoke;
+	cursor: pointer;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.option:hover{	
+	background-color:cornflowerblue;	
+	color:white;
+}
+#main #smallOptions{
+	display:block;
+	margin:0 auto;	
+	width: 100%;
+}
+#main #smallOptions .share{
+	width:32px;	
+}
+#main #smallOptions #socialButtonsSmall{
+margin-top:2px;
+}
+
+#main #currentMemeStats{
+	margin-top: 2px;
+}
+#currentMemeContainer #currentMemeStats .stat{
+	margin: 5px;
+	float:left;
+}
+#currentMemeContainer #currentMemeStats .hot{
+	border:1px solid white;
+}
+#currentMemeContainer #currentMemeStats .hot:hover{
+	border:1px solid cornflowerblue;
+}
+#currentMemeContainer #currentMemeStats i{
+	margin-right:2px;
+}
+#main .imageContainer{
+	height:auto;
+	float:left;
+	width:100%;
+}
+.section{
+	float:left;
+	padding: 5px;
+	border-radius: 6px;
+	background-color: white;
+	margin-bottom: 5px;
+}
+
+#main #currentMemeContainer{
+	padding: 10px;
+	border-radius: 6px;
+	background-color: white;
+	min-height: 270px;
+	display: table;
+  }
+  #main #currentMemeContainer #frame{
+  	display: table-cell;
+	vertical-align: middle;
+  }
+ #main #currentMemeInfo{
+	float:left;
+	width:100%;
+	height:40px;
+	border-radius: 6px;
+	background-color: white;
+	margin-bottom: 5px;
+	
+ }
+#memeViewCurrent #repliesContainer{
+	margin-left:5px;
+	width: auto;
+	overflow:auto;
+}
+#memeViewCurrent #repliesContainer #relatedItems{
+	height: 270px;
+}
+#memeResponses{
+}
+#memeResponses .section{
+	padding: 10px;
+	border-radius: 6px;
+}
+#commentsContainer{
+	margin-right:5px;
+	padding: 0;
+}
+#commentsContainer #commentsHeading{
+	font-weight:bold;
+	
+}
+#commentsContainer #comments{
+	min-height: 270px;
+	width: 100%;
+}
+#commentsContainer #comments input{
+	width: 100%;
+}
+#commentsContainer #comments  .userComment{
+  border-radius: 6px;
+  background-color: whitesmoke;
+  margin-bottom: 15px;
+  border: 1px solid rgb(200,200,200);
+    padding: 5px;
+	width:100%;
+}
+#memeResponses #repliesContainer{
+overflow:auto;
+}
+#memeResponses #repliesContainer #repliesHeading{
+
+}
+.sectionHeading{
+	background-color: white;
+	padding: 10px;
+	border-radius: 6px;
+	margin-bottom:5px;
+}
+.memeLinkContainer{
+	background-color:white;
+	min-width:230px;
+	margin-right:5px;
+	color:#C8C8C8;
+}
+.memeLinkContainer img{
+	margin:5px;
+	cursor:pointer;
+	max-width:200px;
+}
+.memeLinkContainer .created{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	border-bottom: 1px solid #C8C8C8;
+	height: 25px;
+	margin-top: 10px;
+	font-weight:bold;
+}
+.memeLinkContainer .stats{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	height: 20px;	
+}
+.memeLinkContainer .stats div{
+	margin-right:10px;
+}
+#socialMedia{
+	
+	margin-right: 5px;
+	width:100px;
+	margin-top: 100px;
+	position: fixed;
+}
+#socialMedia span{
+font-size: larger;
+}
+#socialMedia .share{
+  width: 64px;
+  background-color: rgb(200, 200, 200);
+  margin-bottom: 5px;
+  height: 64px;
+  padding: 23px;
+  margin-right: 5px;
+}
+.facebook{
+	background-color: #3C5A98 !important;
+}
+.twitter{
+	background-color: #47c7fa !important;
+}
+.google{
+	background-color: #dd4b39 !important;
+}
+.pinterest{
+	background-color: #cb2027 !important;
+}
+.share:hover{
+	font-size: larger !important;
+	padding-top: 16px !important;;
+}
