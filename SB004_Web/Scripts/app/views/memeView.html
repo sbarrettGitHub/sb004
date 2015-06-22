@@ -40,6 +40,7 @@
 				<span class="fa fa-pinterest"></span><div>560</div>
 			</div>
 		</div>
+		<div id="leftSpace" class="pull-left hidden-sm hidden-xs"/>
 		<div id="main" class="pull-left">
 			<div id="currentMemeInfo" class="sectionHeading col-md-12 col-lg-12 col-sm-12 col-xs-12">		
 				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
@@ -80,7 +81,7 @@
 				</div>			
 				
 			</div>
-			<div id="Options" class="section col-lg-12 col-md-12">
+			<div id="Options" class="section col-lg-12 col-md-12 hidden-sm hidden-xs">
 				<div class="text-center col-lg-4 col-md-4">
 					<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="option text-center"
 									title="Return to the post that this is in response to.">
@@ -154,39 +155,39 @@
 					</div>
 				</div>
 
-				<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left">
-					<div>
-						<div>
-							{{userComment.userName.length>0?userComment.userName :"Anonymous"}}
-						</div>
-						<div>
-							{{userComment.dateCreated | date:'short'}}
-						</div>
+				<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left userComment">
+					
+					<div >
+						{{userComment.userName.length>0?userComment.userName :"Anonymous"}}
+						
+						<span>{{userComment.dateCreated | date:'short'}}</span>
 					</div>
-					<div class="userComment">					
+					
+					<div class="userCommentText pull-left col-lg-12 col-md-12">					
 						{{userComment.comment}}
 					</div>
 				</div>
 			</div>
 		</div>			
 		</div>	
-		<div id="repliesContainer" class="hidden-sm hidden-xs">
+		<div id="repliesContainer" class="hidden-sm hidden-xs hidden-md">
 			<div id="repliesHeading" class="rounded sectionHeading col-lg-12 col-md-12">
 				<i class="fa fa-inbox"></i><span >&nbsp; Responses</span>
 			</div>			
-			<div id="Replies" class="rounded section col-lg-12 col-md-12">	
+			<div id="replies" class="rounded section col-lg-12 col-md-12">	
 				<div class="text-center col-lg-12 col-md-12">
-					<div id="respond" ng-click="respond()" class="option text-center col-lg-4 col-md-4"
+					<div id="respond" ng-click="respond()" class="option text-center col-lg-5 col-md-5"
 					title="Respond to this with a new post.">
 						<i class="fa fa-reply"></i><span>&nbsp; Respond</span>
 					</div>	
-					<div id="respondFromFavourites" ng-click="respondFromFavourites()" class="option text-center col-lg-4 col-md-4 pull-right"
+					<div id="respondFromFavourites" ng-click="respondFromFavourites()" class="option text-center col-lg-5 col-md-5 pull-right"
 						title="Respond to this with an existing post from your list of favourites.">
-						<i class="fa fa-reply"></i><span>&nbsp; Respond &nbsp;</span><i class="fa fa-star"></i>
+						<i class="fa fa-reply"></i><span>&nbsp; Favorites </span>
 					</div>
 				</div>	
-				<div id="noReplies" class="rounded sectionHeading col-lg-12 col-md-12">
-					No reponses yet! Be the first.
+				<div id="noReplies" class="rounded sectionHeading text-center  col-lg-12 col-md-12"
+					ng-hide="replies.length>0">
+					No reponses yet. Be the first!
 				</div>
 				<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
 					<div ng-memelink ng-model="reply" 

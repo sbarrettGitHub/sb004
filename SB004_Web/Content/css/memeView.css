@@ -15,12 +15,15 @@
 	padding: 10px;
 	border-radius: 6px;
 }
-
+#leftSpace{
+width:100px;
+height:300px;
+}
 #main{
   float: left;
   background-color: whitesmoke;
   width:700px;
-    margin-left: 100px;
+    /*margin-*/
   margin-right: 5px;
 }
 
@@ -104,6 +107,7 @@ margin-top:2px;
   #main #currentMemeContainer #frame{
   	display: table-cell;
 	vertical-align: middle;
+	padding-bottom: 25px;
   }
  #main #currentMemeInfo{
 	float:left;
@@ -119,8 +123,13 @@ margin-top:2px;
 	width: auto;
 	overflow:auto;
 }
-#memeViewCurrent #repliesContainer #relatedItems{
-	height: 270px;
+#memeViewCurrent #repliesContainer #replies{
+  min-height: 647px;
+  height: 100%;height: 270px;
+}
+#memeViewCurrent #repliesContainer #replies #noReplies{
+  margin-top:50px;
+  
 }
 #memeResponses{
 }
@@ -144,6 +153,9 @@ margin-top:2px;
 	width: 100%;
 }
 #commentsContainer #comments  .userComment{
+	width:100%;
+}
+#commentsContainer #comments  .userCommentText{
   border-radius: 6px;
   background-color: whitesmoke;
   margin-bottom: 15px;
@@ -196,7 +208,7 @@ overflow:auto;
 	
 	margin-right: 5px;
 	width:100px;
-	margin-top: 100px;
+	margin-top: 45px;
 	position: fixed;
 }
 #socialMedia span{
