@@ -149,23 +149,38 @@
 				<div id="addComment">
 					<div ><i class="fa fa-user"></i><span >&nbsp; {{userName}}</span></div>
 					<div>
-						<input type="text" value="" placeholder="Enter you comment here" 
-							ng-model="edItem" 
-							ng-keypress="($event.which === 13)?addComment(edItem):0"/>
+						<textarea type="text" value="" placeholder="Enter you comment here...max characters 1000" maxlength="1000"
+							ng-model="userComment" 
+							ng-keypress="($event.which === 13)?addComment():0">
+						</textarea>
 					</div>
 				</div>
 
 				<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left userComment">
 					
-					<div >
-						{{userComment.userName.length>0?userComment.userName :"Anonymous"}}
-						
-						<span>{{userComment.dateCreated | date:'short'}}</span>
+					<div class="userCommentHeading">
+						<div class="pull-left">
+							<i ng-hide="userComment.userName.length==0" class="fa fa-user"></i>
+							<span ng-class="{'allowFollow': userComment.userName.length>0, 'noFollow': userComment.userName.length==0}">{{userComment.userName.length>0?userComment.userName :"Anonymous"}}</span>
+							&nbsp;
+							<span >{{userComment.dateCreated | date:'short'}}</span>
+						</div>
+						<div class="pull-right">
+							<span ng-click="likeComment(userComment.id)" title="I like this comment" class="info stat hot">
+								<i class="fa fa-thumbs-o-up"></i><span>{{userComment.likes}}</span>
+							</span>	
+							<span ng-click="dislikeComment(userComment.id)" title="I dislike this comment" class="info stat hot">
+								<i class="fa fa-thumbs-o-down"></i><span>{{userComment.dislikes}}</span>
+							</span>	
+						</div>
 					</div>
-					
-					<div class="userCommentText pull-left col-lg-12 col-md-12">					
+					<div class="userCommentText pull-left ">					
 						{{userComment.comment}}
 					</div>
+				</div>
+				<div id="moreComments" ng-click="getMoreComments()" ng-show="allowGetMoreComments" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+						title="Get more comments">
+					<i class="fa fa-cloud-download"></i><span>&nbsp; Show More Comments</span>
 				</div>
 			</div>
 		</div>			

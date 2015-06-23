@@ -29,5 +29,7 @@
         long GetUserCommentCount(string memeId);
 
         IUserComment SaveUserComment(IUserComment userComment);
+
+        IUserComment GetUserComment(string userCommentId);
     }
 }

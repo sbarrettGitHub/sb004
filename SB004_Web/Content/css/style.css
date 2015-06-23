@@ -15,6 +15,15 @@ height: 34px !important;
 button:hover{
 	color:cornflowerblue;
  }
+ .allowFollow{
+	font-weight:bold;
+	cursor:pointer;
+	color:cornflowerblue;
+ }
+
+ .noFollow{
+	color:dark-grey;
+ }
  .hot{	
 	
  }
@@ -212,7 +221,10 @@ margin-left:1px !important;
 }
 /*-----------------------------------------------------------*/
 
-
+#view{
+	padding-left:25px;
+	padding-right:25px;
+}
 #newQuote {
   color:#555;
 }

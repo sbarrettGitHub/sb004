@@ -203,6 +203,10 @@
 
             return cursor.Count();
         }
+        public IUserComment GetUserComment(string userCommentId)
+        {
+            return userCommentCollection.FindOne(Query<UserComment>.EQ(e => e.Id, userCommentId));
+        }
         public List<IUserComment> GetUserComments(string memeId, int skip, int take)
         {
             try

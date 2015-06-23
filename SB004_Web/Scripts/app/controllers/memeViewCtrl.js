@@ -11,6 +11,10 @@
 		$scope.replies = [];
 		$scope.myReplies = [];
 		$scope.userComments = [];
+		$scope.userComment = "";
+		$scope.allowGetMoreComments = true;
+		var myCommentLikes = [];
+		var myCommentDislikes = [];
 		var userCommentsIndex = 0;
 		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
 		var memeId = $routeParams.id;
@@ -62,17 +66,81 @@
 		{
 			 alert("Add to Favourites:" + memeId);
 		}
-		$scope.addComment = function(comment){
+		$scope.addComment = function(){
 			$http.post('/api/Comment', {
                 MemeId: memeId,
-                Comment: comment
+                Comment: $scope.userComment
             }).
 			success(function (data) {
 				$scope.userComments.push(data);
+				$scope.userComment = "";
 			}).
 			error(function (e) {
 				alert(e);
 			});
+		}
+		$scope.getMoreComments = function(){
+			$http.get('/api/Comment/' + memeId + "?skip=" + userCommentsIndex + "&take=11").
+                success(function (data) {
+					var commentCount = data.length;
+					// Deliberately tried to retrieve 11. If 11 came back the show the "Get More Comments" button but only display 10
+					if(commentCount > 10){
+						$scope.allowGetMoreComments = true;
+						commentCount = 10; // only show 10
+					}else{
+						$scope.allowGetMoreComments = false;
+					}
+					for(var i=0;i<commentCount;i++){   
+						$scope.userComments.push(data[i]);
+					}		
+					// Maintain a cursor of comments. Push out by the number of comments retieved (less 1 because zero based index :))
+					userCommentsIndex += data.length-1;		
+                }).
+                error(function (e) {
+					alert(e);
+                    
+                });
+		}	
+		$scope.likeComment = function(commentId)
+		{
+			// Don't allow multiple likes by the same user on the same comment
+			for(var i=0;i<myCommentLikes.length;i++){
+				if(myCommentLikes[i] == commentId){
+					return;
+				}
+			}
+			$http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/like/", data: {}})
+				.success(function (data) {  
+					updateComment(data);
+					myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
+                }).error(function (e) {
+					alert(e);
+					return;
+                });
+		}		
+		$scope.dislikeComment = function(commentId)
+		{
+			// Don't allow multiple dislikes by the same user on the same comment
+			for(var i=0;i<myCommentDislikes.length;i++){
+				if(myCommentDislikes[i] == commentId){
+					return;
+				}
+			}
+			 $http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/dislike/" , data: {}})
+				.success(function (data) {  
+					updateComment(data);
+					myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
+                }).error(function (e) {
+					alert(e);
+					return;
+                });
+		}	
+		var updateComment = function(commentData){
+			for(var i=0;i<$scope.userComments.length;i++){
+				if($scope.userComments[i].id == commentData.id){
+					$scope.userComments[i] = commentData;
+				}
+			}
 		}
 		function getMeme(id){
 			var deferred = $q.defer();
@@ -127,7 +195,7 @@
 						});
 					}									
 				}
-				getMoreComments();
+				$scope.getMoreComments();
 				endWaiting();	
             })
 			.catch(function (e) {
@@ -135,19 +203,7 @@
 				alert(e);
             });
 		}
-		var getMoreComments = function(){
-			$http.get('/api/Comment/' + memeId + "?skip=" + userCommentsIndex + "&take=10").
-                success(function (data) {
-					for(var i=0;i<data.length;i++){   
-						$scope.userComments.push(data[i]);
-					}		
-					userCommentsIndex += data.length;		
-                }).
-                error(function (e) {
-					alert(e);
-                    
-                });
-		}
+		
 		
 		refresh();
 	}

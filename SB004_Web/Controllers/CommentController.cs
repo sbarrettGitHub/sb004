@@ -11,7 +11,7 @@ using SB004.Models;
 namespace SB004.Controllers
 {
 
-
+    [RoutePrefix("api/comment")]
     public class CommentController : ApiController
     {
         readonly IRepository repository;
@@ -19,6 +19,7 @@ namespace SB004.Controllers
         {
             this.repository = repository;
         }
+        [Route("{id}")] 
         public IHttpActionResult Get(string id, int skip, int take)
         {
             return this.Ok(repository.GetUserComments(id,skip, take));
@@ -31,6 +32,7 @@ namespace SB004.Controllers
         /// <param name="comment"></param>
         /// <returns></returns>
        // [Authorize]
+        [Route("")]
         public HttpResponseMessage PostComment([FromBody]UserCommentModel userCommentModel)
         {
             string userId = User.Identity.UserId();
@@ -43,7 +45,11 @@ namespace SB004.Controllers
                 UserName=userName,
                 Likes = 0,
                 Dislikes = 0,
-                Comment = userCommentModel.Comment
+                Comment = userCommentModel.Comment!=null 
+                          ? userCommentModel.Comment.Length > 1000 
+                                ? userCommentModel.Comment.Substring(0, 1000) 
+                                : userCommentModel.Comment 
+                          :""
             };
             userComment = repository.SaveUserComment(userComment);
             var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
@@ -58,7 +64,64 @@ namespace SB004.Controllers
             return response;
         }
         #endregion
+        #region PATCH
+        /// <summary>
+        /// Like a comment
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        // [Authorize]
+        [HttpPatch]
+        [Route("{id}/like/")]
+        public HttpResponseMessage LikeComment(string id)
+        {
+            IUserComment userComment = repository.GetUserComment(id);
+            if (userComment == null)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
+            userComment.Likes++;
+            userComment = repository.SaveUserComment(userComment);
+            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
+            };
+            var response = Request.CreateResponse(HttpStatusCode.Created, userComment, jsonMediaTypeFormatter);
+            response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
+            return response;
+        }
 
+        /// <summary>
+        /// Like a comment
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        // [Authorize]
+        [HttpPatch]
+        [Route("{id}/dislike/")]
+        public HttpResponseMessage DislikeComment(string id)
+        {
+            IUserComment userComment = repository.GetUserComment(id);
+            if (userComment == null) {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
+            userComment.Dislikes++;
+            userComment = repository.SaveUserComment(userComment);
+            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
+            };
+            var response = Request.CreateResponse(HttpStatusCode.Created, userComment, jsonMediaTypeFormatter);
+            response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
+            return response;
+        }
+        #endregion
         //#region DELETE
         //public Comment DeleteComment(int id)
         //{

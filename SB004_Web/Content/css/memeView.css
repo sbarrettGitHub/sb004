@@ -3,7 +3,7 @@
   background-color: whitesmoke;
 }
 #memeViewCurrent{
-
+	padding-top:15px;
 }
 #memeViewCurrent .addQuote{
   height:290px;
@@ -149,19 +149,24 @@ margin-top:2px;
 	min-height: 270px;
 	width: 100%;
 }
-#commentsContainer #comments input{
+#commentsContainer #comments textarea{
 	width: 100%;
+	margin-bottom: 15px;
 }
 #commentsContainer #comments  .userComment{
-	width:100%;
-}
-#commentsContainer #comments  .userCommentText{
-  border-radius: 6px;
+	width:100%;  
+	border-radius: 6px;
   background-color: whitesmoke;
   margin-bottom: 15px;
   border: 1px solid rgb(200,200,200);
-    padding: 5px;
-	width:100%;
+  padding: 10px;
+
+}
+#commentsContainer #comments  .userCommentHeading{
+width: 100%;
+}
+#commentsContainer #comments  .userCommentText{
+width: 100%;
 }
 #memeResponses #repliesContainer{
 overflow:auto;
