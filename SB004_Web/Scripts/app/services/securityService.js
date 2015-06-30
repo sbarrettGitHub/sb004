@@ -8,7 +8,11 @@
             accessToken: "",
             provider: "",
             thumbnail: "",
-            profile: {}
+            profile: {},
+			myCommentLikes : [],
+			myCommentDislikes : [],
+			myMemeLikes : [],
+			myMemeDislikes : []
         }
         var loginDialog = $dialog.dialog({
             backdrop: true,

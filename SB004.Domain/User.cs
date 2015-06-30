@@ -3,6 +3,11 @@ namespace SB004.Domain
 {
     public class User: IUser
     {
+        public User() 
+        {
+            FollowingIds = new List<string>();
+            FavouriteMemeIds = new List<string>();
+        }
         public string UserName { get; set; }
 
         public string Id { get; set; }
@@ -19,5 +24,6 @@ namespace SB004.Domain
 
         public string Thumbnail { get; set; }
 
+        public List<string> FavouriteMemeIds { get; set; }
     }
 }

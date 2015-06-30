@@ -16,6 +16,8 @@ namespace SB004.Controllers
     using SB004.User;
     using SB004.Domain;
     using SB004.Data;
+    using Newtonsoft.Json.Serialization;
+    using System.Net.Http.Formatting;
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
@@ -45,6 +47,7 @@ namespace SB004.Controllers
             }
             return BadRequest("User not authorized");
         }
+        
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]

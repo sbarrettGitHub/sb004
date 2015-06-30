@@ -13,8 +13,6 @@
 		$scope.userComments = [];
 		$scope.userComment = "";
 		$scope.allowGetMoreComments = true;
-		var myCommentLikes = [];
-		var myCommentDislikes = [];
 		var userCommentsIndex = 0;
 		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
 		var memeId = $routeParams.id;
@@ -56,15 +54,64 @@
 		}
 		$scope.likeMeme = function(memeId)
 		{
-			 alert("Like:" + memeId);
+			// Don't allow multiple likes by the same user on the same meme
+			for(var i=0;i<securityService.currentUser.myMemeLikes.length;i++){
+				if(securityService.currentUser.myMemeLikes[i] == memeId){
+					return;
+				}
+			}
+			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/like/", data: {}})
+				.success(function (data) { 
+					if(!$scope.meme.likes){
+						$scope.meme.likes = 0;
+					}
+					$scope.meme.likes++;
+					securityService.currentUser.myMemeLikes.push(data.id);
+                }).error(function (e) {
+					alert(e);
+					return;
+                });
 		}		
 		$scope.dislikeMeme = function(memeId)
 		{
-			 alert("Dislike:" + memeId);
+			// Don't allow multiple dislikes by the same user on the same meme
+			for(var i=0;i<securityService.currentUser.myMemeDislikes.length;i++){
+				if(securityService.currentUser.myMemeDislikes[i] == memeId){
+					return;
+				}
+			}
+			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/dislike/", data: {}})
+				.success(function (data) {  
+					if(!$scope.meme.dislikes){
+						$scope.meme.dislikes = 0;
+					}
+					$scope.meme.dislikes++;	
+					securityService.currentUser.myMemeDislikes.push(data.id);
+                }).error(function (e) {
+					alert(e);
+					return;
+                });
 		}		
 		$scope.addMemeToFavourites = function(memeId)
 		{
-			 alert("Add to Favourites:" + memeId);
+			if(securityService.currentUser.isAuthenticated==false){
+				securityService.logIn()
+					.then(function(){
+						addToFavourites(memeId);
+					});
+			}else{
+				addToFavourites(memeId);
+			}
+			 
+		}
+		var addToFavourites = function(memeId){
+			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
+				.success(function (data) {  
+					$scope.meme.favourites++;	
+					alert("This meme has been added to your list of favourite memes!");
+                }).error(function (e) {					
+					return;
+                });
 		}
 		$scope.addComment = function(){
 			$http.post('/api/Comment', {
@@ -74,6 +121,7 @@
 			success(function (data) {
 				$scope.userComments.push(data);
 				$scope.userComment = "";
+				$scope.meme.userCommentCount++;
 			}).
 			error(function (e) {
 				alert(e);
@@ -104,15 +152,15 @@
 		$scope.likeComment = function(commentId)
 		{
 			// Don't allow multiple likes by the same user on the same comment
-			for(var i=0;i<myCommentLikes.length;i++){
-				if(myCommentLikes[i] == commentId){
+			for(var i=0;i<securityService.currentUser.myCommentLikes.length;i++){
+				if(securityService.currentUser.myCommentLikes[i] == commentId){
 					return;
 				}
 			}
 			$http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/like/", data: {}})
 				.success(function (data) {  
 					updateComment(data);
-					myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
+					securityService.currentUser.myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
                 }).error(function (e) {
 					alert(e);
 					return;
@@ -121,15 +169,15 @@
 		$scope.dislikeComment = function(commentId)
 		{
 			// Don't allow multiple dislikes by the same user on the same comment
-			for(var i=0;i<myCommentDislikes.length;i++){
-				if(myCommentDislikes[i] == commentId){
+			for(var i=0;i<securityService.currentUser.myCommentDislikes.length;i++){
+				if(securityService.currentUser.myCommentDislikes[i] == commentId){
 					return;
 				}
 			}
 			 $http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/dislike/" , data: {}})
 				.success(function (data) {  
 					updateComment(data);
-					myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
+					securityService.currentUser.myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
                 }).error(function (e) {
 					alert(e);
 					return;
@@ -182,7 +230,7 @@
         }
 		var refresh = function(){
 			startWaiting();
-			getMeme(memeId)
+			getMemeLite(memeId)
 			.then(function (data) {
 				var deferred = $q.defer();
 				$scope.meme = data;
@@ -204,8 +252,11 @@
             });
 		}
 		
-		
+		// Load up the meme
 		refresh();
+		
+		// Record that this meme was viewed (fire and forget)
+		$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/viewed/", data: {}});
 	}
 
     // Register the controller

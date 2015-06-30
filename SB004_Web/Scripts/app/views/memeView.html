@@ -58,23 +58,23 @@
 					<img ng-src="/api/image/{{meme.id}}" class="image"/>	
 					<div id="currentMemeStats" class="col-md-12 col-lg-12">
 						<div class="pull-left">
-							<div ng-click="likeMeme(meme.id)" title="I like this post" class="info stat hot">
-								<i class="fa fa-thumbs-o-up"></i><span>110K</span>
+							<div ng-click="likeMeme(meme.id)" title="I like this" class="info stat hot">
+								<i class="fa fa-thumbs-o-up"></i><span>{{meme.likes}}</span>
 							</div>	
-							<div ng-click="dislikeMeme(meme.id)" title="I dislike this post" class="info stat hot">
-								<i class="fa fa-thumbs-o-down"></i><span>75</span>
+							<div ng-click="dislikeMeme(meme.id)" title="I dislike this" class="info stat hot">
+								<i class="fa fa-thumbs-o-down"></i><span>{{meme.dislikes}}</span>
 							</div>	
 							<div ng-click="addMemeToFavourites(meme.id)" title="Add to my favorites" class="info stat hot">
-								<i class="fa fa-star"></i><span>32</span>
+								<i class="fa fa-star"></i><span>{{meme.favourites}}</span>
 							</div>					
 						</div>
 						<div  class="pull-right">
 							<div title="The number times this meme has been viewed" class="info stat">
-								<i class="fa fa-eye"></i><span>120K</span>
+								<i class="fa fa-eye"></i><span>{{meme.views}}</span>
 							</div>	
 							
 							<div title="The number times this meme has been shared" class="info stat">
-								<i class="fa fa-share-alt"></i><span>70K</span>
+								<i class="fa fa-share-alt"></i><span>{{meme.shares}}</span>
 							</div>						
 						</div>				
 					</div>					
@@ -143,7 +143,7 @@
 			</div>				
 			<div id="commentsContainer" class="pull-left col-lg-12 col-md-12 col-sm-12">
 			<div id="commentsHeading" class="rounded sectionHeading">
-				<i class="fa fa-comments-o"></i><span >&nbsp; Comments</span>
+				<i class="fa fa-comments-o"></i><span >&nbsp; Comments ({{meme.userCommentCount}})</span>
 			</div>
 			<div id="comments" class="rounded section">			
 				<div id="addComment">
@@ -166,10 +166,10 @@
 							<span >{{userComment.dateCreated | date:'short'}}</span>
 						</div>
 						<div class="pull-right">
-							<span ng-click="likeComment(userComment.id)" title="I like this comment" class="info stat hot">
+							<span ng-click="likeComment(userComment.id)" title="I like this" class="info stat hot">
 								<i class="fa fa-thumbs-o-up"></i><span>{{userComment.likes}}</span>
 							</span>	
-							<span ng-click="dislikeComment(userComment.id)" title="I dislike this comment" class="info stat hot">
+							<span ng-click="dislikeComment(userComment.id)" title="I dislike this" class="info stat hot">
 								<i class="fa fa-thumbs-o-down"></i><span>{{userComment.dislikes}}</span>
 							</span>	
 						</div>

@@ -40,5 +40,10 @@ namespace SB004.Domain
         public List<IComment> Comments { get; set; }
         public string ResponseToId { get; set; }
         public List<string> ReplyIds { get; set; }
+        public int Likes { get; set; }
+        public int Dislikes { get; set; }
+        public int Favourites { get; set; }
+        public int Shares { get; set; }
+        public int Views { get; set; }
     }
 }

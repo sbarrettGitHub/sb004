@@ -21,10 +21,18 @@ namespace SB004.Controllers
     {
         readonly IRepository repository;
         readonly IImageManager imageManager;
+        readonly JsonMediaTypeFormatter jsonMediaTypeFormatter;
         public MemeController(IRepository repository, IImageManager imageManager)
         {
             this.repository = repository;
             this.imageManager = imageManager;
+            this.jsonMediaTypeFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
+            };
         }
         /// <summary>
         /// Get: api/meme/id
@@ -51,6 +59,11 @@ namespace SB004.Controllers
                 meme.Comments,
                 meme.ResponseToId,
                 meme.ReplyIds,
+                meme.Likes,
+                meme.Dislikes,
+                meme.Favourites,
+                meme.Shares,
+                meme.Views,
                 seedImage = new
                 {
                  seed.Id,
@@ -81,8 +94,14 @@ namespace SB004.Controllers
                 meme.CreatedByUserId,
                 DateCreated = meme.DateCreated.ToLocalTime(),
                 meme.ResponseToId,
+                meme.ReplyIds,
                 replyCount = meme.ReplyIds.Count,
-                userCommentCount = repository.GetUserCommentCount(id)
+                userCommentCount = repository.GetUserCommentCount(id),
+                meme.Likes,
+                meme.Dislikes,
+                meme.Favourites,
+                meme.Shares,
+                meme.Views,
                 
             });
         }
@@ -156,13 +175,7 @@ namespace SB004.Controllers
             //save the meme 
             meme = repository.SaveMeme(meme);
 
-            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-            {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
+
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, meme, jsonMediaTypeFormatter);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
@@ -193,16 +206,133 @@ namespace SB004.Controllers
         // Update the meme
         repository.SaveMeme(meme);
 
-        var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-        {
-          SerializerSettings =
-          {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-          }
-        };
         HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme, jsonMediaTypeFormatter);
         response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
         return response;
       }
+      /// <summary>
+      /// Retrieve the meme. Increment the like count
+      /// </summary>
+      /// <param name="id">Id of the meme</param>
+      /// <returns></returns>
+      [HttpPatch]
+      [Route("{id}/like/")]
+      public HttpResponseMessage LikeMeme(string id)
+      {
+          // Update meme increment like only
+          return MemeInteration(id, 1, 0, 0, 0, 0);
+      }
+      /// <summary>
+      /// Retrieve the meme. Increment the meme dislike count
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
+      [HttpPatch]
+      [Route("{id}/dislike/")]
+      public HttpResponseMessage DislikeMeme(string id)
+      {
+          // Update meme increment dislike only
+          return MemeInteration(id, 0, 1, 0, 0, 0);
+      }
+      /// <summary>
+      /// Record thar this meme was opened for viewing
+      /// Retrieve the meme. Increment the meme view count
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
+      [HttpPatch]
+      [Route("{id}/viewed/")]
+      public HttpResponseMessage ViewMeme(string id)
+      {
+          // Update meme increment views only
+          return MemeInteration(id, 0, 0, 1, 0, 0);
+      }
+      /// <summary>
+      /// Record that this meme was shared
+      /// Retrieve the meme. Increment the meme view count
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
+      [HttpPatch]
+      [Route("{id}/shared/")]
+      public HttpResponseMessage ShareMeme(string id)
+      {
+          // Update meme increment shares only
+          return MemeInteration(id, 0, 0, 0, 1, 0);
+      }
+      /// <summary>
+      /// Requires authentication. Retrieve the authenticated user. Add the meme id to the users list of favourites.
+      /// Increment the number of favourites this meme is listed as
+      /// </summary>
+      /// <param name="id">meme id of favoutite meme</param>
+      /// <returns></returns>
+      [Authorize]
+      [HttpPatch]
+      [Route("{id}/favourite/")]
+      public HttpResponseMessage AddAsFavouriteMeme(string id)
+      {
+          string userId = User.Identity.UserId();
+
+          // Retrieve the authenticated user
+          IUser userProfile = repository.GetUser(userId);
+          if (userProfile == null)
+          {
+              throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+          }
+
+          // Is meme already a favourite of this user?
+          if (userProfile.FavouriteMemeIds.Any(x => x == id))
+          {
+              var response = Request.CreateResponse(HttpStatusCode.PreconditionFailed, new object(), jsonMediaTypeFormatter);
+              return response;
+          }
+
+          // Add as user favourite
+          userProfile.FavouriteMemeIds.Add(id);
+          
+          // Save the user
+          userProfile = repository.SaveUser(userProfile);
+
+          // Update meme increment favourites count only
+          return MemeInteration(id, 0, 0, 0, 0, 1);
+
+      }
+
+        #region Private Methods
+      /// <summary>
+      /// Record interation with the meme. 
+      /// Increment count of likes, dislikes, views, shares 
+      /// </summary>
+      /// <param name="id"></param>
+      /// <param name="likesIncrement"></param>
+      /// <param name="dislikesIncrement"></param>
+      /// <param name="viewsIncrement"></param>
+      /// <param name="sharesIncrement"></param>
+      /// <param name="favouritesIncrement"></param>
+      /// <returns></returns>
+      private HttpResponseMessage MemeInteration(string id, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement)
+      {
+
+          IMeme meme = repository.GetMeme(id);
+          if (meme == null)
+          {
+              var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound, meme, jsonMediaTypeFormatter);
+              responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+              return responseNotFound;
+          }
+
+          meme.Likes += likesIncrement;
+          meme.Dislikes += dislikesIncrement;
+          meme.Views += viewsIncrement;
+          meme.Shares += sharesIncrement;
+
+          meme = repository.SaveMeme(meme);
+
+          var response = Request.CreateResponse(HttpStatusCode.OK, meme, jsonMediaTypeFormatter);
+          response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+          return response;
+      }
+ 
+        #endregion
     }
 }

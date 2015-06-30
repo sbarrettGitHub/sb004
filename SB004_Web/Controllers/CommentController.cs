@@ -70,7 +70,7 @@ namespace SB004.Controllers
         /// </summary>
         /// <param name="comment"></param>
         /// <returns></returns>
-        // [Authorize]
+        //[Authorize]
         [HttpPatch]
         [Route("{id}/like/")]
         public HttpResponseMessage LikeComment(string id)
