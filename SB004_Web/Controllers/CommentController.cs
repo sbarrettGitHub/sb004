@@ -52,14 +52,8 @@ namespace SB004.Controllers
                           :""
             };
             userComment = repository.SaveUserComment(userComment);
-            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-            {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
-            var response = Request.CreateResponse(HttpStatusCode.Created, userComment, jsonMediaTypeFormatter);
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
             return response;
         }
@@ -82,14 +76,8 @@ namespace SB004.Controllers
             }
             userComment.Likes++;
             userComment = repository.SaveUserComment(userComment);
-            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-            {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
-            var response = Request.CreateResponse(HttpStatusCode.Created, userComment, jsonMediaTypeFormatter);
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
             return response;
         }
@@ -110,14 +98,8 @@ namespace SB004.Controllers
             }
             userComment.Dislikes++;
             userComment = repository.SaveUserComment(userComment);
-            var jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-            {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
-            var response = Request.CreateResponse(HttpStatusCode.Created, userComment, jsonMediaTypeFormatter);
+           
+            var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
             return response;
         }

@@ -21,18 +21,10 @@ namespace SB004.Controllers
     {
         readonly IRepository repository;
         readonly IImageManager imageManager;
-        readonly JsonMediaTypeFormatter jsonMediaTypeFormatter;
         public MemeController(IRepository repository, IImageManager imageManager)
         {
             this.repository = repository;
             this.imageManager = imageManager;
-            this.jsonMediaTypeFormatter = new JsonMediaTypeFormatter
-            {
-                SerializerSettings =
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
         }
         /// <summary>
         /// Get: api/meme/id
@@ -177,7 +169,7 @@ namespace SB004.Controllers
 
 
 
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, meme, jsonMediaTypeFormatter);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, meme);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
             return response;
         }
@@ -206,7 +198,7 @@ namespace SB004.Controllers
         // Update the meme
         repository.SaveMeme(meme);
 
-        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme, jsonMediaTypeFormatter);
+        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme);
         response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
         return response;
       }
@@ -283,7 +275,7 @@ namespace SB004.Controllers
           // Is meme already a favourite of this user?
           if (userProfile.FavouriteMemeIds.Any(x => x == id))
           {
-              var response = Request.CreateResponse(HttpStatusCode.PreconditionFailed, new object(), jsonMediaTypeFormatter);
+              var response = Request.CreateResponse(HttpStatusCode.PreconditionFailed);
               return response;
           }
 
@@ -316,8 +308,8 @@ namespace SB004.Controllers
           IMeme meme = repository.GetMeme(id);
           if (meme == null)
           {
-              var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound, meme, jsonMediaTypeFormatter);
-              responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+              var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound);
+              responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + id);
               return responseNotFound;
           }
 
@@ -328,7 +320,7 @@ namespace SB004.Controllers
 
           meme = repository.SaveMeme(meme);
 
-          var response = Request.CreateResponse(HttpStatusCode.OK, meme, jsonMediaTypeFormatter);
+          var response = Request.CreateResponse(HttpStatusCode.OK, meme);
           response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
           return response;
       }
