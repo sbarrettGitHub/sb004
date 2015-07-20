@@ -204,12 +204,16 @@
 					ng-hide="replies.length>0">
 					No reponses yet. Be the first!
 				</div>
-				<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left">			
+				<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left col-md-12 col-lg-12 col-sm-12">			
 					<div ng-memelink ng-model="reply" 
 									on-click="viewMeme(reply.id)" 
 									on-like="likeMeme(reply.id)"
 									on-dislike="dislikeMeme(reply.id)"
 									on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+				</div>
+				<div id="moreReplies" ng-click="getMoreReplies()" ng-show="allowGetMoreReplies" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+						title="Get more responses">
+					<i class="fa fa-cloud-download"></i><span>&nbsp; Show More Responses</span>
 				</div>
 			</div>
 		</div>

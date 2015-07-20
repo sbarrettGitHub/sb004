@@ -1,23 +1,23 @@
-<div class="memeLinkContainer pull-left rounded">
+<div class="memeLinkContainer pull-left rounded col-md-12 col-lg-12 col-sm-12">
 	<img ng-src="/api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image"/>
 	<div class="created">
-	  <div class="pull-left"><span>{{ngModel.createdBy}}</span></div>
+	  <div class="pull-left"><i class="fa fa-user"></i><span class="allowFollow">{{ngModel.createdBy}}</span></div>
 	  <div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
 	</div>
 	<div class="stats">
 		<div ng-click="onLike(ngModel.id)" title="I like this post." class="hot pull-left info stat">
-			<i class="fa fa-thumbs-o-up"></i><span>110K</span>
+			<i class="fa fa-thumbs-o-up"></i><span>{{ngModel.likes}}</span>
 		</div>
 		<div ng-click="onDislike(meme.id)" title="I dislike this post" class="hot pull-left info stat">
-			<i class="fa fa-thumbs-o-down"></i><span>75</span>
+			<i class="fa fa-thumbs-o-down"></i><span>{{ngModel.dislikes}}</span>
 		</div>	
 	
 	
 		<div title="The number of comments" class="pull-right info stat">
-			<i class="fa fa-comments-o"></i><span>120K</span>
+			<i class="fa fa-comments-o"></i><span>{{ngModel.userCommentCount}}</span>
 		</div>
 		<div title="The number responses" class="pull-right info stat">
-			<i class="fa fa-reply"></i><span>120K</span>
+			<i class="fa fa-reply"></i><span>{{ngModel.replyCount}}</span>
 		</div>	
 	</div>		
 </div>

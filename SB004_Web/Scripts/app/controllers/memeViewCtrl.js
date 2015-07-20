@@ -9,6 +9,8 @@
 		$scope.title = "Untitled";
 		$scope.meme = {};
 		$scope.replies = [];
+		$scope.allowGetMoreReplies = true;
+		var repliesIndex = 0;		
 		$scope.myReplies = [];
 		$scope.userComments = [];
 		$scope.userComment = "";
@@ -218,7 +220,29 @@
                 });
             return deferred.promise;
 		}
-        function startWaiting(heading, message) {
+        $scope.getMoreReplies = function(){
+			$http.get('/api/Meme/' + memeId + "/Replies?skip=" + userCommentsIndex + "&take=11").
+                success(function (data) {
+					var replyCount = data.length;
+					// Deliberately tried to retrieve 11. If 11 came back the show the "Get More Replies" button but only display 10
+					if(replyCount > 10){
+						$scope.allowGetMoreReplies = true;
+						replyCount = 10; // only show 10
+					}else{
+						$scope.allowGetMoreReplies = false;
+					}
+					for(var i=0;i<replyCount;i++){   
+						$scope.replies.push(data[i]);
+					}		
+					// Maintain a cursor of replies. Push out by the number of replies retieved (less 1 because zero based index :))
+					repliesIndex += data.length-1;		
+                }).
+                error(function (e) {
+					alert(e);
+                    
+                });
+		}
+		function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
             $scope.waitingMessage = !message ? "" : message;
@@ -230,19 +254,11 @@
         }
 		var refresh = function(){
 			startWaiting();
-			getMemeLite(memeId)
+			getMeme(memeId)
 			.then(function (data) {
 				var deferred = $q.defer();
 				$scope.meme = data;
-				if(data.replyIds){
-					$scope.replies = [];
-					for(var i=0;i<data.replyIds.length && i<viewingCount;i++){
-						getMemeLite(data.replyIds[i])
-						.then(function(replyData){
-							$scope.replies.push(replyData);
-						});
-					}									
-				}
+				$scope.getMoreReplies();
 				$scope.getMoreComments();
 				endWaiting();	
             })
