@@ -73,7 +73,7 @@ namespace SB004.Controllers
             if (user == null)
             {
                 // Register now
-                user = repository.SaveUser(
+                user = repository.Save(
                     new User { 
                         AuthenticationUserId = verifiedAccessToken.user_id,
                         AuthenticationProvider = provider,

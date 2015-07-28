@@ -6,19 +6,19 @@
 
     public interface IRepository
     {
-        ISeed SaveSeed(ISeed seed);
+        ISeed Save(ISeed seed);
 
         ISeed GetSeedByHash(string seedImageHash);
 
         ISeed GetSeed(string seedId);
 
-        IMeme SaveMeme(IMeme meme);
+        IMeme Save(IMeme meme);
 
         IMeme GetMeme(string memeId);
 
         List<IMeme> SearchMeme(int skip, int take);
 
-        IUser SaveUser(IUser user);
+        IUser Save(IUser user);
         
         IUser GetUser(string authenticationUserId, string authenticationProvider);
         
@@ -28,7 +28,7 @@
 
         long GetUserCommentCount(string memeId);
 
-        IUserComment SaveUserComment(IUserComment userComment);
+        IUserComment Save(IUserComment userComment);
 
         IUserComment GetUserComment(string userCommentId);
     }

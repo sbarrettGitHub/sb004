@@ -45,5 +45,7 @@ namespace SB004.Domain
         public int Favourites { get; set; }
         public int Shares { get; set; }
         public int Views { get; set; }
+        public bool IsTopLevel { get; set; }
+        public double TrendScore { get; set; }
     }
 }

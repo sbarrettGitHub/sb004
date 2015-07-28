@@ -165,6 +165,10 @@
     <Compile Include="User\IdentityExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SB004.Business\SB004.Business.csproj">
+      <Project>{B53B56B9-5396-4F3E-A4C9-05B405EEE132}</Project>
+      <Name>SB004.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SB004.Data\SB004.Data.csproj">
       <Project>{0acb081f-1997-45f7-ab42-a7706790dea1}</Project>
       <Name>SB004.Data</Name>

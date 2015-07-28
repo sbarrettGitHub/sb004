@@ -74,7 +74,7 @@
         seed = imageManager.PrimeSeed(seed);
 
         // Save the image
-        seed = repository.SaveSeed(seed);
+        seed = repository.Save(seed);
       }
       else
       {

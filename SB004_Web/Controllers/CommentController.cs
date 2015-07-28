@@ -51,7 +51,7 @@ namespace SB004.Controllers
                                 : userCommentModel.Comment 
                           :""
             };
-            userComment = repository.SaveUserComment(userComment);
+            userComment = repository.Save(userComment);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
@@ -75,7 +75,7 @@ namespace SB004.Controllers
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
             userComment.Likes++;
-            userComment = repository.SaveUserComment(userComment);
+            userComment = repository.Save(userComment);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
@@ -97,7 +97,7 @@ namespace SB004.Controllers
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
             userComment.Dislikes++;
-            userComment = repository.SaveUserComment(userComment);
+            userComment = repository.Save(userComment);
            
             var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);

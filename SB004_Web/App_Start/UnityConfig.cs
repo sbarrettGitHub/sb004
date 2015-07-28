@@ -1,6 +1,7 @@
 namespace SB004
 {
     using Microsoft.Practices.Unity;
+    using SB004.Business;
     using SB004.Data;
     using SB004.Utilities;
     using System.Web.Http;
@@ -14,6 +15,8 @@ namespace SB004
             container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             container.RegisterType<IImageManager, ImageManager>();
             container.RegisterType<IDownloader, Downloader>();
+            container.RegisterType<ITrendManager, TrendManager>();
+            container.RegisterType<IMemeBusiness, MemeBusiness>();
 
             config.DependencyResolver = new UnityDependencyResolver(container);
         }

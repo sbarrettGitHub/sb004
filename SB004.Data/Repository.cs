@@ -62,7 +62,7 @@
         /// </summary>
         /// <param name="seed"></param>
         /// <returns></returns>
-        public ISeed SaveSeed(ISeed seed)
+        public ISeed Save(ISeed seed)
         {
             seed.Id = seed.Id ?? Guid.NewGuid().ToString("N");
             seedCollection.Save(seed.ToBsonDocument());
@@ -106,7 +106,7 @@
         /// </summary>
         /// <param name="meme"></param>
         /// <returns></returns>
-        public IMeme SaveMeme(IMeme meme)
+        public IMeme Save(IMeme meme)
         {
             meme.Id = meme.Id ?? Guid.NewGuid().ToString("N");
             memeCollection.Save(meme.ToBsonDocument());
@@ -165,7 +165,7 @@
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public IUser SaveUser(IUser user)
+        public IUser Save(IUser user)
         {
             user.Id = user.Id ?? Guid.NewGuid().ToString("N");
             userCollection.Save(user.ToBsonDocument());
@@ -236,7 +236,7 @@
         /// </summary>
         /// <param name="userComment"></param>
         /// <returns></returns>
-        public IUserComment SaveUserComment(IUserComment userComment)
+        public IUserComment Save(IUserComment userComment)
         {
             userComment.Id = userComment.Id ?? Guid.NewGuid().ToString("N");
             userCommentCollection.Save(userComment.ToBsonDocument());
