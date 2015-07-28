@@ -64,16 +64,30 @@
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/like/", data: {}})
 				.success(function (data) { 
-					if(!$scope.meme.likes){
-						$scope.meme.likes = 0;
+					// Record that you like the selected meme
+					securityService.currentUser.myMemeLikes.push(data.id);					
+					// Increment the number of likes for the selected meme
+					var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
+					if(meme){
+						if(!meme.likes){
+							meme.likes = 0;
+						}
+						meme.likes++;
 					}
-					$scope.meme.likes++;
-					securityService.currentUser.myMemeLikes.push(data.id);
                 }).error(function (e) {
 					alert(e);
 					return;
                 });
-		}		
+		}
+		function findReply(memeId){
+			// Find the reply with te given id
+			for(var i=0;i<$scope.replies.length;i++){
+				if($scope.replies[i].id == memeId){
+					return $scope.replies[i];
+				}
+			}	
+			return null;
+		}	
 		$scope.dislikeMeme = function(memeId)
 		{
 			// Don't allow multiple dislikes by the same user on the same meme
@@ -84,11 +98,15 @@
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/dislike/", data: {}})
 				.success(function (data) {  
-					if(!$scope.meme.dislikes){
-						$scope.meme.dislikes = 0;
-					}
-					$scope.meme.dislikes++;	
 					securityService.currentUser.myMemeDislikes.push(data.id);
+					// Decrement the number of likes for the selected meme
+					var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
+					if(meme){
+						if(!meme.dislikes){
+							meme.dislikes = 0;
+						}
+						meme.dislikes++;	
+					}
                 }).error(function (e) {
 					alert(e);
 					return;
