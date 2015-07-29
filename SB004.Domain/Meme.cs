@@ -39,7 +39,7 @@ namespace SB004.Domain
         public string CreatedBy { get; set; }
         public List<IComment> Comments { get; set; }
         public string ResponseToId { get; set; }
-        public List<string> ReplyIds { get; set; }
+        public List<IReply> ReplyIds { get; set; }
         public int Likes { get; set; }
         public int Dislikes { get; set; }
         public int Favourites { get; set; }
@@ -47,5 +47,11 @@ namespace SB004.Domain
         public int Views { get; set; }
         public bool IsTopLevel { get; set; }
         public double TrendScore { get; set; }
+    }
+    public class Reply:IReply
+    {
+      public DateTime DateCreated { get; set; }
+      public string Id { get; set; }
+      public double TrendScore { get; set; }
     }
 }

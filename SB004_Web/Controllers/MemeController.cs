@@ -70,7 +70,7 @@ namespace SB004.Controllers
     }
 
     /// <summary>
-    /// Retrieves a paginated list of meme replies
+    /// Retrieves a paginated list of meme replies ordered by reply trend and date created
     /// Get: api/meme/id/replies/
     /// </summary>
     /// <param name="id"></param>
@@ -88,9 +88,9 @@ namespace SB004.Controllers
 
       List<MemeLiteModel> replies = new List<MemeLiteModel>();
       MemeLiteModel replyMeme;
-      foreach (string replyMemeId in meme.ReplyIds.Skip(skip).Take(take))
+      foreach (IReply reply in meme.ReplyIds.OrderByDescending(x=>x.TrendScore).ThenByDescending(y=>y.DateCreated).Skip(skip).Take(take))
       {
-        replyMeme = this.GetMemeLite(replyMemeId);
+        replyMeme = this.GetMemeLite(reply.Id);
         if (replyMeme != null)
         {
           replies.Add(replyMeme);
@@ -169,7 +169,7 @@ namespace SB004.Controllers
         }).ToList(),
         ImageData = Convert.FromBase64String(memeModel.ImageData),
         ResponseToId = memeModel.ResponseToId,
-        ReplyIds = new List<string>(),
+        ReplyIds = new List<IReply>(),
         IsTopLevel = memeModel.ResponseToId == null,
 
       };
@@ -195,16 +195,12 @@ namespace SB004.Controllers
       {
         return Request.CreateResponse(HttpStatusCode.NotFound);
       }
-      if (meme.ReplyIds == null)
-      {
-        meme.ReplyIds = new List<string>();
-      }
 
-      // Add the repy id to the top of the list of replies
-      meme.ReplyIds.Insert(0, replyMemeId);
+      // Add the repy id to the meme, calculate a reply trend
+      memeBusiness.AddReplyToMeme(meme, replyMemeId);
 
       // Update the meme
-      repository.Save(meme);
+      memeBusiness.SaveMeme(meme);
 
       HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme);
       response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
