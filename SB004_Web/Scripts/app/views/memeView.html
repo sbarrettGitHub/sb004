@@ -204,7 +204,7 @@
 					ng-hide="replies.length>0">
 					No reponses yet. Be the first!
 				</div>
-				<div ng-repeat="reply in replies | orderBy: '-dateCreated'" class="pull-left col-md-12 col-lg-12 col-sm-12">			
+				<div ng-repeat="reply in replies" class="pull-left col-md-12 col-lg-12 col-sm-12">			
 					<div ng-memelink ng-model="reply" 
 									on-click="viewMeme(reply.id)" 
 									on-like="likeMeme(reply.id)"

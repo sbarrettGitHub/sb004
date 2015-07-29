@@ -18,6 +18,8 @@
 
         List<IMeme> SearchMeme(int skip, int take);
 
+        List<IMeme> SearchTrendingMemes(int skip, int take);
+
         IUser Save(IUser user);
         
         IUser GetUser(string authenticationUserId, string authenticationProvider);

@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
 
   using SB004.Data;
   using SB004.Domain;
@@ -34,6 +35,9 @@
         userCommentCount = repository.GetUserCommentCount(meme.Id);
       }
 
+      // Meme is top leve if it has no reposnseToId
+      meme.IsTopLevel = meme.ResponseToId == null;
+
       // Calculate the meme trend score
       meme.TrendScore = trendManager.CalculateDailyTrendScore(meme, userCommentCount);
 
@@ -47,8 +51,12 @@
         meme.ImageData = imageManager.GenerateMemeImage(meme, seedData);
       }
       
-      // If the meme is not a response to another meme then identify it as Top level
-      meme.IsTopLevel = meme.ResponseToId != null;
+      // If this meme is a reply to another then update the reply trend to reflect the new data of this meme with in the reply list
+      if (meme.IsTopLevel == false)
+      {
+        // This meme is a reply to another parent meme. Update the parent to reflect the new state of this meme 
+        this.UpdateReplyToMeme(meme);
+      }
 
       // Save the meme
       return repository.Save(meme);
@@ -77,7 +85,7 @@
         {
           Id = replyMemeId,
           DateCreated = DateTime.UtcNow,
-          TrendScore = trendManager.CalculateHourlyTrendScore(meme,0,meme.DateCreated)
+          TrendScore = trendManager.CalculateHourlyTrendScore(replyMeme, 0, meme.DateCreated)
         });
 
         // Save the meme
@@ -85,6 +93,34 @@
       }
       
       return meme;
+    }
+    /// <summary>
+    /// Update the parent meme to reflect the new state of the supplied meme 
+    /// Recalculate and update the reply trend score of the supplied meme inside the reply list of the parent meme (identified by ResponseToId)
+    /// </summary>
+    /// <param name="replyMeme"></param>
+    /// <returns></returns>
+    public void UpdateReplyToMeme(IMeme replyMeme)
+    {
+      if (replyMeme != null && replyMeme.ResponseToId != null)
+      {
+        IMeme parentMeme = repository.GetMeme(replyMeme.ResponseToId);
+        if (parentMeme.ReplyIds == null)
+        {
+          // This meme is not a reply within the parent meme
+          return;
+        }
+
+        IReply reply = parentMeme.ReplyIds.FirstOrDefault(x => x.Id == replyMeme.Id);
+        if(reply != null)
+        {
+          // Update the hourly trend score of this meme as a reply to another meme
+          reply.TrendScore = trendManager.CalculateHourlyTrendScore(replyMeme, repository.GetUserCommentCount(replyMeme.Id), parentMeme.DateCreated);
+          
+          // Save the parent meme to which the reply meme is a response to (with the updated reply trend scrore)
+          repository.Save(parentMeme);
+        }
+      }
     }
   }
 }

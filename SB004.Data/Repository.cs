@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using MongoDB.Bson.Serialization;
 
@@ -47,6 +48,14 @@
                 if (!BsonClassMap.IsClassMapRegistered(typeof(PositionRef)))
                 {
                     BsonClassMap.RegisterClassMap<PositionRef>();
+                }
+                if (!BsonClassMap.IsClassMapRegistered(typeof(List<IReply>)))
+                {
+                  BsonClassMap.RegisterClassMap<List<IReply>>();
+                }
+                if (!BsonClassMap.IsClassMapRegistered(typeof(Reply)))
+                {
+                  BsonClassMap.RegisterClassMap<Reply>();
                 }
             }
             catch (Exception )
@@ -157,7 +166,29 @@
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Search for trending memes ordering 
+        /// </summary>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public List<IMeme> SearchTrendingMemes(int skip, int take)
+        {
+          var query = new QueryDocument();
+          List<IMeme> memes = new List<IMeme>();
+
+          var cursor =
+                memeCollection.FindAs<Meme>(Query<Meme>.EQ(e => e.IsTopLevel, true)).SetSortOrder(SortBy.Descending("TrendScore")).SetLimit(take);
+
+          foreach (Meme entity in cursor)
+          {
+            memes.Add(entity);
+          }
+
+          return memes;
+        }
+
+      #endregion
 
         #region User
         /// <summary>

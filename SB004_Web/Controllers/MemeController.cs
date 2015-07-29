@@ -81,21 +81,35 @@ namespace SB004.Controllers
     public IHttpActionResult GetMemeReplies(string id, int skip, int take)
     {
       IMeme meme = repository.GetMeme(id);
+
       if (meme == null)
       {
         return NotFound();
       }
 
       List<MemeLiteModel> replies = new List<MemeLiteModel>();
-      MemeLiteModel replyMeme;
-      foreach (IReply reply in meme.ReplyIds.OrderByDescending(x=>x.TrendScore).ThenByDescending(y=>y.DateCreated).Skip(skip).Take(take))
+
+      // No replies no list
+      if (meme.ReplyIds != null)
       {
-        replyMeme = this.GetMemeLite(reply.Id);
-        if (replyMeme != null)
+
+        // Get the meme ids of the relevent replies
+        IEnumerable<IReply> memeReplies = meme.ReplyIds
+                                             .OrderByDescending(x => x.TrendScore)
+                                             .ThenByDescending(y => y.DateCreated)
+                                             .Skip(skip)
+                                             .Take(take);
+        // Create the list of reply memes
+        foreach (IReply reply in memeReplies)
         {
-          replies.Add(replyMeme);
+          MemeLiteModel replyMeme = this.GetMemeLite(reply.Id);
+          if (replyMeme != null)
+          {
+            replies.Add(replyMeme);
+          }
         }
       }
+
       return Ok(replies);
     }
     /// <summary>
@@ -125,7 +139,7 @@ namespace SB004.Controllers
     public IHttpActionResult Get()
     {
       //string userId = User.Identity.UserId();
-      IEnumerable<IMeme> searchResults = repository.SearchMeme(0, 10);
+      IEnumerable<IMeme> searchResults = repository.SearchTrendingMemes(0, 10);
       return Ok(searchResults);
     }
     /// <summary>
@@ -170,13 +184,12 @@ namespace SB004.Controllers
         ImageData = Convert.FromBase64String(memeModel.ImageData),
         ResponseToId = memeModel.ResponseToId,
         ReplyIds = new List<IReply>(),
-        IsTopLevel = memeModel.ResponseToId == null,
 
       };
 
       //save the meme 
       meme = memeBusiness.SaveMeme(meme);
-      
+
       HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, meme);
       response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
       return response;

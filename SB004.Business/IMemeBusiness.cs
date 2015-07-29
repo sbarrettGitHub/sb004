@@ -18,5 +18,13 @@ namespace SB004.Business
     /// <param name="replyMemeId"></param>
     /// <returns></returns>
     IMeme AddReplyToMeme(IMeme meme, string replyMemeId);
+
+    /// <summary>
+    /// Update the parent meme to reflect the new state of the supplied meme 
+    /// Recalculate and update the reply trend score of the supplied meme inside the reply list of the parent meme (identified by ResponseToId)
+    /// </summary>
+    /// <param name="replyMeme"></param>
+    /// <returns></returns>
+    void UpdateReplyToMeme(IMeme replyMeme);
   }
 }

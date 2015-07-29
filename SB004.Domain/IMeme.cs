@@ -46,7 +46,7 @@ namespace SB004.Domain
     int Favourites { get; set; }
     int Shares { get; set; }
     int Views { get; set; }
-    bool IsTopLevel { get; set; }
+    bool IsTopLevel { get; set;}
     double TrendScore { get; set; }
   }
 
