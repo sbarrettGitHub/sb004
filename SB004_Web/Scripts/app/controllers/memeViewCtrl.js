@@ -18,7 +18,10 @@
 		var userCommentsIndex = 0;
 		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
 		var memeId = $routeParams.id;
-		var viewingCount = 10;
+		var constants = {
+			commentViewingBlockCount:10,
+			replyViewingBlockCount:10
+		};
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -33,8 +36,7 @@
 				$scope.meme.replyIds.unshift(newMemeId);				
 				$http({ method: 'PATCH', url: '/api/Meme/' + memeId + "/reply/" + newMemeId, data: {}})
 				.success(function (data) {  
-					refresh();
-					//$scope.myReplies.unshift(newMemeId);					
+					$scope.refreshReplies();				
                 }).error(function (e) {
 					alert(e);
 					return;
@@ -238,8 +240,17 @@
                 });
             return deferred.promise;
 		}
-        $scope.getMoreReplies = function(){
-			$http.get('/api/Meme/' + memeId + "/Replies?skip=" + userCommentsIndex + "&take=11").
+		$scope.refreshReplies = function(){
+			$scope.replies = [];
+			var currentCount = repliesIndex +1;
+			repliesIndex = 0;
+			// Retrieve all the replies currently visible again
+			$scope.getMoreReplies(0, currentCount);
+		}
+        $scope.getMoreReplies = function(skipReplies, takeReplies){
+			var skip = skipReplies?skipReplies:repliesIndex;
+			var take = takeReplies?takeReplies:constants.replyViewingBlockCount + 1;
+			$http.get('/api/Meme/' + memeId + "/Replies?skip=" + skip + "&take=" + take).
                 success(function (data) {
 					var replyCount = data.length;
 					// Deliberately tried to retrieve 11. If 11 came back the show the "Get More Replies" button but only display 10

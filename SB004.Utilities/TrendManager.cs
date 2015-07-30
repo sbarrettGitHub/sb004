@@ -12,7 +12,7 @@
     private const double ScorePerView = 0.07;
     private const double ScorePerLike = 1;
     private const double ScorePerDislike = -0.5;
-    private const double ScorePerComment = 0.5;
+    private const double ScorePerComment = 1;
     private const double ScorePerReply = 1.25;
 
 
