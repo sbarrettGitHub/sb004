@@ -149,22 +149,36 @@
 				alert(e);
 			});
 		}
-		$scope.getMoreComments = function(){
-			$http.get('/api/Comment/' + memeId + "?skip=" + userCommentsIndex + "&take=11").
+		$scope.refreshComments = function(){
+			$scope.userComments = [];
+			var currentCount = userCommentsIndex;
+			userCommentsIndex = 0;
+			
+			// Retrieve again all the replies that are currently visible again
+			$scope.getMoreComments(0, currentCount);
+		}
+		$scope.getMoreComments = function(skipComments, takeComments){
+			// Skip the explicitly specified number of comments (used during a refresh as 0 so all previously retrieved comments are refreshed) 
+			// or skip the current number of comments to get the next page worth
+			var skip = skipComments ? skipComments : userCommentsIndex;
+			
+			// Take the explicitly specified number of replies (used during a refresh as the number of previously retrieved replies)
+			// or a standard page worth
+			var take = takeComments ? takeComments : constants.commentViewingBlockCount;
+			$http.get('/api/Comment/' + memeId + "?skip=" + skip + "&take=" + take).
                 success(function (data) {
-					var commentCount = data.length;
-					// Deliberately tried to retrieve 11. If 11 came back the show the "Get More Comments" button but only display 10
-					if(commentCount > 10){
-						$scope.allowGetMoreComments = true;
-						commentCount = 10; // only show 10
-					}else{
-						$scope.allowGetMoreComments = false;
+					// Add the comments returned to the list of comments
+					for(var i=0;i<data.userComments.length;i++){   
+						$scope.userComments.push(data.userComments[i]);
 					}
-					for(var i=0;i<commentCount;i++){   
-						$scope.userComments.push(data[i]);
-					}		
+					// The Get More Comments button should be available if there are more comments out there than are displayed
+					$scope.allowGetMoreComments = (data.fullCommentCount > $scope.userComments.length) ? true : false;
+					
 					// Maintain a cursor of comments. Push out by the number of comments retieved (less 1 because zero based index :))
-					userCommentsIndex += data.length-1;		
+					userCommentsIndex += $scope.userComments.length;	
+
+					// Refresh the comment count on the meme 
+					$scope.meme.userCommentCount = data.fullCommentCount;					
                 }).
                 error(function (e) {
 					alert(e);
@@ -242,29 +256,36 @@
 		}
 		$scope.refreshReplies = function(){
 			$scope.replies = [];
-			var currentCount = repliesIndex +1;
+			var currentCount = repliesIndex;
 			repliesIndex = 0;
-			// Retrieve all the replies currently visible again
+			
+			// Retrieve again all the replies that are currently visible again
 			$scope.getMoreReplies(0, currentCount);
 		}
         $scope.getMoreReplies = function(skipReplies, takeReplies){
-			var skip = skipReplies?skipReplies:repliesIndex;
-			var take = takeReplies?takeReplies:constants.replyViewingBlockCount + 1;
+			
+			// Skip the explicitly specified number of replies (used during a refresh as 0 so all previously retrieved replies are refreshed) 
+			// or skip the current number of replies to get the next page worth
+			var skip = skipReplies ? skipReplies : repliesIndex;
+			
+			// Take the explicitly specified number of replies (used during a refresh as the number of previously retrieved replies)
+			// or a standard page worth
+			var take = takeReplies ? takeReplies : constants.replyViewingBlockCount;
+			
 			$http.get('/api/Meme/' + memeId + "/Replies?skip=" + skip + "&take=" + take).
                 success(function (data) {
-					var replyCount = data.length;
-					// Deliberately tried to retrieve 11. If 11 came back the show the "Get More Replies" button but only display 10
-					if(replyCount > 10){
-						$scope.allowGetMoreReplies = true;
-						replyCount = 10; // only show 10
-					}else{
-						$scope.allowGetMoreReplies = false;
-					}
-					for(var i=0;i<replyCount;i++){   
-						$scope.replies.push(data[i]);
-					}		
-					// Maintain a cursor of replies. Push out by the number of replies retieved (less 1 because zero based index :))
-					repliesIndex += data.length-1;		
+					// Add the replies returned to the list of replies
+					for(var i=0;i<data.replies.length;i++){   
+						$scope.replies.push(data.replies[i]);
+					}	
+					// The Get More Replies button should be available if there are more replies out there than are displayed
+					$scope.allowGetMoreReplies = (data.fullReplyCount > $scope.replies.length) ? true : false;
+					
+					// Maintain a cursor of replies. 
+					repliesIndex = $scope.replies.length;	
+					
+					// Refresh the reply count on the meme 
+					$scope.meme.replyCount = data.fullReplyCount;
                 }).
                 error(function (e) {
 					alert(e);

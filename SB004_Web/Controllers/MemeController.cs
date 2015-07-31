@@ -54,6 +54,7 @@ namespace SB004.Controllers
         meme.Comments,
         meme.ResponseToId,
         replyCount = meme.ReplyIds.Count,
+        userCommentCount = repository.GetUserCommentCount(id),
         meme.Likes,
         meme.Dislikes,
         meme.Favourites,
@@ -81,7 +82,7 @@ namespace SB004.Controllers
     public IHttpActionResult GetMemeReplies(string id, int skip, int take)
     {
       IMeme meme = repository.GetMeme(id);
-
+      int fullReplyCount = 0;
       if (meme == null)
       {
         return NotFound();
@@ -92,7 +93,9 @@ namespace SB004.Controllers
       // No replies no list
       if (meme.ReplyIds != null)
       {
-
+        // Gwet the full count of all replies (even if not all are being returned)
+        fullReplyCount = meme.ReplyIds.Count;
+        
         // Get the meme ids of the relevent replies
         IEnumerable<IReply> memeReplies = meme.ReplyIds
                                              .OrderByDescending(x => x.TrendScore)
@@ -110,7 +113,7 @@ namespace SB004.Controllers
         }
       }
 
-      return Ok(replies);
+      return Ok(new { fullReplyCount, replies });
     }
     /// <summary>
     /// Returns a lite meme model

@@ -144,6 +144,9 @@
 			<div id="commentsContainer" class="pull-left col-lg-12 col-md-12 col-sm-12">
 			<div id="commentsHeading" class="rounded sectionHeading">
 				<i class="fa fa-comments-o"></i><span >&nbsp; Comments ({{meme.userCommentCount}})</span>
+				<div class="pull-right" ng-click="refreshComments()" title="Click here to Refresh">
+					<i class="fa fa-refresh hot"></i>
+				</div>
 			</div>
 			<div id="comments" class="rounded section">			
 				<div id="addComment">
@@ -187,7 +190,7 @@
 		</div>	
 		<div id="repliesContainer" class="hidden-sm hidden-xs hidden-md">
 			<div id="repliesHeading" class="rounded sectionHeading col-lg-12 col-md-12">
-				<i class="fa fa-inbox"></i><span >&nbsp; Responses</span>
+				<i class="fa fa-inbox"></i><span >&nbsp; Responses ({{meme.replyCount}})</span>
 				<div class="pull-right" ng-click="refreshReplies()" title="Click here to Refresh">
 					<i class="fa fa-refresh hot"></i>
 				</div>
