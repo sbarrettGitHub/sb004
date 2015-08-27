@@ -15,6 +15,7 @@
 		$scope.userComments = [];
 		$scope.userComment = "";
 		$scope.allowGetMoreComments = true;
+		$scope.isUserFavourite = false;
 		var userCommentsIndex = 0;
 		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
 		var memeId = $routeParams.id;
@@ -22,6 +23,7 @@
 			commentViewingBlockCount:10,
 			replyViewingBlockCount:10
 		};
+
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -113,9 +115,11 @@
 					alert(e);
 					return;
                 });
-		}		
+		}
+		// -------------------------------------------------------------------
+		// Favourites		
 		$scope.addMemeToFavourites = function(memeId)
-		{
+		{			
 			if(securityService.currentUser.isAuthenticated==false){
 				securityService.logIn()
 					.then(function(){
@@ -127,14 +131,33 @@
 			 
 		}
 		var addToFavourites = function(memeId){
+			if(isUserFavourite(memeId)){
+				alert("This is already a favourite of yours!");
+				return;
+			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
 				.success(function (data) {  
 					$scope.meme.favourites++;	
-					alert("This meme has been added to your list of favourite memes!");
+					if(securityService.currentUser.profile.favouriteMemeIds){
+						securityService.currentUser.profile.favouriteMemeIds.push($scope.meme.id);
+						$scope.isUserFavourite = true;
+					}
+					alert("This has been added to your favourites!");
                 }).error(function (e) {					
 					return;
                 });
 		}
+		var isUserFavourite= function(memeId){
+			if(securityService.currentUser.profile)
+			{
+				if(securityService.currentUser.profile.favouriteMemeIds){
+					return (securityService.currentUser.profile.favouriteMemeIds.indexOf(memeId) > -1);
+				}
+			}
+			return false;
+		}
+		// -------------------------------------------------------------------
+		// Comments
 		$scope.addComment = function(){
 			$http.post('/api/Comment', {
                 MemeId: memeId,
@@ -308,6 +331,7 @@
 			.then(function (data) {
 				var deferred = $q.defer();
 				$scope.meme = data;
+				$scope.isUserFavourite = isUserFavourite($scope.meme.id);
 				$scope.getMoreReplies();
 				$scope.getMoreComments();
 				endWaiting();	

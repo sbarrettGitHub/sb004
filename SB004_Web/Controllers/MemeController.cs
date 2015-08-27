@@ -44,30 +44,33 @@ namespace SB004.Controllers
       }
       ISeed seed = repository.GetSeed(meme.SeedId);
 
-      return Ok(new
-      {
-        meme.Id,
-        meme.CreatedBy,
-        meme.CreatedByUserId,
-        DateCreated = meme.DateCreated.ToLocalTime(),
-        meme.Title,
-        meme.Comments,
-        meme.ResponseToId,
-        replyCount = meme.ReplyIds.Count,
-        userCommentCount = repository.GetUserCommentCount(id),
-        meme.Likes,
-        meme.Dislikes,
-        meme.Favourites,
-        meme.Shares,
-        meme.Views,
-        seedImage = new
-        {
-          seed.Id,
-          seed.Width,
-          seed.Height,
-          image = "data:image/jpeg;base64," + imageManager.GetImageData(seed.ImageData)
-        }
-      });
+      return
+        Ok(
+          new
+          {
+            meme.Id,
+            meme.CreatedBy,
+            meme.CreatedByUserId,
+            DateCreated = meme.DateCreated.ToLocalTime(),
+            meme.Title,
+            meme.Comments,
+            meme.ResponseToId,
+            replyCount = meme.ReplyIds.Count,
+            userCommentCount = repository.GetUserCommentCount(id),
+            meme.Likes,
+            meme.Dislikes,
+            meme.Favourites,
+            meme.Shares,
+            meme.Views,
+            seedImage =
+              new
+              {
+                seed.Id,
+                seed.Width,
+                seed.Height,
+                image = "data:image/jpeg;base64," + imageManager.GetImageData(seed.ImageData)
+              }
+          });
     }
 
     /// <summary>
@@ -338,6 +341,7 @@ namespace SB004.Controllers
       meme.Dislikes += dislikesIncrement;
       meme.Views += viewsIncrement;
       meme.Shares += sharesIncrement;
+      meme.Favourites += favouritesIncrement;
 
       // Update the meme
       meme = memeBusiness.SaveMeme(meme);

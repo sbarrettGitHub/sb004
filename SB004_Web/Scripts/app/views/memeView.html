@@ -64,7 +64,10 @@
 							<div ng-click="dislikeMeme(meme.id)" title="I dislike this" class="info stat hot">
 								<i class="fa fa-thumbs-o-down"></i><span>{{meme.dislikes}}</span>
 							</div>	
-							<div ng-click="addMemeToFavourites(meme.id)" title="Add to my favorites" class="info stat hot">
+							<div ng-click="addMemeToFavourites(meme.id);" 
+								  title="{{isUserFavourite?'Already one of my favourites':'Add to my favorites (requires sign in)'}}" 
+								  class="info stat"
+								  ng-class="{'isFavourite': isUserFavourite, 'hot':!isUserFavourite}">
 								<i class="fa fa-star"></i><span>{{meme.favourites}}</span>
 							</div>					
 						</div>
