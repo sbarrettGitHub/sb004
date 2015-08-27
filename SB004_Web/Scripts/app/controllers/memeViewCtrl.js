@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams, memeWizardService, securityService) {
+    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog, memeWizardService, securityService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -23,7 +23,13 @@
 			commentViewingBlockCount:10,
 			replyViewingBlockCount:10
 		};
-
+		var favouritesDialog = $dialog.dialog({
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/favourites.html",
+            controller: "favouritesCtrl"
+        });
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -132,7 +138,9 @@
 		}
 		var addToFavourites = function(memeId){
 			if(isUserFavourite(memeId)){
-				alert("This is already a favourite of yours!");
+				favouritesDialog.open().then(function (action) {
+                
+				});
 				return;
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
@@ -350,6 +358,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","memeWizardService", "securityService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","memeWizardService", "securityService", memeViewCtrl]);
 
 })();

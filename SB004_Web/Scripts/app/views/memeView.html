@@ -65,9 +65,9 @@
 								<i class="fa fa-thumbs-o-down"></i><span>{{meme.dislikes}}</span>
 							</div>	
 							<div ng-click="addMemeToFavourites(meme.id);" 
-								  title="{{isUserFavourite?'Already one of my favourites':'Add to my favorites (requires sign in)'}}" 
-								  class="info stat"
-								  ng-class="{'isFavourite': isUserFavourite, 'hot':!isUserFavourite}">
+								  title="{{isUserFavourite?'Already one of my favourites. Click to open Favourites':'Add to my favorites (requires sign in)'}}" 
+								  class="info stat hot"
+								  ng-class="{'isFavourite': isUserFavourite}">
 								<i class="fa fa-star"></i><span>{{meme.favourites}}</span>
 							</div>					
 						</div>

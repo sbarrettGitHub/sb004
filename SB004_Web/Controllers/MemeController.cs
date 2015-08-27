@@ -312,7 +312,43 @@ namespace SB004.Controllers
       return MemeInteraction(id, 0, 0, 0, 0, 1);
 
     }
+    /// <summary>
+    /// Requires authentication. Retrieve the authenticated user. Remove the meme id from the users list of favourites.
+    /// Decrement the number of favourites this meme is listed as
+    /// </summary>
+    /// <param name="id">meme id of favoutite meme</param>
+    /// <returns></returns>
+    [Authorize]
+    [HttpDelete]
+    [Route("{id}/favourite/")]
+    public HttpResponseMessage DropAsFavouriteMeme(string id)
+    {
+      string userId = User.Identity.UserId();
 
+      // Retrieve the authenticated user
+      IUser userProfile = repository.GetUser(userId);
+      if (userProfile == null)
+      {
+        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+      }
+
+      // Is meme actually a favourite of this user?
+      if (userProfile.FavouriteMemeIds.All(x => x != id))
+      {
+        var response = Request.CreateResponse(HttpStatusCode.PreconditionFailed);
+        return response;
+      }
+
+      // Remove as user favourite
+      userProfile.FavouriteMemeIds.Remove(id);
+
+      // Save the user
+      this.repository.Save(userProfile);
+
+      // Update meme decrement favourites count only
+      return MemeInteraction(id, 0, 0, 0, 0, -1);
+
+    }
     #region Private Methods
     /// <summary>
     /// Record interation with the meme. 
