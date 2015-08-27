@@ -8,7 +8,7 @@
         $scope.waiting = false;
 		$scope.waitHeading = "Please wait...";
 		$scope.waitingMessage = "";
-		
+		$scope.showClose = false;
         $scope.$on("Drop.Url", function (event, url) {
             $timeout(function () {
                 $scope.image = url;
