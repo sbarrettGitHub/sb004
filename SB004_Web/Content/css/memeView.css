@@ -246,3 +246,18 @@ font-size: larger;
 	font-size: larger !important;
 	padding-top: 16px !important;;
 }
+.favouriteContainer{
+
+}
+.favourite{
+	height:150px;
+	padding:2px;
+}
+.favourite:hover{
+	background-color:cornflowerblue;
+}
+.favourite img{
+
+}
+.deleteFavourite{
+}

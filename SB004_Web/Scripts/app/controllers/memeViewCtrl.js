@@ -28,7 +28,8 @@
             keyboard: true,
             backdropClick: false,
             templateUrl: "/Scripts/app/views/favourites.html",
-            controller: "favouritesCtrl"
+            controller: "favouritesCtrl",
+            size: "560px"
         });
         /*Control buttons*/
         $scope.closeMe = function () {
