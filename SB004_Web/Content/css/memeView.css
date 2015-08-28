@@ -59,7 +59,7 @@ height:300px;
 	margin:0 auto;	
 	width: 100%;
 }
-#main #smallOptions .share{
+#main #smallOptions .share{ 
 	width:32px;	
 }
 #main #smallOptions #socialButtonsSmall{
@@ -245,4 +245,36 @@ font-size: larger;
 .share:hover{
 	font-size: larger !important;
 	padding-top: 16px !important;;
+}
+#favourites .dialogBody{
+	padding-left:2px;
+	padding-right:2px;
+	padding-bottom:2px;
+}
+.favourite{
+	height:180px;
+	color:white;	
+	border:1px solid white;
+	cursor: pointer;
+}
+.favourite:hover{
+border:1px solid grey;
+border-radius: 12px;
+}
+.favouriteDelete{
+    width: 20px;
+    text-align: center;
+	text-shadow: -1px 0px #000, 0px 1px #000, 1px 0px #000, 0px -1px #000;
+	background-color: #F8F8F8;
+    border-radius: 4px;
+	margin-right: -12px;
+	margin-top: 1px;
+	height:20px;
+}
+.favouriteDeleteGhost{
+    background-color: white !important;
+	text-shadow: none;
+}
+.favouriteDelete:hover{
+    background-color: darkred;
 }

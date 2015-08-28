@@ -28,7 +28,7 @@
             keyboard: true,
             backdropClick: false,
             templateUrl: "/Scripts/app/views/favourites.html",
-            controller: "favouritesCtrl"
+            controller: "favouritesCtrl" 
         });
         /*Control buttons*/
         $scope.closeMe = function () {
@@ -138,9 +138,7 @@
 		}
 		var addToFavourites = function(memeId){
 			if(isUserFavourite(memeId)){
-				favouritesDialog.open().then(function (action) {
-                
-				});
+				openFavouritesList();
 				return;
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
@@ -150,11 +148,25 @@
 						securityService.currentUser.profile.favouriteMemeIds.push($scope.meme.id);
 						$scope.isUserFavourite = true;
 					}
-					alert("This has been added to your favourites!");
+					if(confirm("This has been added to your favourites! Would you like to open your favourite list now?")){
+						openFavouritesList();
+					};
+					return;
                 }).error(function (e) {					
 					return;
                 });
 		}
+		var openFavouritesList = function(){
+			favouritesDialog.open().then(function (selectedMemeId) {
+				if(selectedMemeId){
+					$location.path('/meme/' + selectedMemeId);
+				}else{
+					// Is this meme still a favourite?
+					$scope.isUserFavourite = isUserFavourite($scope.meme.id);
+				}
+				
+			});			
+		};
 		var isUserFavourite= function(memeId){
 			if(securityService.currentUser.profile)
 			{

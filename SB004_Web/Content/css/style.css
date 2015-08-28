@@ -58,7 +58,7 @@ button:hover{
 .modal-backdrop
 {
 opacity: 0.6;
-background-color: #FEFEFE;
+background-color: #FEFEFE; 
 -webkit-filter: blur(6px);
 }
 .faded{
@@ -75,24 +75,24 @@ opacity: 0.6 !important;
 .closeMe
 {
 	float: right;
-    margin-top: -60px;
-    margin-right: -5px;
-	color:darkgrey;
+	margin-top: -55px;
+	margin-right: 3px;
+	color: #A9A9A9;
 	cursor: pointer;
 	font-size: 1.25em;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	text-shadow: -1px 0px #000, 0px 1px #000, 1px 0px #000, 0px -1px #000;
 }
 .closeIcon {
-    background-color: darkred;
-    border-radius: 10px;
-    width: 32px;
-    height: 32px;
-    padding-top: 5px;
-    color: white;
-    padding-right: 4px;
+
+	background-color: #F8F8F8;
+	border-radius: 8px;
+	width: 32px;
+	height: 32px;
+	padding-top: 3px;
+	color: #FFF;
 }
-.closeIcon div:hover, .closeIcon span:hover{
-	color:burlywood;
+.closeIcon:hover{
+	background-color: #8B0000;
 }
 .dropComment{
 	float: right;
