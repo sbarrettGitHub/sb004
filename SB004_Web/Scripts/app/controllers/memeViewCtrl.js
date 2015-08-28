@@ -34,8 +34,8 @@
         $scope.closeMe = function () {
             dialog.close(false);
         };
-		$scope.respond = function () {
-			memeWizardService.beginWithMeme($scope.meme,memeId)
+		$scope.respond = function (memeData) {
+			memeWizardService.beginWithMeme(memeData?memeData:$scope.meme,memeId)
 			.then(function(newMemeId){
 				alert("Resolved: " + newMemeId);
 				if(!$scope.meme.replyIds){
@@ -48,12 +48,41 @@
                 }).error(function (e) {
 					alert(e);
 					return;
-                });
-					
+                });					
 			},
 			function(){
 				alert("Rejected");
 			});
+         
+        };
+		$scope.respondFromFavourites = function () {
+			if(securityService.currentUser.isAuthenticated==false){
+				// Log in
+				securityService.logIn()
+					.then(function(){
+						// Select a favourite
+						openFavouritesList().then(function (selectedMemeId) {
+							if(selectedMemeId){
+								// Get the favourtie data
+								getMeme(selectedMemeId)
+								.then(function(memeData){
+									// Respons with favourite meme data
+									$scope.respond(memeData);	
+								});
+								
+							}
+						});
+					});
+			}else{
+				openFavouritesList().then(function (selectedMemeId) {
+					if(selectedMemeId){
+						getMeme(selectedMemeId)
+						.then(function(memeData){
+							$scope.respond(memeData);	
+						});
+					}
+				});
+			}		
          
         };
 		$scope.viewMeme = function(memeId)
@@ -138,7 +167,15 @@
 		}
 		var addToFavourites = function(memeId){
 			if(isUserFavourite(memeId)){
-				openFavouritesList();
+				openFavouritesList()
+				.then(function (selectedMemeId) {
+					if(selectedMemeId){
+						$location.path('/meme/' + selectedMemeId);
+					}else{
+						// Is this meme still a favourite?
+						$scope.isUserFavourite = isUserFavourite($scope.meme.id);
+					}
+				});
 				return;
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
@@ -157,15 +194,11 @@
                 });
 		}
 		var openFavouritesList = function(){
-			favouritesDialog.open().then(function (selectedMemeId) {
-				if(selectedMemeId){
-					$location.path('/meme/' + selectedMemeId);
-				}else{
-					// Is this meme still a favourite?
-					$scope.isUserFavourite = isUserFavourite($scope.meme.id);
-				}
-				
-			});			
+			var deferred = $q.defer();
+			favouritesDialog.open().then(function (selectedMemeId) {				
+				deferred.resolve(selectedMemeId);
+			});	
+			return deferred.promise;			
 		};
 		var isUserFavourite= function(memeId){
 			if(securityService.currentUser.profile)
