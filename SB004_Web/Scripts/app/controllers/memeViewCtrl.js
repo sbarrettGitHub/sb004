@@ -138,7 +138,9 @@
 		}
 		var addToFavourites = function(memeId){
 			if(isUserFavourite(memeId)){
-				openFavouritesList();
+				favouritesDialog.open().then(function (action) {
+                
+				});
 				return;
 			}
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
@@ -148,25 +150,11 @@
 						securityService.currentUser.profile.favouriteMemeIds.push($scope.meme.id);
 						$scope.isUserFavourite = true;
 					}
-					if(confirm("This has been added to your favourites! Would you like to open your favourite list now?")){
-						openFavouritesList();
-					};
-					return;
+					alert("This has been added to your favourites!");
                 }).error(function (e) {					
 					return;
                 });
 		}
-		var openFavouritesList = function(){
-			favouritesDialog.open().then(function (selectedMemeId) {
-				if(selectedMemeId){
-					$location.path('/meme/' + selectedMemeId);
-				}else{
-					// Is this meme still a favourite?
-					$scope.isUserFavourite = isUserFavourite($scope.meme.id);
-				}
-				
-			});			
-		};
 		var isUserFavourite= function(memeId){
 			if(securityService.currentUser.profile)
 			{

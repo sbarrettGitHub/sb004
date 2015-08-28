@@ -1,33 +1,27 @@
 ﻿'use strict';
 (function () {
 
-    var favouritesCtrl = function ($scope, $http, dialog, securityService) {
+    var favouritesCtrl = function ($scope, dialog, securityService) {
         $scope.favourites = [];
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
-        $scope.waitingMessage = "";
-		$scope.currentFavourite = null;		
+        $scope.waitingMessage = "";		
 		/*Control buttons*/
         $scope.closeMe = function () {
             dialog.close();
         };
 		
 		$scope.deleteFromFavourites = function(memeId){
-			if(!confirm("Are you sure you wish to remove this from your list of favoutites?"))
-			{
-				return;
-			}
 			startWaiting();
 			$http({ method: 'DELETE', url: '/api/meme/' + memeId + "/favourite/", data: {}})
-				.success(function (data) { 
-					// Remove from the current user profile favourites (saves reloading)
+				.success(function (data) {  
+					$scope.meme.favourites++;	
 					if(securityService.currentUser.profile.favouriteMemeIds){
-						for(var i=securityService.currentUser.profile.favouriteMemeIds.length-1;i>0;i--){
-							if(securityService.currentUser.profile.favouriteMemeIds[i] === memeId){
-								securityService.currentUser.profile.favouriteMemeIds.splice(i,1);								
+						for(var i=$scope.favourites.length-1;i>0;i--){
+							if($scope.favourites[i] === memeId){
+								$scope.favourites[i].slice(i,1);								
 							}
 						}
-						refresh();
 					}
 					endWaiting();
                 }).error(function (e) {		
@@ -35,14 +29,13 @@
 					return;
                 });
 		};
-		$scope.selectFavourite = function(memeId){
+		$scope.selectFavourites = function(memeId){
 			dialog.close(memeId);
 		};
 		var refresh = function(){
 			if(securityService.currentUser.profile)
 			{
 				if(securityService.currentUser.profile.favouriteMemeIds){
-					$scope.favourites = [];
 					for(var i=securityService.currentUser.profile.favouriteMemeIds.length-1;i>0;i--){
 						$scope.favourites.push(securityService.currentUser.profile.favouriteMemeIds[i]);
 					}
@@ -63,6 +56,6 @@
     }
   
     // Register the controller
-    app.controller('favouritesCtrl', ["$scope", "$http", "dialog", "securityService", favouritesCtrl]);
+    app.controller('favouritesCtrl', ["$scope", "dialog", "securityService", favouritesCtrl]);
 
 })();
