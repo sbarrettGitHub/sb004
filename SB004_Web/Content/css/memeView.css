@@ -218,6 +218,7 @@ overflow:auto;
 	width:100px;
 	margin-top: 45px;
 	position: fixed;
+	margin-left:-23px;
 }
 #socialMedia span{
 font-size: larger;
@@ -243,8 +244,7 @@ font-size: larger;
 	background-color: #cb2027 !important;
 }
 .share:hover{
-	font-size: larger !important;
-	padding-top: 16px !important;;
+width: 80px !important;
 }
 #favourites .dialogBody{
 	padding-left:2px;
