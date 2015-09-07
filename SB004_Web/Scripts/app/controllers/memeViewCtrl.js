@@ -18,6 +18,7 @@
 		$scope.isUserFavourite = false;
 		var userCommentsIndex = 0;
 		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
+		$scope.url = $location.absUrl();
 		var memeId = $routeParams.id;
 		var constants = {
 			commentViewingBlockCount:10,

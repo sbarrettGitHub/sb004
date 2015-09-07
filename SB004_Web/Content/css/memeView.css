@@ -230,6 +230,12 @@ font-size: larger;
   height: 64px;
   padding: 23px;
   margin-right: 5px;
+  -webkit-transition-property: width; /* Safari */
+  -webkit-transition-duration: 1s; /* Safari */
+  -webkit-transition-delay: 0s; /* Safari */
+  transition-property: width;
+  transition-duration: 1s;
+  transition-delay: 0s;
 }
 .facebook{
 	background-color: #3C5A98 !important;
@@ -244,7 +250,7 @@ font-size: larger;
 	background-color: #cb2027 !important;
 }
 .share:hover{
-width: 80px !important;
+width: 120px !important;
 }
 #favourites .dialogBody{
 	padding-left:2px;

@@ -1,5 +1,5 @@
 var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalStorageModule'])
-    .config(function ($routeProvider, $httpProvider, helloProvider) {
+    .config(function ($routeProvider, $httpProvider, helloProvider, $locationProvider) {
         helloProvider.init({
             facebook: 224433161069107,
             google: 'myGoogleToken',
@@ -22,6 +22,7 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
           otherwise({
               redirectTo: '/home'
           });
+		  $locationProvider.html5Mode(true);
         $httpProvider.interceptors.push('authInterceptorService');
 
     })
