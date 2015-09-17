@@ -31,6 +31,13 @@
             templateUrl: "/Scripts/app/views/favourites.html",
             controller: "favouritesCtrl" 
         });
+		var repostDialogOpts ={
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/repost.html",
+            controller: "repostCtrl" 
+        };
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -163,8 +170,7 @@
 					});
 			}else{
 				addToFavourites(memeId);
-			}
-			 
+			}			 
 		}
 		var addToFavourites = function(memeId){
 			if(isUserFavourite(memeId)){
@@ -209,6 +215,26 @@
 				}
 			}
 			return false;
+		}
+		// -------------------------------------------------------------------
+		// Repost
+		$scope.repostMeme = function(memeId){
+			if(securityService.currentUser.isAuthenticated==false){
+				securityService.logIn()
+					.then(function(){
+						repost(memeId);
+					});
+			}else{
+				repost(memeId);
+			}
+		}
+		var repost = function(memeId){
+			var deferred = $q.defer();
+			repostDialogOpts.resolve = {memeId : function() {return memeId;}};
+			$dialog.dialog(repostDialogOpts).open().then(function () {				
+				deferred.resolve();
+			});	
+			return deferred.promise;
 		}
 		// -------------------------------------------------------------------
 		// Comments

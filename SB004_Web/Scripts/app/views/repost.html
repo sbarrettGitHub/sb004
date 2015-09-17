@@ -1,0 +1,21 @@
+<div id="repost" class="dialogPage">
+	<div class="heading dialogHead" ng-hide="waiting">		
+		<h3><i class="fa fa-recycle"></i> Repost to my timeline</h3>		
+		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+	</div>	
+    <div class="dialogBody" ng-hide="waiting" class="pull-left col-md-12 col-lg-12 col-sm-12">									
+		<div ng-memelink ng-model="meme"></div>
+    </div>	
+	<div class="buttons dialogFoot" ng-hide="waiting">				
+		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>
+		<input type="button" value="Publish" />
+	</div>	
+	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
+		<div class="heading">
+			<h3>{{waitHeading}}</h3>
+			<div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		</div>
+		<div class="waitGraphic dialogWaitGraphic"/>
+		<div class="waitMessage">{{waitMessage}}</div>
+	</div>	
+</div>
