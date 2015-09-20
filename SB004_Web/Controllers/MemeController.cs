@@ -313,6 +313,38 @@ namespace SB004.Controllers
 
     }
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Authorize]
+    [HttpPatch]
+    [Route("{id}/repost/")]
+    public HttpResponseMessage RepostMeme(string id)
+    {
+        string userId = User.Identity.UserId();
+        // Retrieve the authenticated user
+        IUser userProfile = repository.GetUser(userId);
+        if (userProfile == null)
+        {
+            throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+        }
+        IMeme meme = repository.GetMeme(id);
+        if (meme == null)
+        {
+            var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound);
+            responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + id);
+            return responseNotFound;
+        }
+
+        // Repost the meme under the users name
+        meme = memeBusiness.RepostMeme(meme, userProfile);
+
+        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme);
+        response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+        return response;
+    }
+    /// <summary>
     /// Requires authentication. Retrieve the authenticated user. Remove the meme id from the users list of favourites.
     /// Decrement the number of favourites this meme is listed as
     /// </summary>

@@ -20,5 +20,6 @@ namespace SB004.Domain
         string Thumbnail { get; set; }
 
         List<string> FavouriteMemeIds { get; set; }
+
     }
 }

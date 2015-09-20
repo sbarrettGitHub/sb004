@@ -22,7 +22,7 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
           otherwise({
               redirectTo: '/home'
           });
-		  $locationProvider.html5Mode(true);
+		  //$locationProvider.html5Mode(true);
         $httpProvider.interceptors.push('authInterceptorService');
 
     })

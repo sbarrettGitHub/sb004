@@ -19,6 +19,7 @@
     private readonly MongoCollection<Meme> memeCollection;
     private readonly MongoCollection<User> userCollection;
     private readonly MongoCollection<UserComment> userCommentCollection;
+    private readonly MongoCollection<Repost> repostCollection;
     public Repository()
     {
       var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -34,6 +35,8 @@
       userCollection = database.GetCollection<User>("user");
 
       userCommentCollection = database.GetCollection<UserComment>("userComment");
+
+      repostCollection = database.GetCollection<Repost>("respost");
 
       try
       {
@@ -56,6 +59,10 @@
         if (!BsonClassMap.IsClassMapRegistered(typeof(Reply)))
         {
           BsonClassMap.RegisterClassMap<Reply>();
+        }
+        if (!BsonClassMap.IsClassMapRegistered(typeof(Repost)))
+        {
+            BsonClassMap.RegisterClassMap<Repost>();
         }
       }
       catch (Exception)
@@ -187,7 +194,17 @@
 
       return memes;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="repost"></param>
+    /// <returns></returns>
+    public IRepost Save(IRepost repost)
+    {
+        repost.Id = repost.Id ?? Guid.NewGuid().ToString("N");
+        repostCollection.Save(repost.ToBsonDocument());
+        return repost;
+    }
     #endregion
 
     #region User

@@ -122,5 +122,30 @@
         }
       }
     }
+    /// <summary>
+    /// Repost the specified meme to the specified user
+    /// </summary>
+    /// <param name="meme"></param>
+    /// <returns></returns>
+    public IMeme RepostMeme(IMeme meme, IUser user) 
+    {
+        IRepost repost = new Repost
+        {
+            DateCreated = DateTime.Now.ToUniversalTime(),
+            MemeId = meme.Id,
+            UserId = user.Id
+        };
+
+        // Save the repost
+        repository.Save(repost);
+
+        // Increment the repost count of the meme
+        meme.Reposts++;
+
+        // Save the meme and calculate it's new trend score
+        SaveMeme(meme);
+
+        return meme;
+    }
   }
 }

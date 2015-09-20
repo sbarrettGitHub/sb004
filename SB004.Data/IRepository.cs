@@ -33,5 +33,7 @@
         IUserComment Save(IUserComment userComment);
 
         IUserComment GetUserComment(string userCommentId);
+
+        IRepost Save(IRepost repost);
     }
 }

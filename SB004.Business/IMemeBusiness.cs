@@ -26,5 +26,12 @@ namespace SB004.Business
     /// <param name="replyMeme"></param>
     /// <returns></returns>
     void UpdateReplyToMeme(IMeme replyMeme);
+
+    /// <summary>
+    /// Repost the specified meme to the specified user
+    /// </summary>
+    /// <param name="meme"></param>
+    /// <returns></returns>
+    IMeme RepostMeme(IMeme meme, IUser user);
   }
 }
