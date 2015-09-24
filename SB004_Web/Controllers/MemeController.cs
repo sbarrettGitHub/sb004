@@ -62,6 +62,7 @@ namespace SB004.Controllers
             meme.Favourites,
             meme.Shares,
             meme.Views,
+            meme.Reposts,
             seedImage =
               new
               {
@@ -313,7 +314,7 @@ namespace SB004.Controllers
 
     }
     /// <summary>
-    /// 
+    /// Repost the meme
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -339,6 +340,42 @@ namespace SB004.Controllers
 
         // Repost the meme under the users name
         meme = memeBusiness.RepostMeme(meme, userProfile);
+
+        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme);
+        response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
+        return response;
+    }
+    /// <summary>
+    /// Report the meme as offensive
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Authorize]
+    [HttpPatch]
+    [Route("{id}/report/")]
+    public HttpResponseMessage ReportMeme(string id, [FromBody] ReportModel report)
+    {
+        if (report == null || (report.Objection ?? "").Length == 0)
+        {
+            return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
+        }
+        string userId = User.Identity.UserId();
+        // Retrieve the authenticated user
+        IUser userProfile = repository.GetUser(userId);
+        if (userProfile == null)
+        {
+            throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+        }
+        IMeme meme = repository.GetMeme(id);
+        if (meme == null)
+        {
+            var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound);
+            responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + id);
+            return responseNotFound;
+        }
+
+        // Report the meme as offensive under the users name
+        meme = memeBusiness.ReportMeme(meme, report.Objection, userProfile);
 
         HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, meme);
         response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);
@@ -444,7 +481,8 @@ namespace SB004.Controllers
         Dislikes = meme.Dislikes,
         Favourites = meme.Favourites,
         Shares = meme.Shares,
-        Views = meme.Views
+        Views = meme.Views,
+        Reposts = meme.Reposts,
       };
     }
     #endregion

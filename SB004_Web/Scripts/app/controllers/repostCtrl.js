@@ -61,14 +61,6 @@
 		$scope.repost=function(){
 			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/repost/", data: {}})
 				.success(function (data) {  
-					//securityService.currentUser.myMemeDislikes.push(data.id);
-					// Decrement the number of likes for the selected meme					
-					//if($scope.meme){
-					//	if(!$scope.meme.dislikes){
-					//		$scope.meme.dislikes = 0;
-					//	}
-					//	$scope.meme.dislikes++;	
-					//}
 					dialog.close({action:"repost"});
                 }).error(function (e) {
 					alert(e);

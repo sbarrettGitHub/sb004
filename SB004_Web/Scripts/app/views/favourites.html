@@ -1,9 +1,11 @@
 <div id="favourites" class="dialogPage">
 	<div class="heading dialogHead" ng-hide="waiting">		
-		<h3><i class="fa fa-star isFavourite"></i> My Favourites</h3>		
+		<h3><i class="fa fa-star isFavourite"></i> My Favourites</h3>	
+		<span ng-show="favourites.length==0">You currently have no favourites in your list.</span>		
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
     <div class="dialogBody" ng-hide="waiting">
+		
 		<div ng-repeat="favourite in favourites" class="pull-left col-md-4 col-lg-4 col-sm-4 favourite" 
 			 ng-mouseenter="currentFavourite=favourite" ng-mouseleave="currentFavourite=null">
 			
@@ -15,6 +17,9 @@
 			<img ng-src="/api/image/{{favourite}}" ng-click="selectFavourite(favourite)"class="image"/> 
 		</div>
     </div>	
+	<div class="buttons dialogFoot" ng-hide="waiting">				
+		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
+	</div>
 	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
 		<div class="heading">
 			<h3>{{waitHeading}}</h3>

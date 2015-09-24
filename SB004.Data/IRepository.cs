@@ -35,5 +35,7 @@
         IUserComment GetUserComment(string userCommentId);
 
         IRepost Save(IRepost repost);
+
+        IReport Save(IReport report);
     }
 }

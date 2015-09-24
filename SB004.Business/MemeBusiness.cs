@@ -147,5 +147,28 @@
 
         return meme;
     }
+    /// <summary>
+    /// Report the specified meme as offensive by the specified user
+    /// </summary>
+    /// <param name="meme"></param>
+    /// <param name="objection"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public IMeme ReportMeme(IMeme meme, string objection, IUser user)
+    {
+        IReport report = new Report
+        {
+            DateCreated = DateTime.Now.ToUniversalTime(),
+            MemeId = meme.Id,
+            UserId = user.Id,
+            Objection = objection
+
+        };
+
+        // Save the report
+        repository.Save(report);
+
+        return meme;
+    }
   }
 }

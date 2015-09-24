@@ -20,6 +20,7 @@
     private readonly MongoCollection<User> userCollection;
     private readonly MongoCollection<UserComment> userCommentCollection;
     private readonly MongoCollection<Repost> repostCollection;
+    private readonly MongoCollection<Repost> reportCollection;
     public Repository()
     {
       var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -38,6 +39,7 @@
 
       repostCollection = database.GetCollection<Repost>("respost");
 
+      reportCollection = database.GetCollection<Repost>("reported");
       try
       {
         if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
@@ -63,6 +65,10 @@
         if (!BsonClassMap.IsClassMapRegistered(typeof(Repost)))
         {
             BsonClassMap.RegisterClassMap<Repost>();
+        }
+        if (!BsonClassMap.IsClassMapRegistered(typeof(Report)))
+        {
+            BsonClassMap.RegisterClassMap<Report>();
         }
       }
       catch (Exception)
@@ -195,7 +201,7 @@
       return memes;
     }
     /// <summary>
-    /// 
+    /// Repost a meme
     /// </summary>
     /// <param name="repost"></param>
     /// <returns></returns>
@@ -204,6 +210,18 @@
         repost.Id = repost.Id ?? Guid.NewGuid().ToString("N");
         repostCollection.Save(repost.ToBsonDocument());
         return repost;
+    }
+
+    /// <summary>
+    /// Save the report of an offensive meme
+    /// </summary>
+    /// <param name="repost"></param>
+    /// <returns></returns>
+    public IReport Save(IReport report)
+    {
+        report.Id = report.Id ?? Guid.NewGuid().ToString("N");
+        reportCollection.Save(report.ToBsonDocument());
+        return report;
     }
     #endregion
 

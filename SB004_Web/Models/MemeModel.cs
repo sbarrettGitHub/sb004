@@ -3,6 +3,7 @@
     using SB004.Domain;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     public class PositionRefModel : IPositionRef
     {
         public string Align { get; set; }
@@ -56,5 +57,10 @@
         public int Favourites { get; set; }
         public int Shares { get; set; }
         public int Views { get; set; }
+        public int Reposts { get; set; }
+    }
+    public class ReportModel 
+    {
+        public string Objection { get; set; }
     }
 }

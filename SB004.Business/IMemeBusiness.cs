@@ -33,5 +33,14 @@ namespace SB004.Business
     /// <param name="meme"></param>
     /// <returns></returns>
     IMeme RepostMeme(IMeme meme, IUser user);
+
+    /// <summary>
+    /// Report the specified meme as offensive by the specified user
+    /// </summary>
+    /// <param name="meme"></param>
+    /// <param name="objection"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    IMeme ReportMeme(IMeme meme, string objection,IUser user);
   }
 }

@@ -1,0 +1,30 @@
+<div id="report" class="dialogPage">
+	<div class="heading dialogHead" ng-hide="waiting">		
+		<h3><i class="fa fa-exclamation-triangle"></i> Report this as offensive</h3>	
+		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+	</div>	
+    <div class="dialogBody" ng-hide="waiting" class="pull-left col-md-12 col-lg-12 col-sm-12">									
+		<div ng-memelink 
+				ng-model="meme"
+		></div>
+		<p> <i class="fa fa-exclamation-triangle"></i>
+			Obscene, racist, misogynistic, hurtful or otherwise inappropriate posts are not tolerated and will be removed. 
+			Repeat offenders will be evicted from this site.</p>
+		<textarea placeholder="Please explain your objection to this material here...this is required" ng-model="objection" class="col-md-11 col-lg-11 col-sm-11">
+			
+		</textarea>
+    </div>	
+
+		<div class="buttons dialogFoot" ng-hide="waiting">					
+		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>
+		<input type="button" value="Report Now!" ng-disabled="objection.length==0" ng-click="report()" title="Report this to the moderators as offensive."/>
+	</div>	
+	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
+		<div class="heading">
+			<h3>{{waitHeading}}</h3>
+			<div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		</div>
+		<div class="waitGraphic dialogWaitGraphic"/>
+		<div class="waitMessage">{{waitMessage}}</div>
+	</div>	
+</div>

@@ -28,24 +28,24 @@
 		</div>		
 		<div id="socialMedia" class="text-center hidden-sm hidden-xs">
 			
-			<a href="http://www.facebook.com/sharer.php?u={{url}}" target="_blank">
+			<a href="http://www.facebook.com/sharer.php?u={{url}}" ng-click="shared()" target="_blank">
 				<div title="Click here to share on Facebook" class="info share facebook">
 					<span class="fa fa-facebook"></span><div>7K</div>
 				</div>
 			</a>	
-			<a href="https://twitter.com/share?url={{url}}" target="_blank">
+			<a href="https://twitter.com/share?url={{url}}"  ng-click="shared()" target="_blank">
 				<div title="Click here to tweet on twitter" class="info share twitter">
 					<span class="fa fa-twitter"></span><div>62K</div>
 				</div>
 			</a>
-			<a href="https://plus.google.com/share?url={{url}}" target="_blank">
+			<a href="https://plus.google.com/share?url={{url}}"  ng-click="shared()" target="_blank">
 				<div title="Click here to share in Google+" class="info share google" >
 					<span class="fa fa-google-plus"></span><div>129</div>
 				</div>
 			</a>			
 
 			<a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());">
-				<div title="Click here to pin on Pinterest" class="info share pinterest">
+				<div title="Click here to pin on Pinterest"  ng-click="shared()" class="info share pinterest">
 					<span class="fa fa-pinterest"></span><div>560</div>
 				</div>
 			</a>			
@@ -85,7 +85,9 @@
 							<div title="The number times this meme has been viewed" class="info stat">
 								<i class="fa fa-eye"></i><span>{{meme.views}}</span>
 							</div>	
-							
+							<div title="The number of reposts" class="info stat">
+								<i class="fa fa-recycle"></i><span>{{meme.reposts}}</span>
+							</div>	
 							<div title="The number times this meme has been shared" class="info stat">
 								<i class="fa fa-share-alt"></i><span>{{meme.shares}}</span>
 							</div>						
@@ -112,9 +114,9 @@
 					</div>
 				</div>
 				<div class="text-center col-lg-4 col-md-4">
-					<div id="report" ng-click="report()" class="option text-center" 
-							title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
-						<i class="fa fa-exclamation-triangle"></i><span>&nbsp; Report</span>
+					<div id="report" ng-click="reportMeme(meme.id)" class="option text-center" 
+							title="Are you insulted or offended by this? If so click here to report this image. Obscene, racist, misogynistic or otherwise hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
+						<i class="fa fa-exclamation-triangle"></i><span>&nbsp; This is offensive!</span>
 					</div>	
 				</div>				
 			</div>

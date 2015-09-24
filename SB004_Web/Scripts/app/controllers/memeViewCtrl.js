@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog, memeWizardService, securityService) {
+    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog,$window, memeWizardService, securityService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -38,6 +38,13 @@
             templateUrl: "/Scripts/app/views/repost.html",
             controller: "repostCtrl" 
         };
+		var reportDialogOpts ={
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "/Scripts/app/views/report.html",
+            controller: "reportCtrl" 
+        };
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close(false);
@@ -45,7 +52,7 @@
 		$scope.respond = function (memeData) {
 			memeWizardService.beginWithMeme(memeData?memeData:$scope.meme,memeId)
 			.then(function(newMemeId){
-				alert("Resolved: " + newMemeId);
+				$window.alert("Resolved: " + newMemeId);
 				if(!$scope.meme.replyIds){
 					$scope.meme.replyIds = [];
 				}
@@ -54,12 +61,12 @@
 				.success(function (data) {  
 					$scope.refreshReplies();				
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
 					return;
                 });					
 			},
 			function(){
-				alert("Rejected");
+				$window.alert("Rejected");
 			});
          
         };
@@ -122,7 +129,7 @@
 						meme.likes++;
 					}
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
 					return;
                 });
 		}
@@ -155,7 +162,7 @@
 						meme.dislikes++;	
 					}
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
 					return;
                 });
 		}
@@ -223,6 +230,7 @@
 				securityService.logIn()
 					.then(function(){
 						repost(memeId);
+						
 					});
 			}else{
 				repost(memeId);
@@ -231,7 +239,10 @@
 		var repost = function(memeId){
 			var deferred = $q.defer();
 			repostDialogOpts.resolve = {memeId : function() {return memeId;}};
-			$dialog.dialog(repostDialogOpts).open().then(function () {				
+			$dialog.dialog(repostDialogOpts).open().then(function (dialogResult) {	
+				if(dialogResult.action == "repost"){
+					$scope.meme.reposts++;
+				}
 				deferred.resolve();
 			});	
 			return deferred.promise;
@@ -249,7 +260,7 @@
 				$scope.meme.userCommentCount++;
 			}).
 			error(function (e) {
-				alert(e);
+				$window.alert(e);
 			});
 		}
 		$scope.refreshComments = function(){
@@ -284,7 +295,7 @@
 					$scope.meme.userCommentCount = data.fullCommentCount;					
                 }).
                 error(function (e) {
-					alert(e);
+					$window.alert(e);
                     
                 });
 		}	
@@ -301,7 +312,7 @@
 					updateComment(data);
 					securityService.currentUser.myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
 					return;
                 });
 		}		
@@ -318,7 +329,7 @@
 					updateComment(data);
 					securityService.currentUser.myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
 					return;
                 });
 		}	
@@ -329,6 +340,42 @@
 				}
 			}
 		}
+		// -------------------------------------------------------------------
+		// Shared
+		$scope.shared = function(){
+			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/shared/", data: {}})
+				.success(function () {  
+					$scope.meme.shares++;
+                }).error(function (e) {
+					$window.alert(e);
+					return;
+                });
+		}
+		// -------------------------------------------------------------------
+		// Report
+		$scope.reportMeme = function(memeId){
+			if(securityService.currentUser.isAuthenticated==false){
+				securityService.logIn()
+					.then(function(){
+						report(memeId);
+						
+					});
+			}else{
+				report(memeId);
+			}
+		}
+		var report = function(memeId){
+			var deferred = $q.defer();
+			reportDialogOpts.resolve = {memeId : function() {return memeId;}};
+			$dialog.dialog(reportDialogOpts).open().then(function (dialogResult) {	
+				if(dialogResult.action == "report"){
+					$window.alert("Thank you for bringing this to our attention. This post has been reported and action will be taken.");
+				}
+				deferred.resolve();
+			});	
+			return deferred.promise;
+		}
+		
 		function getMeme(id){
 			var deferred = $q.defer();
 			startWaiting();
@@ -391,7 +438,7 @@
 					$scope.meme.replyCount = data.fullReplyCount;
                 }).
                 error(function (e) {
-					alert(e);
+					$window.alert(e);
                     
                 });
 		}
@@ -418,7 +465,7 @@
             })
 			.catch(function (e) {
                 endWaiting();
-				alert(e);
+				$window.alert(e);
             });
 		}
 		
@@ -430,6 +477,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","memeWizardService", "securityService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","$window", "memeWizardService", "securityService", memeViewCtrl]);
 
 })();
