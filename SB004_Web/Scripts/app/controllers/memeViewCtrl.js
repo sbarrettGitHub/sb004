@@ -375,7 +375,9 @@
 			});	
 			return deferred.promise;
 		}
-		
+		$scope.openUser = function(userId){
+			$location.path("/usermemes/" + userId);
+		}
 		function getMeme(id){
 			var deferred = $q.defer();
 			startWaiting();

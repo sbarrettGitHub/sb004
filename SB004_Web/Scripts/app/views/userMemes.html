@@ -1,0 +1,39 @@
+<div ng-controller="userMemesCtrl">
+	<div id="userMemes" class="container searchResultsContainer rounded col-md-12 col-sm-12">
+		<div class="pull-left userCard rounded">
+			<div class="userCardContainer">          
+				<div class="userCardContainerUser">
+					<i class="fa fa-user"></i>
+					<div id="">{{user.userName}}</div>
+					<div class="userStats">
+						<span  title="Number of views {{user.userName}} has received">
+							<i class="fa fa-eye"></i>{{user.views | nearestK}}
+						</span>
+						<span title="Number of likes {{user.userName }} has received">
+						<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}}
+						</span>
+						<span title="Number of dislikes {{user.userName}} has received">
+						<i class="fa fa-thumbs-o-down" ></i>{{user.dislikes | nearestK}}
+						</span>
+						<span  title="Number of posts of {{user.userName}} that have been reposted">
+							<i class="fa fa-retweet"></i>{{user.reposted | nearestK}}
+						</span>
+					</div>
+				</div>
+				<div class="userCardContainerOptions">
+					<div id="follow" class="option text-center" title="Click here to follow {{user.userName}}">
+						<i class="fa fa-plus"></i><span>&nbsp; Follow</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	  <div ng-repeat="meme in memes" class="pull-left">			
+			<div ng-memelink ng-model="meme" 
+							on-click="viewMeme(meme.id)" 
+							on-like="likeMeme(meme.id)"
+							on-dislike="dislikeMeme(meme.id)"
+							on-addtofavourites="addMemeToFavourites(meme.id)"
+							on-userclick="openUser(meme.createdByUserId)"></div>
+		</div>
+	</div>
+</div>

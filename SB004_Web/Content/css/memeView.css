@@ -42,18 +42,7 @@ height:300px;
 	cursor:pointer;
 	display:none;
 }
-.option{
-	border-radius:3px;
-	border: 1px solid rgb(200,200,200);
-	background-color:whitesmoke;
-	cursor: pointer;
-	padding-top:5px;
-	padding-bottom:5px;
-}
-.option:hover{	
-	background-color:cornflowerblue;	
-	color:white;
-}
+
 #main #smallOptions{
 	display:block;
 	margin:0 auto;	
@@ -180,18 +169,18 @@ overflow:auto;
 	border-radius: 6px;
 	margin-bottom:5px;
 }
-.memeLinkContainer{
+#replies .memeLinkContainer{
 	background-color:white;
 	min-width:230px;
 	margin-right:5px;
 }
-.memeLinkContainer img{
+#replies .memeLinkContainer img{
 	margin:5px;
 	cursor:pointer;
 	display: block;
 	margin: auto !important;
 }
-.memeLinkContainer .created{
+#replies .memeLinkContainer .created{
 	margin-left: 10px;
 	margin-right: 10px;
 	font-size: small;
@@ -200,16 +189,16 @@ overflow:auto;
 	margin-top: 10px;
 	font-weight:bold;
 }
-.memeLinkContainer .stats{
+#replies .memeLinkContainer .stats{
 	margin-left: 10px;
 	margin-right: 10px;
 	font-size: small;
 	height: 20px;	
 }
-.memeLinkContainer .stats div{
+#replies .memeLinkContainer .stats div{
 	margin-right:10px;
 }
-.memeLinkContainer  i{
+#replies .memeLinkContainer  i{
 	margin-right:2px;
 }
 #socialMedia{

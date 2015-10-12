@@ -21,5 +21,11 @@ namespace SB004.Domain
 
         List<string> FavouriteMemeIds { get; set; }
 
+        int Likes { get; set; }
+        int Dislikes { get; set; }
+        int Favourites { get; set; }
+        int Shares { get; set; }
+        int Views { get; set; }
+        int Reposted { get; set; }
     }
 }

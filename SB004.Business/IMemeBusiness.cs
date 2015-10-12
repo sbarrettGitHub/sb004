@@ -42,5 +42,18 @@ namespace SB004.Business
     /// <param name="user"></param>
     /// <returns></returns>
     IMeme ReportMeme(IMeme meme, string objection,IUser user);
+    
+    /// <summary>
+    /// Apply business rules around the update of meme interaction 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="likesIncrement"></param>
+    /// <param name="dislikesIncrement"></param>
+    /// <param name="viewsIncrement"></param>
+    /// <param name="sharesIncrement"></param>
+    /// <param name="favouritesIncrement"></param>
+    /// <returns></returns>
+    IMeme UpdateMemeInteraction(string id, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement);
+
   }
 }

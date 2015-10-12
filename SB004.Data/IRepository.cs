@@ -34,8 +34,10 @@
 
         IUserComment GetUserComment(string userCommentId);
 
-        IRepost Save(IRepost repost);
+        IMeme Save(IRepost repost);
 
         IReport Save(IReport report);
+
+        List<IMeme> SearchMemeByUser(string userId, int skip, int take, out long fullCount);
     }
 }

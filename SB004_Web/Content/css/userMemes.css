@@ -1,0 +1,64 @@
+#userMemes #follow{
+	width: 30%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: smaller;
+    margin-top: 5px;
+}
+#userMemes .memeLinkContainer{
+	background-color:white;
+	width:400px;
+	height:300px;
+   margin-bottom: 15px;
+    margin-left: 15px;
+	display: table;
+}
+#userMemes .memeLinkCard{
+   text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+
+}
+#userMemes .memeLinkCardImage{
+    height: 225px;
+    display: table-cell;
+    vertical-align: middle;    
+    width: 400px;
+}
+#userMemes .memeLinkCardMeta{
+
+}
+#userMemes .memeLinkContainer img{
+	margin:5px;
+	cursor:pointer;
+	display: block;
+	margin: auto !important;
+}
+#userMemes .memeLinkContainer .created{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	border-bottom: 1px solid #C8C8C8;
+	height: 25px;
+	margin-top: 10px;
+	font-weight:bold;
+}
+#userMemes .memeLinkContainer .stats{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	height: 20px;	
+}
+#userMemes .memeLinkContainer .stats div{
+	margin-right:10px;
+}
+#userMemes .memeLinkContainer  i{
+	margin-right:2px;
+}
+#userMemes .userStats{
+	font-size: smaller;
+}
+#userMemes .userStats i{
+	margin-left: 10px;
+	margin-right: 3px;
+}

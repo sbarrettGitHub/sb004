@@ -4,11 +4,7 @@ namespace SB004.Domain
 {
     public class Repost: IRepost
     {
-        /// <summary>
-        /// Repost id
-        /// </summary>
-        public string Id { get; set; }
-
+        
         /// <summary>
         /// ID of the meme being reposted
         /// </summary>
@@ -18,7 +14,7 @@ namespace SB004.Domain
         /// ID of the user who reposted
         /// </summary>
         public string UserId { get; set; }
-
+        public string UserName { get; set; }
         /// <summary>
         /// Date of repost
         /// </summary>

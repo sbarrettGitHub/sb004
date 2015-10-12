@@ -19,7 +19,7 @@
 			</div>				
 			<div id="repost" ng-click="repost()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
 					title="Repost this, and begin a new discussion thread among your followers.">
-				<i class="fa fa-recycle"></i><span>&nbsp; Repost</span>
+				<i class="fa fa-retweet"></i><span>&nbsp; Repost</span>
 			</div>
 			<div id="report" ng-click="report()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
 					title="Are you insulted or offended by this? If so click here to report this image. Obscene or hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
@@ -86,7 +86,7 @@
 								<i class="fa fa-eye"></i><span>{{meme.views}}</span>
 							</div>	
 							<div title="The number of reposts" class="info stat">
-								<i class="fa fa-recycle"></i><span>{{meme.reposts}}</span>
+								<i class="fa fa-retweet"></i><span>{{meme.reposts}}</span>
 							</div>	
 							<div title="The number times this meme has been shared" class="info stat">
 								<i class="fa fa-share-alt"></i><span>{{meme.shares}}</span>
@@ -110,7 +110,7 @@
 				<div class="text-center col-lg-4 col-md-4">
 					<div id="repost" ng-click="repostMeme(meme.id)" class="option text-center" 
 							title="Repost this, and begin a new discussion thread among your followers.">
-						<i class="fa fa-recycle"></i><span>&nbsp; Repost</span>
+						<i class="fa fa-retweet"></i><span>&nbsp; Repost</span>
 					</div>
 				</div>
 				<div class="text-center col-lg-4 col-md-4">
@@ -135,7 +135,7 @@
 							<span class="fa fa-reply">*</span>
 					</button>	
 					<button ng-click="repost()" title="Repost this, and begin a new discussion thread among your followers.">
-							<span class="fa fa-recycle"></span>
+							<span class="fa fa-retweet"></span>
 					</button>		
 					<button ng-click="report()" title="Report this, and begin a new discussion thread among your followers.">
 							<span class="fa fa-exclamation-triangle"></span>
@@ -230,7 +230,8 @@
 									on-click="viewMeme(reply.id)" 
 									on-like="likeMeme(reply.id)"
 									on-dislike="dislikeMeme(reply.id)"
-									on-addtofavourites="addMemeToFavourites(reply.id)"></div>
+									on-addtofavourites="addMemeToFavourites(reply.id)"
+									on-userclick="openUser(reply.createdByUserId)"></div>
 				</div>
 				<div id="moreReplies" ng-click="getMoreReplies()" ng-show="allowGetMoreReplies" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
 						title="Get more responses">

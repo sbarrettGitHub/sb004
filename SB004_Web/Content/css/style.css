@@ -19,8 +19,15 @@ button:hover{
 	font-weight:bold;
 	cursor:pointer;
 	color:cornflowerblue;
+	padding:3px;
  }
-
+.allowFollow:hover {
+    background-color: cornflowerblue;
+    color: white;
+	border-radius: 3px;
+    border: 1px solid rgb(200,200,200);
+	font-weight:normal;
+}
  .noFollow{
 	color:dark-grey;
  }
@@ -510,4 +517,36 @@ height:325px;*/
 .innerPinterest{
 	background-color: red;
 	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
+}
+.userCard {
+    width: 400px;
+    height: 300px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+	background-color: white;
+    display: table;
+}
+.userCardContainer{  
+font-size: 1.5em;
+    color: #C8C8C8;
+    height: 300px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+
+}
+.option{
+	border-radius:3px;
+	border: 1px solid rgb(200,200,200);
+	background-color:whitesmoke;
+	cursor: pointer;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.option:hover{	
+	background-color:cornflowerblue;	
+	color:white;
 }

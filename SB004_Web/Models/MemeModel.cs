@@ -45,6 +45,7 @@
     }
     public class MemeLiteModel
     {
+
         public string Id { get; set; }
         public string CreatedByUserId { get; set; }
         public DateTime DateCreated { get; set; }
@@ -62,5 +63,11 @@
     public class ReportModel 
     {
         public string Objection { get; set; }
+    }
+    public class UserMemeModel 
+    {
+        public IUser User { get; set; }
+        public List<MemeLiteModel> Memes { get; set; }
+        public long FullMemeCount { get; set; }
     }
 }

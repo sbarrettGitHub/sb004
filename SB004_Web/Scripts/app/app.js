@@ -12,6 +12,9 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
           }).when('/meme/:id', {
               templateUrl: '/Scripts/app/views/memeView.html',
               controller: 'memeViewCtrl'
+          }).when('/usermemes/:id', {
+              templateUrl: '/Scripts/app/views/userMemes.html',
+              controller: 'userMemesCtrl'
           }).when('/spawn/:id', {
               templateUrl: 'views/spawn.html',
               controller: 'memeApplyTextCtrl'
@@ -26,7 +29,26 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
         $httpProvider.interceptors.push('authInterceptorService');
 
     })
-    .run(function (securityService)
+	.filter('nearestK', function() {
+		return function(input) {
+		  if (typeof input=="undefined") {
+			return;
+		  }
+		  else {
+			input = input+'';    // make string
+			if (input < 1000) {
+			  return input;		 // return the same number
+			}
+			if (input < 10000) { // place a comma between
+			  return input.charAt(0) + ',' + input.substring(1);
+			}
+			
+			// divide and format
+			return (input/1000).toFixed(input % 1000 != 0)+'k';
+		  }
+		}
+	})
+	.run(function (securityService)
     {
         securityService.testStillLoggedIn();
     }); 
