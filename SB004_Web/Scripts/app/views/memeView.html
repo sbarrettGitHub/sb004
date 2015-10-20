@@ -53,14 +53,16 @@
 		<div id="leftSpace" class="pull-left hidden-sm hidden-xs"/>
 		<div id="main" class="pull-left">
 			<div id="currentMemeInfo" class="sectionHeading col-md-12 col-lg-12 col-sm-12 col-xs-12">		
-				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs">
-					<span class="fa fa-user"></span> {{meme.createdBy}} 
+				<div id="createdBy" class="col-md-6 col-lg-6 col-sm-12 col-xs-12 hidden-sm hidden-xs " 
+						ng-click="openUser(meme.createdByUserId)">
+					<span class="fa fa-user"></span> <span class="allowFollow">{{meme.createdBy}} </span>
 				</div>
 				<div id="dateCreated" class="when col-md-6 col-lg-6 hidden-sm hidden-xs text-right">
 					<span class="fa fa-clock-o"></span> {{meme.dateCreated | date:'medium'}}
 				</div>
-				<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center">
-					<span class="fa fa-user"></span> {{meme.createdBy}} | {{meme.dateCreated | date:'short'}}					
+				<div id="createdBy" class="col-sm-12 col-xs-12 hidden-md hidden-lg text-center" 
+					ng-click="openUser(meme.createdByUserId)">
+					<span class="fa fa-user"></span> <span class="allowFollow">{{meme.createdBy}}  </span>| {{meme.dateCreated | date:'short'}}					
 				</div>					
 			</div>
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
@@ -73,21 +75,18 @@
 							</div>	
 							<div ng-click="dislikeMeme(meme.id)" title="I dislike this" class="info stat hot">
 								<i class="fa fa-thumbs-o-down"></i><span>{{meme.dislikes}}</span>
-							</div>	
-							<div ng-click="addMemeToFavourites(meme.id);" 
-								  title="{{isUserFavourite?'Already one of my favourites. Click to open Favourites':'Add to my favorites (requires sign in)'}}" 
-								  class="info stat hot"
-								  ng-class="{'isFavourite': isUserFavourite}">
-								<i class="fa fa-star"></i><span>{{meme.favourites}}</span>
 							</div>					
 						</div>
-						<div  class="pull-right">
+						<div  class="pull-right">	
 							<div title="The number times this meme has been viewed" class="info stat">
 								<i class="fa fa-eye"></i><span>{{meme.views}}</span>
 							</div>	
 							<div title="The number of reposts" class="info stat">
 								<i class="fa fa-retweet"></i><span>{{meme.reposts}}</span>
-							</div>	
+							</div>
+							<div title="The number times this meme has been added to someones favourites" class="info stat">
+								<i class="fa fa-star"></i><span>{{meme.favourites}}</span>
+							</div>							
 							<div title="The number times this meme has been shared" class="info stat">
 								<i class="fa fa-share-alt"></i><span>{{meme.shares}}</span>
 							</div>						
@@ -97,7 +96,7 @@
 				
 			</div>
 			<div id="Options" class="section col-lg-12 col-md-12 hidden-sm hidden-xs">
-				<div class="text-center col-lg-4 col-md-4">
+				<div class="text-center col-lg-3 col-md-3">
 					<div id="back" ng-show="meme.responseToId!=null" ng-click="viewMeme(meme.responseToId)" class="option text-center"
 									title="Return to the post that this is in response to.">
 						<i class="fa fa-arrow-circle-o-left"></i><span >&nbsp; Back to conversation</span>
@@ -107,13 +106,19 @@
 						<i class="fa fa-home"></i><span>&nbsp; Home</span>
 					</div>	
 				</div>
-				<div class="text-center col-lg-4 col-md-4">
+				<div class="text-center col-lg-3 col-md-3">
 					<div id="repost" ng-click="repostMeme(meme.id)" class="option text-center" 
 							title="Repost this, and begin a new discussion thread among your followers.">
 						<i class="fa fa-retweet"></i><span>&nbsp; Repost</span>
 					</div>
 				</div>
-				<div class="text-center col-lg-4 col-md-4">
+				<div class="text-center col-lg-3 col-md-3">
+					<div id="favourite" ng-click="addMemeToFavourites(meme.id)" class="option text-center" 
+							title="{{isUserFavourite?'Already one of my favourites. Click to open Favourites':'Add to my favorites (requires sign in)'}}" >
+						<i class="fa fa-star"></i><span>&nbsp; Favourite</span>
+					</div>	
+				</div>					
+				<div class="text-center col-lg-3 col-md-3">
 					<div id="report" ng-click="reportMeme(meme.id)" class="option text-center" 
 							title="Are you insulted or offended by this? If so click here to report this image. Obscene, racist, misogynistic or otherwise hurtful posts are not tolerated and will be removed. Repeat offenders will be evicted from this site.">
 						<i class="fa fa-exclamation-triangle"></i><span>&nbsp; This is offensive!</span>

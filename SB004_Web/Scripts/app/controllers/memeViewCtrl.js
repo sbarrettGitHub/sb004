@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog,$window, memeWizardService, securityService) {
+    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog,$window, memeWizardService, securityService, likeDislikeMemeService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -110,28 +110,8 @@
 		}
 		$scope.likeMeme = function(memeId)
 		{
-			// Don't allow multiple likes by the same user on the same meme
-			for(var i=0;i<securityService.currentUser.myMemeLikes.length;i++){
-				if(securityService.currentUser.myMemeLikes[i] == memeId){
-					return;
-				}
-			}
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/like/", data: {}})
-				.success(function (data) { 
-					// Record that you like the selected meme
-					securityService.currentUser.myMemeLikes.push(data.id);					
-					// Increment the number of likes for the selected meme
-					var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
-					if(meme){
-						if(!meme.likes){
-							meme.likes = 0;
-						}
-						meme.likes++;
-					}
-                }).error(function (e) {
-					$window.alert(e);
-					return;
-                });
+			var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
+			likeDislikeMemeService.like(meme);			
 		}
 		function findReply(memeId){
 			// Find the reply with te given id
@@ -144,27 +124,8 @@
 		}	
 		$scope.dislikeMeme = function(memeId)
 		{
-			// Don't allow multiple dislikes by the same user on the same meme
-			for(var i=0;i<securityService.currentUser.myMemeDislikes.length;i++){
-				if(securityService.currentUser.myMemeDislikes[i] == memeId){
-					return;
-				}
-			}
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/dislike/", data: {}})
-				.success(function (data) {  
-					securityService.currentUser.myMemeDislikes.push(data.id);
-					// Decrement the number of likes for the selected meme
-					var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
-					if(meme){
-						if(!meme.dislikes){
-							meme.dislikes = 0;
-						}
-						meme.dislikes++;	
-					}
-                }).error(function (e) {
-					$window.alert(e);
-					return;
-                });
+			var meme = ($scope.meme.id == memeId)?$scope.meme:findReply(memeId);
+			likeDislikeMemeService.dislike(meme);				
 		}
 		// -------------------------------------------------------------------
 		// Favourites		
@@ -479,6 +440,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","$window", "memeWizardService", "securityService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","$window", "memeWizardService", "securityService", "likeDislikeMemeService", memeViewCtrl]);
 
 })();

@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var userMemesCtrl = function ($scope, $routeParams, $http, $window) {
+    var userMemesCtrl = function ($scope, $routeParams, $http, $window, $location, likeDislikeMemeService) {
         var userId = $routeParams.id;
 		var memesIndex=0;
 		$scope.memes = [];
@@ -49,6 +49,31 @@
                     endWaiting();
                 });
 		}
+		$scope.viewMeme = function(memeId)
+		{
+			if(memeId){
+				$location.path('/meme/' + memeId);
+			}else{
+				$location.path("home");
+			}
+		}
+		$scope.likeMeme = function(memeId)
+		{
+			likeDislikeMemeService.like(findMeme(memeId));			
+		}
+		$scope.dislikeMeme = function(memeId)
+		{
+			likeDislikeMemeService.dislike(findMeme(memeId));			
+		}
+		function findMeme(memeId){
+			// Find the meme in scope with the given id
+			for(var i=0;i<$scope.memes.length;i++){
+				if($scope.memes[i].id == memeId){
+					return $scope.memes[i];
+				}
+			}	
+			return null;
+		}	
 		function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
@@ -64,6 +89,6 @@
     }
 
     // Register the controller
-    app.controller('userMemesCtrl', ["$scope", "$routeParams", "$http", "$window", userMemesCtrl]);
+    app.controller('userMemesCtrl', ["$scope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", userMemesCtrl]);
 
 })();

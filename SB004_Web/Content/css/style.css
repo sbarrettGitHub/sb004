@@ -527,8 +527,7 @@ height:325px;*/
     display: table;
 }
 .userCardContainer{  
-font-size: 1.5em;
-    color: #C8C8C8;
+	font-size: 1.5em;
     height: 300px;
     text-align: center;
     display: table-cell;
