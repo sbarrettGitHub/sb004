@@ -535,7 +535,10 @@ height:325px;*/
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-
+}
+.userCardContainer  .userCardContainerOptionsInfo{
+	font-size: smaller;
+	margin-top:15px;
 }
 .option{
 	border-radius:3px;

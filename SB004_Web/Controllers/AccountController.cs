@@ -18,6 +18,7 @@ namespace SB004.Controllers
     using SB004.Data;
     using Newtonsoft.Json.Serialization;
     using System.Net.Http.Formatting;
+    using System.Collections.Generic;
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
@@ -47,7 +48,79 @@ namespace SB004.Controllers
             }
             return BadRequest("User not authorized");
         }
-        
+        /// <summary>
+        /// Add a user to the current user's list of users he follows
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="followedId"></param>
+        /// <returns>User profile</returns>
+        [HttpPatch]
+        [Authorize]
+        [Route("{id}/follow/{followedId}")]
+        public HttpResponseMessage Follow(string id, string followedId)
+        {
+            if (User.Identity.UserId() == id)
+            {
+                IUser profile = repository.GetUser(id);
+
+                if (profile != null)
+                {
+                    if (profile.FollowingIds == null) 
+                    {
+                        profile.FollowingIds = new List<string>();
+                    }
+                    
+                    // Remove the id if is already there, because it is being added to the front
+                    profile.FollowingIds.RemoveAll(x=>x == id);
+
+                    // Insert at the beginning
+                    profile.FollowingIds.Insert(0, followedId);
+
+                    // Save 
+                    repository.Save(profile);
+                    
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+                    response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+                    return response;
+                }
+            }
+            throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+        }
+        /// <summary>
+        /// Remove a user from the current user's list of users he follows
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="followedId"></param>
+        /// <returns>User profile</returns>
+        [HttpPatch]
+        [Authorize]
+        [Route("{id}/unfollow/{followedId}")]
+        public HttpResponseMessage Unfollow(string id, string followedId)
+        {
+            if (User.Identity.UserId() == id)
+            {
+                IUser profile = repository.GetUser(id);
+
+                if (profile != null)
+                {
+                    if (profile.FollowingIds == null)
+                    {
+                        profile.FollowingIds = new List<string>();
+                    }
+
+                    // Remove the id 
+                    profile.FollowingIds.RemoveAll(x => x == id);
+                    
+                    // Save 
+                    repository.Save(profile);
+
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+                    response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+                    return response;
+                }
+            }
+            throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+        }         
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]

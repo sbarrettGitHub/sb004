@@ -20,14 +20,20 @@
 						</span>
 					</div>
 				</div>
-				<div class="userCardContainerOptions">
-					<button id="follow" class="text-center" title="Click here to follow {{user.userName}}">
+				<div class="userCardContainerOptions" ng-hide="waiting">
+					<button id="follow" class="text-center follow" title="Click here to follow {{user.userName}}"
+						ng-hide="isFollowing" ng-click="follow()">
 						<i class="fa fa-plus"></i><span>&nbsp; Follow</span>
 					</button>
+					<button id="unfollow" class="text-center follow" title="Click here to stop following {{user.userName}}"
+						ng-show="isFollowing" ng-click="unfollow()">
+						<i class="fa fa-minus"></i><span>&nbsp; Unfollow</span>
+					</button>					
+					<div class="userCardContainerOptionsInfo" ng-show="isFollowing">You are currently following {{user.userName}}</div>
 				</div>
 			</div>
 		</div>
-	  <div ng-repeat="meme in memes" class="pull-left">			
+		<div ng-repeat="meme in memes" class="pull-left">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
 							on-like="likeMeme(meme.id)"
@@ -35,5 +41,21 @@
 							on-addtofavourites="addMemeToFavourites(meme.id)"
 							on-userclick="openUser(meme.createdByUserId)"></div>
 		</div>
-	</div>
+		
+		<div class="pull-left userCard rounded" ng-show="allowGetMoreMemes">
+			<div class="userCardContainer">          
+				<div class="userCardContainerUser">
+					<i class="fa fa-user"></i>
+					<div id="">{{user.userName}}</div>					
+					<div class="userCardContainerOptions">
+					<button class="text-center follow" title="Get more posts by {{user.userName}}"
+						 ng-click="getMoreMemes()">
+						<i class="fa fa-download"></i><span>&nbsp; More...</span>
+					</button>
+					
+					
+					</div>
+				</div>
+			</div>
+		</div>
 </div>

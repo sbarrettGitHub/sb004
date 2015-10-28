@@ -1,12 +1,13 @@
 'use strict';
 (function () {
 
-    var userMemesCtrl = function ($scope, $routeParams, $http, $window, $location, likeDislikeMemeService) {
+    var userMemesCtrl = function ($scope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
         var userId = $routeParams.id;
 		var memesIndex=0;
 		$scope.memes = [];
 		$scope.user = {};
 		$scope.allowGetMoreMemes = false;
+		$scope.isFollowing = false;
 		var constants = {
 			memeViewingBlockCount:10
 		};
@@ -73,7 +74,23 @@
 				}
 			}	
 			return null;
-		}	
+		}
+		$scope.follow = function()
+		{
+			securityService.follow($scope.user.id)
+			.then(function(){
+				$window.alert("You are now following " + $scope.user.userName + '!');
+				$scope.isFollowing = true;
+			});
+		}		
+		$scope.unfollow = function()
+		{
+			securityService.unfollow($scope.user.id)
+			.then(function(){
+				$window.alert("You are no longer following " + $scope.user.userName + '!');
+				$scope.isFollowing = false;
+			});
+		}			
 		function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
@@ -85,10 +102,14 @@
             $scope.waitingMessage = "";
         }
 		
+		securityService.isFollowing(userId)
+		.then(function(isFollowing){
+			$scope.isFollowing = isFollowing;
+		});
 		refreshMemes();
     }
 
     // Register the controller
-    app.controller('userMemesCtrl', ["$scope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", userMemesCtrl]);
+    app.controller('userMemesCtrl', ["$scope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", "securityService", userMemesCtrl]);
 
 })();

@@ -100,11 +100,97 @@
                 });
             return deferred.promise;
         }
+		var follow = function(followId){
+			var deferred = $q.defer();
+			if(currentUser.isAuthenticated==false){
+				// Log in
+				logIn()
+					.then(function(){
+						// Follow
+						followUnfollowUser(followId, true)
+						.then(function(data){
+							deferred.resolve(data);
+						});
+					});
+			}else{			
+				// Follow
+				followUnfollowUser(followId, true)
+				.then(function(data){
+					deferred.resolve(data);
+				});
+			}
+			return deferred.promise;
+		}
+		var unfollow = function(followId){
+			var deferred = $q.defer();
+			if(currentUser.isAuthenticated==false){
+				// Log in
+				logIn()
+					.then(function(){
+						// Unfollow
+						followUnfollowUser(followId, false)
+						.then(function(data){
+							deferred.resolve(data);
+						});
+					});
+			} else{			
+				// Unfollow
+				followUnfollowUser(followId, false)
+				.then(function(data){
+					deferred.resolve(data);
+				});
+			}
+			return deferred.promise;
+		}
+		function followUnfollowUser(followId, follow)
+		{
+			var deferred = $q.defer();
+			if(follow == true){
+				$http({ method: 'PATCH', url:'/api/Account/' + currentUser.userId + '/follow/' + followId, data: {}}).
+				success(function (data) {       
+					currentUser.profile = data;           
+					deferred.resolve(data);
+				}).
+				error(function () {
+					deferred.reject();
+				});
+			}else{
+				$http({ method: 'PATCH', url:'/api/Account/' + currentUser.userId + '/unfollow/' + followId, data: {}}).
+				success(function (data) {       
+					currentUser.profile = data;           
+					deferred.resolve(data);
+				}).
+				error(function () {
+					deferred.reject();
+				});			
+			}
+			return deferred.promise; 
+		}
+		
+		var isFollowing = function(followId){
+			var deferred = $q.defer();
+			testStillLoggedIn()
+			.then(function(){
+				if(currentUser.isAuthenticated==false || !currentUser.profile || !currentUser.profile.followingIds){
+					deferred.resolve(false);
+				}
+				for(var i=0;i<currentUser.profile.followingIds.length;i++){
+					if(currentUser.profile.followingIds[i] == followId){
+						deferred.resolve(true);
+					}
+				}
+				deferred.resolve(false);
+			});
+			return deferred.promise;
+		}
         return {
             logIn:logIn,
             connect: connect,
             testStillLoggedIn: testStillLoggedIn,
-            currentUser: currentUser
+            currentUser: currentUser,
+			follow:follow,
+			unfollow: unfollow,
+			isFollowing: isFollowing
         }
     }
 
