@@ -65,7 +65,7 @@
         var saveMeme = function (memeImageData) {
             var deferred = $q.defer();
 			startWaiting();
-            $http.post('/api/Meme', {
+            $http.post('api/Meme', {
                 SeedId: $scope.memeData.seedImage.id,
                 Comments: $scope.memeData.comments,
                 ImageData: $scope.memeData.imageData,

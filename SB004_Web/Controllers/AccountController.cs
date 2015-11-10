@@ -19,13 +19,17 @@ namespace SB004.Controllers
     using Newtonsoft.Json.Serialization;
     using System.Net.Http.Formatting;
     using System.Collections.Generic;
+    using SB004.Business;
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
         readonly IRepository repository;
-        public AccountController(IRepository repository)
+        readonly IAccountBusiness accountBusiness;
+
+        public AccountController(IRepository repository, IAccountBusiness accountBusiness)
         {
             this.repository = repository;
+            this.accountBusiness = accountBusiness;
         }
         /// <summary>
         /// Test that the user is authenticated
@@ -67,14 +71,22 @@ namespace SB004.Controllers
                 {
                     if (profile.FollowingIds == null) 
                     {
-                        profile.FollowingIds = new List<string>();
+                        profile.FollowingIds = new List<IUserLite>();
                     }
                     
                     // Remove the id if is already there, because it is being added to the front
-                    profile.FollowingIds.RemoveAll(x=>x == id);
+                    profile.FollowingIds.RemoveAll(x=>x.Id == id);
 
                     // Insert at the beginning
-                    profile.FollowingIds.Insert(0, followedId);
+                    IUser followed = repository.GetUser(id);
+                    if (followed != null)
+                    {
+                        profile.FollowingIds.Insert(0, new UserLite { Id = followed.Id, UserName = followed.UserName });
+                    }
+                    else
+                    {
+                        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+                    }
 
                     // Save 
                     repository.Save(profile);
@@ -105,11 +117,11 @@ namespace SB004.Controllers
                 {
                     if (profile.FollowingIds == null)
                     {
-                        profile.FollowingIds = new List<string>();
+                        profile.FollowingIds = new List<IUserLite>();
                     }
 
                     // Remove the id 
-                    profile.FollowingIds.RemoveAll(x => x == id);
+                    profile.FollowingIds.RemoveAll(x => x.Id == id);
                     
                     // Save 
                     repository.Save(profile);
@@ -120,7 +132,25 @@ namespace SB004.Controllers
                 }
             }
             throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-        }         
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("RegisterNewUser")]
+        public IHttpActionResult RegisterNewUser(NewAccount newAccount)
+        {
+            IUser newUser = accountBusiness.CreateNewUserAccount(new User
+            {
+                UserName = newAccount.UserName,
+                Email = newAccount.Email
+            }, 
+            new Credentials 
+            { 
+                Email = newAccount.Email,
+                Password = newAccount.Password
+            });
+            return Ok(new { user = newUser }); 
+
+        }
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]
@@ -146,7 +176,7 @@ namespace SB004.Controllers
             if (user == null)
             {
                 // Register now
-                user = repository.Save(
+                user = accountBusiness.CreateNewUser(
                     new User { 
                         AuthenticationUserId = verifiedAccessToken.user_id,
                         AuthenticationProvider = provider,

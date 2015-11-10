@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountBusiness.cs" />
+    <Compile Include="IAccountBusiness.cs" />
     <Compile Include="IMemeBusiness.cs" />
     <Compile Include="MemeBusiness.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

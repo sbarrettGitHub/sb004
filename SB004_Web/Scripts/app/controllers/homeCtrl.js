@@ -1,13 +1,13 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService, memeWizardService) {
-        $scope.quotes = sharedDataService.data.quoteSearch.results;
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService, memeWizardService, securityService) {
+        $scope.memes = sharedDataService.data.quoteSearch.results;
         $scope.searchTerm = "";
         $scope.searchCategory = "";
-
+		$scope.view = "trending";
         
-        $scope.memeSelectConfirmImage = function () {
+        $scope.addNew = function () {
 			
 			dialogsViewBegin();
 			memeWizardService.begin()
@@ -32,7 +32,7 @@
 		}
         $rootScope.$on('quoteSearch.complete', function (event, data) {
 
-            $scope.quotes = sharedDataService.data.quoteSearch.results;
+            $scope.memes = sharedDataService.data.quoteSearch.results;
 
         });
         $scope.resized = function (width, height) {
@@ -44,7 +44,24 @@
         };
 
         $scope.init();
-		
+		$scope.switchView = function(view)
+		{
+			if(view=="following"){
+				if (securityService.currentUser.isAuthenticated) {
+					$scope.view = "following";
+					alert("show following");
+				} else {					
+					securityService.logIn()
+					.then(function () {
+						$scope.view = "following";
+						alert("show following");
+					});                
+				}
+			}else{
+				$scope.view = view;
+			}
+			
+		}
 		function dialogsViewBegin(){
 			angular.element("#view").addClass("blurry");
 		}
@@ -54,6 +71,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", "memeWizardService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", "memeWizardService", "securityService", homeCtrl]);
 
 })();

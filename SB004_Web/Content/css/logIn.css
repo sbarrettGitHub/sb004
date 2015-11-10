@@ -1,0 +1,115 @@
+#logIn .signInMethods{
+	display: table;
+	height:250px;
+	width:375px;
+	margin-left: auto;
+    margin-right: auto;
+}
+#logIn .signInMethod{
+    display: table-cell;
+    vertical-align: middle;
+}
+#logIn .form-group{
+    margin-bottom:10px !important;
+}
+#logIn .fieldLabel{
+    padding-left:0 !important;
+}
+#logIn .help-block{
+    margin-bottom:0 !important;
+}
+#logIn .checkOption{
+    margin-top:-15px;
+}
+#logIn .checkOption label{
+    font-weight:normal;
+}
+#logIn .buttons{
+    margin-top:0;
+}
+#logIn #signUp{
+	padding-top: 20px;
+}
+#logIn #socialMediaOptions{
+    max-width:375px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:50px;
+	padding-bottom:50px;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	float: none;
+}
+#logIn .logInOption {
+    margin-bottom:15px;
+    width:302px;
+    margin-left:auto;
+	margin-right:auto;
+    height:42px;
+    cursor:pointer;
+}
+#logIn #logInWithFacebook {
+    background-image:url("../images/LogInWithFacebook.png")
+}
+#logIn #logInWithGoogle {
+    background-image:url("../images/LogInWithGoogle.png")
+}
+#logIn #logInWithTwitter {
+    background-image:url("../images/LogInWithTwitter.png")
+}
+#logIn #keepMeSignedInSocialContainer {
+      margin-top: 10px;
+}
+.logInButton{
+	background-repeat:no-repeat;
+	height:41px; 
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 10px;
+	border-radius: 3px;
+	cursor:pointer;
+}
+.logInInner{
+	margin-left:43px;	
+	height:100%;
+}
+.socialMediaText{
+	padding-left:18px;
+	padding-top:13px;
+	font-family:sans-serif;
+	font-weight: bold;
+	font-size:11pt;
+	text-align: left;
+	color:white
+}
+.logInButtonFacebook{
+	background-image: url('../images/Facebook.png');
+	border: 1px solid navy;
+}		
+
+.logInButtonGoogle{
+	background-image: url('../images/GooglePlus.png');
+	border: 1px solid rgb(248, 116, 116);
+}
+.logInButtonTwitter{
+	background-image: url('../images/Twitter.png');
+	border: 1px solid rgb(32, 145, 189);
+}
+.innerFaceBook{
+	background-color: rgb(81, 114, 180);
+	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
+}
+.innerGoogle{
+	background-color: rgb(227, 66, 66);
+	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
+}
+.innerTwitter{
+	background-color: rgb(28, 128, 168);
+	background-image: linear-gradient(rgb(94, 189, 228), rgb(28, 128, 168));
+}
+.innerPinterest{
+	background-color: red;
+	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
+}

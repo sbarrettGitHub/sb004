@@ -45,7 +45,7 @@
 			var width = imagePreview.width();
 			var height = imagePreview.height();
 			startWaiting("Please wait...","");
-            $http.post('/api/Seed', {
+            $http.post('api/Seed', {
                 id: null,
                 image: $scope.image,
                 width: width,

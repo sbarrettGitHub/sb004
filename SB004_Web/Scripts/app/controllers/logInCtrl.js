@@ -1,12 +1,35 @@
 ﻿'use strict';
 (function () {
 
-    var logInCtrl = function ($scope, dialog, hello, securityService) {
+    var logInCtrl = function ($scope, dialog, hello, securityService, focus) {
+		$scope.submitted = false;
+		$scope.email="";
+		$scope.password="";
+		
+		$scope.nameSignUp="";
+		$scope.emailSignUp="";
+		$scope.passwordSignUp="";
+		$scope.conformPasswordSignUp="";
+		
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close("Fail");
         };
-
+		$scope.view="SignIn";
+		$scope.switchView = function(newView){
+			$scope.view=newView;
+			switch(newView){
+				case "SignIn":
+					focus('SignIn');
+				break;
+				case "SignUp":
+					focus('SignUp');
+				break;
+				default:
+					return;
+			}
+			
+		}
         // Sign in using social media
         $scope.login = function (provider) {
             hello(provider).login();
@@ -29,11 +52,19 @@
             });
             
         });
-
+		$scope.signUp = function(){
+			$scope.submitted = true;
+		}
+		$scope.signUpError = function(){
+			return (!$scope.nameSignUp || !!$scope.emailSignUp || !$scope.passwordSignUp 
+			|| $scope.passwordSignUp!= $scope.confirmPasswordSignUp);
+		}
+		// Set focus to sign in email address
+		focus('SignIn');
     }
   
 
     // Register the controller
-    app.controller('logInCtrl', ["$scope", "dialog", "hello", "securityService", logInCtrl]);
+    app.controller('logInCtrl', ["$scope", "dialog", "hello", "securityService", "focus", logInCtrl]);
 
 })();

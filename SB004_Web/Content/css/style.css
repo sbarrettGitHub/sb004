@@ -221,8 +221,9 @@ margin-left:1px !important;
 }
 /*-----------------------------------------------------------*/
 .search{
-  margin-top:15px;
-  padding:15px;
+	margin-top:15px;
+	padding-left: 15px;
+	padding-right: 15px;  
 }
 .searchResultsContainer{
   background-color:#F8F8F8 ;
@@ -438,85 +439,9 @@ height:325px;*/
  }
 #publish img{margin-left:auto;margin-right:auto;display:block;}
   
-#logIn #logInOptions{
-    max-width:375px;
-	padding-left:5px;
-	padding-right:5px;
-	padding-top:5px;
-	padding-bottom:50px;
-	display:block;
-	margin-left:auto;
-	margin-right:auto;
-	float: none;
-}
-#logIn .logInOption {
-    margin-bottom:15px;
-    width:302px;
-    margin-left:auto;
-	margin-right:auto;
-    height:42px;
-    cursor:pointer;
-}
-#logIn #logInWithFacebook {
-    background-image:url("../images/LogInWithFacebook.png")
-}
-#logIn #logInWithGoogle {
-    background-image:url("../images/LogInWithGoogle.png")
-}
-#logIn #logInWithTwitter {
-    background-image:url("../images/LogInWithTwitter.png")
-}
-.logInButton{
-	background-repeat:no-repeat;
-	height:41px; 
-	width:300px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom: 10px;
-	border-radius: 3px;
-	cursor:pointer;
-}
-.logInInner{
-	margin-left:43px;	
-	height:100%;
-}
-.socialMediaText{
-	padding-left:18px;
-	padding-top:13px;
-	font-family:sans-serif;
-	font-weight: bold;
-	font-size:11pt;
-	text-align: left;
-	color:white
-}
-.logInButtonFacebook{
-	background-image: url('../images/Facebook.png');
-	border: 1px solid navy;
-}		
 
-.logInButtonGoogle{
-	background-image: url('../images/GooglePlus.png');
-	border: 1px solid rgb(248, 116, 116);
-}
-.logInButtonTwitter{
-	background-image: url('../images/Twitter.png');
-	border: 1px solid rgb(32, 145, 189);
-}
-.innerFaceBook{
-	background-color: rgb(81, 114, 180);
-	background-image: linear-gradient(rgb(81, 114, 180), rgb(12, 42, 105));
-}
-.innerGoogle{
-	background-color: rgb(227, 66, 66);
-	background-image: linear-gradient(rgb(248, 115, 115), rgb(227, 66, 66));
-}
-.innerTwitter{
-	background-color: rgb(28, 128, 168);
-	background-image: linear-gradient(rgb(94, 189, 228), rgb(28, 128, 168));
-}
-.innerPinterest{
-	background-color: red;
-	background-image: linear-gradient(rgb(239, 119, 123), rgb(212,47,52));
+.card {
+	background-color: white;
 }
 .userCard {
     width: 400px;
@@ -551,4 +476,67 @@ height:325px;*/
 .option:hover{	
 	background-color:cornflowerblue;	
 	color:white;
+}
+/*---------------------------------------------------------*/
+ .memeLinkContainer{
+	background-color:white;
+	width:400px;
+	height:300px;
+   margin-bottom: 15px;
+    margin-left: 15px;
+	display: table;
+}
+ .memeLinkCard{
+   text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+
+}
+ .memeLinkCardImage{
+    height: 225px;
+    display: table-cell;
+    vertical-align: middle;    
+    width: 400px;
+}
+ .memeLinkCardMeta{
+
+}
+ .memeLinkContainer img{
+	margin:5px;
+	cursor:pointer;
+	display: block;
+	margin: auto !important;
+}
+ .memeLinkContainer .created{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	border-bottom: 1px solid #C8C8C8;
+	height: 25px;
+	margin-top: 10px;
+	font-weight:bold;
+}
+ .memeLinkContainer .stats{
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	height: 20px;	
+}
+ .memeLinkContainer .stats div{
+	margin-right:10px;
+}
+ .memeLinkContainer  i{
+	margin-right:2px;
+}
+ .userStats{
+    font-size: 10pt;
+    margin-bottom: 25px;
+}
+ .userStats i{
+	margin-left: 10px;
+	margin-right: 3px;
+}
+.toolbar{
+	margin-bottom: 15px;
+	padding-left:5px;
 }

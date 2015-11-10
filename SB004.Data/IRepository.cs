@@ -21,7 +21,9 @@
         List<IMeme> SearchTrendingMemes(int skip, int take);
 
         IUser Save(IUser user);
-        
+
+        ICredentials Save(ICredentials credentials);
+
         IUser GetUser(string authenticationUserId, string authenticationProvider);
         
         IUser GetUser(string userId);

@@ -10,7 +10,7 @@
 					return;
 				}
 			}
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/like/", data: {}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/like/", data: {}})
 				.success(function (data) { 
 					// Record that you like the selected meme
 					securityService.currentUser.myMemeLikes.push(data.id);					
@@ -37,7 +37,7 @@
 					return;
 				}
 			}
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/dislike/", data: {}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/dislike/", data: {}})
 				.success(function (data) {  
 					securityService.currentUser.myMemeDislikes.push(data.id);
 					// Decrement the number of likes for the selected meme

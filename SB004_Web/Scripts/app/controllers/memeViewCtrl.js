@@ -28,21 +28,21 @@
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "/Scripts/app/views/favourites.html",
+            templateUrl: "Scripts/app/views/favourites.html",
             controller: "favouritesCtrl" 
         });
 		var repostDialogOpts ={
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "/Scripts/app/views/repost.html",
+            templateUrl: "Scripts/app/views/repost.html",
             controller: "repostCtrl" 
         };
 		var reportDialogOpts ={
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "/Scripts/app/views/report.html",
+            templateUrl: "Scripts/app/views/report.html",
             controller: "reportCtrl" 
         };
         /*Control buttons*/
@@ -57,7 +57,7 @@
 					$scope.meme.replyIds = [];
 				}
 				$scope.meme.replyIds.unshift(newMemeId);				
-				$http({ method: 'PATCH', url: '/api/Meme/' + memeId + "/reply/" + newMemeId, data: {}})
+				$http({ method: 'PATCH', url: 'api/Meme/' + memeId + "/reply/" + newMemeId, data: {}})
 				.success(function (data) {  
 					$scope.refreshReplies();				
                 }).error(function (e) {
@@ -153,7 +153,7 @@
 				});
 				return;
 			}
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/favourite/", data: {}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/favourite/", data: {}})
 				.success(function (data) {  
 					$scope.meme.favourites++;	
 					if(securityService.currentUser.profile.favouriteMemeIds){
@@ -211,7 +211,7 @@
 		// -------------------------------------------------------------------
 		// Comments
 		$scope.addComment = function(){
-			$http.post('/api/Comment', {
+			$http.post('api/Comment', {
                 MemeId: memeId,
                 Comment: $scope.userComment
             }).
@@ -240,7 +240,7 @@
 			// Take the explicitly specified number of replies (used during a refresh as the number of previously retrieved replies)
 			// or a standard page worth
 			var take = takeComments ? takeComments : constants.commentViewingBlockCount;
-			$http.get('/api/Comment/' + memeId + "?skip=" + skip + "&take=" + take).
+			$http.get('api/Comment/' + memeId + "?skip=" + skip + "&take=" + take).
                 success(function (data) {
 					// Add the comments returned to the list of comments
 					for(var i=0;i<data.userComments.length;i++){   
@@ -268,7 +268,7 @@
 					return;
 				}
 			}
-			$http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/like/", data: {}})
+			$http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/like/", data: {}})
 				.success(function (data) {  
 					updateComment(data);
 					securityService.currentUser.myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
@@ -285,7 +285,7 @@
 					return;
 				}
 			}
-			 $http({ method: 'PATCH', url: '/api/Comment/' + commentId + "/dislike/" , data: {}})
+			 $http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/dislike/" , data: {}})
 				.success(function (data) {  
 					updateComment(data);
 					securityService.currentUser.myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
@@ -304,7 +304,7 @@
 		// -------------------------------------------------------------------
 		// Shared
 		$scope.shared = function(){
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/shared/", data: {}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/shared/", data: {}})
 				.success(function () {  
 					$scope.meme.shares++;
                 }).error(function (e) {
@@ -342,7 +342,7 @@
 		function getMeme(id){
 			var deferred = $q.defer();
 			startWaiting();
-            $http.get('/api/Meme/' + id).
+            $http.get('api/Meme/' + id).
                 success(function (data) {
 					endWaiting();
                     deferred.resolve(data);
@@ -356,7 +356,7 @@
 		function getMemeLite(id){
 			var deferred = $q.defer();
 			startWaiting();
-            $http.get('/api/Meme/Lite/' + id).
+            $http.get('api/Meme/Lite/' + id).
                 success(function (data) {
 					endWaiting();
                     deferred.resolve(data);
@@ -385,7 +385,7 @@
 			// or a standard page worth
 			var take = takeReplies ? takeReplies : constants.replyViewingBlockCount;
 			
-			$http.get('/api/Meme/' + memeId + "/Replies?skip=" + skip + "&take=" + take).
+			$http.get('api/Meme/' + memeId + "/Replies?skip=" + skip + "&take=" + take).
                 success(function (data) {
 					// Add the replies returned to the list of replies
 					for(var i=0;i<data.replies.length;i++){   
@@ -436,7 +436,7 @@
 		refresh();
 		
 		// Record that this meme was viewed (fire and forget)
-		$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/viewed/", data: {}});
+		$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/viewed/", data: {}});
 	}
 
     // Register the controller

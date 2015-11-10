@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 namespace SB004.Domain
 {
+    public class UserLite: IUserLite
+    {
+        public string UserName { get; set; }
+
+        public string Id { get; set; }
+    }
     public class User: IUser
     {
         public User() 
         {
-            FollowingIds = new List<string>();
+            FollowingIds = new List<IUserLite>();
             FavouriteMemeIds = new List<string>();
         }
         public string UserName { get; set; }
@@ -18,7 +24,7 @@ namespace SB004.Domain
 
         public string Email { get; set; }
 
-        public List<string> FollowingIds { get; set; }
+        public List<IUserLite> FollowingIds { get; set; }
 
         public bool Active { get; set; }
 
@@ -31,5 +37,15 @@ namespace SB004.Domain
         public int Shares { get; set; }
         public int Views { get; set; }
         public int Reposted { get; set; }
+    }
+    public class Credentials : ICredentials
+    {
+        public string Id { get; set; }
+
+        public string Email{ get; set; }
+
+        public string Password { get; set; }
+        public string Salt { get; set; }
+
     }
 }

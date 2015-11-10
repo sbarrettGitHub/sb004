@@ -29,7 +29,7 @@
 			// or a standard page worth
 			var take = takeMemes ? takeMemes : constants.memeViewingBlockCount;
 			
-			$http.get('/api/Meme/byuser/' + userId + "?skip=" + skip + "&take=" + take).
+			$http.get('api/Meme/byuser/' + userId + "?skip=" + skip + "&take=" + take).
                 success(function (data) {
 					if(data.user){
 						$scope.user = data.user;
@@ -102,10 +102,8 @@
             $scope.waitingMessage = "";
         }
 		
-		securityService.isFollowing(userId)
-		.then(function(isFollowing){
-			$scope.isFollowing = isFollowing;
-		});
+		$scope.isFollowing = securityService.isFollowing(userId);
+		
 		refreshMemes();
     }
 

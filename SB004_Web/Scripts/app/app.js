@@ -7,13 +7,13 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
         });
         $routeProvider.
           when('/home', {
-              templateUrl: '/Scripts/app/views/home.html',
+              templateUrl: 'Scripts/app/views/home.html',
               controller: 'homeCtrl'
           }).when('/meme/:id', {
-              templateUrl: '/Scripts/app/views/memeView.html',
+              templateUrl: 'Scripts/app/views/memeView.html',
               controller: 'memeViewCtrl'
           }).when('/usermemes/:id', {
-              templateUrl: '/Scripts/app/views/userMemes.html',
+              templateUrl: 'Scripts/app/views/userMemes.html',
               controller: 'userMemesCtrl'
           }).when('/spawn/:id', {
               templateUrl: 'views/spawn.html',

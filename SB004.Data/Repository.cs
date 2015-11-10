@@ -19,7 +19,9 @@
         private readonly MongoCollection<Meme> memeCollection;
         private readonly MongoCollection<User> userCollection;
         private readonly MongoCollection<UserComment> userCommentCollection;
-        private readonly MongoCollection<Repost> reportCollection;
+        private readonly MongoCollection<Repost> repostCollection;
+        private readonly MongoCollection<Report> reportCollection;
+        private readonly MongoCollection<Credentials> userCredentialCollection;
         public Repository()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -35,8 +37,12 @@
             userCollection = database.GetCollection<User>("user");
 
             userCommentCollection = database.GetCollection<UserComment>("userComment");
+            
+            repostCollection = database.GetCollection<Repost>("reposted");
 
-            reportCollection = database.GetCollection<Repost>("reported");
+            reportCollection = database.GetCollection<Report>("reported");
+
+            userCredentialCollection = database.GetCollection<Credentials>("userCredential");
             try
             {
                 if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
@@ -272,7 +278,11 @@
             userCollection.Save(user.ToBsonDocument());
             return user;
         }
-
+        public ICredentials Save(ICredentials credentials)
+        {
+            userCredentialCollection.Save(credentials.ToBsonDocument());
+            return credentials;
+        }
         /// <summary>
         /// Retrieve the user by authentication provider user id and provider name
         /// </summary>

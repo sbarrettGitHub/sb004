@@ -1,29 +1,121 @@
 ﻿<div id="logIn">
     <div class="heading">
-        <h3>Log into SB004</h3>
+        <h3>Sign into SB004</h3>
         <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
         <p>
-            To continue please log in using the options below
+            To continue please sign in using the options below
         </p>
-        <div id="logInOptions">
-			<div class="logInButton logInButtonFacebook" ng-click="login('facebook')">
-				<div class="logInInner innerFaceBook" >
-					<div class="socialMediaText">Log In with Facebook</div>				
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='SignIn') }"
+				ng-click="switchView('SignIn')"
+				title="Sign In with your email and password">
+				<i class="fa fa-unlock"></i>
+				Sign In
+			</button>
+			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='SignUp') }"
+				ng-click="switchView('SignUp')"
+				title="Simple sign up ever. Takes seconds">
+				<i class="fa fa-pencil-square-o"></i>
+				Sign Up Now
+			</button>
+			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='SocialMedia') }"
+				ng-click="switchView('SocialMedia')"
+				title="No Sign up! No remembering more passwords. Just pick your favourite social media and sign in with that.">
+				<i class="fa fa-users"></i>
+				Social Media Sign In 
+			</button>
+		</div>
+	</div>		
+		<div class="signInMethods">
+			<div id="credentials" class="signInMethod" ng-show="view=='SignIn'">
+				<div class="form-group">
+					<label for="email">Email address:</label>
+					<input type="email" id="email" class="form-control" placeholder="Please enter your email address" 
+						ng-model="email" focus-on="SignIn">
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label>
+					<input type="password" id="password" class="form-control"ng-model="password">
 				</div>		
+				<div class="checkOption">					
+					<input type="checkbox" id="keepMeSignedIn" 
+						class=""ng-model="keepMeSignedIn"/>
+					<label for="keepMeSignedIn">Keep me signed in until I sign out</label>
+				</div>				
 			</div>
-			<div class="logInButton logInButtonTwitter">
-				<div class="logInInner innerTwitter" >
-					<div class="socialMediaText">Log In with Twitter</div>				
-				</div>		
-			</div>			
-			<div class="logInButton logInButtonGoogle">
-				<div class="logInInner innerGoogle" >
-					<div class="socialMediaText">Log In with Google</div>				
-				</div>		
-			</div>
-        </div>
+			<div id="signUp" class="signInMethod" ng-show="view=='SignUp'">
+				<div class="form-group" ng-class="{'has-error':submitted && !nameSignUp}">
+					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
+						<label for="name" class="control-label">* Name:</label>
+					</div>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6"><span class="pull-right help-block" ng-show="submitted && !nameSignUp">A name is required</span></div>
+					<input type="text" id="name" class="form-control" placeholder="Please enter your name"
+						ng-model="nameSignUp" focus-on="SignUp">
+					
+				</div>						
+				<div class="form-group" ng-class="{'has-error':submitted && !emailSignUp}">
+					<div class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
+						<label for="emailSignUp" class="control-label">* Email address:</label>
+					</div>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
+						<span class="pull-right help-block" ng-show="submitted && !emailSignUp">Valid email is required</span>
+					</div>
+					<input type="email" id="emailSignUp" class="form-control" placeholder="Please enter your email address" 
+						ng-model="emailSignUp">					
+				</div>
+				<div class="form-group" ng-class="{'has-error':submitted && !passwordSignUp}">
+					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
+						<label for="passwordSignUp" class="control-label">* Password:</label>
+					</div>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6 ">		
+						<span class="pull-right help-block" ng-show="submitted && !passwordSignUp">A password is required</span>
+					</div>
+					<input type="password" id="passwordSignUp"class="form-control" ng-model="passwordSignUp"/>					
+				</div>	
+				<div class="form-group" ng-class="{'has-error':submitted && passwordSignUp != confirmPasswordSignUp}">
+					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
+						<label for="confirmPasswordSignUp" class="control-label">* Confirm Password:</label>
+					</div>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">		
+						<span class="pull-right help-block" ng-show="submitted && passwordSignUp != confirmPasswordSignUp">
+						Passwords must match.</span>
+					</div>
+					<input type="password" id="confirmPasswordSignUp" class="form-control"ng-model="confirmPasswordSignUp">					
+				</div>	
+				<div class="checkOption">					
+					<input type="checkbox" id="termsAcceptedSignUp" 
+						class=""ng-model="termsAcceptedSignUp"/>
+					<label for="termsAcceptedSignUp">I accept the <a href="#">terms and conditions</a> of SB004</label>
+				</div>
+			</div>		
+			<div id="socialMediaOptions" class="signInMethod" ng-show="view=='SocialMedia'">
+				<div class="logInButton logInButtonFacebook" ng-click="login('facebook')">
+					<div class="logInInner innerFaceBook" >
+						<div class="socialMediaText">Sign In with Facebook</div>				
+					</div>		
+				</div>
+				<div class="logInButton logInButtonTwitter">
+					<div class="logInInner innerTwitter" >
+						<div class="socialMediaText">Sign In with Twitter</div>				
+					</div>		
+				</div>			
+				<div class="logInButton logInButtonGoogle">
+					<div class="logInInner innerGoogle" >
+						<div class="socialMediaText">Sign In with Google</div>				
+					</div>		
+				</div>
+				<div class="checkOption" id="keepMeSignedInSocialContainer">					
+					<input type="checkbox" id="keepMeSignedInSocial" 
+						class=""ng-model="keepMeSignedIn"/>
+					<label for="keepMeSignedInSocial">Keep me signed in until I sign out</label>
+				</div>				
+			</div>		
+		</div>
+		
         <div class="buttons">
+			<input type="button" value="Sign In" ng-show="view=='SignIn'" ng-click="SignIn()"/>
+			<input type="button" value="Sign Up" ng-show="view=='SignUp'" ng-click="signUp()"/>
             <input type="button" value="No Thanks" ng-click="closeMe()"/>
         </div>	
-    </div>
+  
 </div>

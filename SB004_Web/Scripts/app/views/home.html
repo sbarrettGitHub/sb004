@@ -1,26 +1,49 @@
 <div ng-controller="homeCtrl">
-  <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="container searchResultsContainer rounded col-md-12 col-sm-12">
-      <div class="quote addQuote panel" title="Click here to start a new Meme" ng-click="memeSelectConfirmImage()">
-        <div class="qContainer">
-          <div id="addQuote">Add</div>
-          <span class="glyphicon glyphicon-plus"></span>
-        </div>
-      </div>
-      <div class="quote panel" ng-repeat="quote in quotes" title="{{quote.title}}">
-        <div class="quoteHeader">
-          <span>{{quote.createdBy}}</span>
-          <div class="when">{{quote.dateCreated  | date:'longDate'}} (<span class="glyphicon glyphicon-heart" title="This meme has received {{quote.upVotes}} positive votes"></span> {{quote.votes}})</div> 
-        </div>
-        <img ng-src="/api/image/{{quote.id}}" alt="{{quote.title}}" ng-click="viewMeme(quote.id)"/>
-        <div class="quoteFooter">
-          <div class="options">
-            <span class="fa fa-retweet" title="Requote this! Add a new meme based on this one."></span>
-            <span class="glyphicon glyphicon-star" title="Add this meme to my favourites!"></span>
-            <span class="glyphicon glyphicon-heart" title="Click to love this meme"></span>
-          </div>
-        </div>
-      </div>
+
+	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="btn-group pull-left">
+			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='trending') }"
+				ng-click="switchView('trending')">
+				<i class="fa fa-thumbs-o-up"></i>
+				trending
+			</button>
+			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='following') }"
+				ng-click="switchView('following')">
+				<i class="fa fa-users"></i>
+				following 
+			</button>
+			
+		</div>
+		<div class="container pull-left" ng-show="view=='following'">
+			<button type="button" class="btn btn-default " >
+				<i class="fa fa-user"></i>
+				following 
+			</button>
+		</div>
+	</div>
+	
+    <div class="container searchResultsContainer rounded col-md-12 col-sm-12">	
+		<button type="button" class="pull-left" ng-click="addNew()">
+			<i class="fa fa-plus"></i>
+			Add
+		</button>
+		<div ng-repeat="meme in memes" class="pull-left">			
+			<div ng-memelink ng-model="meme" 
+							on-click="viewMeme(meme.id)" 
+							on-like="likeMeme(meme.id)"
+							on-dislike="dislikeMeme(meme.id)"
+							on-addtofavourites="addMemeToFavourites(meme.id)"
+							on-userclick="openUser(meme.createdByUserId)"></div>
+		</div>
     </div>
-  </div>
+  <!--
+  <div id="viewOptions">
+		<div id="byTrend"></div>
+		<div id="byfollowing"></div>
+	</div>
+	<div id="byfollowingView" class="container searchResultsContainer rounded col-md-12 col-sm-12">
+	</div>
+	<div id="byTrendView" class="container searchResultsContainer rounded col-md-12 col-sm-12">
+	</div>
+  -->
 </div>

@@ -18,13 +18,13 @@
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "/Scripts/app/views/logIn.html",
+            templateUrl: "Scripts/app/views/logIn.html",
             controller: "logInCtrl"
         });
 
         var connect = function (provider, acessToken) {
             var deferred = $q.defer();
-            $http.get('/api/Account/ObtainLocalAccessToken?provider=' + provider + '&externalAccessToken=' + acessToken).
+            $http.get('api/Account/ObtainLocalAccessToken?provider=' + provider + '&externalAccessToken=' + acessToken).
             success(function (data) {
 
                 currentUser.isAuthenticated = true;
@@ -53,37 +53,24 @@
             return deferred.promise;
         }
         var testStillLoggedIn = function () {
-            var deferred = $q.defer();
             var authData = localStorageService.get('authorizationData');
             if (authData) {
                 if (authData.userData) {
-					currentUser.isAuthenticated = authData.userData.isAuthenticated;
-                    currentUser.userName = authData.userData.userName;
-					currentUser.userId = authData.userData.userId
-					currentUser.accessToken = authData.userData.accessToken;
-					currentUser.provider = authData.userData.provider;
-					currentUser.thumbnail = authData.userData.thumbnail;
-                    $http.get('/api/Account/' + currentUser.userId).
-                    success(function (data) {
-                        currentUser.profile = data;
-                        deferred.resolve(data);
-                    }).
-                    error(function () {
-                        currentUser.isAuthenticated = false;
-                        currentUser.userName = "";
-                        currentUser.userId = "";
-                        currentUser.accessToken = "";
-                        currentUser.provider = "";
-                        currentUser.thumbnail = "";
-                        currentUser.profile = {};
-                        deferred.reject();
-                    });
+					currentUser = authData.userData                    
+					return true;
                 }
             } else {
-                deferred.reject();
+                currentUser.isAuthenticated = false;
+				currentUser.userName = "";
+				currentUser.userId = "";
+				currentUser.accessToken = "";
+				currentUser.provider = "";
+				currentUser.thumbnail = "";
+				currentUser.profile = {};
+				return false;
             }            
 
-            return deferred.promise;
+             
         }
         var logIn = function () {
             var deferred = $q.defer();
@@ -100,6 +87,16 @@
                 });
             return deferred.promise;
         }
+		var logOut = function(){
+			currentUser.isAuthenticated = false;
+			currentUser.userName = "";
+			currentUser.userId = "";
+			currentUser.accessToken = "";
+			currentUser.provider = "";
+			currentUser.thumbnail = "";
+			currentUser.profile = {};
+			localStorageService.set('authorizationData', null);
+		}
 		var follow = function(followId){
 			var deferred = $q.defer();
 			if(currentUser.isAuthenticated==false){
@@ -146,7 +143,7 @@
 		{
 			var deferred = $q.defer();
 			if(follow == true){
-				$http({ method: 'PATCH', url:'/api/Account/' + currentUser.userId + '/follow/' + followId, data: {}}).
+				$http({ method: 'PATCH', url:'api/Account/' + currentUser.userId + '/follow/' + followId, data: {}}).
 				success(function (data) {       
 					currentUser.profile = data;           
 					deferred.resolve(data);
@@ -155,7 +152,7 @@
 					deferred.reject();
 				});
 			}else{
-				$http({ method: 'PATCH', url:'/api/Account/' + currentUser.userId + '/unfollow/' + followId, data: {}}).
+				$http({ method: 'PATCH', url:'api/Account/' + currentUser.userId + '/unfollow/' + followId, data: {}}).
 				success(function (data) {       
 					currentUser.profile = data;           
 					deferred.resolve(data);
@@ -168,23 +165,21 @@
 		}
 		
 		var isFollowing = function(followId){
-			var deferred = $q.defer();
-			testStillLoggedIn()
-			.then(function(){
-				if(currentUser.isAuthenticated==false || !currentUser.profile || !currentUser.profile.followingIds){
-					deferred.resolve(false);
+
+			if(currentUser.isAuthenticated==false || !currentUser.profile || !currentUser.profile.followingIds){
+				return false;
+			}
+			for(var i=0;i<currentUser.profile.followingIds.length;i++){
+				if(currentUser.profile.followingIds[i] == followId){
+					return true;
 				}
-				for(var i=0;i<currentUser.profile.followingIds.length;i++){
-					if(currentUser.profile.followingIds[i] == followId){
-						deferred.resolve(true);
-					}
-				}
-				deferred.resolve(false);
-			});
-			return deferred.promise;
+			}
+			return false;
+			
 		}
         return {
             logIn:logIn,
+			logOut: logOut,
             connect: connect,
             testStillLoggedIn: testStillLoggedIn,
             currentUser: currentUser,

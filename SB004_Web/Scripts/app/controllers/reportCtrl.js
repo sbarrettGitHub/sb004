@@ -12,7 +12,7 @@
             dialog.close();
         };
 		$scope.report=function(){
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/report/", data: {objection:$scope.objection}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/report/", data: {objection:$scope.objection}})
 				.success(function (data) {  
 					dialog.close({action:"report"});
                 }).error(function (e) {
@@ -31,7 +31,7 @@
             $scope.waitingMessage = "";
         }
 		
-		$http.get('/api/Meme/Lite/' + memeId).
+		$http.get('api/Meme/Lite/' + memeId).
 			success(function (data) {
 				endWaiting();
 				if(data){

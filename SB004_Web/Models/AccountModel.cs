@@ -14,4 +14,10 @@ namespace SB004.Models
     public string app_id { get; set; }
     public string username { get; set; }
   }
+  public class NewAccount 
+  {
+      public string UserName { get; set; }
+      public string Email { get; set; }
+      public string Password { get; set; }
+  }
 }

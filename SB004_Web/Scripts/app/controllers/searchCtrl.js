@@ -21,7 +21,7 @@
 	var search = function () {
 		var deferred = $q.defer();
 		startWaiting();
-		$http.get('/api/Meme').
+		$http.get('api/Meme').
 			success(function (data) {
 				endWaiting();
 				deferred.resolve(data);
