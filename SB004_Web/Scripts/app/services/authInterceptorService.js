@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStorageService', function ($q, $injector,$location, localStorageService) {
+app.factory('authInterceptorService', ['$q', '$injector','$location', '$window', function ($q, $injector,$location, $window) {
 
     var authInterceptorServiceFactory = {};
 
@@ -7,9 +7,15 @@ app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStor
 
         config.headers = config.headers || {};
        
-        var authData = localStorageService.get('authorizationData');
+        var authData;
+		if( $window.Storage ){
+			var data = $window.sessionStorage.getItem( 'SB004.authorizationData' );
+			if(data){
+				authData = $window.JSON.parse(data);
+			}
+		}
         if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
+            config.headers.Authorization = 'Bearer ' + authData.token.access_token;
         }
 
         return config;

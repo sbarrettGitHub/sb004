@@ -32,7 +32,7 @@
             var memeImageData = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
 			$scope.memeData.imageData = memeImageData;
             // Save the meme
-            if (securityService.currentUser.isAuthenticated) {
+            if (securityService.getCurrentUser().isAuthenticated) {
                 saveMeme(memeImageData)
                     .then(function (id) {
 						$scope.memeData.id = id;

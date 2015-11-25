@@ -1,4 +1,4 @@
-var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalStorageModule'])
+var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello'])
     .config(function ($routeProvider, $httpProvider, helloProvider, $locationProvider) {
         helloProvider.init({
             facebook: 224433161069107,
@@ -48,9 +48,9 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'LocalS
 		  }
 		}
 	})
-	.run(function (securityService)
+	.run(function ()
     {
-        securityService.testStillLoggedIn();
+        // Do start up items here...
     }); 
 
 app.directive("ngFileSelect", function () {

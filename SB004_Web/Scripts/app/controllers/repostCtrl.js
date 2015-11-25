@@ -13,15 +13,15 @@
 		$scope.likeMeme = function(memeId)
 		{
 			// Don't allow multiple likes by the same user on the same meme
-			for(var i=0;i<securityService.currentUser.myMemeLikes.length;i++){
-				if(securityService.currentUser.myMemeLikes[i] == memeId){
+			for(var i=0;i<securityService.getCurrentUser().myMemeLikes.length;i++){
+				if(securityService.getCurrentUser().myMemeLikes[i] == memeId){
 					return;
 				}
 			}
 			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/like/", data: {}})
 				.success(function (data) { 
 					// Record that you like the selected meme
-					securityService.currentUser.myMemeLikes.push(data.id);					
+					securityService.getCurrentUser().myMemeLikes.push(data.id);					
 					// Increment the number of likes for the selected meme					
 					if($scope.meme){
 						if(!$scope.meme.likes){
@@ -38,14 +38,14 @@
 		$scope.dislikeMeme = function(memeId)
 		{
 			// Don't allow multiple dislikes by the same user on the same meme
-			for(var i=0;i<securityService.currentUser.myMemeDislikes.length;i++){
-				if(securityService.currentUser.myMemeDislikes[i] == memeId){
+			for(var i=0;i<securityService.getCurrentUser().myMemeDislikes.length;i++){
+				if(securityService.getCurrentUser().myMemeDislikes[i] == memeId){
 					return;
 				}
 			}
 			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/dislike/", data: {}})
 				.success(function (data) {  
-					securityService.currentUser.myMemeDislikes.push(data.id);
+					securityService.getCurrentUser().myMemeDislikes.push(data.id);
 					// Decrement the number of likes for the selected meme					
 					if($scope.meme){
 						if(!$scope.meme.dislikes){
@@ -59,7 +59,7 @@
                 });
 		}
 		$scope.repost=function(){
-			$http({ method: 'PATCH', url: '/api/meme/' + memeId + "/repost/", data: {}})
+			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/repost/", data: {}})
 				.success(function (data) {  
 					dialog.close({action:"repost"});
                 }).error(function (e) {

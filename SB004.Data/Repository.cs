@@ -69,6 +69,10 @@
                 {
                     BsonClassMap.RegisterClassMap<Report>();
                 }
+                if (!BsonClassMap.IsClassMapRegistered(typeof(UserLite)))
+                {
+                    BsonClassMap.RegisterClassMap<UserLite>();
+                }
             }
             catch (Exception)
             {
@@ -278,10 +282,30 @@
             userCollection.Save(user.ToBsonDocument());
             return user;
         }
+        /// <summary>
+        /// Save user credentials
+        /// </summary>
+        /// <param name="credentials"></param>
+        /// <returns></returns>
         public ICredentials Save(ICredentials credentials)
         {
             userCredentialCollection.Save(credentials.ToBsonDocument());
             return credentials;
+        }
+        /// <summary>
+        /// Retrieve the credentials for the given email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public ICredentials GetCredentials(string email) 
+        {
+            Credentials credentialsEntity = userCredentialCollection.FindOne(Query<Credentials>.EQ(e => e.Email, email));
+            if (credentialsEntity == null)
+            {
+                return null;
+            }
+
+            return credentialsEntity;                        
         }
         /// <summary>
         /// Retrieve the user by authentication provider user id and provider name
@@ -303,6 +327,7 @@
         {
             return userCollection.FindOne(Query<User>.EQ(e => e.Id, userId));
         }
+        
         #endregion
 
         #region User Comment

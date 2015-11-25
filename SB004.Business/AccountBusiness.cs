@@ -18,20 +18,44 @@ namespace SB004.Business
         }
         public IUser CreateNewUser(IUser newUser) 
         {
+            if (newUser.AuthenticationProvider == null && newUser.Email != null)
+            {
+                if (repository.GetCredentials(newUser.Email) != null) 
+                {
+                    throw new UserAlreadyRegisteredException();
+                }
+            }
             return repository.Save(newUser);
         }
-        public IUser CreateNewUserAccount(IUser newUser, ICredentials newUserCredentials)
+        public IUser SignUp(IUser newUser, ICredentials newUserCredentials)
         {
             // Save the user
-            newUser = repository.Save(newUser);
+            newUser = CreateNewUser(newUser);
 
             // Create a Hash and unique salt for the new password
-            string[] hashDetail = PasswordHash.PasswordHash.CreateHash(newUserCredentials.Password).Split(':');
-            newUserCredentials.Password = hashDetail[1];
-            newUserCredentials.Salt = hashDetail[2];
+            newUserCredentials.Password = PasswordHash.PasswordHash.CreateHash(newUserCredentials.Password);
             newUserCredentials.Id = newUser.Id;
-
+			
+			// Save the credentials
+			repository.Save(newUserCredentials);
+			
             return newUser;
+        }
+        /// <summary>
+        /// Validation the email and password. If valid return the appropriate user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public IUser SignIn(string email, string password)
+        {
+            ICredentials userCredentials = repository.GetCredentials(email);
+            if (userCredentials != null && PasswordHash.PasswordHash.ValidatePassword(password, userCredentials.Password))
+            {
+                return repository.GetUser(userCredentials.Id);
+            }
+
+            throw new InvalidEmailOrPasswordException();
         }
     }
 }

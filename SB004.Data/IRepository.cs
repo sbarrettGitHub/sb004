@@ -23,6 +23,8 @@
         IUser Save(IUser user);
 
         ICredentials Save(ICredentials credentials);
+        
+        ICredentials GetCredentials(string email);
 
         IUser GetUser(string authenticationUserId, string authenticationProvider);
         

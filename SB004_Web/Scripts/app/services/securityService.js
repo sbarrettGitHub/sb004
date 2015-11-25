@@ -1,6 +1,6 @@
 ﻿'use strict';
 (function () {
-    var securityService = function ($http, $q, localStorageService, $dialog) {
+    var securityService = function ($http, $q, $dialog, $window, $timeout) {
         var currentUser = {
             isAuthenticated: false,
             userName: "",
@@ -27,22 +27,7 @@
             $http.get('api/Account/ObtainLocalAccessToken?provider=' + provider + '&externalAccessToken=' + acessToken).
             success(function (data) {
 
-                currentUser.isAuthenticated = true;
-                currentUser.userId = data.token.userId;
-                currentUser.userName = data.token.userName;
-                currentUser.accessToken = data.token.access_token;
-                currentUser.profile = data.profile;
-                // Add bearer token to local storage for inclusion with future requests to the server
-                localStorageService.set('authorizationData',
-                    {
-                        token: data.token.access_token,
-                        userName: data.token.userName,
-                        userId: data.token.userId,
-                        refreshToken: "",
-                        useRefreshTokens: false,
-                        userData: currentUser
-                    });
-                
+                addUserProfileToStorage(data);               
 
                 deferred.resolve(data);
             }).
@@ -52,26 +37,41 @@
 
             return deferred.promise;
         }
-        var testStillLoggedIn = function () {
-            var authData = localStorageService.get('authorizationData');
-            if (authData) {
-                if (authData.userData) {
-					currentUser = authData.userData                    
-					return true;
-                }
-            } else {
-                currentUser.isAuthenticated = false;
-				currentUser.userName = "";
-				currentUser.userId = "";
-				currentUser.accessToken = "";
-				currentUser.provider = "";
-				currentUser.thumbnail = "";
-				currentUser.profile = {};
-				return false;
-            }            
-
-             
-        }
+		var testIsAuthenticated = function () {
+			var deferred = $q.defer();
+			var authData;
+			if( $window.Storage ){
+				if(getCurrentUser().isAuthenticated == true){
+					$timeout(function() {
+							deferred.resolve(true);
+					}, 100);
+				}else{
+					var data = $window.sessionStorage.getItem( 'SB004.authorizationData' );
+					if(data){
+						authData = $window.JSON.parse(data);
+						currentUser.isAuthenticated = true;
+						currentUser.userId = authData.token.userId;
+						currentUser.userName = authData.token.userName;
+						currentUser.accessToken = authData.token.access_token;
+						currentUser.profile = authData.userData.profile;	
+						$timeout(function() {
+							deferred.resolve(true);
+						}, 100);
+												
+					}else{
+						$timeout(function() {
+							deferred.resolve(false);
+						}, 100);
+					}
+				}	
+			}else{
+				$timeout(function() {
+					deferred.resolve(false);
+				}, 100);
+			}
+			return deferred.promise;
+		}
+		
         var logIn = function () {
             var deferred = $q.defer();
             loginDialog.open()
@@ -87,6 +87,69 @@
                 });
             return deferred.promise;
         }
+		
+		function addUserProfileToStorage(data){
+			currentUser.isAuthenticated = true;
+			currentUser.userId = data.token.userId;
+			currentUser.userName = data.token.userName;
+			currentUser.accessToken = data.token.access_token;
+			currentUser.profile = data.profile;
+			
+			// Add bearer token to session storage for inclusion with future requests to the server
+			try{
+				if( $window.Storage ){
+					$window.sessionStorage.setItem( 'SB004.authorizationData', $window.JSON.stringify({
+						token: data.token,
+						refreshToken: "",
+						useRefreshTokens: false,
+						userData: currentUser
+					}));
+				} 
+			}catch( error ){
+			  $window.alert(error.message );
+			}			
+		}
+		var signUp = function(userName, email, password){
+			var deferred = $q.defer();
+			$http( { 
+					method: 'POST', 
+					url: 'api/account/RegisterNewUser', 
+					data: {
+							userName:userName,
+							email:email,
+							password:password
+					}
+				})
+			.success(function (data) {
+                addUserProfileToStorage(data)
+                deferred.resolve();
+            }).
+            error(function () {
+                deferred.reject();
+            });
+
+            return deferred.promise;
+		}
+		var signIn = function(email, password){
+			var deferred = $q.defer();
+			$http( { 
+					method: 'POST', 
+					url: 'api/account/SignIn', 
+					data: {
+							email:email,
+							password:password
+					}
+				})
+			.success(function (data) {
+                addUserProfileToStorage(data)
+                deferred.resolve();
+            }).
+            error(function (e) {
+                deferred.reject(e);
+            });
+
+            return deferred.promise;
+		}		
 		var logOut = function(){
 			currentUser.isAuthenticated = false;
 			currentUser.userName = "";
@@ -170,27 +233,33 @@
 				return false;
 			}
 			for(var i=0;i<currentUser.profile.followingIds.length;i++){
-				if(currentUser.profile.followingIds[i] == followId){
+				if(currentUser.profile.followingIds[i].id == followId){
 					return true;
 				}
 			}
 			return false;
 			
 		}
+		var getCurrentUser = function(){
+			return currentUser;
+		}
         return {
             logIn:logIn,
 			logOut: logOut,
+			signIn:signIn,
+			signUp: signUp,
             connect: connect,
-            testStillLoggedIn: testStillLoggedIn,
             currentUser: currentUser,
+			getCurrentUser: getCurrentUser,
 			follow:follow,
 			unfollow: unfollow,
-			isFollowing: isFollowing
+			isFollowing: isFollowing,
+			testIsAuthenticated:testIsAuthenticated
         }
     }
 
 
     // Register the service
-    app.factory('securityService', ['$http', '$q', 'localStorageService','$dialog', securityService]);
+    app.factory('securityService', ['$http', '$q', '$dialog', '$window','$timeout', securityService]);
 
 })();

@@ -6,7 +6,8 @@
         $scope.searchTerm = "";
         $scope.searchCategory = "";
 		$scope.view = "trending";
-        
+        $scope.following = [];
+		$scope.viewing = [];
         $scope.addNew = function () {
 			
 			dialogsViewBegin();
@@ -47,14 +48,14 @@
 		$scope.switchView = function(view)
 		{
 			if(view=="following"){
-				if (securityService.currentUser.isAuthenticated) {
+				if (securityService.getCurrentUser().isAuthenticated) {
 					$scope.view = "following";
-					alert("show following");
+					showFollowing();
 				} else {					
 					securityService.logIn()
 					.then(function () {
 						$scope.view = "following";
-						alert("show following");
+						showFollowing();
 					});                
 				}
 			}else{
@@ -62,12 +63,29 @@
 			}
 			
 		}
+		function showFollowing(){
+			var f = securityService.getCurrentUser().profile.followingIds;
+			$scope.following = [];
+			for(var i=0;i<f.length;i++){
+				$scope.following.push({id:f[i].id, userName:f[i].userName,selected:true});
+			}
+		}
 		function dialogsViewBegin(){
 			angular.element("#view").addClass("blurry");
 		}
 		function allDialogsComplete(){
 			angular.element("#view").removeClass("blurry");			
 		}
+		
+		// Swap between trending or following depending on if the user is authenticated and previous choices
+		securityService.testIsAuthenticated()
+		.then(function(isAuthenticated){
+			if(isAuthenticated===true){
+				$scope.switchView("following");
+			}else{
+				$scope.switchView("trending");
+			}
+		});		
     }
 
     // Register the controller

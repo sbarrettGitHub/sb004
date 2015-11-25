@@ -5,6 +5,7 @@ namespace SB004.Business
     public interface IAccountBusiness
     {
         IUser CreateNewUser(IUser newUser);
-        IUser CreateNewUserAccount(IUser newUser, ICredentials newUserCredentials);
+        IUser SignUp(IUser newUser, ICredentials newUserCredentials);
+        IUser SignIn(string email, string password);
     }
 }

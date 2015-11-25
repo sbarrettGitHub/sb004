@@ -18,13 +18,13 @@
 				return;
 			}
 			startWaiting();
-			$http({ method: 'DELETE', url: '/api/meme/' + memeId + "/favourite/", data: {}})
+			$http({ method: 'DELETE', url: 'api/meme/' + memeId + "/favourite/", data: {}})
 				.success(function (data) { 
 					// Remove from the current user profile favourites (saves reloading)
-					if(securityService.currentUser.profile.favouriteMemeIds){
-						for(var i=securityService.currentUser.profile.favouriteMemeIds.length-1;i>0;i--){
-							if(securityService.currentUser.profile.favouriteMemeIds[i] === memeId){ 
-								securityService.currentUser.profile.favouriteMemeIds.splice(i,1);								
+					if(securityService.getCurrentUser().profile.favouriteMemeIds){
+						for(var i=securityService.getCurrentUser().profile.favouriteMemeIds.length-1;i>0;i--){
+							if(securityService.getCurrentUser().profile.favouriteMemeIds[i] === memeId){ 
+								securityService.getCurrentUser().profile.favouriteMemeIds.splice(i,1);								
 							}
 						}
 						refresh();
@@ -39,12 +39,12 @@
 			dialog.close(memeId);
 		};
 		var refresh = function(){
-			if(securityService.currentUser.profile)
+			if(securityService.getCurrentUser().profile)
 			{
-				if(securityService.currentUser.profile.favouriteMemeIds){
+				if(securityService.getCurrentUser().profile.favouriteMemeIds){
 					$scope.favourites = [];
-					for(var i=securityService.currentUser.profile.favouriteMemeIds.length-1;i>0;i--){
-						$scope.favourites.push(securityService.currentUser.profile.favouriteMemeIds[i]);
+					for(var i=securityService.getCurrentUser().profile.favouriteMemeIds.length-1;i>0;i--){
+						$scope.favourites.push(securityService.getCurrentUser().profile.favouriteMemeIds[i]);
 					}
 				}
 			}

@@ -8,7 +8,7 @@
 				   // Hold the quotes in shared data 
 				  sharedDataService.data.quoteSearch.results = quotes;
 				  
-				  /// Search is complete
+				  // Search is complete
 				  $rootScope.$broadcast('quoteSearch.complete',quotes);
 				  
 				  // redirect to home

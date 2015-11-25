@@ -75,7 +75,7 @@ namespace SB004.Controllers
                     }
                     
                     // Remove the id if is already there, because it is being added to the front
-                    profile.FollowingIds.RemoveAll(x=>x.Id == id);
+                    profile.FollowingIds.RemoveAll(x => x.Id == followedId);
 
                     // Insert at the beginning
                     IUser followed = repository.GetUser(id);
@@ -136,9 +136,9 @@ namespace SB004.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("RegisterNewUser")]
-        public IHttpActionResult RegisterNewUser(NewAccount newAccount)
+        public IHttpActionResult RegisterNewUser(NewAccountModel newAccount)
         {
-            IUser newUser = accountBusiness.CreateNewUserAccount(new User
+            IUser newUser = accountBusiness.SignUp(new User
             {
                 UserName = newAccount.UserName,
                 Email = newAccount.Email
@@ -148,7 +148,35 @@ namespace SB004.Controllers
                 Email = newAccount.Email,
                 Password = newAccount.Password
             });
-            return Ok(new { user = newUser }); 
+            //generate access token response
+            var accessTokenResponse = GenerateLocalAccessTokenResponse(newUser);
+
+            // Return success with the bearer token for authorized access
+            return Ok(new { token = accessTokenResponse, profile = newUser });
+
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("SignIn")]
+        public IHttpActionResult SignIn(SignInModel credentials)
+        {
+            try
+            {
+                // Validate credentials and return user
+                IUser user = accountBusiness.SignIn(credentials.Email, credentials.Password);
+
+                //generate access token response
+                var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
+
+                // Return success with the bearer token for authorized access
+                return Ok(new { token = accessTokenResponse, profile = user });
+            }
+            catch (InvalidEmailOrPasswordException) 
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
+
+            
 
         }
         [AllowAnonymous]

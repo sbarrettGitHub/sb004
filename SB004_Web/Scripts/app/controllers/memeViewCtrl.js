@@ -17,7 +17,7 @@
 		$scope.allowGetMoreComments = true;
 		$scope.isUserFavourite = false;
 		var userCommentsIndex = 0;
-		$scope.userName = securityService.currentUser.isAuthenticated ? securityService.currentUser.userName:"Anonymous";
+		$scope.userName = securityService.getCurrentUser().isAuthenticated ? securityService.getCurrentUser().userName:"Anonymous";
 		$scope.url = $location.absUrl();
 		var memeId = $routeParams.id;
 		var constants = {
@@ -71,7 +71,7 @@
          
         };
 		$scope.respondFromFavourites = function () {
-			if(securityService.currentUser.isAuthenticated==false){
+			if(securityService.getCurrentUser().isAuthenticated==false){
 				// Log in
 				securityService.logIn()
 					.then(function(){
@@ -131,7 +131,7 @@
 		// Favourites		
 		$scope.addMemeToFavourites = function(memeId)
 		{			
-			if(securityService.currentUser.isAuthenticated==false){
+			if(securityService.getCurrentUser().isAuthenticated==false){
 				securityService.logIn()
 					.then(function(){
 						addToFavourites(memeId);
@@ -156,8 +156,8 @@
 			$http({ method: 'PATCH', url: 'api/meme/' + memeId + "/favourite/", data: {}})
 				.success(function (data) {  
 					$scope.meme.favourites++;	
-					if(securityService.currentUser.profile.favouriteMemeIds){
-						securityService.currentUser.profile.favouriteMemeIds.push($scope.meme.id);
+					if(securityService.getCurrentUser().profile.favouriteMemeIds){
+						securityService.getCurrentUser().profile.favouriteMemeIds.push($scope.meme.id);
 						$scope.isUserFavourite = true;
 					}
 					if(confirm("This has been added to your favourites! Would you like to open your favourite list now?")){
@@ -176,10 +176,10 @@
 			return deferred.promise;			
 		};
 		var isUserFavourite= function(memeId){
-			if(securityService.currentUser.profile)
+			if(securityService.getCurrentUser().profile)
 			{
-				if(securityService.currentUser.profile.favouriteMemeIds){
-					return (securityService.currentUser.profile.favouriteMemeIds.indexOf(memeId) > -1);
+				if(securityService.getCurrentUser().profile.favouriteMemeIds){
+					return (securityService.getCurrentUser().profile.favouriteMemeIds.indexOf(memeId) > -1);
 				}
 			}
 			return false;
@@ -187,7 +187,7 @@
 		// -------------------------------------------------------------------
 		// Repost
 		$scope.repostMeme = function(memeId){
-			if(securityService.currentUser.isAuthenticated==false){
+			if(securityService.getCurrentUser().isAuthenticated==false){
 				securityService.logIn()
 					.then(function(){
 						repost(memeId);
@@ -263,15 +263,15 @@
 		$scope.likeComment = function(commentId)
 		{
 			// Don't allow multiple likes by the same user on the same comment
-			for(var i=0;i<securityService.currentUser.myCommentLikes.length;i++){
-				if(securityService.currentUser.myCommentLikes[i] == commentId){
+			for(var i=0;i<securityService.getCurrentUser().myCommentLikes.length;i++){
+				if(securityService.getCurrentUser().myCommentLikes[i] == commentId){
 					return;
 				}
 			}
 			$http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/like/", data: {}})
 				.success(function (data) {  
 					updateComment(data);
-					securityService.currentUser.myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
+					securityService.getCurrentUser().myCommentLikes.push(data.id);// Remember that you like this comment (so you can keep clicking like)
                 }).error(function (e) {
 					$window.alert(e);
 					return;
@@ -280,15 +280,15 @@
 		$scope.dislikeComment = function(commentId)
 		{
 			// Don't allow multiple dislikes by the same user on the same comment
-			for(var i=0;i<securityService.currentUser.myCommentDislikes.length;i++){
-				if(securityService.currentUser.myCommentDislikes[i] == commentId){
+			for(var i=0;i<securityService.getCurrentUser().myCommentDislikes.length;i++){
+				if(securityService.getCurrentUser().myCommentDislikes[i] == commentId){
 					return;
 				}
 			}
 			 $http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/dislike/" , data: {}})
 				.success(function (data) {  
 					updateComment(data);
-					securityService.currentUser.myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
+					securityService.getCurrentUser().myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can keep clicking dislike)			
                 }).error(function (e) {
 					$window.alert(e);
 					return;
@@ -315,7 +315,7 @@
 		// -------------------------------------------------------------------
 		// Report
 		$scope.reportMeme = function(memeId){
-			if(securityService.currentUser.isAuthenticated==false){
+			if(securityService.getCurrentUser().isAuthenticated==false){
 				securityService.logIn()
 					.then(function(){
 						report(memeId);

@@ -18,8 +18,8 @@
 #logIn .help-block{
     margin-bottom:0 !important;
 }
-#logIn .checkOption{
-    margin-top:-15px;
+#logIn #termsAcceptedSignUpContainer{
+    margin-top:-10px;
 }
 #logIn .checkOption label{
     font-weight:normal;

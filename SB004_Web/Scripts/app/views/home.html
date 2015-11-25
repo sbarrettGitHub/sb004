@@ -14,14 +14,17 @@
 			</button>
 			
 		</div>
-		<div class="container pull-left" ng-show="view=='following'">
-			<button type="button" class="btn btn-default " >
+		
+	</div>
+	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="pull-left" ng-repeat="user in following" ng-show="view=='following'">
+			<button type="button" class="btn btn-default followUser rounded">
 				<i class="fa fa-user"></i>
-				following 
+				<div>{{user.userName}} </div>
+				<div><input type="checkbox" ng-model="user.selected"/></div>
 			</button>
 		</div>
 	</div>
-	
     <div class="container searchResultsContainer rounded col-md-12 col-sm-12">	
 		<button type="button" class="pull-left" ng-click="addNew()">
 			<i class="fa fa-plus"></i>

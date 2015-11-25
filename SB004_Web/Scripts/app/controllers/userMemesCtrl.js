@@ -102,9 +102,16 @@
             $scope.waitingMessage = "";
         }
 		
-		$scope.isFollowing = securityService.isFollowing(userId);
+		securityService.testIsAuthenticated()
+		.then(function(isAuthenticated){
+			if(isAuthenticated===true){
+				// If signed in then check if the current user follows the selected user
+				$scope.isFollowing = securityService.isFollowing(userId);
+			}
+			// Refresh the users memes
+			refreshMemes();
+		});
 		
-		refreshMemes();
     }
 
     // Register the controller

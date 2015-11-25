@@ -15,8 +15,6 @@ namespace SB004.Domain
 
         // Store as hash
         string Password { get; set; }
-
-        string Salt { get; set; }
     }
     public interface IUser
     {

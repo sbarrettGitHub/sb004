@@ -3,24 +3,24 @@
         <h3>Sign into SB004</h3>
         <div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
         <p>
-            To continue please sign in using the options below
+            To continue please sign in with one of the options below
         </p>
 		<div class="btn-group">
 			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='SignIn') }"
 				ng-click="switchView('SignIn')"
-				title="Sign In with your email and password">
+				title="Click here to sign in with your email and password">
 				<i class="fa fa-unlock"></i>
 				Sign In
-			</button>
+			</button>			
 			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='SignUp') }"
 				ng-click="switchView('SignUp')"
-				title="Simple sign up ever. Takes seconds">
+				title="Click here to sign up. It only takes a seconds">
 				<i class="fa fa-pencil-square-o"></i>
 				Sign Up Now
 			</button>
 			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='SocialMedia') }"
 				ng-click="switchView('SocialMedia')"
-				title="No Sign up! No remembering more passwords. Just pick your favourite social media and sign in with that.">
+				title="No Sign up needed! Click here to pick your favourite social media and sign in with that.">
 				<i class="fa fa-users"></i>
 				Social Media Sign In 
 			</button>
@@ -28,64 +28,105 @@
 	</div>		
 		<div class="signInMethods">
 			<div id="credentials" class="signInMethod" ng-show="view=='SignIn'">
-				<div class="form-group">
-					<label for="email">Email address:</label>
+				<div class="form-group" ng-class="{'has-error':submitted && !email}">
+					<label for="email" class="control-label">
+						* Email address:
+					</label>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
+						<span class="pull-right help-block" ng-show="submitted && !email">Valid email is required</span>
+					</div>					
 					<input type="email" id="email" class="form-control" placeholder="Please enter your email address" 
 						ng-model="email" focus-on="SignIn">
 				</div>
-				<div class="form-group">
-					<label for="password">Password:</label>
+				<div class="form-group" ng-class="{'has-error':submitted && !password}">
+					<label for="password" class="control-label">
+						* Password:
+					</label>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
+						<span class="pull-right help-block" ng-show="submitted && !password">Password is required</span>
+					</div>
 					<input type="password" id="password" class="form-control"ng-model="password">
-				</div>		
-				<div class="checkOption">					
-					<input type="checkbox" id="keepMeSignedIn" 
-						class=""ng-model="keepMeSignedIn"/>
-					<label for="keepMeSignedIn">Keep me signed in until I sign out</label>
-				</div>				
+					<div class="has-error" ng-show="submitted && submitError">
+						<strong class=" help-block" >{{submitError}}</strong>
+					</div>						
+					<div class="pull-right">
+						<a href="javascript:void(0);" ng-click="switchView('ForgotPassword')">
+							Forgot password?
+						</a>
+					</div>
+				</div>			
+			</div>
+			<div id="forgotPassword" class="signInMethod" ng-show="view=='ForgotPassword'">
+				<label class="text-center">
+					Enter your email address here and we will mail you a reset password link
+				</label>
+				<div class="form-group" ng-class="{'has-error':submitted && !email}">
+					<br/>
+					<label for="email" class="control-label">
+						* Email address:
+					</label>
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
+						<span class="pull-right help-block" ng-show="submitted && !email">Valid email is required</span>
+					</div>
+					<input type="email" id="email" class="form-control" placeholder="Please enter your email address" 
+						ng-model="email" focus-on="ForgotPassword">
+					<div class="pull-right">
+						<a href="javascript:void(0);" ng-click="switchView('SignIn')">
+							Back to Sign In
+						</a>
+					</div>
+				</div>												
 			</div>
 			<div id="signUp" class="signInMethod" ng-show="view=='SignUp'">
-				<div class="form-group" ng-class="{'has-error':submitted && !nameSignUp}">
-					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
-						<label for="name" class="control-label">* Name:</label>
+				<div class="form-group" ng-class="{'has-error':submitted && !nameSignUp}">					
+					<label for="name" class="control-label">
+						* Name:
+					</label>					
+					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
+						<span class="pull-right help-block" ng-show="submitted && !nameSignUp">A name is required</span>
 					</div>
-					<div class="pull-right col-lg-6 col-md-6 col-sm-6"><span class="pull-right help-block" ng-show="submitted && !nameSignUp">A name is required</span></div>
 					<input type="text" id="name" class="form-control" placeholder="Please enter your name"
 						ng-model="nameSignUp" focus-on="SignUp">
 					
 				</div>						
 				<div class="form-group" ng-class="{'has-error':submitted && !emailSignUp}">
-					<div class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
-						<label for="emailSignUp" class="control-label">* Email address:</label>
-					</div>
+					<label for="emailSignUp" class="control-label">
+						* Email address:
+					</label>					
 					<div class="pull-right col-lg-6 col-md-6 col-sm-6">
 						<span class="pull-right help-block" ng-show="submitted && !emailSignUp">Valid email is required</span>
 					</div>
 					<input type="email" id="emailSignUp" class="form-control" placeholder="Please enter your email address" 
 						ng-model="emailSignUp">					
 				</div>
-				<div class="form-group" ng-class="{'has-error':submitted && !passwordSignUp}">
-					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
-						<label for="passwordSignUp" class="control-label">* Password:</label>
-					</div>
-					<div class="pull-right col-lg-6 col-md-6 col-sm-6 ">		
+				<div class="form-group" ng-class="{'has-error':submitted && (!passwordSignUp || passwordTooWeak())}">
+					<label for="passwordSignUp" class="control-label">
+						* Password:
+					</label>
+					<div class="pull-right col-lg-9 col-md-9 col-sm-9 ">		
 						<span class="pull-right help-block" ng-show="submitted && !passwordSignUp">A password is required</span>
+						<span class="pull-right help-block" ng-show="submitted && passwordTooShort()">Too short (at least 6)</span>
+						<span class="pull-right help-block" ng-show="submitted && passwordNeedsOneDigit()">Must have at least 1 number</span>
 					</div>
-					<input type="password" id="passwordSignUp"class="form-control" ng-model="passwordSignUp"/>					
+					<input type="password" id="passwordSignUp"class="form-control" ng-model="passwordSignUp" title="Password must be at least 6 characters long and contain at least one number and one letter!"/>					
 				</div>	
 				<div class="form-group" ng-class="{'has-error':submitted && passwordSignUp != confirmPasswordSignUp}">
-					<div  class="pull-left col-lg-6 col-md-6 col-sm-6 fieldLabel"> 
-						<label for="confirmPasswordSignUp" class="control-label">* Confirm Password:</label>
-					</div>
+					<label for="confirmPasswordSignUp" class="control-label">
+						* Confirm Password:
+					</label>
 					<div class="pull-right col-lg-6 col-md-6 col-sm-6">		
 						<span class="pull-right help-block" ng-show="submitted && passwordSignUp != confirmPasswordSignUp">
 						Passwords must match.</span>
 					</div>
 					<input type="password" id="confirmPasswordSignUp" class="form-control"ng-model="confirmPasswordSignUp">					
 				</div>	
-				<div class="checkOption">					
+				<div id="termsAcceptedSignUpContainer" class="checkOption" 
+						ng-class="{'has-error':submitted && !termsAcceptedSignUp}">					
 					<input type="checkbox" id="termsAcceptedSignUp" 
-						class=""ng-model="termsAcceptedSignUp"/>
-					<label for="termsAcceptedSignUp">I accept the <a href="#">terms and conditions</a> of SB004</label>
+						ng-model="termsAcceptedSignUp"/>
+					<label for="termsAcceptedSignUp" class="control-label">
+						I accept the <a href="termsAndConditions.html" target="_blank">terms and conditions</a> of SB004
+					</label>
 				</div>
 			</div>		
 			<div id="socialMediaOptions" class="signInMethod" ng-show="view=='SocialMedia'">
@@ -103,18 +144,16 @@
 					<div class="logInInner innerGoogle" >
 						<div class="socialMediaText">Sign In with Google</div>				
 					</div>		
-				</div>
-				<div class="checkOption" id="keepMeSignedInSocialContainer">					
-					<input type="checkbox" id="keepMeSignedInSocial" 
-						class=""ng-model="keepMeSignedIn"/>
-					<label for="keepMeSignedInSocial">Keep me signed in until I sign out</label>
-				</div>				
+				</div>			
 			</div>		
 		</div>
 		
         <div class="buttons">
-			<input type="button" value="Sign In" ng-show="view=='SignIn'" ng-click="SignIn()"/>
-			<input type="button" value="Sign Up" ng-show="view=='SignUp'" ng-click="signUp()"/>
+			<input type="button" value="Sign In" ng-show="view=='SignIn'" ng-click="signIn()"/>
+			<input type="button" value="Sign Up" ng-show="view=='SignUp'" ng-click="signUp()" 
+				title="To sign up please first read and accept our terms and conditions."
+				ng-disabled="!termsAcceptedSignUp"/>
+			<input type="button" value="Reset Passord" ng-show="view=='ForgotPassword'" ng-click="resetPassword()"/>
             <input type="button" value="No Thanks" ng-click="closeMe()"/>
         </div>	
   
