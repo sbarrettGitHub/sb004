@@ -17,11 +17,11 @@
 		
 	</div>
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="pull-left" ng-repeat="user in following" ng-show="view=='following'">
-			<button type="button" class="btn btn-default followUser rounded">
+		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
+			<button type="button" class="btn btn-default ">
 				<i class="fa fa-user"></i>
-				<div>{{user.userName}} </div>
-				<div><input type="checkbox" ng-model="user.selected"/></div>
+				{{user.userName}} 
+				<input type="checkbox" ng-model="user.selected"/>
 			</button>
 		</div>
 	</div>

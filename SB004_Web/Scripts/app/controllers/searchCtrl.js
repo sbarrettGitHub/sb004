@@ -1,7 +1,9 @@
 'use strict';
 (function() {
 
-  var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService ) {
+  var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService ) {
+	$scope.userName = "";
+	$scope.isAuthenticated = false;
     $scope.search = function() {
       $rootScope.$broadcast('quoteSearch.begin', null);
 	  search().then(function (quotes) {
@@ -38,8 +40,26 @@
 	function endWaiting(){
 
 	}
+
+	function testAuthentication(){
+		// Test if the user is signed in
+		securityService.testIsAuthenticated()
+		.then(function(isAuthenticated){
+			$scope.isAuthenticated = isAuthenticated;
+			if(isAuthenticated===true){
+				$scope.userName = securityService.getCurrentUser().userName;
+			}
+		});	
+	}
+	// Set up the context when the user logs in
+	$rootScope.$on('account.signIn', function (event, data) {
+		testAuthentication();
+	});
+	
+	// Test if the user is signed in
+	testAuthentication();
   }
   // Register the controller
-  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","sharedDataService", searchCtrl]);
+  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","sharedDataService", "securityService", searchCtrl]);
 
 })();

@@ -1,6 +1,6 @@
 ﻿'use strict';
 (function () {
-    var securityService = function ($http, $q, $dialog, $window, $timeout) {
+    var securityService = function ($http, $q, $dialog, $window, $timeout, $rootScope) {
         var currentUser = {
             isAuthenticated: false,
             userName: "",
@@ -104,6 +104,9 @@
 						useRefreshTokens: false,
 						userData: currentUser
 					}));
+					
+					// Broadcast that the user has signed in
+					$rootScope.$broadcast('account.signIn', null);
 				} 
 			}catch( error ){
 			  $window.alert(error.message );
@@ -260,6 +263,6 @@
 
 
     // Register the service
-    app.factory('securityService', ['$http', '$q', '$dialog', '$window','$timeout', securityService]);
+    app.factory('securityService', ['$http', '$q', '$dialog', '$window','$timeout',"$rootScope", securityService]);
 
 })();

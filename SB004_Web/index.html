@@ -14,43 +14,45 @@
 <body>
   <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-controller="searchCtrl">
     <form class="search" role="search">
-      <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		
-        <input type="text" class="form-control" placeholder="Search for meme" name="srch-term" id="srch-term">
-        <div class="input-group-btn">
-			<div class="btn-group">
-				<button type="button" class="btn btn-default " ng-click="search()">
-				  <span class="glyphicon glyphicon-search"></span> 
-				</button>			 
-			</div>
-			<button type="button" class="btn btn-default " data-toggle="collapse" data-target="#categories" >
-			  <span class="fa fa-bars"></span>
-			</button>		  
+	<div class="row">
+		<div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" class="form-control" placeholder="Search for meme" name="srch-term" id="srch-term" />
+                <div class="input-group-btn">
+					<button type="button" class="btn btn-default " ng-click="search()">
+						<span class="fa fa-search"></span> 
+					</button>
+                    <div class="btn-group" role="group">
+
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<span>{{userName}}</span>
+								<span class="fa fa-bars"></span>
+							</button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form class="form-horizontal" role="form">
+									<div class="form-group" ng-show="isAuthenticated">
+										<div class="contextOption">Action</div>
+										<div class="contextOption">Another action</div>
+										<div class="contextOption">Sign Out</div>
+									</div>  
+									<div class="form-group" ng-show="!isAuthenticated">
+										<div class="contextOption"><a href="#">Sign In</a></div>
+										<div class="contextOption"><a href="#">Sign up now</a></div>
+										<div class="contextOption"><a href="#">Social Media Sign In</a></div>
+									</div> 								  
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="collapse  navbar navbar-default" id="categories">
-        <ul class="nav navbar-nav">
-          <li><a href="#">Most Popular &nbsp;<span class="glyphicon glyphicon-star"></span></a>
-          </li>
-          <li><a href="#">Most Recent &nbsp;<span class="glyphicon glyphicon-calendar"></span></a>
-          </li>
-          <li><a href="#">Funny</a>
-          </li>
-          <li><a href="#">Thoughtful</a>
-          </li>
-          <li><a href="#">Inspirational</a>
-          </li>
-          <li><a href="#">Loving</a>
-          </li>
-          <li>
-            <a href="#"></a>
-          </li>
-          <li>
-            <a href="#"></a>
-          </li>
-        </ul>
-      </div>
-    </form>
+
+</div>	  
+</form>
   </div>
     <div id="view" ng-view=""></div>
     <script data-require="jquery@*" data-semver="2.1.1" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
