@@ -4,6 +4,8 @@
   var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService ) {
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
+	
+	/*---------------------------------------------------------*/
     $scope.search = function() {
       $rootScope.$broadcast('quoteSearch.begin', null);
 	  search().then(function (quotes) {
@@ -34,6 +36,14 @@
 			});
 		return deferred.promise;
 	};
+	/*---------------------------------------------------------*/
+	$scope.signOut = function(){
+		securityService.signOut();
+	}
+	$scope.signIn = function(){
+		securityService.logIn();
+	}
+	/*---------------------------------------------------------*/
 	function startWaiting(){
 
 	}

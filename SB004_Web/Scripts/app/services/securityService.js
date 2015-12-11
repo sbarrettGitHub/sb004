@@ -153,7 +153,7 @@
 
             return deferred.promise;
 		}		
-		var logOut = function(){
+		var signOut = function(){
 			currentUser.isAuthenticated = false;
 			currentUser.userName = "";
 			currentUser.userId = "";
@@ -161,7 +161,18 @@
 			currentUser.provider = "";
 			currentUser.thumbnail = "";
 			currentUser.profile = {};
-			localStorageService.set('authorizationData', null);
+
+			// Remove bearer token from session storage 
+			try{
+				if( $window.Storage ){
+					$window.sessionStorage.removeItem( 'SB004.authorizationData');
+					
+					// Broadcast that the user has signed out
+					$rootScope.$broadcast('account.signOut', null);
+				} 
+			}catch( error ){
+			  $window.alert(error.message );
+			}	
 		}
 		var follow = function(followId){
 			var deferred = $q.defer();
@@ -247,10 +258,10 @@
 			return currentUser;
 		}
         return {
-            logIn:logIn,
-			logOut: logOut,
+            logIn:logIn,			
 			signIn:signIn,
 			signUp: signUp,
+			signOut: signOut,
             connect: connect,
             currentUser: currentUser,
 			getCurrentUser: getCurrentUser,
