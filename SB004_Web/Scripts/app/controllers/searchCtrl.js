@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; 
 (function() {
 
   var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService ) {
@@ -46,16 +46,17 @@
 		securityService.testIsAuthenticated()
 		.then(function(isAuthenticated){
 			$scope.isAuthenticated = isAuthenticated;
-			if(isAuthenticated===true){
-				$scope.userName = securityService.getCurrentUser().userName;
-			}
+			$scope.userName = securityService.getCurrentUser().userName
 		});	
 	}
 	// Set up the context when the user logs in
 	$rootScope.$on('account.signIn', function (event, data) {
 		testAuthentication();
 	});
-	
+	// Set up the context when the user logs out
+	$rootScope.$on('account.signOut', function (event, data) {
+		testAuthentication();
+	});
 	// Test if the user is signed in
 	testAuthentication();
   }
