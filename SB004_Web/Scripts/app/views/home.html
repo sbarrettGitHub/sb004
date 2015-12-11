@@ -11,10 +11,15 @@
 				ng-click="switchView('following')">
 				<i class="fa fa-users"></i>
 				following 
-			</button>
-			
+			</button>			
 		</div>
-		
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default" ng-click="addNew()">
+				<i class="fa fa-plus"></i>
+				Add a new Post
+			</button>			
+			
+		</div>		
 	</div>
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
@@ -26,10 +31,7 @@
 		</div>
 	</div>
     <div class="container searchResultsContainer rounded col-md-12 col-sm-12">	
-		<button type="button" class="pull-left" ng-click="addNew()">
-			<i class="fa fa-plus"></i>
-			Add
-		</button>
+
 		<div ng-repeat="meme in memes" class="pull-left">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 

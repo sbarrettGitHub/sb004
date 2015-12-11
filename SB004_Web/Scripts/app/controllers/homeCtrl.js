@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService, memeWizardService, securityService) {
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, sharedDataService, memeWizardService, securityService, blurry) {
         $scope.memes = sharedDataService.data.quoteSearch.results;
         $scope.searchTerm = "";
         $scope.searchCategory = "";
@@ -10,19 +10,19 @@
 		$scope.viewing = [];
         $scope.addNew = function () {
 			
-			dialogsViewBegin();
+			blurry("view", true);
 			memeWizardService.begin()
 			.then(
 				function(newMemeId){
 					// New meme added
-					allDialogsComplete();
+					blurry("view", false);
 					
 					// Move to new meme
 					$scope.viewMeme(newMemeId);
 				},
 				function(){
 					// Cancelled
-					allDialogsComplete();
+					blurry("view", false);
 				}				
 			);
         }
@@ -36,10 +36,7 @@
             $scope.memes = sharedDataService.data.quoteSearch.results;
 
         });
-        $scope.resized = function (width, height) {
-            console.log(width + " X " + height);
-        };
-        // $scope.search();
+
         $scope.init = function () {
             $scope.handle = $dialog.dialog({});
         };
@@ -70,25 +67,36 @@
 				$scope.following.push({id:f[i].id, userName:f[i].userName,selected:true});
 			}
 		}
-		function dialogsViewBegin(){
-			angular.element("#view").addClass("blurry");
-		}
-		function allDialogsComplete(){
-			angular.element("#view").removeClass("blurry");			
+
+		function testAuthentication(){
+			// Swap between trending or following depending on if the user is authenticated and previous choices
+			securityService.testIsAuthenticated()
+			.then(function(isAuthenticated){
+				if(isAuthenticated===true){
+					$scope.switchView("following");
+				}else{
+					$scope.switchView("trending");
+				}
+			});
 		}
 		
-		// Swap between trending or following depending on if the user is authenticated and previous choices
-		securityService.testIsAuthenticated()
-		.then(function(isAuthenticated){
-			if(isAuthenticated===true){
-				$scope.switchView("following");
-			}else{
-				$scope.switchView("trending");
-			}
-		});		
+		/*-----------------------------------------------------------------*/
+		// Set up the context when the user logs in
+		$rootScope.$on('account.signIn', function (event, data) {
+			testAuthentication();
+		});
+		// Set up the context when the user logs out
+		$rootScope.$on('account.signOut', function (event, data) {
+			testAuthentication();
+		});
+		
+		// Check if the user is authenticated, if so swap between trending and following
+		testAuthentication();
+		/*-----------------------------------------------------------------*/
+			
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", "memeWizardService", "securityService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "sharedDataService", "memeWizardService", "securityService", "blurry", homeCtrl]);
 
 })();

@@ -537,8 +537,9 @@ height:325px;*/
 	margin-right: 3px;
 }
 .toolbar{
-	margin-bottom: 15px;
-	padding-left:5px;
+    margin-bottom: 15px;
+    padding-left: 0px;
+    padding-right: 5px !important;
 }
 .followUser{
     white-space: normal !important;
@@ -560,4 +561,8 @@ height:325px;*/
 }
 .contextOption i{
 	width:20px;
+}
+.contextSeparator hr{
+
+	margin:3px !important;
 }

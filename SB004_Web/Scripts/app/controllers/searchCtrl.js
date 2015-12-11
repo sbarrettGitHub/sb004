@@ -1,10 +1,13 @@
 'use strict'; 
 (function() {
 
-  var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService ) {
+  var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService, memeWizardService, blurry ) {
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
 	
+	$scope.home = function() {
+		$location.path("home");
+	}
 	/*---------------------------------------------------------*/
     $scope.search = function() {
       $rootScope.$broadcast('quoteSearch.begin', null);
@@ -37,6 +40,24 @@
 		return deferred.promise;
 	};
 	/*---------------------------------------------------------*/
+	$scope.addNew = function () {
+			
+			blurry("view", true);
+			memeWizardService.begin()
+			.then(
+				function(newMemeId){
+					blurry("view", false);
+					
+					// Move to new meme
+					$location.path('/meme/' + newMemeId);
+				},
+				function(){
+					// Cancelled
+					blurry("view", false);
+				}				
+			);
+        }
+	/*---------------------------------------------------------*/
 	$scope.signOut = function(){
 		securityService.signOut();
 	}
@@ -59,6 +80,7 @@
 			$scope.userName = securityService.getCurrentUser().userName
 		});	
 	}
+	/*-----------------------------------------------------------------*/
 	// Set up the context when the user logs in
 	$rootScope.$on('account.signIn', function (event, data) {
 		testAuthentication();
@@ -67,10 +89,12 @@
 	$rootScope.$on('account.signOut', function (event, data) {
 		testAuthentication();
 	});
+	
 	// Test if the user is signed in
 	testAuthentication();
+	/*-----------------------------------------------------------------*/
   }
   // Register the controller
-  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","sharedDataService", "securityService", searchCtrl]);
+  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","sharedDataService", "securityService","memeWizardService", "blurry", searchCtrl]);
 
 })();

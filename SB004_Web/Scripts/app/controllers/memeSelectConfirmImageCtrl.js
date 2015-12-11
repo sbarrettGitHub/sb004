@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var memeSelectConfirmImageCtrl = function ($scope, $timeout, $location, $http, fileReader, dialog, sharedDataService) {
+    var memeSelectConfirmImageCtrl = function ($scope, $timeout, $location, $http, fileReader, dialog, sharedDataService, focus) {
         $scope.image = null;
         $scope.imageFileName = null;
         $scope.file = null;
@@ -109,9 +109,10 @@
 			$scope.waitHeading = "";
 			$scope.waitingMessage = "";
 		}
+        focus("selectImage");
     }
 
     // Register the controller
-    app.controller('memeSelectConfirmImageCtrl', ["$scope", "$timeout", "$location", "$http", "fileReader", "dialog", "sharedDataService", memeSelectConfirmImageCtrl]);
+    app.controller('memeSelectConfirmImageCtrl', ["$scope", "$timeout", "$location", "$http", "fileReader", "dialog", "sharedDataService", "focus", memeSelectConfirmImageCtrl]);
 
 })();

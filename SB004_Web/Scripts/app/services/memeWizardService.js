@@ -60,12 +60,11 @@
 						});
                     return;
                 }
+              
 				deferred.reject();
             });
 
-            $timeout(function () {
-                angular.element('#pasteInput>input').focus();
-            }, 400);
+
 			
 			return deferred.promise;
         }
