@@ -26,21 +26,24 @@
 
                         <div class="dropdown dropdown-lg">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<span>{{userName}}</span>
+								<span ng-show="isAuthenticated">{{userName}}</span>
+                                <span class="fa fa-cog" ng-show="isAuthenticated"></span>
+                                <span class="fa fa-caret-down" ng-show="isAuthenticated"></span>
 								<span class="fa fa-bars" ng-show="!isAuthenticated"></span>
 							</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <form class="form-horizontal" role="form">
 									<div class="form-group" ng-show="isAuthenticated">
-										<div class="contextOption">Add a new Post</div>
-										<div class="contextOption">Edit my Profile</div>
-										<div class="contextOption" ng-click="signOut()">Sign Out</div>
+										<div class="contextOption"><i class="fa fa-plus"></i> Add a new Post</div>
+										<div class="contextOption"><i class="fa fa-user"></i> Edit my Profile</div>
+                                        <div class="contextOption"><i class="fa fa-list"></i> View my Posts</div>
+										<div class="contextOption" ng-click="signOut()"><i class="fa fa-lock"></i> Sign Out</div>
 									</div>  
 									<div class="form-group" ng-show="!isAuthenticated">
-                                        <div class="contextOption">Add a new Post</div>
-										<div class="contextOption" ng-click="signIn()">Sign In</div>
-										<div class="contextOption">Sign up now</div>
-										<div class="contextOption">Social Media Sign In</div>
+                                        <div class="contextOption"><i class="fa fa-plus"></i> Add a new Post</div>
+										<div class="contextOption" ng-click="signIn()"><i class="fa fa-unlock"></i> Sign In</div>
+										<div class="contextOption"><i class="fa fa-pencil-square-o"></i> Sign up now</div>
+										<div class="contextOption"><i class="fa fa-users"></i> Social Media Sign In</div>
 									</div> 								  
                                 </form>
                             </div>

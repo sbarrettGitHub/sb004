@@ -557,5 +557,7 @@ height:325px;*/
 
 	background-color: silver;
 	color:black;
-
+}
+.contextOption i{
+	width:20px;
 }
