@@ -62,8 +62,14 @@
 		securityService.signOut();
 	}
 	$scope.signIn = function(){
-		securityService.logIn();
+		securityService.logInDialog(securityService.signInOptions.signIn, true);
 	}
+	$scope.signUp = function(){
+		securityService.logInDialog(securityService.signInOptions.signUp, true);
+	}	
+	$scope.socialSignIn = function(){
+		securityService.logInDialog(securityService.signInOptions.socialMedia, true);
+	}	
 	/*---------------------------------------------------------*/
 	function startWaiting(){
 

@@ -73,7 +73,7 @@
 		$scope.respondFromFavourites = function () {
 			if(securityService.getCurrentUser().isAuthenticated==false){
 				// Log in
-				securityService.logIn()
+				securityService.logInDialog()
 					.then(function(){
 						// Select a favourite
 						openFavouritesList().then(function (selectedMemeId) {
@@ -132,7 +132,7 @@
 		$scope.addMemeToFavourites = function(memeId)
 		{			
 			if(securityService.getCurrentUser().isAuthenticated==false){
-				securityService.logIn()
+				securityService.logInDialog()
 					.then(function(){
 						addToFavourites(memeId);
 					});
@@ -188,7 +188,7 @@
 		// Repost
 		$scope.repostMeme = function(memeId){
 			if(securityService.getCurrentUser().isAuthenticated==false){
-				securityService.logIn()
+				securityService.logInDialog()
 					.then(function(){
 						repost(memeId);
 						
@@ -316,7 +316,7 @@
 		// Report
 		$scope.reportMeme = function(memeId){
 			if(securityService.getCurrentUser().isAuthenticated==false){
-				securityService.logIn()
+				securityService.logInDialog()
 					.then(function(){
 						report(memeId);
 						

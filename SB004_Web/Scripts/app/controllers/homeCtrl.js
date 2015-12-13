@@ -49,7 +49,7 @@
 					$scope.view = "following";
 					showFollowing();
 				} else {					
-					securityService.logIn()
+					securityService.logInDialog()
 					.then(function () {
 						$scope.view = "following";
 						showFollowing();

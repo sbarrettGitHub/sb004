@@ -1,6 +1,13 @@
 ﻿'use strict';
 (function () {
-    var securityService = function ($http, $q, $dialog, $window, $timeout, $rootScope) {
+    var securityService = function ($http, $q, $dialog, $window, $timeout, $rootScope, blurry) {
+		var signInOptions={
+			signIn:"SignIn",
+			signUp:"SignUp",
+			forgotPassword:"ForgotPassword",
+			socialMedia:"SocialMedia"
+			
+		}
         var currentUser = {
             isAuthenticated: false,
             userName: "",
@@ -14,6 +21,13 @@
 			myMemeLikes : [],
 			myMemeDislikes : []
         }
+        var loginDialogOpts = {
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "Scripts/app/views/logIn.html",
+            controller: "logInCtrl"
+        };		
         var loginDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
@@ -72,15 +86,25 @@
 			return deferred.promise;
 		}
 		
-        var logIn = function () {
+        var showLogInDialog = function (view, withBlurryBackground) {
+			if(withBlurryBackground === true){
+				blurry("view", true);
+			}
             var deferred = $q.defer();
-            loginDialog.open()
+			loginDialogOpts.resolve = {view : function() {return view?view:"SignIn";}};
+            $dialog.dialog(loginDialogOpts).open()
                 .then(function (action) {
-                    if (action == "Success") {
-                        deferred.resolve();
+                    if (action == "Success") {                        
+						if(withBlurryBackground === true){
+							blurry("view", false);
+						}
+						deferred.resolve();
                         return;
                     }
                     if (action == "Fail") {
+						if(withBlurryBackground === true){
+							blurry("view", false);
+						}						
                         deferred.reject();
                         return;
                     }
@@ -178,7 +202,7 @@
 			var deferred = $q.defer();
 			if(currentUser.isAuthenticated==false){
 				// Log in
-				logIn()
+				showLogInDialog()
 					.then(function(){
 						// Follow
 						followUnfollowUser(followId, true)
@@ -199,7 +223,7 @@
 			var deferred = $q.defer();
 			if(currentUser.isAuthenticated==false){
 				// Log in
-				logIn()
+				showLogInDialog()
 					.then(function(){
 						// Unfollow
 						followUnfollowUser(followId, false)
@@ -258,7 +282,7 @@
 			return currentUser;
 		}
         return {
-            logIn:logIn,			
+            logInDialog:showLogInDialog,			
 			signIn:signIn,
 			signUp: signUp,
 			signOut: signOut,
@@ -268,12 +292,13 @@
 			follow:follow,
 			unfollow: unfollow,
 			isFollowing: isFollowing,
-			testIsAuthenticated:testIsAuthenticated
+			testIsAuthenticated:testIsAuthenticated,
+			signInOptions:signInOptions
         }
     }
 
 
     // Register the service
-    app.factory('securityService', ['$http', '$q', '$dialog', '$window','$timeout',"$rootScope", securityService]);
+    app.factory('securityService', ['$http', '$q', '$dialog', '$window','$timeout',"$rootScope", "blurry", securityService]);
 
 })();

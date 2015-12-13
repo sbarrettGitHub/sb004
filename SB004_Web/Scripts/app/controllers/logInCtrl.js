@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var logInCtrl = function ($scope, dialog, hello, securityService, focus,$window) {
+    var logInCtrl = function ($scope, dialog, hello, securityService, focus,$window, view) {
 		
 		$scope.submitted = false;
 		$scope.email="";
@@ -19,18 +19,18 @@
         $scope.closeMe = function () {
             dialog.close("Fail");
         };
-		$scope.view="SignIn";
+		$scope.view=view?view:securityService.signInOptions.signIn; //Defult to sign in if view not specified
 		$scope.switchView = function(newView){
 			$scope.submitted = false;
 			$scope.view=newView;
 			switch(newView){
-				case "SignIn":
+				case securityService.signInOptions.signIn:
 					focus('SignIn');
 				break;
-				case "SignUp":
+				case securityService.signInOptions.signUp:
 					focus('SignUp');
 				break;				
-				case "ForgotPassword":
+				case securityService.signInOptions.forgotPassword:
 					focus('ForgotPassword');
 				break;
 				default:
@@ -114,12 +114,12 @@
 		$scope.showTerms = function(){
 					
 		}
-		// Set focus to sign in email address
-		focus('SignIn');
+		// Set focus based on the supplied intial view
+		$scope.switchView($scope.view);
     }
   
 
     // Register the controller
-    app.controller('logInCtrl', ["$scope", "dialog", "hello", "securityService", "focus", "$window", logInCtrl]);
+    app.controller('logInCtrl', ["$scope", "dialog", "hello", "securityService", "focus", "$window", "view", logInCtrl]);
 
 })();

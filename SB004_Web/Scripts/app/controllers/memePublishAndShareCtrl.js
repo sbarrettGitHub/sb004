@@ -46,7 +46,7 @@
                     });
             } else {
 				
-                securityService.logIn()
+                securityService.logInDialog()
                 .then(function () {
                     saveMeme(memeImageData)
                     .then(function (id) {
