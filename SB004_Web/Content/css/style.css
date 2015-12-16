@@ -566,3 +566,8 @@ height:325px;*/
 
 	margin:3px !important;
 }
+.ngUserHover{
+	position: absolute;
+	left:50px;
+	z-index: 999;
+}
