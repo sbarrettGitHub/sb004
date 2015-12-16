@@ -7,13 +7,19 @@ app.directive('ngUserhover', function($compile, $timeout) {
     },
 	link: function(scope, elem, attrs) {
      var inElement = false;
-      elem.bind('mouseenter', function() {      
+      elem.bind('mouseenter', function(e) {      
         inElement = true;  
         $timeout(function () {
             // Ensure that the mouse is still over the element
             if(inElement){
+              var $hover = angular.element(elem).children(".ngUserHover");
+              var left = e.pageX;
+              if(left + 460 > window.innerWidth){
+                  left =  -460;
+              }
+              $hover.css("left",left);
               // Fade in
-              angular.element(elem).children(".ngUserHover").fadeIn();
+              $hover.fadeIn();
             }              
           }, 500);
       });
@@ -23,12 +29,38 @@ app.directive('ngUserhover', function($compile, $timeout) {
         // fade out
         angular.element(elem).children(".ngUserHover").fadeOut();
       });
-      elem.bind('click', function() {
-        alert("");
-      });
-        var template = '<div class="ngUserHover" style="display:none;" ng-model="ngUser">  \
+        /*var template = '<div class="ngUserHover" style="display:none;" ng-model="ngUser">  \
                           Hovering {{ngUser.userName}}                                   \
-                        </div>'; 
+                        </div>'; */
+        var template = "";
+        template += "	<div id='hoverUserDetail' class='ngUserHover' style='display:none;' ng-model='ngUser'> ";
+        template += "		<div class='header'>";
+        template += "       	<img class='userImage'";
+        template += "           	src='http://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBnxJQ1.img?h=64&w=80&m=6&q=60&u=t&o=t&l=f&x=918&y=846'>";
+        template += "           </img>";
+        template += "           <div class='userName'>";
+        template += "           	{{ngUser.userName}}";
+        template += "           </div>	";
+        template += "        </div>";
+        template += "        <div class='userStats'>";
+        template += "        	<div class='userStat'>";
+        template += "           	<i class='fa fa-eye'></i> Views";
+        template += "               <div>{{ngUser.views | nearestK}}</div>";
+        template += "           </div>";
+        template += "           <div class='userStat'>";
+        template += "           	<i class='fa fa-thumbs-o-up'></i> Likes";
+        template += "               <div>{{ngUser.likes | nearestK}}</div>";
+        template += "           </div>";	
+        template += "           <div class='userStat'>";
+        template += "           	<i class='fa fa-thumbs-o-down'></i> Dislikes";
+        template += "               <div>{{ngUser.dislikes | nearestK}}</div>";
+        template += "           </div>";	
+        template += "           <div class='userStat'>";
+        template += "           	<i class='fa fa-retweet'></i> Reposts";
+        template += "            	<div>{{ngUser.reposted | nearestK}}</div>";
+        template += "           </div>";						
+        template += "        </div>";	
+        template += "	</div>";
         var new$ = angular.element(template);
         elem.append(new$); // append hover div as a child
         $compile(new$)(scope);

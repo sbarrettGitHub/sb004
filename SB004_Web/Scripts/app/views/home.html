@@ -3,7 +3,7 @@
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left">
 			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='trending') }"
-				ng-click="switchView('trending')" ng-userhover ng-user="{userName:'Seamus'}">
+				ng-click="switchView('trending')">
 				<i class="fa fa-thumbs-o-up"></i>
 				trending
 			</button>
@@ -14,7 +14,7 @@
 			</button>			
 		</div>
 		<div class="btn-group pull-right">
-			<button type="button" class="btn btn-default" ng-click="addNew()" ng-userhover ng-user="{userName:'Seamus'}">
+			<button type="button" class="btn btn-default" ng-click="addNew()">
 				<i class="fa fa-plus"></i>
 				Add a new Post
 			</button>			
@@ -23,7 +23,7 @@
 	</div>
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
-			<button type="button" class="btn btn-default ">
+			<button type="button" class="btn btn-default "  ng-userhover ng-user="user">
 				<i class="fa fa-user"></i>
 				{{user.userName}} 
 				<input type="checkbox" ng-model="user.selected"/>
