@@ -22,6 +22,7 @@
         private readonly MongoCollection<Repost> repostCollection;
         private readonly MongoCollection<Report> reportCollection;
         private readonly MongoCollection<Credentials> userCredentialCollection;
+        private readonly MongoCollection<Image> imageCollection;
         public Repository()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -43,6 +44,8 @@
             reportCollection = database.GetCollection<Report>("reported");
 
             userCredentialCollection = database.GetCollection<Credentials>("userCredential");
+
+            imageCollection = database.GetCollection<Image>("image");
             try
             {
                 if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
@@ -72,6 +75,10 @@
                 if (!BsonClassMap.IsClassMapRegistered(typeof(UserLite)))
                 {
                     BsonClassMap.RegisterClassMap<UserLite>();
+                }
+                if (!BsonClassMap.IsClassMapRegistered(typeof(Image)))
+                {
+                    BsonClassMap.RegisterClassMap<Image>();
                 }
             }
             catch (Exception)
@@ -385,6 +392,18 @@
             userComment.Id = userComment.Id ?? Guid.NewGuid().ToString("N");
             userCommentCollection.Save(userComment.ToBsonDocument());
             return userComment;
+        }
+        #endregion
+        #region Image
+        public IImage Save(IImage image)
+        {
+            image.Id = image.Id ?? Guid.NewGuid().ToString("N");
+            imageCollection.Save(image.ToBsonDocument());
+            return image;
+        }
+        public IImage GetImage(string id)
+        {
+            return imageCollection.FindOne(Query<Image>.EQ(e => e.Id, id));
         }
         #endregion
     }

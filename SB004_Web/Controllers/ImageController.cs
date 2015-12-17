@@ -1,30 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using SB004.Data;
+using SB004.Domain;
+using SB004.Utilities;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-
 namespace SB004.Controllers
 {
-  using SB004.Data;
-    using SB004.Domain;
+   
 
+  [RoutePrefix("api/image")]
   public class ImageController : ApiController
   {
     readonly IRepository repository;
-
-    public ImageController(IRepository repository)
+    readonly IImageManager imageManager;
+    public ImageController(IRepository repository, IImageManager imageManager)
     {
       this.repository = repository;
+      this.imageManager = imageManager;
     }
-
-    // GET: api/Image
-    public IEnumerable<string> Get()
-    {
-      return new[] { "value1", "value2" };
-    }
-
-    // GET: api/Image/5
+    /// <summary>
+    /// Returns an image representing a meme, only
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("{id}")]
     public HttpResponseMessage Get(string id)
     {
       HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
@@ -37,20 +37,25 @@ namespace SB004.Controllers
       result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
       return result;
     }
-
-    // POST: api/Image
-    public void Post([FromBody]string value)
+    /// <summary>
+    /// Get a users image
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Route("user/{id}")]
+    public HttpResponseMessage GetUserImage(string id)
     {
+        HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+        IImage userImage = repository.GetImage(id);
+        if (userImage == null)
+        {
+            userImage = new Image();
+            userImage.ImageData = imageManager.GetImageData(Url.Content("~/Content/Images/avatar.GIF"));             
+        }
+        result.Content = new ByteArrayContent(userImage.ImageData);
+        result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+        return result;
     }
-
-    // PUT: api/Image/5
-    public void Put(int id, [FromBody]string value)
-    {
-    }
-
-    // DELETE: api/Image/5
-    public void Delete(int id)
-    {
-    }
+    
   }
 }

@@ -43,5 +43,9 @@
         IReport Save(IReport report);
 
         List<IMeme> SearchMemeByUser(string userId, int skip, int take, out long fullCount);
+
+        IImage Save(IImage image);
+
+        IImage GetImage(string id);
     }
 }

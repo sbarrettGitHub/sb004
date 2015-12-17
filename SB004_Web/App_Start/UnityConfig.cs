@@ -18,7 +18,6 @@ namespace SB004
             container.RegisterType<ITrendManager, TrendManager>();
             container.RegisterType<IMemeBusiness, MemeBusiness>();
             container.RegisterType<IAccountBusiness, AccountBusiness>();
-
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
