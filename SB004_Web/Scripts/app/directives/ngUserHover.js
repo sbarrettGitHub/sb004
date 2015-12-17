@@ -33,7 +33,7 @@ app.directive('ngUserhover', function($compile, $timeout) {
                           Hovering {{ngUser.userName}}                                   \
                         </div>'; */
         var template = "";
-        template += "	<div id='hoverUserDetail' class='ngUserHover' style='display:none;' ng-model='ngUser'> ";
+        template += "	<div id='hoverUserDetail' class='ngUserHover rounded' style='display:none;' ng-model='ngUser'> ";
         template += "		<div class='header'>";
         template += "       	<img class='userImage'";
         template += "           	src='http://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBnxJQ1.img?h=64&w=80&m=6&q=60&u=t&o=t&l=f&x=918&y=846'>";

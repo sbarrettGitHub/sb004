@@ -576,7 +576,7 @@ height:325px;*/
      display: none; 
     left: 100px;
     top: -50px;
-    border: 1px solid black;
+    border: 1px solid darkgrey;
 }
 #hoverUserDetail .header{
 	text-align: left;
