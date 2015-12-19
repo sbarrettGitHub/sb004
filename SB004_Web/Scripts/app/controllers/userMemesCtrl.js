@@ -2,7 +2,7 @@
 (function () {
 
     var userMemesCtrl = function ($scope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
-        var userId = $routeParams.id;
+        $scope.userId = $routeParams.id;
 		var memesIndex=0;
 		$scope.memes = [];
 		$scope.user = {};
@@ -29,7 +29,7 @@
 			// or a standard page worth
 			var take = takeMemes ? takeMemes : constants.memeViewingBlockCount;
 			
-			$http.get('api/Meme/byuser/' + userId + "?skip=" + skip + "&take=" + take).
+			$http.get('api/Meme/byuser/' + $scope.userId + "?skip=" + skip + "&take=" + take).
                 success(function (data) {
 					if(data.user){
 						$scope.user = data.user;
@@ -106,7 +106,7 @@
 		.then(function(isAuthenticated){
 			if(isAuthenticated===true){
 				// If signed in then check if the current user follows the selected user
-				$scope.isFollowing = securityService.isFollowing(userId);
+				$scope.isFollowing = securityService.isFollowing($scope.userId);
 			}
 			// Refresh the users memes
 			refreshMemes();

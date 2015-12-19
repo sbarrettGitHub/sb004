@@ -5,7 +5,7 @@
 		</div>
 		<div class="memeLinkCardMeta pull-down">
 			<div class="created">
-			  <div class="pull-left "><i class="fa fa-user"></i><span ng-click="onUserclick(ngModel.createdByUserId)" class="allowFollow">{{ngModel.createdBy}}</span></div>
+			  <div class="pull-left "><i class="fa fa-user"></i><span ng-click="onUserclick(ngModel.createdByUserId)" class="allowFollow"  ng-userhover ng-user="ngModel.creator">{{ngModel.createdBy}}</span></div>
 			  <div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
 			</div>
 			<div class="stats">

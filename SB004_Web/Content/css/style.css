@@ -566,7 +566,7 @@ height:325px;*/
 
 	margin:3px !important;
 }
-.ngUserHover{
+ .ngUserHover{
     position: absolute;
     width: 460px;
     height: 128px;
@@ -582,17 +582,18 @@ height:325px;*/
 	text-align: left;
 	background-color: white;
 	height: 64px;
+	
 }
 #hoverUserDetail .header .userImage{
     text-align: left;
-    float: left;
-    max-height: 64px;
-    margin-top: 32px;
-    margin-left: 10px;
+    float: left !important;
+    max-height: 64px !important;
+    margin-top: 32px!important;
+    margin-left: 10px!important;
     border: 1px solid darkgrey;
     padding: 5px;
     background-color: white;
-    max-width: 64px;
+    max-width: 64px !important;
 }
 #hoverUserDetail .header .userName{
     font-size: large;
@@ -600,19 +601,21 @@ height:325px;*/
     padding-top: 20px;
     text-align: left;
     margin-left: 100px;
+	color:black;
 }
 #hoverUserDetail .userStats{
-    background-color: whitesmoke;
+    background-color: whitesmoke !important;
 	height: 64px;
 }
 
 #hoverUserDetail .userStats .userStat{
-	float:left;
+	float:left !important;
 	width: 90px;
 	margin-top: 5px; 
+	color:black;
 }
 
 #hoverUserDetail .userStats .userStat div{
 	font-weight: bold;
-    color: cadetblue;
+    color: cadetblue !important;
 }

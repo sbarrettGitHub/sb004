@@ -1,9 +1,9 @@
-app.directive('ngUserhover', function($compile, $timeout) {
+app.directive('ngUserhover', function($compile, $timeout, $location) {
   return {
     restrict: 'A',
     replace: false,
 	scope: {
-      ngUser: '=',
+      ngUser: '='
     },
 	link: function(scope, elem, attrs) {
      var inElement = false;
@@ -12,12 +12,26 @@ app.directive('ngUserhover', function($compile, $timeout) {
         $timeout(function () {
             // Ensure that the mouse is still over the element
             if(inElement){
+              
+              var $target = angular.element(e.target);
+              var pos = $target.position();  
+              var width =$target.outerWidth();
+              var left = pos.left;
+              var top = pos.top;
+              var height =$target.outerHeight();              
               var $hover = angular.element(elem).children(".ngUserHover");
-              var left = e.pageX;
-              if(left + 460 > window.innerWidth){
-                  left =  -460;
+              
+              // Correct or right margin (show to the left of target)
+              if(e.pageX + $hover.outerWidth() > window.innerWidth){
+                  left -=  $hover.outerWidth();
               }
-              $hover.css("left",left);
+              
+              // Correct for bottom margin (show above the target)
+              if(e.pageY + $hover.outerHeight() > window.innerHeight){
+                  top -=  $hover.outerHeight() + $target.outerHeight();
+              }
+              $hover.css("left",(left + (width/2)) + "px");
+              $hover.css("top",(top + height) + "px");
               // Fade in
               $hover.fadeIn();
             }              
@@ -29,10 +43,10 @@ app.directive('ngUserhover', function($compile, $timeout) {
         // fade out
         angular.element(elem).children(".ngUserHover").fadeOut();
       });
-        /*var template = '<div class="ngUserHover" style="display:none;" ng-model="ngUser">  \
-                          Hovering {{ngUser.userName}}                                   \
-                        </div>'; 
-                        src='http://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBnxJQ1.img?h=64&w=80&m=6&q=60&u=t&o=t&l=f&x=918&y=846'>";*/
+      elem.bind('click',function(){
+        $location.path("/usermemes/" + scope.ngUser.id);
+      });
+      
         var template = "";
         template += "	<div id='hoverUserDetail' class='ngUserHover rounded' style='display:none;' ng-model='ngUser'> ";
         template += "		<div class='header'>";

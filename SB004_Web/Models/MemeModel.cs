@@ -48,6 +48,7 @@
 
         public string Id { get; set; }
         public string CreatedByUserId { get; set; }
+        public IUser Creator { get; set; } 
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
         public long userCommentCount { get; set; }

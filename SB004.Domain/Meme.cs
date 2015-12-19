@@ -30,10 +30,27 @@ namespace SB004.Domain
     }
     public class Meme : IMeme
     {
+        private IUser creator;
         public string Id { get; set; }
         public string RepostOfId { get; set; }
         public string Title { get; set; }
         public string CreatedByUserId { get; set; }
+        public IUser Creator 
+        {
+            get
+            {
+                return creator;
+            }
+        }
+        /// <summary>
+        /// Resolve the creator. Not persisted
+        /// </summary>
+        /// <param name="creator"></param>
+        public IMeme SetCreator(IUser creator) 
+        {
+            this.creator = creator;
+            return this;
+        }
         public string SeedId { get; set; }
         public byte[] ImageData { get; set; }
         public DateTime DateCreated { get; set; }
@@ -49,6 +66,7 @@ namespace SB004.Domain
         public int Reposts { get; set; }
         public bool IsTopLevel { get; set; }
         public double TrendScore { get; set; }
+
     }
     public class Reply:IReply
     {

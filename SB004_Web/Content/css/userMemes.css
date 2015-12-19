@@ -5,3 +5,7 @@
     font-size: smaller;
     margin-top: 5px;
 }
+#userMemes .userImage{
+	max-width: 96px;
+	max-height: 96px;
+}

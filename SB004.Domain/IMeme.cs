@@ -35,6 +35,7 @@ namespace SB004.Domain
     string RepostOfId { get; set; }
     string Title { get; set; }
     string CreatedByUserId { get; set; }
+    IUser Creator { get; }   
     string SeedId { get; set; }
     byte[] ImageData { get; set; }
     DateTime DateCreated { get; set; }
@@ -50,6 +51,7 @@ namespace SB004.Domain
     int Reposts { get; set; }
     bool IsTopLevel { get; set;}
     double TrendScore { get; set; }
+    IMeme SetCreator(IUser creator);
   }
 
   public interface IReply

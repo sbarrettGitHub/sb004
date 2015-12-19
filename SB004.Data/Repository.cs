@@ -157,7 +157,7 @@
                 return null;
             }
 
-            return memeEntity;
+            return memeEntity.SetCreator(GetUser(memeEntity.CreatedByUserId));
         }
         /// <summary>
         /// Search for memes
@@ -177,7 +177,8 @@
 
                 foreach (Meme entity in cursor)
                 {
-                    memes.Add(entity);
+                    // Add meme (resolving creator user object)
+                    memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
                 }
 
                 return memes;
@@ -205,7 +206,8 @@
 
             foreach (Meme entity in cursor)
             {
-                memes.Add(entity);
+                // Add meme (resolving creator user object)
+                memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
             }
 
             return memes;
@@ -265,7 +267,8 @@
                 fullCount = cursor.Count();
                 foreach (Meme entity in resultItems)
                 {
-                    memes.Add(entity);
+                    // Add meme (resolving creator user object)
+                    memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
                 }
 
                 return memes;

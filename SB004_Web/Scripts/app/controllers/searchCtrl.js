@@ -4,6 +4,7 @@
   var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService, memeWizardService, blurry ) {
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
+	$scope.userId = "";
 	
 	$scope.home = function() {
 		$location.path("home");
@@ -71,19 +72,18 @@
 		securityService.logInDialog(securityService.signInOptions.socialMedia, true);
 	}	
 	/*---------------------------------------------------------*/
-	function startWaiting(){
-
+	$scope.viewMyPosts= function(){
+		$location.path("/usermemes/" + $scope.userId);
 	}
-	function endWaiting(){
-
-	}
+	/*---------------------------------------------------------*/
 
 	function testAuthentication(){
 		// Test if the user is signed in
 		securityService.testIsAuthenticated()
 		.then(function(isAuthenticated){
 			$scope.isAuthenticated = isAuthenticated;
-			$scope.userName = securityService.getCurrentUser().userName
+			$scope.userName = securityService.getCurrentUser().userName;
+			$scope.userId = securityService.getCurrentUser().userId;
 		});	
 	}
 	/*-----------------------------------------------------------------*/
