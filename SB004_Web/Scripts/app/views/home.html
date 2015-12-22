@@ -24,7 +24,7 @@
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
 			<button type="button" class="btn btn-default "  ng-userhover ng-user="user">
-				<i class="fa fa-user"></i>
+				<img class='userImageSmall' ng-src='api/image/user/{{user.id}}'></img>
 				{{user.userName}} 
 			</button>
 		</div>

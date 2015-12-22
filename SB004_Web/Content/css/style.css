@@ -498,14 +498,25 @@ height:325px;*/
     vertical-align: middle;    
     width: 400px;
 }
- .memeLinkCardMeta{
-
+.memeLinkCardMeta .userImageFrame{
+	height:55px;
+}
+.userImageSmall{
+	width:32px;
+	height:32px;
+	border-radius: 16px;
+}
+ .memeLinkCardMeta .userImageSmall{
+	margin-top: 16px !important;	 
 }
  .memeLinkContainer img{
 	margin:5px;
 	cursor:pointer;
 	display: block;
 	margin: auto !important;
+}
+.memeLinkCardMeta .infoFrame{
+	width:335px;
 }
  .memeLinkContainer .created{
 	margin-left: 10px;

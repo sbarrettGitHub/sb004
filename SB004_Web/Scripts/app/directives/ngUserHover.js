@@ -53,7 +53,7 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         var template = "";
         template += "	<div id='hoverUserDetail' class='ngUserHover rounded' style='display:none;' ng-model='ngUser'> ";
         template += "		<div class='header'>";
-        template += "       	<img class='userImage rounded'";
+        template += "       	  <img class='userImage rounded'";
         template += "           	src='api/image/user/{{ngUser.id}}'>";
         template += "           </img>";
         template += "           <div class='userName hot' ng-click='openUserMemes()'>";
