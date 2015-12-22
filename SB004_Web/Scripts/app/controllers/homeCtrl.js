@@ -61,11 +61,9 @@
 			
 		}
 		function showFollowing(){
-			var f = securityService.getCurrentUser().profile.followingIds;
-			$scope.following = [];
-			for(var i=0;i<f.length;i++){
-				$scope.following.push({id:f[i].id, userName:f[i].userName,selected:true});
-			}
+			
+			$scope.following =securityService.getCurrentUser().profile.following;
+			
 		}
 
 		function testAuthentication(){

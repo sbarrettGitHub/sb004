@@ -9,6 +9,7 @@ namespace SB004.Domain
     }
     public class User: IUser
     {
+        private List<IUser> following;
         public User() 
         {
             FollowingIds = new List<IUserLite>();
@@ -26,6 +27,14 @@ namespace SB004.Domain
 
         public List<IUserLite> FollowingIds { get; set; }
 
+        public List<IUser> Following
+        {
+            get
+            {
+                return this.following;
+            }
+        }
+
         public bool Active { get; set; }
 
         public string Thumbnail { get; set; }
@@ -37,6 +46,11 @@ namespace SB004.Domain
         public int Shares { get; set; }
         public int Views { get; set; }
         public int Reposted { get; set; }
+        public IUser SetFollowing(List<IUser> following)
+        {
+            this.following = following;
+            return this;
+        }
     }
     public class Credentials : ICredentials
     {

@@ -36,7 +36,7 @@ button:hover{
  }
  .hot:hover{
 	cursor: pointer;
-	color:cornflowerblue;
+	color:cornflowerblue !important;
  }
  .isFavourite{
 	color:gold

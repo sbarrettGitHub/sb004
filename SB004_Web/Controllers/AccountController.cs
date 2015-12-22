@@ -63,8 +63,15 @@ namespace SB004.Controllers
         [Route("{id}/follow/{followedId}")]
         public HttpResponseMessage Follow(string id, string followedId)
         {
+
             if (User.Identity.UserId() == id)
             {
+                // Can't follow yourself
+                if (id == followedId)
+                {
+                    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.PreconditionFailed));
+                }
+
                 IUser profile = repository.GetUser(id);
 
                 if (profile != null)
@@ -78,7 +85,7 @@ namespace SB004.Controllers
                     profile.FollowingIds.RemoveAll(x => x.Id == followedId);
 
                     // Insert at the beginning
-                    IUser followed = repository.GetUser(id);
+                    IUser followed = repository.GetUser(followedId);
                     if (followed != null)
                     {
                         profile.FollowingIds.Insert(0, new UserLite { Id = followed.Id, UserName = followed.UserName });

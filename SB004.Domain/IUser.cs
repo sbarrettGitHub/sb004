@@ -30,6 +30,8 @@ namespace SB004.Domain
 
         List<IUserLite> FollowingIds { get; set; }
 
+        List<IUser> Following { get; }
+
         bool Active { get; set; }
 
         string Thumbnail { get; set; }
@@ -42,6 +44,7 @@ namespace SB004.Domain
         int Shares { get; set; }
         int Views { get; set; }
         int Reposted { get; set; }
+        IUser SetFollowing(List<IUser> following);
     }
     
 }

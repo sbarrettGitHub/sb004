@@ -40,6 +40,12 @@
 			});
 		return deferred.promise;
 	};
+	function startWaiting(){
+		
+	}
+	function endWaiting(){
+		
+	}
 	/*---------------------------------------------------------*/
 	$scope.addNew = function () {
 			

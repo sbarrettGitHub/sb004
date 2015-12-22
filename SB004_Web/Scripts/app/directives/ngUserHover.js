@@ -43,9 +43,12 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         // fade out
         angular.element(elem).children(".ngUserHover").fadeOut();
       });
-      elem.bind('click',function(){
+      scope.openUserMemes = function(){
         $location.path("/usermemes/" + scope.ngUser.id);
-      });
+      }
+      // elem.bind('click',function(){
+      //   $location.path("/usermemes/" + scope.ngUser.id);
+      // });
       
         var template = "";
         template += "	<div id='hoverUserDetail' class='ngUserHover rounded' style='display:none;' ng-model='ngUser'> ";
@@ -53,7 +56,7 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         template += "       	<img class='userImage rounded'";
         template += "           	src='api/image/user/{{ngUser.id}}'>";
         template += "           </img>";
-        template += "           <div class='userName'>";
+        template += "           <div class='userName hot' ng-click='openUserMemes()'>";
         template += "           	{{ngUser.userName}}";
         template += "           </div>	";
         template += "        </div>";

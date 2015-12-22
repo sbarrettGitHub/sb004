@@ -27,8 +27,8 @@
         ICredentials GetCredentials(string email);
 
         IUser GetUser(string authenticationUserId, string authenticationProvider);
-        
-        IUser GetUser(string userId);
+
+        IUser GetUser(string userId, bool deep = false);
 
         List<IUserComment> GetUserComments(string memeId, int skip, int take);
 

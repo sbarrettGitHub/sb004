@@ -323,9 +323,19 @@
         /// <returns></returns>
         public IUser GetUser(string authenticationUserId, string authenticationProvider)
         {
-            return userCollection.FindOne(Query.And(
+            IUser user = userCollection.FindOne(Query.And(
                         Query.EQ("AuthenticationUserId", authenticationUserId),
                         Query.EQ("AuthenticationProvider", authenticationProvider)));
+            
+            if (user != null)
+            {
+                // Resolve the following
+                List<IUser> following = new List<IUser>();
+                user.FollowingIds.ForEach(f => following.Add(GetUser(f.Id)));
+                user.SetFollowing(following);
+            }
+
+            return user;
         }
 
         /// <summary>
@@ -333,9 +343,30 @@
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IUser GetUser(string userId)
+        public IUser GetUser(string userId, bool deep = false)
         {
-            return userCollection.FindOne(Query<User>.EQ(e => e.Id, userId));
+            IUser user = userCollection.FindOne(Query<User>.EQ(e => e.Id, userId));
+            if (user != null)
+            {
+                List<IUser> following = new List<IUser>();
+                // Resolve the following
+                if(deep)
+                {
+                    user.FollowingIds.ForEach(f =>
+                    {
+                        // If following himself, don't resolve ... infinite loop!
+                        if (f.Id != user.Id)
+                        {
+                            following.Add(GetUser(f.Id));
+                        }
+                    });
+                    
+                }
+                user.SetFollowing(following);
+
+            }
+            
+            return user;
         }
         
         #endregion
