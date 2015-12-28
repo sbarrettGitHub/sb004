@@ -1,7 +1,7 @@
 'use strict'; 
 (function() {
 
-  var searchCtrl = function($scope,$rootScope, $location, $http, $q, sharedDataService, securityService, memeWizardService, blurry ) {
+  var searchCtrl = function($scope,$rootScope, $location, $http, $q, $dialog, sharedDataService, securityService, memeWizardService, blurry ) {
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
 	$scope.userId = "";
@@ -82,6 +82,25 @@
 		$location.path("/usermemes/" + $scope.userId);
 	}
 	/*---------------------------------------------------------*/
+	$scope.editMyProfile = function(){
+		var profileDialog = $dialog.dialog({
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "Scripts/app/views/profile.html",
+            controller: "profileCtrl" 
+        });
+		blurry("view", true);
+		// Open the user profile
+		profileDialog.open()
+		.then(function () {				
+			blurry("view", false);
+		},
+		function(){
+			blurry("view", false);								
+		});	
+	}
+	/*---------------------------------------------------------*/
 
 	function testAuthentication(){
 		// Test if the user is signed in
@@ -107,6 +126,6 @@
 	/*-----------------------------------------------------------------*/
   }
   // Register the controller
-  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","sharedDataService", "securityService","memeWizardService", "blurry", searchCtrl]);
+  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","$dialog","sharedDataService", "securityService","memeWizardService", "blurry", searchCtrl]);
 
 })();

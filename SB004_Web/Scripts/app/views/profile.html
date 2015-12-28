@@ -1,0 +1,69 @@
+<div id="profile" class="dialogPage">
+	<div class="heading dialogHead" ng-hide="waiting">		
+		<h3><i class="fa fa-user"></i> My SB004 Profile</h3>			
+		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
+	</div>	
+    <div class="dialogBody" ng-hide="waiting">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12" >	
+			<div class="col-lg-7 col-md-7 col-sm-7">	
+				<img class='userImage rounded'ng-src='api/image/user/{{id}}'></img>
+			</div>	
+			<div id="changeProfileImage" class="col-lg-5 col-md-5 col-sm-5">					
+				<a href='javascript:void(0);'>Change profile image</a>	
+			</div>		
+		</div>	
+		<div ng-hide="showChangeName" class="form-group col-lg-12 col-md-12 col-sm-12">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+				<label class="control-label">
+					Name: {{profileName}}
+				</label>
+			</div>	
+			<div class="col-lg-5 col-md-5 col-sm-5">
+				<a href='javascript:void(0);'>Change profile name</a>
+			</div>
+		</div>		
+		<div class="form-group" ng-show="showChangeName">					
+			
+			<label for="name" class="control-label">
+				Name:
+			</label>					
+			<input type="text" id="name" class="form-control" placeholder="Your profile needs a name"
+				ng-model="profileName" focus-on="ProfileName">			
+		</div>	
+		<div ng-hide="showChangeEmail" class="form-group col-lg-12 col-md-12 col-sm-12">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+				<label class="control-label">
+					Email: {{profileEmail}}
+				</label>
+			</div>	
+			<div class="col-lg-5 col-md-5 col-sm-5">
+				<a href='javascript:void(0);'>Change email address</a>	
+			</div>
+		</div>					
+		<div class="form-group" ng-show="showChangeEmail">
+			<label for="email" class="control-label">
+				Email address:
+			</label>					
+			<input type="email" id="email" class="form-control" placeholder="Your profile needs an email address" 
+				ng-model="profileEmail" focus-on="ProfileEmail">					
+		</div>
+		<div class="form-group" ng-show="showChangeEmail">
+			<label for="confirmEmail" class="control-label">
+				Confirm Email address:
+			</label>					
+			<input type="email" id="email" class="form-control" placeholder="Confirm your email address" 
+				ng-model="profileConfirmEmail">					
+		</div>
+    </div>	
+	<div class="buttons dialogFoot" ng-hide="waiting">				
+		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
+	</div>
+	<div id="waiting" ng-show="waiting" class="waitingContainer dialogWaitConainer">
+		<div class="heading">
+			<h3>{{waitHeading}}</h3>
+			<div class="closeMe closeIcon" ng-click="closeMe()"><span class="fa fa-times"></span></div>
+		</div>
+		<div class="waitGraphic dialogWaitGraphic"/>
+		<div class="waitMessage">{{waitMessage}}</div>
+	</div>	
+</div>

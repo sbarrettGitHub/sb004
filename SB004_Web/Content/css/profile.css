@@ -1,0 +1,15 @@
+
+#profile .userImage {
+    height: 64px !important;
+    width: 64px !important;
+    border: 1px solid darkgrey;
+    padding: 5px;
+    background-color: white;
+    margin-top: 15px;
+}
+#profile .dialogHead{
+    border-bottom: 1px solid silver;
+}
+#profile #changeProfileImage{
+    margin-top: 55px;
+}
