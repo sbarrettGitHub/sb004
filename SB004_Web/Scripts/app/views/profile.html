@@ -12,24 +12,29 @@
 				<a href='javascript:void(0);'>Change profile image</a>	
 			</div>		
 		</div>	
-		<div ng-hide="showChangeName" class="form-group col-lg-12 col-md-12 col-sm-12">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12">
 			<div class="col-lg-7 col-md-7 col-sm-7">
 				<label class="control-label">
-					Name: {{profileName}}
+					Name: 
 				</label>
+				<label>{{profileName}}</label>
+				<input type="text" id="name" class="form-control" ng-show="showChangeName"
+					placeholder="Your profile needs a name"
+					ng-model="profileName" 
+					focus-on="ProfileName">	
 			</div>	
 			<div class="col-lg-5 col-md-5 col-sm-5">
-				<a href='javascript:void(0);'>Change profile name</a>
+				<a href='javascript:void(0);' 
+					ng-click="showChangeName=true;" 
+					ng-hide="showChangeName">
+					Change profile name</a>
+				<div>
+					<input type="button" value="Save" ng-show="showChangeName"/>
+					<input type="button" value="Cancel" ng-show="showChangeName" ng-click="showChangeName=false;" />
+				</div>
 			</div>
 		</div>		
-		<div class="form-group" ng-show="showChangeName">					
-			
-			<label for="name" class="control-label">
-				Name:
-			</label>					
-			<input type="text" id="name" class="form-control" placeholder="Your profile needs a name"
-				ng-model="profileName" focus-on="ProfileName">			
-		</div>	
+	
 		<div ng-hide="showChangeEmail" class="form-group col-lg-12 col-md-12 col-sm-12">
 			<div class="col-lg-7 col-md-7 col-sm-7">
 				<label class="control-label">
