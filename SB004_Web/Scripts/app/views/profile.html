@@ -6,22 +6,37 @@
     <div class="dialogBody" ng-hide="waiting">
 		<div class="form-group col-lg-12 col-md-12 col-sm-12" >	
 			<div class="col-lg-7 col-md-7 col-sm-7">	
-				<img class='userImage rounded'ng-src='api/image/user/{{id}}'></img>
+				<img class='userImage rounded'ng-src='{{profileImageLink}}'></img>
+				<input type="text" id="changeProfileImageLink" class="form-control" 
+					ng-show="showChangeImage"
+					ng-change="previewProfileImage()";
+					placeholder="http://pasteLinkToYourNewImage.here"
+					title="Paste a the URL to the new image you would like to use for your profile here."
+					ng-model="changeProfileImageLink">							
 			</div>	
 			<div id="changeProfileImage" class="col-lg-5 col-md-5 col-sm-5">					
-				<a href='javascript:void(0);'>Change profile image</a>	
+				<a href='javascript:void(0);'
+					ng-click="showChangeImage=true;" 
+					ng-hide="showChangeImage">Change profile image</a>
+				<div>
+					<input type="button" value="Save" ng-show="showChangeImage"  ng-click="saveProfileImage()"/>
+					<input type="button" value="Cancel" ng-show="showChangeImage" ng-click="resetProfileImage()" />
+				</div>	
 			</div>		
 		</div>	
-		<div class="form-group col-lg-12 col-md-12 col-sm-12">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error':!changeProfileNameValid}">
 			<div class="col-lg-7 col-md-7 col-sm-7">
 				<label class="control-label">
 					Name: 
 				</label>
 				<label>{{profileName}}</label>
-				<input type="text" id="name" class="form-control" ng-show="showChangeName"
-					placeholder="Your profile needs a name"
-					ng-model="profileName" 
-					focus-on="ProfileName">	
+				<input type="text" class="form-control" ng-show="showChangeName"
+					placeholder="Enter your new profile name"
+					ng-model="changeProfileName" 
+					focus-on="ChangeProfileName">	
+				<div ng-hide="changeProfileNameValid" class="text-error">
+					{{changeProfileNameError}}
+				</div>
 			</div>	
 			<div class="col-lg-5 col-md-5 col-sm-5">
 				<a href='javascript:void(0);' 
@@ -29,36 +44,81 @@
 					ng-hide="showChangeName">
 					Change profile name</a>
 				<div>
-					<input type="button" value="Save" ng-show="showChangeName"/>
-					<input type="button" value="Cancel" ng-show="showChangeName" ng-click="showChangeName=false;" />
+					<input type="button" value="Save" ng-show="showChangeName" ng-click="saveProfileName()" />
+					<input type="button" value="Cancel" ng-show="showChangeName" ng-click="resetProfileName()" />
 				</div>
 			</div>
 		</div>		
 	
-		<div ng-hide="showChangeEmail" class="form-group col-lg-12 col-md-12 col-sm-12">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error':!changeProfileEmailValid}">
 			<div class="col-lg-7 col-md-7 col-sm-7">
 				<label class="control-label">
-					Email: {{profileEmail}}
+					Email:
 				</label>
+				<label> {{profileEmail}}</label>
+				<input type="email"  class="form-control" ng-show="showChangeEmail"
+					placeholder="Enter a new email address"
+					ng-model="changeProfileEmail">
+				<input type="email" class="form-control" ng-show="showChangeEmail"
+					placeholder="Confirm your new email address"
+					ng-model="confirmChangeProfileEmail">	
+				<div ng-hide="changeProfileEmailValid" class="text-error">
+					{{changeProfileEmailError}}
+				</div>													
 			</div>	
 			<div class="col-lg-5 col-md-5 col-sm-5">
-				<a href='javascript:void(0);'>Change email address</a>	
+				<a href='javascript:void(0);' 
+					ng-click="showChangeEmail=true;" 
+					ng-hide="showChangeEmail">
+					Change email address</a>
+				<div>
+					<input type="button" value="Save" ng-show="showChangeEmail" ng-click="saveProfileEmail()"/>
+					<input type="button" value="Cancel" ng-show="showChangeEmail" ng-click="resetProfileEmail()" />
+				</div>
 			</div>
-		</div>					
-		<div class="form-group" ng-show="showChangeEmail">
-			<label for="email" class="control-label">
-				Email address:
-			</label>					
-			<input type="email" id="email" class="form-control" placeholder="Your profile needs an email address" 
-				ng-model="profileEmail" focus-on="ProfileEmail">					
 		</div>
-		<div class="form-group" ng-show="showChangeEmail">
-			<label for="confirmEmail" class="control-label">
-				Confirm Email address:
-			</label>					
-			<input type="email" id="email" class="form-control" placeholder="Confirm your email address" 
-				ng-model="profileConfirmEmail">					
+		<div class="form-group col-lg-12 col-md-12 col-sm-12">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+				<label class="control-label">
+					Connected using:
+				</label>
+				<label> {{authenticationProvider}}</label>																
+			</div>	
+			<div class="col-lg-5 col-md-5 col-sm-5">
+				<a href='javascript:void(0);' ng-click="closeAccount()">
+					Close this account</a>				
+			</div>
 		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error':!changePasswordValid}" ng-show="nativeAuthentication">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+				<label class="control-label">
+					Password:
+				</label>
+				<label> **************************</label>
+				<input type="password" class="form-control" ng-show="showChangePassword"
+					placeholder="Enter your CURRENT Password"
+					ng-model="existingProfilePassword">				
+				<input type="password" class="form-control" ng-show="showChangePassword"
+					placeholder="Enter a new Password"
+					ng-model="changeProfilePassword">
+				<input type="password" class="form-control" ng-show="showChangePassword"
+					placeholder="Confirm your new Password"
+					ng-model="confirmChangeProfilePassword">	
+				<div ng-hide="changePasswordValid" class="text-error">
+					{{changePasswordError}}
+				</div>								
+			</div>	
+			<div class="col-lg-5 col-md-5 col-sm-5">
+				<a href='javascript:void(0);' 
+					ng-click="showChangePassword=true;" 
+					ng-hide="showChangePassword">
+					Change password</a>
+				<div>
+					<input type="button" value="Save" ng-show="showChangePassword" ng-click="saveProfilePassword()"/>
+					<input type="button" value="Cancel" ng-show="showChangePassword" ng-click="resetProfilePasswordChange()" />
+				</div>
+			</div>			
+		</div>		
     </div>	
 	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>
