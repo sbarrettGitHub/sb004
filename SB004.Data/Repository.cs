@@ -1,4 +1,7 @@
-﻿namespace SB004.Data
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace SB004.Data
 {
     using System;
     using System.Collections.Generic;
@@ -87,7 +90,29 @@
                 throw;
             }
         }
-        #region Seed
+
+	    private string NewId()
+	    {
+		    const int maxSize = 8;
+			char[] chars = new char[62];
+			chars =
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+			byte[] data = new byte[1];
+			using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+			{
+				crypto.GetNonZeroBytes(data);
+				data = new byte[maxSize];
+				crypto.GetNonZeroBytes(data);
+			}
+			StringBuilder result = new StringBuilder(maxSize);
+			foreach (byte b in data)
+			{
+				result.Append(chars[b % (chars.Length)]);
+			}
+			return result.ToString();
+	    }
+
+	    #region Seed
 
         /// <summary>
         /// Persist the supplied seed and assign an ID
@@ -96,7 +121,7 @@
         /// <returns></returns>
         public ISeed Save(ISeed seed)
         {
-            seed.Id = seed.Id ?? Guid.NewGuid().ToString("N");
+            seed.Id = seed.Id ?? NewId();
             seedCollection.Save(seed.ToBsonDocument());
             return seed;
         }
@@ -140,7 +165,7 @@
         /// <returns></returns>
         public IMeme Save(IMeme meme)
         {
-            meme.Id = meme.Id ?? Guid.NewGuid().ToString("N");
+            meme.Id = meme.Id ?? NewId();
             memeCollection.Save(meme.ToBsonDocument());
             return meme;
         }
@@ -240,7 +265,7 @@
         /// <returns></returns>
         public IReport Save(IReport report)
         {
-            report.Id = report.Id ?? Guid.NewGuid().ToString("N");
+            report.Id = report.Id ?? NewId();
             reportCollection.Save(report.ToBsonDocument());
             return report;
         }
@@ -288,7 +313,7 @@
         /// <returns></returns>
         public IUser Save(IUser user)
         {
-            user.Id = user.Id ?? Guid.NewGuid().ToString("N");
+            user.Id = user.Id ?? NewId();
             userCollection.Save(user.ToBsonDocument());
             return user;
         }
@@ -423,7 +448,7 @@
         /// <returns></returns>
         public IUserComment Save(IUserComment userComment)
         {
-            userComment.Id = userComment.Id ?? Guid.NewGuid().ToString("N");
+            userComment.Id = userComment.Id ?? NewId();
             userCommentCollection.Save(userComment.ToBsonDocument());
             return userComment;
         }
@@ -431,7 +456,7 @@
         #region Image
         public IImage Save(IImage image)
         {
-            image.Id = image.Id ?? Guid.NewGuid().ToString("N");
+            image.Id = image.Id ?? NewId();
             imageCollection.Save(image.ToBsonDocument());
             return image;
         }
