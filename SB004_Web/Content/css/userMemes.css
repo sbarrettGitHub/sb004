@@ -6,6 +6,9 @@
     margin-top: 5px;
 }
 #userMemes .userImage{
-	max-width: 96px;
-	max-height: 96px;
+
+    max-width: 96px;
+    max-height: 96px;
+    min-height: 96px;
+    min-width: 96px;
 }

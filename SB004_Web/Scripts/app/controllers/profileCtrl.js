@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var profileCtrl = function ($scope, $http, dialog, securityService, $window) {
+    var profileCtrl = function ($scope, $http, $q, dialog, securityService, $window) {
         
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -38,20 +38,40 @@
         $scope.closeMe = function () {
             dialog.close();
         };        
-		$scope.reset = function(){
-            $scope.profileImageLink = "api/image/user/" + currentUser.userId;
-        }	
+        /*-----------------------------------------------------------------*/
         $scope.previewProfileImage = function(){
-            $scope.profileImageLink = $scope.changeProfileImageLink;
+            $scope.profileImageLink = $scope.changeProfileImageLink;            
         }	
+        $scope.clearProfileImage = function(){
+            $scope.profileImageLink = "content/images/avatar.gif";
+            $scope.saveProfileImage().then(function(){
+                //$scope.resetProfileImage();
+            });
+                        
+        }
 		$scope.saveProfileImage = function(){
-            $scope.showChangeImage = false;
+            var deferred = $q.defer();
+            $http({ method: 'POST', url: 'api/image/user/' + $scope.id , data: {
+                id:$scope.id,
+                imageUrl: $scope.changeProfileImageLink
+            }})
+				.success(function (data) { 
+                    $scope.showChangeImage = false;
+                    deferred.resolve();
+                }).error(function (e) {
+					alert(e);
+                    deferred.reject();
+					return;
+                });              
+            return deferred.promise;
         }
         $scope.resetProfileImage = function(){
             $scope.showChangeImage=false;
             $scope.profileImageLink = "api/image/user/" + currentUser.userId;
             $scope.changeProfileImageLink = "";
         }
+        /*-----------------------------------------------------------------*/
+        
         $scope.saveProfileName = function(){
             $scope.changeProfileNameValid = $scope.changeProfileName.length>0;
             if($scope.changeProfileName.length == 0 ){
@@ -166,6 +186,6 @@
     }
   
     // Register the controller
-    app.controller('profileCtrl', ["$scope", "$http", "dialog", "securityService", "$window", profileCtrl]);
+    app.controller('profileCtrl', ["$scope", "$http","$q",  "dialog", "securityService", "$window", profileCtrl]);
 
 })();

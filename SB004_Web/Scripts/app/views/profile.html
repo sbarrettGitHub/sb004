@@ -6,20 +6,26 @@
     <div class="dialogBody" ng-hide="waiting">
 		<div class="form-group col-lg-12 col-md-12 col-sm-12" >	
 			<div class="col-lg-7 col-md-7 col-sm-7">	
-				<img class='userImage rounded'ng-src='{{profileImageLink}}'></img>
+				<img class='userImage rounded'ng-src='profileImageLink'></img>
+				<div ng-show="showChangeImage && profileImageLink" ng-click="clearProfileImage()" class="hot" >
+					<span class="fa fa-eraser" ></span>
+					<a href='javascript:void(0);'>Clear profile image</a>
+				</div>	
+				<input type="button" value="Clear" ng-show="showChangeName" ng-click="clearProfileImage()" />
 				<input type="text" id="changeProfileImageLink" class="form-control" 
 					ng-show="showChangeImage"
 					ng-change="previewProfileImage()";
 					placeholder="http://pasteLinkToYourNewImage.here"
 					title="Paste a the URL to the new image you would like to use for your profile here."
-					ng-model="changeProfileImageLink">							
+					ng-model="changeProfileImageLink">		
+								
 			</div>	
 			<div id="changeProfileImage" class="col-lg-5 col-md-5 col-sm-5">					
 				<a href='javascript:void(0);'
 					ng-click="showChangeImage=true;" 
 					ng-hide="showChangeImage">Change profile image</a>
-				<div>
-					<input type="button" value="Save" ng-show="showChangeImage"  ng-click="saveProfileImage()"/>
+				<div>					
+					<input type="button" value="Save" ng-show="showChangeImage" ng-disabled="!changeProfileImageLink" ng-click="saveProfileImage()"/>
 					<input type="button" value="Cancel" ng-show="showChangeImage" ng-click="resetProfileImage()" />
 				</div>	
 			</div>		

@@ -52,7 +52,11 @@ namespace SB004.Business
             ICredentials userCredentials = repository.GetCredentials(email);
             if (userCredentials != null && PasswordHash.PasswordHash.ValidatePassword(password, userCredentials.Password))
             {
-                return repository.GetUser(userCredentials.Id, true);
+                IUser user = repository.GetUser(userCredentials.Id, true);
+	            if (user.Active)
+	            {
+		            return user;
+	            }
             }
 
             throw new InvalidEmailOrPasswordException();

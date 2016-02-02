@@ -464,6 +464,12 @@ namespace SB004.Data
         {
             return imageCollection.FindOne(Query<Image>.EQ(e => e.Id, id));
         }
-        #endregion
+
+	    public void DeleteImage(string id)
+	    {
+			imageCollection.Remove(Query.EQ("_id", id));
+	    }
+
+	    #endregion
     }
 }
