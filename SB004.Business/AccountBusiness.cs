@@ -25,6 +25,7 @@ namespace SB004.Business
                     throw new UserAlreadyRegisteredException();
                 }
             }
+            newUser.Active = true;
             return repository.Save(newUser);
         }
         public IUser SignUp(IUser newUser, ICredentials newUserCredentials)

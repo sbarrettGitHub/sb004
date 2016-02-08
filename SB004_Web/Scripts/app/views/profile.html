@@ -6,7 +6,7 @@
     <div class="dialogBody" ng-hide="waiting">
 		<div class="form-group col-lg-12 col-md-12 col-sm-12" >	
 			<div class="col-lg-7 col-md-7 col-sm-7">	
-				<img class='userImage rounded'ng-src='profileImageLink'></img>
+				<img class='userImage rounded'ng-src='{{profileImageLink}}'></img>
 				<div ng-show="showChangeImage && profileImageLink" ng-click="clearProfileImage()" class="hot" >
 					<span class="fa fa-eraser" ></span>
 					<a href='javascript:void(0);'>Clear profile image</a>
