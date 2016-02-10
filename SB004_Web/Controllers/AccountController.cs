@@ -180,26 +180,26 @@ namespace SB004.Controllers
 		/// Update the current users profile email
 		/// </summary>
 		/// <param name="id"></param>
-		/// <param name="email"></param>
+		/// <param name="details"></param>
 		/// <returns>User profile</returns>
 		[HttpPatch]
 		[Authorize]
 		[Route("{id}/email")]
-		public HttpResponseMessage UpdateProfileEmail(string id, [FromBody] string email)
+		public HttpResponseMessage UpdateProfileEmail(string id, [FromBody] AccountDetailsModel details)
 		{
-			if ((email ?? "").Length == 0)
+			if ((details.Email ?? "").Length == 0)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
 			}
 			if (User.Identity.UserId() == id)
 			{
 				IUser profile = repository.GetUser(id);
-				Domain.ICredentials credentials = repository.GetCredentials(email);
+				Domain.ICredentials credentials = repository.GetCredentials(details.Email);
 
 				if (profile != null && credentials != null)
 				{
-					profile.Email = email;
-					credentials.Email = email;
+					profile.Email = details.Email;
+					credentials.Email = details.Email;
 
 					// Save 
 					repository.Save(profile);

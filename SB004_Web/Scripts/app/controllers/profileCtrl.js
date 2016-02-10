@@ -59,7 +59,7 @@
                     $scope.showChangeImage = false;
                     deferred.resolve();
                 }).error(function (e) {
-					alert(e);
+					$window.alert(e);
                     deferred.reject();
 					return;
                 });              
@@ -89,14 +89,14 @@
                 $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/name', data: {
                     userName: $scope.changeProfileName
                 }})
-                    .success(function (data) { 
-                        $scope.showChangeName = false;
-                        $scope.profileName = $scope.changeProfileName;    
-                        deferred.resolve();
-                    }).error(function (e) {
-                        alert(e);
-                        return;
-                    });
+                .success(function (data) { 
+                    $scope.showChangeName = false;
+                    $scope.profileName = $scope.changeProfileName;    
+                    deferred.resolve();
+                }).error(function (e) {
+                    $window.alert(e);
+                    return;
+                });
                 
             }
            
@@ -128,8 +128,18 @@
                 $scope.changeProfileEmailError = "Email address hasn't changed!";
                 return;
             }
-            $scope.showChangeEmail = false;
-            $scope.profileEmail = $scope.changeProfileEmail;
+            $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/email', data: {
+                    email: $scope.changeProfileEmail
+                }})
+                .success(function (data) { 
+                    $scope.showChangeEmail = false;
+                    $scope.profileEmail = $scope.changeProfileEmail;
+                    return;
+                }).error(function (e) {
+                    $window.alert(e);
+                    return;
+                });
+            
         }
         $scope.resetProfileEmail = function(){
             $scope.changeProfileEmailValid = true;
