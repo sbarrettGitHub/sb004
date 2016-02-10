@@ -22,8 +22,8 @@
         $scope.changeProfileNameValid = true;
         
         $scope.profileEmail = currentUser.profile.email;
-        $scope.changeProfileEmail = currentUser.profile.email;
-        $scope.confirmChangeProfileEmail= currentUser.profile.email;
+        $scope.changeProfileEmail = ""
+        $scope.confirmChangeProfileEmail= "";
         $scope.changeProfileEmailValid = true;
         $scope.changeProfileEmailError = "";
         $scope.showChangeEmail = false;
@@ -85,7 +85,19 @@
                 return;
             }            
             if($scope.changeProfileNameValid){
-                $scope.profileName = $scope.changeProfileName;    
+                var deferred = $q.defer();
+                $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/name', data: {
+                    userName: $scope.changeProfileName
+                }})
+                    .success(function (data) { 
+                        $scope.showChangeName = false;
+                        $scope.profileName = $scope.changeProfileName;    
+                        deferred.resolve();
+                    }).error(function (e) {
+                        alert(e);
+                        return;
+                    });
+                
             }
            
         }

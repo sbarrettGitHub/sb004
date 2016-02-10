@@ -145,14 +145,14 @@ namespace SB004.Controllers
 		/// Update the current users profile name
 		/// </summary>
 		/// <param name="id"></param>
-		/// <param name="name"></param>
+		/// <param name="details"></param>
 		/// <returns>User profile</returns>
 		[HttpPatch]
 		[Authorize]
 		[Route("{id}/name")]
-		public HttpResponseMessage UpdateProfileName(string id, [FromBody] string name)
+		public HttpResponseMessage UpdateProfileName(string id, [FromBody] AccountDetailsModel details)
 		{
-			if ((name ?? "").Length == 0)
+			if ((details.UserName ?? "").Length == 0)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
 			}
@@ -162,7 +162,7 @@ namespace SB004.Controllers
 
 				if (profile != null)
 				{
-					profile.UserName = name;
+					profile.UserName = details.UserName;
 
 					// Save 
 					repository.Save(profile);
