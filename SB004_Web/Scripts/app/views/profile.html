@@ -68,6 +68,9 @@
 				<input type="email" class="form-control" ng-show="showChangeEmail"
 					placeholder="Confirm your new email address"
 					ng-model="confirmChangeProfileEmail">	
+				<input type="password" class="form-control" ng-show="showChangeEmail"
+					placeholder="Enter your Password to confirm action"
+					ng-model="changeProfileEmailPasswordVerification">		
 				<div ng-hide="changeProfileEmailValid" class="text-error">
 					{{changeProfileEmailError}}
 				</div>													

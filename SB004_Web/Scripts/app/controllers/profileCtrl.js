@@ -106,6 +106,7 @@
            $scope.changeProfileName = currentUser.userName;
            $scope.changeProfileNameValid = true;
         }
+        /*-----------------------------------------------------------------*/        
         $scope.saveProfileEmail = function(){
             $scope.changeProfileEmailValid = true;
             if($scope.changeProfileEmail.length == 0 ){
@@ -116,6 +117,11 @@
             if($scope.confirmChangeProfileEmail.length == 0 ){
                 $scope.changeProfileEmailValid = false;
                 $scope.changeProfileEmailError = "Please confirm new email address";
+                return;
+            }
+            if($scope.changeProfileEmailPasswordVerification.length == 0 ){
+                $scope.changeProfileEmailValid = false;
+                $scope.changeProfileEmailError = "Please enter your password to confirm new email address";
                 return;
             }
             if($scope.changeProfileEmail != $scope.confirmChangeProfileEmail){
@@ -129,7 +135,8 @@
                 return;
             }
             $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/email', data: {
-                    email: $scope.changeProfileEmail
+                    email: $scope.changeProfileEmail,
+                    password: $scope.changeProfileEmailPasswordVerification
                 }})
                 .success(function (data) { 
                     $scope.showChangeEmail = false;

@@ -194,21 +194,38 @@ namespace SB004.Controllers
 			if (User.Identity.UserId() == id)
 			{
 				IUser profile = repository.GetUser(id);
-				Domain.ICredentials credentials = repository.GetCredentials(details.Email);
-
-				if (profile != null && credentials != null)
+				if (profile != null)
 				{
-					profile.Email = details.Email;
-					credentials.Email = details.Email;
+					// User must supply a password to change his email address. Valid password and existing email
 
-					// Save 
-					repository.Save(profile);
-					repository.Save(credentials);
+					try
+					{
+						accountBusiness.SignIn(profile.Email, details.Password);
+					}
+					catch (InvalidEmailOrPasswordException)
+					{
 
-					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
-					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
-					return response;
+						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+					}
+
+
+					Domain.ICredentials credentials = repository.GetCredentials(profile.Email);
+
+					if (credentials != null)
+					{
+						profile.Email = details.Email;
+						credentials.Email = details.Email;
+
+						// Save 
+						repository.Save(profile);
+						repository.Save(credentials);
+
+						HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+						response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+						return response;
+					}
 				}
+				
 				// No such user
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 			}
