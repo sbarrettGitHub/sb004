@@ -34,6 +34,11 @@
         $scope.changePasswordValid = true;
         $scope.changePasswordError = "";
         
+        $scope.closeAccountPasswordVerification = "";
+        $scope.closeAccountValid = true;
+        $scope.closeAccountError = "";
+        $scope.showCloseAccount = false;
+        
 		/*Control buttons*/
         $scope.closeMe = function () {
             dialog.close();
@@ -199,9 +204,31 @@
         
         $scope.closeAccount= function(){
             if($window.confirm("If you continue with this option, you will no longer be able to sign into SB004.\n\n *** This action cannot be undone. **** \n\n Are you sure you wish to close this account? ")){
+                $scope.closeAccountValid = true;
+                if($scope.closeAccountPasswordVerification.length == 0 ){
+                    $scope.closeAccountValid = false;
+                    $scope.closeAccountError = "Please enter your password to confirm that you wish to close your account";
+                    return;
+                }
+                $http({ method: 'POST', url: 'api/account/' + $scope.id + '/close', data: {
+                        email: currentUser.profile.email,
+                        password: $scope.closeAccountPasswordVerification
+                    }})
+                    .success(function (data) { 
+                        $scope.showCloseAccount = false;
+                        currentUser.signOut();
+                        return;
+                    }).error(function (e) {
+                        $window.alert(e);
+                        $scope.closeAccountValid = false;
+                        $scope.showCloseAccount = false;
+                        $scope.closeAccountError = "An error occurred closing this account!";
+                        return;
+                    });
                 
             }
         }
+        
 		function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
