@@ -86,31 +86,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group col-lg-12 col-md-12 col-sm-12">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-				<label class="control-label">
-					Connected using:
-				</label>
-				<label> {{authenticationProvider}}</label>	
-				<input type="password" class="form-control" ng-show="showCloseAccount"
-					placeholder="Enter your Password to confirm action"
-					ng-model="closeAccountPasswordVerification">
-					{{closeAccountError}}
-				<div ng-hide="closeAccountValid" class="text-error">
-						{{changeProfileEmailError}}
-				</div>																				
-			</div>	
-			<div class="col-lg-5 col-md-5 col-sm-5">
-				<a href='javascript:void(0);'  
-					ng-click="showCloseAccount=true;" 
-					ng-hide="showCloseAccount">
-					Close this Account</a>
-				<div>
-					<input type="button" value="Close Account" ng-show="showCloseAccount" ng-click="closeAccount()"/>
-					<input type="button" value="Cancel" ng-show="showCloseAccount" ng-click="showCloseAccount=false;" />
-				</div>			
-			</div>
-		</div>
 		<div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error':!changePasswordValid}" ng-show="nativeAuthentication">
 			<div class="col-lg-7 col-md-7 col-sm-7">
 				<label class="control-label">
@@ -140,7 +115,32 @@
 					<input type="button" value="Cancel" ng-show="showChangePassword" ng-click="resetProfilePasswordChange()" />
 				</div>
 			</div>			
-		</div>		
+		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+				<label class="control-label">
+					Connected using:
+				</label>
+				<label> {{authenticationProvider}}</label>	
+				<input type="password" class="form-control" ng-show="showCloseAccount"
+					placeholder="Enter your Password to confirm action"
+					ng-model="closeAccountPasswordVerification">
+					{{closeAccountError}}
+				<div ng-hide="closeAccountValid" class="text-error">
+						{{changeProfileEmailError}}
+				</div>																				
+			</div>	
+			<div class="col-lg-5 col-md-5 col-sm-5">
+				<a href='javascript:void(0);'  
+					ng-click="showCloseAccount=true;" 
+					ng-hide="showCloseAccount">
+					Close this Account</a>
+				<div>
+					<input type="button" value="Close Account" ng-show="showCloseAccount" ng-click="closeAccount()"/>
+					<input type="button" value="Cancel" ng-show="showCloseAccount" ng-click="showCloseAccount=false;" />
+				</div>			
+			</div>
+		</div>				
     </div>	
 	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Close" ng-click="closeMe()" title="Close this page"/>

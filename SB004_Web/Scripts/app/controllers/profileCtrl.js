@@ -62,6 +62,7 @@
                 imageUrl: $scope.changeProfileImageLink
             }})
 				.success(function (data) { 
+                    $window.alert("Your profile image has been changed!");       
                     $scope.showChangeImage = false;
                     deferred.resolve();
                 }).error(function (e) {
@@ -96,6 +97,7 @@
                     userName: $scope.changeProfileName
                 }})
                 .success(function (data) { 
+                    $window.alert("Your profile name has been changed!");       
                     $scope.showChangeName = false;
                     $scope.profileName = $scope.changeProfileName;    
                     deferred.resolve();
@@ -145,11 +147,13 @@
                     password: $scope.changeProfileEmailPasswordVerification
                 }})
                 .success(function (data) { 
+                    $window.alert("Your email address has been changed!");       
                     $scope.showChangeEmail = false;
                     $scope.profileEmail = $scope.changeProfileEmail;
                     return;
                 }).error(function (e) {
-                    $window.alert(e);
+                    $scope.changeProfileEmailValid = false;
+                    $scope.changeProfileEmailError = "Could not change email. Invalid credentials or unknown user!";
                     return;
                 });
             
@@ -199,8 +203,9 @@
                     password:$scope.existingProfilePassword,
                     newPassword: $scope.changeProfilePassword
                 }})
-                .success(function (data) {                    
-                    $scope.showChangePassword = false;
+                .success(function (data) {  
+                    $window.alert("Your password has been changed!");                  
+                    $scope.resetProfilePasswordChange();
                 }).error(function (e) {
                     $scope.changePasswordValid = false;
                     $scope.changePasswordError = "Cannot update password. Invalid user credentials or user unknown. ";
@@ -230,8 +235,10 @@
                         password: $scope.closeAccountPasswordVerification
                     }})
                     .success(function (data) { 
+                        $window.alert("Your account has been closed!");       
                         $scope.showCloseAccount = false;
-                        currentUser.signOut();
+                        securityService.signOut();
+                        $scope.closeMe();
                         return;
                     }).error(function (e) {
                         $window.alert(e);

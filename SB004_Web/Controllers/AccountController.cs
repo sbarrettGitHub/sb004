@@ -196,12 +196,6 @@ namespace SB004.Controllers
 				IUser profile = repository.GetUser(id);
 				if (profile != null)
 				{
-					// Ensure the email of the user logged in is being used
-					if (profile.Email != details.Email)
-					{
-						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
-					}
-
 					// User must supply a password to change his email address. Valid password and existing email
 					try
 					{
