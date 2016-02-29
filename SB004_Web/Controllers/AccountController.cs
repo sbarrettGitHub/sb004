@@ -196,8 +196,13 @@ namespace SB004.Controllers
 				IUser profile = repository.GetUser(id);
 				if (profile != null)
 				{
-					// User must supply a password to change his email address. Valid password and existing email
+					// Ensure the email of the user logged in is being used
+					if (profile.Email != details.Email)
+					{
+						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+					}
 
+					// User must supply a password to change his email address. Valid password and existing email
 					try
 					{
 						accountBusiness.SignIn(profile.Email, details.Password);
@@ -231,6 +236,63 @@ namespace SB004.Controllers
 			}
 			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
 		}
+		/// <summary>
+		/// Update the current users profile email
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="details"></param>
+		/// <returns>User profile</returns>
+		[HttpPatch]
+		[Authorize]
+		[Route("{id}/password")]
+		public HttpResponseMessage ChangePassword(string id, [FromBody] AccountDetailsModel details)
+		{
+			if ((details.Email ?? "").Length == 0 || (details.Password ?? "").Length == 0 || (details.NewPassword ?? "").Length == 0)
+			{
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+			}
+			if (User.Identity.UserId() == id)
+			{
+				IUser profile = repository.GetUser(id);
+				if (profile != null)
+				{
+					// Ensure the email of the user logged in is being used
+					if (profile.Email != details.Email)
+					{
+						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+					}
+					// User must supply existing password to change his email address. Valid password and existing email
+					try
+					{
+						accountBusiness.SignIn(profile.Email, details.Password);
+					}
+					catch (InvalidEmailOrPasswordException)
+					{
+
+						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+					}
+
+					// Retrieve the user credentials
+					Domain.ICredentials credentials = repository.GetCredentials(profile.Email);
+
+					if (credentials != null)
+					{
+						credentials.Password = details.NewPassword;
+
+						// Save user credentials
+						accountBusiness.ChangePassword(profile, credentials);
+
+						HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+						response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+						return response;
+					}
+				}
+
+				// No such user or user has no credentials
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+			}
+			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+		}		
 		/// <summary>
 		/// Update the current users profile email
 		/// </summary>

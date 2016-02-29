@@ -62,5 +62,19 @@ namespace SB004.Business
 
             throw new InvalidEmailOrPasswordException();
         }
+		/// <summary>
+		/// Change teh credentials of the spuulied user
+		/// </summary>
+		/// <param name="user"></param>
+		/// <param name="newCredentials"></param>
+		public void ChangePassword(IUser user, ICredentials newCredentials)
+	    {
+			// Create a Hash and unique salt for the new password
+			newCredentials.Password = PasswordHash.PasswordHash.CreateHash(newCredentials.Password);
+			newCredentials.Id = user.Id;
+
+			// Save the credentials
+			repository.Save(newCredentials);
+	    }
     }
 }

@@ -7,5 +7,6 @@ namespace SB004.Business
         IUser CreateNewUser(IUser newUser);
         IUser SignUp(IUser newUser, ICredentials newUserCredentials);
         IUser SignIn(string email, string password);
+	    void ChangePassword(IUser user, ICredentials newCredentials);
     }
 }

@@ -33,6 +33,7 @@
         $scope.confirmChangeProfilePassword = "";
         $scope.changePasswordValid = true;
         $scope.changePasswordError = "";
+        $scope.showChangePassword = false;
         
         $scope.closeAccountPasswordVerification = "";
         $scope.closeAccountValid = true;
@@ -159,6 +160,7 @@
             $scope.changeProfileEmail = currentUser.profile.email;
             $scope.confirmChangeProfileEmail= currentUser.profile.email;
         }
+        /*-----------------------------------------------------------------*/       
         $scope.saveProfilePassword = function(){
             $scope.changePasswordValid = true;
             if($scope.existingProfilePassword.length == 0 ){
@@ -191,8 +193,21 @@
                 $scope.changePasswordError = "New password needs at lease 1 digit!";
                 return;
             }             
-        
-            $scope.showChangePassword = false;
+            if($scope.changeProfilePassword){
+                $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/password', data: {
+                    email: currentUser.profile.email,
+                    password:$scope.existingProfilePassword,
+                    newPassword: $scope.changeProfilePassword
+                }})
+                .success(function (data) {                    
+                    $scope.showChangePassword = false;
+                }).error(function (e) {
+                    $scope.changePasswordValid = false;
+                    $scope.changePasswordError = "Cannot update password. Invalid user credentials or user unknown. ";
+                    return;
+                });
+                
+            }
         }
         $scope.resetProfilePasswordChange = function(){
             $scope.changePasswordValid = true;
@@ -201,7 +216,7 @@
             $scope.changeProfilePassword= "";
             $scope.confirmChangeProfilePassword= "";
         }
-        
+        /*-----------------------------------------------------------------*/       
         $scope.closeAccount= function(){
             if($window.confirm("If you continue with this option, you will no longer be able to sign into SB004.\n\n *** This action cannot be undone. **** \n\n Are you sure you wish to close this account? ")){
                 $scope.closeAccountValid = true;
@@ -221,7 +236,6 @@
                     }).error(function (e) {
                         $window.alert(e);
                         $scope.closeAccountValid = false;
-                        $scope.showCloseAccount = false;
                         $scope.closeAccountError = "An error occurred closing this account!";
                         return;
                     });
