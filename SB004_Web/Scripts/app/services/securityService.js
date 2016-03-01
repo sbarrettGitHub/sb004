@@ -281,6 +281,15 @@
 		var getCurrentUser = function(){
 			return currentUser;
 		}
+		var updateUserName = function(newUserName){
+			currentUser.userName = newUserName;
+			if( $window.Storage && getCurrentUser().isAuthenticated == true){
+				// Force a sign in next visit
+				$window.sessionStorage.removeItem( 'SB004.authorizationData');
+			}
+			// Broadcast that the user has updated his user name
+			$rootScope.$broadcast('account.newUserName', newUserName);
+		}
         return {
             logInDialog:showLogInDialog,			
 			signIn:signIn,
@@ -293,7 +302,8 @@
 			unfollow: unfollow,
 			isFollowing: isFollowing,
 			testIsAuthenticated:testIsAuthenticated,
-			signInOptions:signInOptions
+			signInOptions:signInOptions,
+			updateUserName:updateUserName 
         }
     }
 

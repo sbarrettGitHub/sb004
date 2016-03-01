@@ -121,7 +121,12 @@
 		testAuthentication();
 	});
 	
-	// Test if the user is signed in
+		// Set up the context when the user logs out
+	$rootScope.$on('account.newUserName', function (event, data) {
+		$scope.userName = data;
+	});
+	
+	// Test if the user is signed in account.newUserName
 	testAuthentication();
 	/*-----------------------------------------------------------------*/
   }

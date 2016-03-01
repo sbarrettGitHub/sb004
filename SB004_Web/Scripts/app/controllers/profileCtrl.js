@@ -99,7 +99,8 @@
                 .success(function (data) { 
                     $window.alert("Your profile name has been changed!");       
                     $scope.showChangeName = false;
-                    $scope.profileName = $scope.changeProfileName;    
+                    $scope.profileName = $scope.changeProfileName; 
+                    securityService.updateUserName($scope.profileName); 
                     deferred.resolve();
                 }).error(function (e) {
                     $window.alert(e);
@@ -241,9 +242,7 @@
                         $scope.closeMe();
                         return;
                     }).error(function (e) {
-                        $window.alert(e);
-                        $scope.closeAccountValid = false;
-                        $scope.closeAccountError = "An error occurred closing this account!";
+                        $window.alert("Your account has not been closed! Please check your password."); 
                         return;
                     });
                 
