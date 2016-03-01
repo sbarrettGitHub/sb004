@@ -339,21 +339,29 @@ namespace SB004.Controllers
 		[Route("RegisterNewUser")]
 		public IHttpActionResult RegisterNewUser(NewAccountModel newAccount)
 		{
-			IUser newUser = accountBusiness.SignUp(new User
+			try
 			{
-				UserName = newAccount.UserName,
-				Email = newAccount.Email
-			},
-			new Credentials
-			{
-				Email = newAccount.Email,
-				Password = newAccount.Password
-			});
-			//generate access token response
-			var accessTokenResponse = GenerateLocalAccessTokenResponse(newUser);
+				IUser newUser = accountBusiness.SignUp(new User
+				{
+					UserName = newAccount.UserName,
+					Email = newAccount.Email
+				},
+				new Credentials
+				{
+					Email = newAccount.Email,
+					Password = newAccount.Password
+				});
+				//generate access token response
+				var accessTokenResponse = GenerateLocalAccessTokenResponse(newUser);
 
-			// Return success with the bearer token for authorized access
-			return Ok(new { token = accessTokenResponse, profile = newUser });
+				// Return success with the bearer token for authorized access
+				return Ok(new { token = accessTokenResponse, profile = newUser });
+			}
+			catch (UserAlreadyRegisteredException)
+			{
+
+				return BadRequest("A user with this email address is already registered.");
+			}
 
 		}
 		[AllowAnonymous]

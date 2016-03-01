@@ -151,8 +151,8 @@
                 addUserProfileToStorage(data)
                 deferred.resolve();
             }).
-            error(function () {
-                deferred.reject();
+            error(function (data, status, headers, config) {
+                deferred.reject(data, status, headers, config);
             });
 
             return deferred.promise;

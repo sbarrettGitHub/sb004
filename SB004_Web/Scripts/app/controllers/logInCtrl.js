@@ -68,9 +68,9 @@
 			securityService.signUp($scope.nameSignUp, $scope.emailSignUp, $scope.passwordSignUp)
                     .then(function() {
                         dialog.close("Success");
-                    })
-                    .catch(function(e) {
-                        dialog.close("Fail");
+                    },
+					function(data, status, headers, config) {
+						$window.alert("Failed to register user! \n" + data.message)
                     });
 		}
 		// --------------------------------------------------------------

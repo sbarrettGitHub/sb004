@@ -630,3 +630,6 @@ height:325px;*/
 	font-weight: bold;
     color: cadetblue !important;
 }
+#searchContainer{
+	padding-left: 10px;
+}
