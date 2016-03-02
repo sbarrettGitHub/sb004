@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq;
+
 namespace SB004.Controllers
 {
 	using System;
@@ -98,7 +100,7 @@ namespace SB004.Controllers
 					// Save 
 					repository.Save(profile);
 
-					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, repository.GetUser(id, true));
 					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
 					return response;
 				}
@@ -128,12 +130,12 @@ namespace SB004.Controllers
 					}
 
 					// Remove the id 
-					profile.FollowingIds.RemoveAll(x => x.Id == id);
+					profile.FollowingIds.RemoveAll(x => x.Id == followedId);
 
 					// Save 
 					repository.Save(profile);
 
-					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, repository.GetUser(id, true));
 					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
 					return response;
 				}

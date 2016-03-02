@@ -136,6 +136,26 @@
 			  $window.alert(error.message );
 			}			
 		}
+		function updateUserProfileInStorage(updatedProfileData){	
+			try{
+				if( $window.Storage ){
+					var storageData = $window.sessionStorage.getItem( 'SB004.authorizationData' );
+					if(storageData){
+						var authData = $window.JSON.parse(storageData);
+						// Update the profile data
+						authData.userData.profile = updatedProfileData;	
+						
+						$window.sessionStorage.setItem( 'SB004.authorizationData', $window.JSON.stringify(authData));												
+					}
+					
+					
+					// Broadcast that the user has updated profile
+					$rootScope.$broadcast('account.profileUpdate', null);
+				} 
+			}catch( error ){
+			  $window.alert(error.message );
+			}			
+		}		
 		var signUp = function(userName, email, password){
 			var deferred = $q.defer();
 			$http( { 
@@ -207,6 +227,8 @@
 						// Follow
 						followUnfollowUser(followId, true)
 						.then(function(data){
+							// Broadcast that the user has updated his following list
+							$rootScope.$broadcast('account.followingUpdate', null);
 							deferred.resolve(data);
 						});
 					});
@@ -214,6 +236,8 @@
 				// Follow
 				followUnfollowUser(followId, true)
 				.then(function(data){
+					// Broadcast that the user has updated his following list
+					$rootScope.$broadcast('account.followingUpdate', null);
 					deferred.resolve(data);
 				});
 			}
@@ -227,7 +251,7 @@
 					.then(function(){
 						// Unfollow
 						followUnfollowUser(followId, false)
-						.then(function(data){
+						.then(function(data){						
 							deferred.resolve(data);
 						});
 					});
@@ -246,7 +270,9 @@
 			if(follow == true){
 				$http({ method: 'PATCH', url:'api/Account/' + currentUser.userId + '/follow/' + followId, data: {}}).
 				success(function (data) {       
-					currentUser.profile = data;           
+					// Refesh the current user profile				
+					currentUser.profile = data; 
+					updateUserProfileInStorage(data);  
 					deferred.resolve(data);
 				}).
 				error(function () {
@@ -255,7 +281,9 @@
 			}else{
 				$http({ method: 'PATCH', url:'api/Account/' + currentUser.userId + '/unfollow/' + followId, data: {}}).
 				success(function (data) {       
-					currentUser.profile = data;           
+					// Refesh the current user profile				
+					currentUser.profile = data;   
+					updateUserProfileInStorage(data);    
 					deferred.resolve(data);
 				}).
 				error(function () {

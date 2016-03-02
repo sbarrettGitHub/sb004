@@ -61,9 +61,11 @@
 			
 		}
 		function showFollowing(){
-			
-			$scope.following =securityService.getCurrentUser().profile.following;
-			
+			if(securityService.getCurrentUser()){
+				if(securityService.getCurrentUser().profile.following){
+					$scope.following = securityService.getCurrentUser().profile.following;
+				}
+			}		
 		}
 
 		function testAuthentication(){
@@ -72,6 +74,7 @@
 			.then(function(isAuthenticated){
 				if(isAuthenticated===true){
 					$scope.switchView("following");
+					showFollowing();
 				}else{
 					$scope.switchView("trending");
 				}
@@ -87,7 +90,7 @@
 		$rootScope.$on('account.signOut', function (event, data) {
 			testAuthentication();
 		});
-		
+
 		// Check if the user is authenticated, if so swap between trending and following
 		testAuthentication();
 		/*-----------------------------------------------------------------*/
