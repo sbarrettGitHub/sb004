@@ -5,10 +5,51 @@
     font-size: smaller;
     margin-top: 5px;
 }
+#userMemes .userImageContainer{
+
+    background-color:#F8F8F8;
+    width: 200px;
+    height: 200px;
+    padding:37px;
+}
 #userMemes .userImage{
 
-    max-width: 96px;
-    max-height: 96px;
-    min-height: 96px;
-    min-width: 96px;
+    max-width: 125px;
+    max-height: 125px;
+    min-height: 125px;
+    min-width: 125px;
+}
+#userMemes .userNameContainer{
+    font-size: 4em; 
+    width: 80%;
+    height: 100px;
+    margin-left:15px;
+}
+#userMemes .userQuoteContainer{
+    font-size: 1.5em; 
+    width: 80%;
+    height: 100px;
+    margin-left:15px;
+    overflow: auto;
+    font-style: italic;
+    color: silver;
+}
+
+#userMemes .userCard {
+    width: 98%;
+    height: 300px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+	background-color: white;
+    display: table;
+}
+.userCardContainer{  
+	
+    height: 300px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.userCardContainer  .userCardContainerOptionsInfo{
+	font-size: smaller;
+	margin-top:15px;
 }

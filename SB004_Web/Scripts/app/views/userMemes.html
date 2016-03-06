@@ -1,9 +1,22 @@
 <div ng-controller="userMemesCtrl">
 	<div id="userMemes" class="container searchResultsContainer rounded col-md-12 col-sm-12">
-		<div class="pull-left card userCard rounded">
-			<div class="userCardContainer">          
-				<div class="userCardContainerUser">
+		<div class="pull-left card userCard rounded col-lg-12 col-md-12 col-sm-12">
+			<div class="userCardContainer">
+				<div class="userImageContainer rounded pull-left">
 					<img class='userImage rounded' ng-src='api/image/user/{{userId}}'></img>
+				</div>  
+				<div class="userNameContainer rounded pull-left">
+					<div>{{user.userName}}</div>
+				</div>  
+				<div class="userQuoteContainer rounded pull-left">
+					<div>
+						<span class="fa fa-quote-left"></span>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 	<!--voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
+						<span class="fa fa-quote-right"></span>
+					</div>
+				</div>         
+				<!--div class="userCardContainerUser">
+					
 					<div id="">{{user.userName}}</div>
 					<div class="userStats">
 						<span  title="Number of views {{user.userName}} has received">
@@ -30,7 +43,7 @@
 						<i class="fa fa-minus"></i><span>&nbsp; Unfollow</span>
 					</button>					
 					<div class="userCardContainerOptionsInfo" ng-show="isFollowing">You are currently following {{user.userName}}</div>
-				</div>
+				</div-->
 			</div>
 		</div>
 		<div ng-repeat="meme in memes" class="pull-left">			

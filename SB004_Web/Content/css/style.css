@@ -443,28 +443,7 @@ height:325px;*/
 .card {
 	background-color: white;
 }
-.userCard {
-    width: 400px;
-    height: 300px;
-    margin-bottom: 15px;
-    margin-left: 15px;
-	background-color: white;
-    display: table;
-}
-.userCardContainer{  
-	font-size: 1.5em;
-    height: 300px;
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-}
-.userCardContainer  .userCardContainerOptionsInfo{
-	font-size: smaller;
-	margin-top:15px;
-}
+
 .option{
 	border-radius:3px;
 	border: 1px solid rgb(200,200,200);
