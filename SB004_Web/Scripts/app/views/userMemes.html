@@ -5,16 +5,17 @@
 				<div class="userImageContainer rounded pull-left">
 					<img class='userImage rounded' ng-src='api/image/user/{{userId}}'></img>
 				</div>  
-				<div class="userNameContainer rounded pull-left">
+				<div class="userNameContainer rounded pull-left col-lg-9 col-md-9 col-sm-9">
 					<div>{{user.userName}}</div>
 				</div>  
-				<div class="userQuoteContainer rounded pull-left">
+				<div class="userQuoteContainer rounded pull-left col-lg-9 col-md-12 col-sm-12">
 					<div>
 						<span class="fa fa-quote-left"></span>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 	<!--voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
 						<span class="fa fa-quote-right"></span>
 					</div>
-				</div>         
+				</div>  
+							       
 				<!--div class="userCardContainerUser">
 					
 					<div id="">{{user.userName}}</div>
@@ -46,6 +47,38 @@
 				</div-->
 			</div>
 		</div>
+		<div class="userStats col-lg-12 col-md-12 col-sm-12">
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span  title="Number of posts {{user.userName}} has added">
+					<i class="fa fa-plus"></i>{{0 | nearestK}} Posts
+				</span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span  title="Number of posts of {{user.userName}} that have been reposted">
+					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} reposts
+				</span>
+			</div>				
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span  title="Number of views {{user.userName}} has received">
+					<i class="fa fa-eye"></i>{{user.views | nearestK}} Views
+				</span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span title="Number of likes {{user.userName }} has received">
+					<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}} Likes
+				</span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span title="Number of replies {{user.userName}} has received to posts">
+					<i class="fa fa-reply" ></i>{{user.replies | nearestK}} Replies
+				</span>
+			</div>	
+			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+				<span title="Number of comments {{user.userName}} has received to posts">
+					<i class="fa fa-comments-o" ></i>{{user.comments | nearestK}} Comments
+				</span>
+			</div>							
+		</div>	
 		<div ng-repeat="meme in memes" class="pull-left">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
