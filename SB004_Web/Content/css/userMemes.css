@@ -7,10 +7,11 @@
 }
 #userMemes .userImageContainer{
 
-    background-color:#F8F8F8;
+    background-color:white;
     width: 200px;
     height: 200px;
     padding:37px;
+    border:3px solid #F8F8F8;
 }
 #userMemes .userImage{
 
