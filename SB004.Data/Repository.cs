@@ -26,6 +26,7 @@ namespace SB004.Data
         private readonly MongoCollection<Report> reportCollection;
         private readonly MongoCollection<Credentials> userCredentialCollection;
         private readonly MongoCollection<Image> imageCollection;
+        private readonly MongoCollection<TimeLine> timeLineCollection;
         public Repository()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -49,6 +50,8 @@ namespace SB004.Data
             userCredentialCollection = database.GetCollection<Credentials>("userCredential");
 
             imageCollection = database.GetCollection<Image>("image");
+
+            timeLineCollection = database.GetCollection<TimeLine>("timeLine");
             try
             {
                 if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
@@ -82,6 +85,10 @@ namespace SB004.Data
                 if (!BsonClassMap.IsClassMapRegistered(typeof(Image)))
                 {
                     BsonClassMap.RegisterClassMap<Image>();
+                }
+                if (!BsonClassMap.IsClassMapRegistered(typeof(TimeLine)))
+                {
+                    BsonClassMap.RegisterClassMap<TimeLine>();
                 }
             }
             catch (Exception)
@@ -453,6 +460,7 @@ namespace SB004.Data
             return userComment;
         }
         #endregion
+       
         #region Image
         public IImage Save(IImage image)
         {
@@ -471,5 +479,18 @@ namespace SB004.Data
 	    }
 
 	    #endregion
+
+        #region Time line
+        /// <summary>
+        /// Add a time line entry
+        /// </summary>
+        /// <param name="userComment"></param>
+        /// <returns></returns>
+        public ITimeLine Save(ITimeLine timeLine)
+        {
+            timeLineCollection.Save(timeLine.ToBsonDocument());
+            return timeLine;
+        }
+        #endregion
     }
 }

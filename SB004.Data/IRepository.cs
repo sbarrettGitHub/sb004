@@ -49,5 +49,7 @@
         IImage GetImage(string id);
 	    
 		void DeleteImage(string id);
+
+        ITimeLine Save(ITimeLine timeLine);
     }
 }

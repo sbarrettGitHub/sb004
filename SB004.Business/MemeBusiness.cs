@@ -88,11 +88,15 @@
         public IMeme SaveMeme(IMeme meme)
         {
             long userCommentCount = 0;
-
+            bool isNew = false;
             // Get the number of user comments
             if (meme.Id != null)
             {
                 userCommentCount = repository.GetUserCommentCount(meme.Id);
+            }
+            else 
+            {
+                isNew = true;
             }
 
             // Meme is top leve if it has no reposnseToId
@@ -119,8 +123,21 @@
             }
 
             // Save the meme
-            return repository.Save(meme);
+            var savedMeme = repository.Save(meme);
 
+            // Update the users time line
+            if (isNew) 
+            {
+                repository.Save(new TimeLine
+                {
+                    UserId = savedMeme.CreatedByUserId,
+                    DateOfEntry = DateTime.Now,
+                    EntryType = TimeLineEntry.Post,
+                    TimeLineRefId = savedMeme.Id
+                });
+            }
+            // Add to the time line
+            return savedMeme;
         }
 
         /// <summary>

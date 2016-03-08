@@ -36,38 +36,38 @@
 		</div>
 		<div class="userStatOptions col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='posts') }" ng-click="statOptionSelected='posts'">
-				<span  title="Number of posts {{user.userName}} has added">
-					<i class="fa fa-plus"></i>{{0 | nearestK}} <span class="hidden-sm hidden-xs">Posts</span>
+				ng-class="{ 'selected': (statOptionSelected=='feed') }" ng-click="statOptionSelected='feed'">
+				<span  title="All recent {{user.userName}} posts, reposts, likes, replies and comments">
+					<i class="fa fa-rss"></i><span class="hidden-sm hidden-xs">Feed</span>
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='reposts') }" ng-click="statOptionSelected='reposts'">
-				<span  title="Number of posts of {{user.userName}} that have been reposted">
-					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} <span class="hidden-sm hidden-xs">Reposts</span>
+				ng-class="{ 'selected': (statOptionSelected=='posts') }" ng-click="statOptionSelected='posts'">
+				<span  title="Posts by {{user.userName}}">
+					<i class="fa fa-plus"></i>{{user.posts | nearestK}} <span class="hidden-sm hidden-xs">Posts</span>
 				</span>
 			</div>				
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='views') }"  ng-click="statOptionSelected='views'">
-				<span  title="Number of views {{user.userName}} has received">
-					<i class="fa fa-eye"></i>{{user.views | nearestK}} <span class="hidden-sm hidden-xs">Views</span>
+				ng-class="{ 'selected': (statOptionSelected=='reposts') }" ng-click="statOptionSelected='reposts'">
+				<span  title="Reposts by {{user.userName}}">
+					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} <span class="hidden-sm hidden-xs">Reposts</span>
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='likes') }" ng-click="statOptionSelected='likes'">
-				<span title="Number of likes {{user.userName }} has received">
+				<span title="Posts that {{user.userName }} has liked">
 					<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}} <span class="hidden-sm hidden-xs">Likes</span>
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='replies') }">
-				<span title="Number of replies {{user.userName}} has received to posts" ng-click="statOptionSelected='replies'">
+				<span title="Replies {{user.userName }} has made to other posts" ng-click="statOptionSelected='replies'">
 					<i class="fa fa-reply" ></i>{{user.replies | nearestK}} <span class="hidden-sm hidden-xs">Replies</span>
 				</span>
 			</div>	
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='comments') }" ng-click="statOptionSelected='comments'">
-				<span title="Number of comments {{user.userName}} has received to posts">
+				<span title="Posts that {{user.userName }} has commented on">
 					<i class="fa fa-comments-o" ></i>{{user.comments | nearestK}} <span class="hidden-sm hidden-xs">Comments</span>
 				</span>
 			</div>							
