@@ -8,6 +8,7 @@
 		$scope.user = {};
 		$scope.allowGetMoreMemes = false;
 		$scope.isFollowing = false;
+		$scope.statOptionSelected ="posts";
 		var constants = {
 			memeViewingBlockCount:10
 		};

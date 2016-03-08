@@ -2,80 +2,73 @@
 	<div id="userMemes" class="container searchResultsContainer rounded col-md-12 col-sm-12">
 		<div class="pull-left card userCard rounded col-lg-12 col-md-12 col-sm-12">
 			<div class="userCardContainer">
+				<div class="userName pull-left hidden-lg hidden-md col-sm-12 col-xs-12">{{user.userName}}</div>
 				<div class="userImageContainer rounded pull-left">
 					<img class='userImage rounded' ng-src='api/image/user/{{userId}}'></img>
+					
+				</div>
+				<div class="userNameContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
+					<div class="userName col-lg-10 col-md-10 col-sm-6 ">{{user.userName}}</div>
+					<div class="pull-left col-lg-2 col-md-2">
+						<button type="button" class="btn btn-default following" title="Click here to follow {{user.userName}}"
+								ng-show="!isFollowing" ng-click="follow()">
+							<i class="fa fa-plus"></i>
+							Follow
+						</button>
+						<button type="button" class="btn btn-default following" title="Click here to stop following {{user.userName}}" 
+								ng-show="isFollowing" ng-click="unfollow()">
+							<i class="fa fa-minus unfollow"></i>
+							Unfollow
+						</button>
+					</div>
 				</div>  
-				<div class="userNameContainer rounded pull-left col-lg-9 col-md-9 col-sm-9">
-					<div>{{user.userName}}</div>
-				</div>  
-				<div class="userQuoteContainer rounded pull-left col-lg-9 col-md-12 col-sm-12">
+				<div class="userQuoteContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
 					<div>
 						<span class="fa fa-quote-left"></span>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 	<!--voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 	
+						<!--voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
+						anim id est laborum.-->
 						<span class="fa fa-quote-right"></span>
 					</div>
-				</div>  
-							       
-				<!--div class="userCardContainerUser">
-					
-					<div id="">{{user.userName}}</div>
-					<div class="userStats">
-						<span  title="Number of views {{user.userName}} has received">
-							<i class="fa fa-eye"></i>{{user.views | nearestK}}
-						</span>
-						<span title="Number of likes {{user.userName }} has received">
-						<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}}
-						</span>
-						<span title="Number of dislikes {{user.userName}} has received">
-						<i class="fa fa-thumbs-o-down" ></i>{{user.dislikes | nearestK}}
-						</span>
-						<span  title="Number of posts of {{user.userName}} that have been reposted">
-							<i class="fa fa-retweet"></i>{{user.reposted | nearestK}}
-						</span>
-					</div>
 				</div>
-				<div class="userCardContainerOptions" ng-hide="waiting">
-					<button id="follow" class="text-center follow" title="Click here to follow {{user.userName}}"
-						ng-hide="isFollowing" ng-click="follow()">
-						<i class="fa fa-plus"></i><span>&nbsp; Follow</span>
-					</button>
-					<button id="unfollow" class="text-center follow" title="Click here to stop following {{user.userName}}"
-						ng-show="isFollowing" ng-click="unfollow()">
-						<i class="fa fa-minus"></i><span>&nbsp; Unfollow</span>
-					</button>					
-					<div class="userCardContainerOptionsInfo" ng-show="isFollowing">You are currently following {{user.userName}}</div>
-				</div-->
 			</div>
 		</div>
-		<div class="userStats col-lg-12 col-md-12 col-sm-12">
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+		<div class="userStatOptions col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='posts') }" ng-click="statOptionSelected='posts'">
 				<span  title="Number of posts {{user.userName}} has added">
-					<i class="fa fa-plus"></i>{{0 | nearestK}} Posts
+					<i class="fa fa-plus"></i>{{0 | nearestK}} <span class="hidden-sm hidden-xs">Posts</span>
 				</span>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='reposts') }" ng-click="statOptionSelected='reposts'">
 				<span  title="Number of posts of {{user.userName}} that have been reposted">
-					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} reposts
+					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} <span class="hidden-sm hidden-xs">Reposts</span>
 				</span>
 			</div>				
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='views') }"  ng-click="statOptionSelected='views'">
 				<span  title="Number of views {{user.userName}} has received">
-					<i class="fa fa-eye"></i>{{user.views | nearestK}} Views
+					<i class="fa fa-eye"></i>{{user.views | nearestK}} <span class="hidden-sm hidden-xs">Views</span>
 				</span>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='likes') }" ng-click="statOptionSelected='likes'">
 				<span title="Number of likes {{user.userName }} has received">
-					<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}} Likes
+					<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}} <span class="hidden-sm hidden-xs">Likes</span>
 				</span>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
-				<span title="Number of replies {{user.userName}} has received to posts">
-					<i class="fa fa-reply" ></i>{{user.replies | nearestK}} Replies
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='replies') }">
+				<span title="Number of replies {{user.userName}} has received to posts" ng-click="statOptionSelected='replies'">
+					<i class="fa fa-reply" ></i>{{user.replies | nearestK}} <span class="hidden-sm hidden-xs">Replies</span>
 				</span>
 			</div>	
-			<div class="col-lg-2 col-md-2 col-sm-2 hot">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
+				ng-class="{ 'selected': (statOptionSelected=='comments') }" ng-click="statOptionSelected='comments'">
 				<span title="Number of comments {{user.userName}} has received to posts">
-					<i class="fa fa-comments-o" ></i>{{user.comments | nearestK}} Comments
+					<i class="fa fa-comments-o" ></i>{{user.comments | nearestK}} <span class="hidden-sm hidden-xs">Comments</span>
 				</span>
 			</div>							
 		</div>	

@@ -1,12 +1,12 @@
 #userMemes .userCardContainer{  	
     height: 300px;
 }
-#userMemes .follow{
-	width: 30%;
-    margin-right: auto;
-    margin-left: auto;
-    font-size: smaller;
-    margin-top: 5px;
+#userMemes .following{
+    width:100px;
+    margin-top: 25px;
+}
+#userMemes .unfollow{
+    color: darkred;
 }
 #userMemes .userImageContainer{
     margin-top: 50px;
@@ -25,9 +25,11 @@
 }
 #userMemes .userNameContainer{
     margin-top: 35px;
-    font-size: 4em; 
     height: 100px;
     margin-left:15px;
+}
+#userMemes .userName{
+    font-size: 4em;     
 }
 #userMemes .userQuoteContainer{
     font-size: 1.5em;
@@ -37,17 +39,20 @@
     font-style: italic;
     color: darkgray;
 }
-#userMemes .userStats{
+#userMemes .userStatOptions{
     margin-top: -45px;
     font-size: 1.3em;
     color: darkgray;
     text-align: center;
 }
-#userMemes .userStats div{
+#userMemes .userStatOptions div{
     border-bottom: 4px solid white ; 
 }
-#userMemes .userStats div:hover{
+#userMemes .userStatOptions div:hover{
     border-bottom: 4px solid cornflowerblue ; 
+}
+#userMemes .userStatOptions .selected{
+    color: black !important; 
 }
 #userMemes .userCard {
     width: 98%;
