@@ -47,7 +47,18 @@
             // Save meme
             meme = SaveMeme(meme);
 
-            IUser memeCreator = repository.GetUser(meme.CreatedByUserId);
+			// Add like to time line
+	        if (likesIncrement > 0)
+	        {
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Like, meme.Id, null));
+	        }
+			// Add dislike to time line
+			if (dislikesIncrement > 0)
+			{
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Dislike, meme.Id, null));
+			}
+
+	        IUser memeCreator = repository.GetUser(meme.CreatedByUserId);
             if (memeCreator != null)
             {
                 memeCreator.Likes += likesIncrement;
@@ -126,15 +137,9 @@
             var savedMeme = repository.Save(meme);
 
             // Update the users time line
-            if (isNew) 
+            if (isNew)
             {
-                repository.Save(new TimeLine
-                {
-                    UserId = savedMeme.CreatedByUserId,
-                    DateOfEntry = DateTime.Now,
-                    EntryType = TimeLineEntry.Post,
-                    TimeLineRefId = savedMeme.Id
-                });
+	            repository.Save(new TimeLine(savedMeme.CreatedByUserId, TimeLineEntry.Post, savedMeme.Id, null));
             }
             // Add to the time line
             return savedMeme;
@@ -167,6 +172,9 @@
 
                 // Save the meme
                 meme = repository.Save(meme);
+
+				// Add reply to time line
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMemeId));
             }
 
             return meme;
@@ -199,12 +207,14 @@
                 }
             }
         }
-        /// <summary>
-        /// Repost the specified meme to the specified user
-        /// </summary>
-        /// <param name="meme"></param>
-        /// <returns></returns>
-        public IMeme RepostMeme(IMeme meme, IUser user)
+
+	    /// <summary>
+	    /// Repost the specified meme to the specified user
+	    /// </summary>
+	    /// <param name="meme"></param>
+	    /// <param name="user"></param>
+	    /// <returns></returns>
+	    public IMeme RepostMeme(IMeme meme, IUser user)
         {
             IRepost repost = new Repost
             {
@@ -216,7 +226,10 @@
 
             // Save the repost
             repository.Save(repost);
-
+			
+			// Add repost to time line
+			repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Repost, repost.MemeId, null));
+	   
             // Increment the repost count of the meme and its creator
             meme = Reposted(meme);
             

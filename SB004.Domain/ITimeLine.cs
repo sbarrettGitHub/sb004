@@ -9,5 +9,6 @@ namespace SB004.Domain
         DateTime DateOfEntry { get; set; }
         TimeLineEntry EntryType { get; set; }
         string TimeLineRefId { get; set; }
+		string TimeLineRefAlternateId { get; set; }
     }
 }
