@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SB004.Domain
 {
@@ -13,13 +9,14 @@ namespace SB004.Domain
 	    }
 
 	    public TimeLine(string userId, TimeLineEntry entryType, string timeLineRefId,
-		    string timeLineRefAlternateId)
+			string timeLineRefAlternateId, string message)
 	    {
 		    this.UserId = userId;
 		    this.DateOfEntry = DateTime.Now.ToUniversalTime();
 		    this.EntryType = entryType;
 		    this.TimeLineRefId = timeLineRefId;
 		    this.TimeLineRefAlternateId = timeLineRefAlternateId;
+			this.Message = message;
 	    }
 
 	    public string UserId { get; set; }
@@ -27,5 +24,6 @@ namespace SB004.Domain
         public TimeLineEntry EntryType { get; set; }
         public string TimeLineRefId { get; set; }
 		public string TimeLineRefAlternateId { get; set; }
+		public string Message { get; set; }
     }
 }

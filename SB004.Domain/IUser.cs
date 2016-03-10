@@ -28,6 +28,8 @@ namespace SB004.Domain
 
         string Email { get; set; }
 
+		string StatusMessage { get; set; }
+
         List<IUserLite> FollowingIds { get; set; }
 
         List<IUser> Following { get; }

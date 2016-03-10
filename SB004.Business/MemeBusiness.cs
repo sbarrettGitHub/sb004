@@ -50,12 +50,12 @@
 			// Add like to time line
 	        if (likesIncrement > 0)
 	        {
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Like, meme.Id, null));
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Like, meme.Id, null, null));
 	        }
 			// Add dislike to time line
 			if (dislikesIncrement > 0)
 			{
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Dislike, meme.Id, null));
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Dislike, meme.Id, null, null));
 			}
 
 	        IUser memeCreator = repository.GetUser(meme.CreatedByUserId);
@@ -139,7 +139,7 @@
             // Update the users time line
             if (isNew)
             {
-	            repository.Save(new TimeLine(savedMeme.CreatedByUserId, TimeLineEntry.Post, savedMeme.Id, null));
+				repository.Save(new TimeLine(savedMeme.CreatedByUserId, TimeLineEntry.Post, savedMeme.Id, null, null));
             }
             // Add to the time line
             return savedMeme;
@@ -174,7 +174,7 @@
                 meme = repository.Save(meme);
 
 				// Add reply to time line
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMemeId));
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMemeId, null));
             }
 
             return meme;
@@ -228,7 +228,7 @@
             repository.Save(repost);
 			
 			// Add repost to time line
-			repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Repost, repost.MemeId, null));
+			repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Repost, repost.MemeId, null, null));
 	   
             // Increment the repost count of the meme and its creator
             meme = Reposted(meme);

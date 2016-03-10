@@ -45,5 +45,6 @@ namespace SB004.Models
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public string NewPassword { get; set; }
+		public string StatusMessage { get; set; }
 	}
 }

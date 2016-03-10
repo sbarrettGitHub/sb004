@@ -24,6 +24,8 @@ namespace SB004.Domain
         public string AuthenticationProvider { get; set; }
 
         public string Email { get; set; }
+        
+		public string StatusMessage { get; set; }
 
         public List<IUserLite> FollowingIds { get; set; }
 
