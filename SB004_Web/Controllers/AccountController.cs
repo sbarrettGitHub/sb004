@@ -179,6 +179,37 @@ namespace SB004.Controllers
 			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
 		}
 		/// <summary>
+		/// Update the current users profile name
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="details"></param>
+		/// <returns>User profile</returns>
+		[HttpPatch]
+		[Authorize]
+		[Route("{id}/status")]
+		public HttpResponseMessage UpdateProfileStatusMessage(string id, [FromBody] AccountDetailsModel details)
+		{
+			if (User.Identity.UserId() == id)
+			{
+				IUser profile = repository.GetUser(id);
+
+				if (profile != null)
+				{
+					profile.StatusMessage = details.StatusMessage ?? "";
+
+					// Save 
+					repository.Save(profile);
+
+					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, profile);
+					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+					return response;
+				}
+				// No such user
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+			}
+			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
+		}
+		/// <summary>
 		/// Update the current users profile email
 		/// </summary>
 		/// <param name="id"></param>

@@ -6,7 +6,11 @@
     <div class="dialogBody" ng-hide="waiting">
 		<div class="form-group col-lg-12 col-md-12 col-sm-12" >	
 			<div class="col-lg-7 col-md-7 col-sm-7">	
-				<img class='userImage rounded'ng-src='{{profileImageLink}}'></img>
+				<img class='userImage pull-left rounded hot'ng-src='{{profileImageLink}}' ng-click="showChangeImage=true;"></img>
+				<div class="pull-left statusMessage">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+				</div>
 				<div ng-show="showChangeImage && profileImageLink" ng-click="clearProfileImage()" class="hot" >
 					<span class="fa fa-eraser" ></span>
 					<a href='javascript:void(0);'>Clear profile image</a>
@@ -35,7 +39,7 @@
 				<label class="control-label">
 					Name: 
 				</label>
-				<label>{{profileName}}</label>
+				<label class="hot" ng-click="showChangeName=true;">{{profileName}}</label>
 				<input type="text" class="form-control" ng-show="showChangeName"
 					placeholder="Enter your new profile name"
 					ng-model="changeProfileName" 
@@ -61,7 +65,7 @@
 				<label class="control-label">
 					Email:
 				</label>
-				<label> {{profileEmail}}</label>
+				<label class="hot"  ng-click="showChangeEmail=true;" > {{profileEmail}}</label>
 				<input type="email"  class="form-control" ng-show="showChangeEmail"
 					placeholder="Enter a new email address"
 					ng-model="changeProfileEmail">
@@ -91,7 +95,7 @@
 				<label class="control-label">
 					Password:
 				</label>
-				<label> **************************</label>
+				<label class="hot" ng-click="showChangePassword=true;" > **************************</label>
 				<input type="password" class="form-control" ng-show="showChangePassword"
 					placeholder="Enter your CURRENT Password"
 					ng-model="existingProfilePassword">				
@@ -121,7 +125,7 @@
 				<label class="control-label">
 					Connected using:
 				</label>
-				<label> {{authenticationProvider}}</label>	
+				<label class="hot" ng-click="showCloseAccount=true;"> {{authenticationProvider}}</label>	
 				<input type="password" class="form-control" ng-show="showCloseAccount"
 					placeholder="Enter your Password to confirm action"
 					ng-model="closeAccountPasswordVerification">

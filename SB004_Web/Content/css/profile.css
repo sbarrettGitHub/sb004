@@ -16,3 +16,9 @@
 #profile #changeProfileImageLink{
     margin-top: 5px;
 }
+#profile .statusMessage{
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: smaller;
+    font-style: italic;
+}
