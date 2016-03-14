@@ -16,6 +16,11 @@
         $scope.changeProfileImageLink = "";
         $scope.showChangeImage = false;
         
+        $scope.profileMessage = currentUser.statusMessage;
+        $scope.changeProfileMessage =currentUser.statusMessage;
+        $scope.showChangeMessage = false;
+        $scope.changeProfileMessageValid = true;
+                
         $scope.profileName = currentUser.userName;
         $scope.changeProfileName =currentUser.userName;
         $scope.showChangeImage = false;
@@ -115,6 +120,43 @@
            $scope.changeProfileName = currentUser.userName;
            $scope.changeProfileNameValid = true;
         }
+        /*-----------------------------------------------------------------*/
+        
+        $scope.saveProfileMessage = function(){
+            $scope.changeProfileMessageValid = $scope.changeProfileMessage.length>0;
+            if($scope.changeProfileMessage.length == 0 ){
+                $scope.changeProfileMessageValid = false;
+                $scope.changeProfileMessageError = "Please supply a new profile Message!";
+                return;
+            }
+            if($scope.changeProfileMessage == $scope.profileMessage ){
+                $scope.changeProfileMessageValid = false;
+                $scope.changeProfileMessageError = "Profile Message hasn't changed!";
+                return;
+            }            
+            if($scope.changeProfileMessageValid){
+                var deferred = $q.defer();
+                $http({ method: 'PATCH', url: 'api/account/' + $scope.id + '/status', data: {
+                    statusMessage: $scope.changeProfileMessage
+                }})
+                .success(function (data) { 
+                    $window.alert("Your profile Message has been changed!");       
+                    $scope.showChangeMessage = false;
+                    $scope.profileMessage = $scope.changeProfileMessage; 
+                    deferred.resolve();
+                }).error(function (e) {
+                    $window.alert(e);
+                    return;
+                });
+                
+            }
+           
+        }
+        $scope.resetProfileMessage = function(){
+           $scope.showChangeMessage = false;
+           $scope.changeProfileMessage = currentUser.statusMessage;
+           $scope.changeProfileNameValid = true;
+        }        
         /*-----------------------------------------------------------------*/        
         $scope.saveProfileEmail = function(){
             $scope.changeProfileEmailValid = true;
