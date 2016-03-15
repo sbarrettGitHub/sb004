@@ -69,6 +69,7 @@
 				.success(function (data) { 
                     $window.alert("Your profile image has been changed!");       
                     $scope.showChangeImage = false;
+                    securityService.updateUserImage(); 
                     deferred.resolve();
                 }).error(function (e) {
 					$window.alert(e);
@@ -143,6 +144,7 @@
                     $window.alert("Your profile Message has been changed!");       
                     $scope.showChangeMessage = false;
                     $scope.profileMessage = $scope.changeProfileMessage; 
+                    securityService.updateUserMessage($scope.profileMessage); 
                     deferred.resolve();
                 }).error(function (e) {
                     $window.alert(e);

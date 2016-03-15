@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var userMemesCtrl = function ($scope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
+    var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
         $scope.userId = $routeParams.id;
 		var memesIndex=0;
 		$scope.memes = [];
@@ -108,14 +108,27 @@
 			if(isAuthenticated===true){
 				// If signed in then check if the current user follows the selected user
 				$scope.isFollowing = securityService.isFollowing($scope.userId);
+				$scope.user = securityService.getCurrentUser();
 			}
 			// Refresh the users memes
 			refreshMemes();
 		});
 		
+		// User message updated
+		$rootScope.$on('account.newUserMessage', function (event, data) {
+			$scope.user.statusMessage = data;
+		});
+		// User name updated
+		$rootScope.$on('account.newUserName', function (event, data) {
+			$scope.user.userName = data;
+		});
+		// User image updated
+		$rootScope.$on('account.newUserImage', function (event, data) {
+			$scope.userId =  $scope.userId + '?' + new Date().getTime();
+		});
     }
 
     // Register the controller
-    app.controller('userMemesCtrl', ["$scope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", "securityService", userMemesCtrl]);
+    app.controller('userMemesCtrl', ["$scope", "$rootScope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", "securityService", userMemesCtrl]);
 
 })();

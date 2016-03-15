@@ -150,7 +150,7 @@
 					
 					
 					// Broadcast that the user has updated profile
-					$rootScope.$broadcast('account.profileUpdate', null);
+					$rootScope.$broadcast('account.profileUpdate', updatedProfileData);
 				} 
 			}catch( error ){
 			  $window.alert(error.message );
@@ -318,6 +318,16 @@
 			// Broadcast that the user has updated his user name
 			$rootScope.$broadcast('account.newUserName', newUserName);
 		}
+		var updateUserMessage = function(newUserMessage){
+			currentUser.statusMessage = newUserMessage;
+
+			// Broadcast that the user has updated his message
+			$rootScope.$broadcast('account.newUserMessage', newUserMessage);
+		}	
+		var updateUserImage = function (){
+			// Broadcast that the user has updated his image
+			$rootScope.$broadcast('account.newUserImage', null);
+		}	
         return {
             logInDialog:showLogInDialog,			
 			signIn:signIn,
@@ -331,7 +341,9 @@
 			isFollowing: isFollowing,
 			testIsAuthenticated:testIsAuthenticated,
 			signInOptions:signInOptions,
-			updateUserName:updateUserName 
+			updateUserName:updateUserName,
+			updateUserMessage:updateUserMessage,
+			updateUserImage:updateUserImage
         }
     }
 
