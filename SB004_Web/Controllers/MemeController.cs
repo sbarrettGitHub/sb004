@@ -497,23 +497,7 @@ namespace SB004.Controllers
         /// <returns></returns>
         private MemeLiteModel ToMemeLiteModel(IMeme meme)
         {
-            return new MemeLiteModel
-            {
-                Id = meme.Id,
-                CreatedBy = meme.CreatedBy,
-                CreatedByUserId = meme.CreatedByUserId,
-                Creator = meme.Creator,
-                DateCreated = meme.DateCreated.ToLocalTime(),
-                ResponseToId = meme.ResponseToId,
-                replyCount = meme.ReplyIds.Count,
-                userCommentCount = repository.GetUserCommentCount(meme.Id),
-                Likes = meme.Likes,
-                Dislikes = meme.Dislikes,
-                Favourites = meme.Favourites,
-                Shares = meme.Shares,
-                Views = meme.Views,
-                Reposts = meme.Reposts,
-            };
+	        return new MemeLiteModel(repository, meme);
         }
         #endregion
     }

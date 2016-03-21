@@ -481,16 +481,33 @@ namespace SB004.Data
 	    #endregion
 
         #region Time line
-        /// <summary>
-        /// Add a time line entry
-        /// </summary>
-        /// <param name="userComment"></param>
-        /// <returns></returns>
-        public ITimeLine Save(ITimeLine timeLine)
+
+	    /// <summary>
+	    /// Add a time line entry
+	    /// </summary>
+	    /// <returns></returns>
+	    public ITimeLine Save(ITimeLine timeLine)
         {
             timeLineCollection.Save(timeLine.ToBsonDocument());
             return timeLine;
         }
-        #endregion
+
+	    /// <summary>
+	    /// Retrieve the time line of a particular user paginated if requested
+	    /// </summary>
+	    /// <param name="userId">ID of the user</param>
+	    /// <param name="skip">Number of itms to skip</param>
+	    /// <param name="take"></param>
+	    /// <param name="type"></param>
+	    /// <returns></returns>
+	    public List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry? type = null)
+	    {
+		    var cursor =
+				  timeLineCollection.FindAs<TimeLine>(Query<TimeLine>.EQ(e => e.UserId, userId)).SetSortOrder(SortBy.Descending("DateOfEntry")).SetSkip(skip).SetLimit(take);
+
+		    return cursor.Cast<ITimeLine>().ToList();
+	    }
+
+	    #endregion
     }
 }

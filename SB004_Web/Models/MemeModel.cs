@@ -1,10 +1,13 @@
-﻿namespace SB004.Models
+﻿using SB004.Data;
+
+namespace SB004.Models
 {
     using SB004.Domain;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    public class PositionRefModel : IPositionRef
+
+	
+	public class PositionRefModel : IPositionRef
     {
         public string Align { get; set; }
         public float X { get; set; }
@@ -45,8 +48,24 @@
     }
     public class MemeLiteModel
     {
-
-        public string Id { get; set; }
+		public MemeLiteModel(IRepository repository, IMeme meme)
+		{
+			Id = meme.Id;
+			CreatedBy = meme.CreatedBy;
+			CreatedByUserId = meme.CreatedByUserId;
+			Creator = meme.Creator;
+			DateCreated = meme.DateCreated.ToLocalTime();
+			ResponseToId = meme.ResponseToId;
+			replyCount = meme.ReplyIds.Count;
+			userCommentCount = repository.GetUserCommentCount(meme.Id);
+			Likes = meme.Likes;
+			Dislikes = meme.Dislikes;
+			Favourites = meme.Favourites;
+			Shares = meme.Shares;
+			Views = meme.Views;
+			Reposts = meme.Reposts;
+		}
+	    public string Id { get; set; }
         public string CreatedByUserId { get; set; }
         public IUser Creator { get; set; } 
         public DateTime DateCreated { get; set; }
@@ -60,6 +79,7 @@
         public int Shares { get; set; }
         public int Views { get; set; }
         public int Reposts { get; set; }
+		
     }
     public class ReportModel 
     {
@@ -71,4 +91,5 @@
         public List<MemeLiteModel> Memes { get; set; }
         public long FullMemeCount { get; set; }
     }
+
 }

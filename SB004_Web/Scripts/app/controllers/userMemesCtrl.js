@@ -3,47 +3,45 @@
 
     var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
         $scope.userId = $routeParams.id;
-		var memesIndex=0;
-		$scope.memes = [];
+		var itemsIndex=0;
+		$scope.items = []
 		$scope.user = {};
-		$scope.allowGetMoreMemes = false;
 		$scope.isFollowing = false;
 		$scope.statOptionSelected ="feed";
 		var constants = {
-			memeViewingBlockCount:10
+			viewingBlockCount:10
 		};
-		var refreshMemes = function(){
+		
+		var refreshTimeline = function(){
 			$scope.memes = [];
-			var currentCount = memesIndex;
-			memesIndex = 0;
+			var currentCount = itemsIndex;
+			itemsIndex = 0;
 			
-			// Retrieve again all the memes that are currently visible again
-			$scope.getMoreMemes(0, currentCount);
-		}
-        $scope.getMoreMemes = function(skipMemes, takeMemes){
+			// Retrieve  all the items that are currently visible again
+			$scope.getMoreTimeline(0, currentCount);
+		}		
+		$scope.getMoreTimeline = function(skipitems, takeitems){
 			startWaiting();
-			// Skip the explicitly specified number of memes (used during a refresh as 0 so all previously retrieved memes are refreshed) 
-			// or skip the current number of memes to get the next page worth
-			var skip = skipMemes ? skipMemes : memesIndex;
+			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 
+			// or skip the current number of items to get the next page worth
+			var skip = skipitems ? skipitems : itemsIndex;
 			
-			// Take the explicitly specified number of memes (used during a refresh as the number of previously retrieved memes)
+			// Take the explicitly specified number of items (used during a refresh as the number of previously retrieved items)
 			// or a standard page worth
-			var take = takeMemes ? takeMemes : constants.memeViewingBlockCount;
+			var take = takeitems ? takeitems : constants.viewingBlockCount;
 			
-			$http.get('api/Meme/byuser/' + $scope.userId + "?skip=" + skip + "&take=" + take).
+			$http.get('api/timeline/' + $scope.userId + "/" + skip + "/" + take).
                 success(function (data) {
 					if(data.user){
 						$scope.user = data.user;
 					}
-					// Add the memes returned to the list of memes
-					for(var i=0;i<data.memes.length;i++){   
-						$scope.memes.push(data.memes[i]);
+					// Add the items returned to the list of items
+					for(var i=0;i<data.length;i++){   
+						$scope.items.push(data[i]);
 					}	
-					// The Get More Memes button should be available if there are more memes out there than are displayed
-					$scope.allowGetMoreMemes = (data.fullMemeCount > $scope.memes.length) ? true : false;
-					
-					// Maintain a cursor of memes. 
-					memesIndex = $scope.memes.length;
+										
+					// Maintain a cursor of items. 
+					itemsIndex = $scope.length;
 					endWaiting();
                 }).
                 error(function (e) {
@@ -110,8 +108,8 @@
 				$scope.isFollowing = securityService.isFollowing($scope.userId);
 				$scope.user = securityService.getCurrentUser();
 			}
-			// Refresh the users memes
-			refreshMemes();
+			// Refresh the users time line
+			refreshTimeline();
 		});
 		
 		// User message updated

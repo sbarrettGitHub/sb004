@@ -158,10 +158,12 @@
     <Compile Include="Controllers\MemeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SeedController.cs" />
+    <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\MemeModel.cs" />
     <Compile Include="Models\SeedModel.cs" />
+    <Compile Include="Models\TimelineModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="User\IdentityExtension.cs" />

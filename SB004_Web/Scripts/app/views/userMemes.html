@@ -73,16 +73,16 @@
 				</span>
 			</div>							
 		</div>	
-		<div ng-repeat="meme in memes" class="pull-left">			
-			<div ng-memelink ng-model="meme" 
+		<div ng-repeat="item in items" class="pull-left">			
+			<!--div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
 							on-like="likeMeme(meme.id)"
 							on-dislike="dislikeMeme(meme.id)"
 							on-addtofavourites="addMemeToFavourites(meme.id)"
-							on-userclick="openUser(meme.createdByUserId)"></div>
+							on-userclick="openUser(meme.createdByUserId)"></div-->
 		</div>
 		
-		<div class="pull-left userCard rounded" ng-show="allowGetMoreMemes">
+		<!--div class="pull-left userCard rounded" ng-show="allowGetMoreMemes">
 			<div class="userCardContainer">          
 				<div class="userCardContainerUser">
 					<i class="fa fa-user"></i>
@@ -97,5 +97,5 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div-->
 </div>

@@ -51,5 +51,7 @@
 		void DeleteImage(string id);
 
         ITimeLine Save(ITimeLine timeLine);
+
+		List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry? type);
     }
 }
