@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SB004.Data
@@ -98,7 +99,7 @@ namespace SB004.Data
             }
         }
 
-	    private string NewId()
+	    private string NewShortId()
 	    {
 		    const int maxSize = 8;
 			char[] chars = new char[62];
@@ -118,7 +119,10 @@ namespace SB004.Data
 			}
 			return result.ToString();
 	    }
-
+	    private string NewLongId()
+	    {
+			return Guid.NewGuid().ToString("N");
+	    }
 	    #region Seed
 
         /// <summary>
@@ -128,7 +132,7 @@ namespace SB004.Data
         /// <returns></returns>
         public ISeed Save(ISeed seed)
         {
-            seed.Id = seed.Id ?? NewId();
+            seed.Id = seed.Id ?? NewShortId();
             seedCollection.Save(seed.ToBsonDocument());
             return seed;
         }
@@ -172,7 +176,7 @@ namespace SB004.Data
         /// <returns></returns>
         public IMeme Save(IMeme meme)
         {
-            meme.Id = meme.Id ?? NewId();
+            meme.Id = meme.Id ?? NewShortId();
             memeCollection.Save(meme.ToBsonDocument());
             return meme;
         }
@@ -272,7 +276,7 @@ namespace SB004.Data
         /// <returns></returns>
         public IReport Save(IReport report)
         {
-            report.Id = report.Id ?? NewId();
+            report.Id = report.Id ?? NewShortId();
             reportCollection.Save(report.ToBsonDocument());
             return report;
         }
@@ -320,7 +324,7 @@ namespace SB004.Data
         /// <returns></returns>
         public IUser Save(IUser user)
         {
-            user.Id = user.Id ?? NewId();
+            user.Id = user.Id ?? NewShortId();
             userCollection.Save(user.ToBsonDocument());
             return user;
         }
@@ -455,7 +459,7 @@ namespace SB004.Data
         /// <returns></returns>
         public IUserComment Save(IUserComment userComment)
         {
-            userComment.Id = userComment.Id ?? NewId();
+			userComment.Id = userComment.Id ?? NewLongId();
             userCommentCollection.Save(userComment.ToBsonDocument());
             return userComment;
         }
@@ -464,7 +468,7 @@ namespace SB004.Data
         #region Image
         public IImage Save(IImage image)
         {
-            image.Id = image.Id ?? NewId();
+            image.Id = image.Id ?? NewShortId();
             imageCollection.Save(image.ToBsonDocument());
             return image;
         }
@@ -488,7 +492,12 @@ namespace SB004.Data
 	    /// <returns></returns>
 	    public ITimeLine Save(ITimeLine timeLine)
         {
-            timeLineCollection.Save(timeLine.ToBsonDocument());
+		    if (timeLine.EntryType == TimeLineEntry.All)
+		    {
+				throw new Exception("All not a valid type for time line entry. Only when reading!");
+		    }
+			timeLine.Id = NewLongId();
+		    timeLineCollection.Save(timeLine.ToBsonDocument());
             return timeLine;
         }
 
@@ -500,10 +509,24 @@ namespace SB004.Data
 	    /// <param name="take"></param>
 	    /// <param name="type"></param>
 	    /// <returns></returns>
-	    public List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry? type = null)
+	    public List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry type)
 	    {
+		    IMongoQuery query = null;
+		    if (type == TimeLineEntry.All)
+		    {
+				// Bring back all entry types
+				query = Query<TimeLine>.EQ(e => e.UserId, userId);
+		    }
+		    else
+		    {
+				// Bring back specific entry types
+				Query.And(
+					Query<TimeLine>.EQ(e => e.UserId, userId),
+					Query<TimeLine>.EQ(e => e.EntryType, type));
+		    }
+		    
 		    var cursor =
-				  timeLineCollection.FindAs<TimeLine>(Query<TimeLine>.EQ(e => e.UserId, userId)).SetSortOrder(SortBy.Descending("DateOfEntry")).SetSkip(skip).SetLimit(take);
+				  timeLineCollection.FindAs<TimeLine>(query).SetSortOrder(SortBy.Descending("DateOfEntry")).SetSkip(skip).SetLimit(take);
 
 		    return cursor.Cast<ITimeLine>().ToList();
 	    }

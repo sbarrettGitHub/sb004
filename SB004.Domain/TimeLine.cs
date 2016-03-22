@@ -18,7 +18,7 @@ namespace SB004.Domain
 		    this.TimeLineRefAlternateId = timeLineRefAlternateId;
 			this.Message = message;
 	    }
-
+		public string Id { get; set; }
 	    public string UserId { get; set; }
         public DateTime DateOfEntry { get; set; }
         public TimeLineEntry EntryType { get; set; }

@@ -4,6 +4,7 @@
     var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
         $scope.userId = $routeParams.id;
 		var itemsIndex=0;
+		var entryType = "All";
 		$scope.items = []
 		$scope.user = {};
 		$scope.isFollowing = false;
@@ -18,9 +19,9 @@
 			itemsIndex = 0;
 			
 			// Retrieve  all the items that are currently visible again
-			$scope.getMoreTimeline(0, currentCount);
+			$scope.getTimeline(0, currentCount, entryType);
 		}		
-		$scope.getMoreTimeline = function(skipitems, takeitems){
+		$scope.getTimeline = function(skipitems, takeitems, type){
 			startWaiting();
 			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 
 			// or skip the current number of items to get the next page worth
@@ -30,7 +31,7 @@
 			// or a standard page worth
 			var take = takeitems ? takeitems : constants.viewingBlockCount;
 			
-			$http.get('api/timeline/' + $scope.userId + "/" + skip + "/" + take).
+			$http.get('api/timeline/' + $scope.userId + '?skip=' + skip + '&take=' + take + '&type=' + type).
                 success(function (data) {
 					if(data.user){
 						$scope.user = data.user;

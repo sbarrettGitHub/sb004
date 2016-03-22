@@ -24,15 +24,14 @@ namespace SB004.Controllers
 		/// <param name="take">number of items to take</param>
 		/// <param name="type">The type of entries. Allow null for all entry types</param>
 		/// <returns></returns>
-		[Route("{id}/{skip}/{take}/{type}")]
-		public IHttpActionResult Get(string id, int skip, int take)
+		[Route("{id}")]
+		public IHttpActionResult Get(string id, int skip, int take, TimeLineEntry type)
 		{
-			TimeLineEntry? type = null;
 			List<ITimeLine> timeLine = repository.GetUserTimeLine(id, skip, take, type);
 			List<TimelineModel> model = new List<TimelineModel>();
 			foreach (var item in timeLine)
 			{
-				TimelineModel itemModel = (TimelineModel) item;
+				TimelineModel itemModel = new TimelineModel(item);
 
 				// Resove the user object
 				itemModel.User = repository.GetUser(item.UserId);
@@ -42,7 +41,8 @@ namespace SB004.Controllers
 				    item.EntryType == TimeLineEntry.Like ||
 				    item.EntryType == TimeLineEntry.Dislike ||
 				    item.EntryType == TimeLineEntry.Repost ||
-				    item.EntryType == TimeLineEntry.Reply 
+				    item.EntryType == TimeLineEntry.Reply ||
+					item.EntryType == TimeLineEntry.Comment
 					)
 				{
 					itemModel.Meme = new MemeLiteModel(repository, repository.GetMeme(item.TimeLineRefId));
@@ -51,13 +51,11 @@ namespace SB004.Controllers
 				// Resolve the comment
 				if (item.EntryType == TimeLineEntry.Comment)
 				{
-					itemModel.UserComment = repository.GetUserComment(item.TimeLineRefId);
+					itemModel.UserComment = repository.GetUserComment(item.TimeLineRefAlternateId);
 				}
 
 				// Resolve the alternative ref id (always a meme)
-				if (item.EntryType == TimeLineEntry.Comment ||
-					item.EntryType == TimeLineEntry.Reply
-					)
+				if (item.EntryType == TimeLineEntry.Reply)
 				{
 					itemModel.AlternateMeme = new MemeLiteModel(repository, repository.GetMeme(item.TimeLineRefAlternateId));
 				}

@@ -149,8 +149,8 @@
         /// Adds a reply (with an id) to the replies of the supplied meme.
         /// The reply trend and date added are calculated before appending to the meme
         /// </summary>
-        /// <param name="meme"></param>
-        /// <param name="replyMemeId"></param>
+        /// <param name="meme">The meme being replied to</param>
+        /// <param name="replyMemeId">Id of the reply</param>
         /// <returns></returns>
         public IMeme AddReplyToMeme(IMeme meme, string replyMemeId)
         {
@@ -174,7 +174,7 @@
                 meme = repository.Save(meme);
 
 				// Add reply to time line
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMemeId, null));
+				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMeme.Id, null));
             }
 
             return meme;
