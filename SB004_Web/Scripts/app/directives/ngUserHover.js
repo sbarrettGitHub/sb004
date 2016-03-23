@@ -43,6 +43,10 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         // fade out
         angular.element(elem).children(".ngUserHover").fadeOut();
       });
+      elem.bind('click', function() {
+        scope.openUserMemes();
+        
+      });
       scope.openUserMemes = function(){
         $location.path("/usermemes/" + scope.ngUser.id);
       }

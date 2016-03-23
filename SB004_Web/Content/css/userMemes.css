@@ -67,3 +67,45 @@
 	font-size: smaller;
 	margin-top:15px;
 }
+#userMemes .timeLineDescription{
+    margin-left: 15px;
+    background-color: white;
+    width: 400px;
+    margin-right: 15px;
+    margin-bottom: 40px;
+    padding: 2px;
+    border-top: 2px solid darkgrey;
+}
+#userMemes .timeLineDescription .icon{
+    background-color: #F8F8F8;
+    width: 32px;
+    border: 1px solid darkgrey;
+    height: 32px;
+    font-size: large;
+    
+}
+#userMemes .timeLineDescription .icon i{
+    margin-left: 6px;
+    margin-top: 6px;
+}
+#userMemes .timeLineDescription .text{
+    width: 360px;
+    height: 32px;
+    padding-top: 6px;   
+}
+#userMemes .timeLineDescription .dateofEntry{
+    margin-left: 2px;
+    font-weight: bold;   
+}
+
+#userMemes .timeLineComment{
+    font-style: italic; 
+    max-height: 75px;
+    overflow: auto;
+    border-bottom: 1px inset;
+    width: 100%;
+}
+
+#userMemes .memeLinkContainer{
+    margin-bottom: 0 !important;
+}

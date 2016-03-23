@@ -66,6 +66,10 @@
 		{
 			likeDislikeMemeService.dislike(findMeme(memeId));			
 		}
+		$scope.openUser = function(userId)
+		{
+			$location.path("/usermemes/" + userId);		
+		}
 		function findMeme(memeId){
 			// Find the meme in scope with the given id
 			for(var i=0;i<$scope.memes.length;i++){

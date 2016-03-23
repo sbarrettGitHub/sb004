@@ -73,13 +73,42 @@
 				</span>
 			</div>							
 		</div>	
-		<div ng-repeat="item in items" class="pull-left">			
-			<!--div ng-memelink ng-model="meme" 
-							on-click="viewMeme(meme.id)" 
-							on-like="likeMeme(meme.id)"
-							on-dislike="dislikeMeme(meme.id)"
-							on-addtofavourites="addMemeToFavourites(meme.id)"
-							on-userclick="openUser(meme.createdByUserId)"></div-->
+		<div ng-repeat="item in items" class="pull-left col-lg-offset-4 col-lg-8 col-md-offset-4col-md-8 col-sm-8 col-xs-8">	
+
+			<div class="pull-left">		
+				<div ng-memelink ng-model="item.meme" 
+								on-click="viewMeme(item.meme.id)" 
+								on-like="likeMeme(item.meme.id)"
+								on-dislike="dislikeMeme(item.meme.id)"
+								on-addtofavourites="addMemeToFavourites(item.meme.id)">
+				</div>
+				<div class="pull-left timeLineDescription" >
+					<div class="icon pull-left">
+						<i class="fa fa-quote-left" ng-show="item.entryType==1"></i>
+						<i class="fa fa-retweet" ng-show="item.entryType==2"></i>
+						<i class="fa fa-thumbs-o-up" ng-show="item.entryType==3"></i>
+						<i class="fa fa-thumbs-o-down" ng-show="item.entryType==4"></i>
+						<i class="fa fa-reply" ng-show="item.entryType==5"></i>
+						<i class="fa fa-comments-o" ng-show="item.entryType==6"></i>						
+					</div>
+					<div class="pull-left text">
+						<span class="dateofEntry"> {{item.dateOfEntry | date:'short'}}</span>
+						<span ng-click="openUser(item.user.id)" class="allowFollow ng-binding">{{item.user.userName}}</span>					 
+						<span ng-show="item.entryType==1"> posted a new quote.</span>
+						<span ng-show="item.entryType==2"> requoted this.</span>
+						<span ng-show="item.entryType==3"> likes this.</span>
+						<span ng-show="item.entryType==4"> dislikes this.</span>
+						<span ng-show="item.entryType==5"> replied to this.</span>
+						<span ng-show="item.entryType==6"> commented on this.</span>
+					</div>
+					
+					<div class="pull-left timeLineComment" ng-show="item.entryType==6" >
+						{{item.userComment.comment}} 
+					</div>
+				</div>
+				
+			</div>
+
 		</div>
 		
 		<!--div class="pull-left userCard rounded" ng-show="allowGetMoreMemes">

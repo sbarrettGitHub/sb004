@@ -9,7 +9,11 @@
 			</div>
 			<div class="pull-left infoFrame">
 				<div class="created">
-					<div class="pull-left "><span ng-click="onUserclick(ngModel.createdByUserId)" class="allowFollow"  ng-userhover ng-user="ngModel.creator">{{ngModel.createdBy}}</span></div>
+					<div class="pull-left ">
+						<span class="allowFollow"   ng-userhover ng-user="ngModel.creator" >
+							{{ngModel.createdBy}}
+						</span>
+					</div>
 					<div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
 				</div>
 				<div class="stats">
