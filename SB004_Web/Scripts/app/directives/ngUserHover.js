@@ -50,13 +50,10 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
       scope.openUserMemes = function(){
         $location.path("/usermemes/" + scope.ngUser.id);
       }
-      // elem.bind('click',function(){
-      //   $location.path("/usermemes/" + scope.ngUser.id);
-      // });
       
         var template = "";
         template += "	<div id='hoverUserDetail' class='ngUserHover rounded' style='display:none;' ng-model='ngUser'> ";
-        template += "		<div class='header'>";
+        template += "		     <div class='header'>";
         template += "       	  <img class='userImage rounded'";
         template += "           	src='api/image/user/{{ngUser.id}}'>";
         template += "           </img>";
@@ -65,22 +62,26 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         template += "           </div>	";
         template += "        </div>";
         template += "        <div class='userStats'>";
-        template += "        	<div class='userStat'>";
-        template += "           	<i class='fa fa-eye'></i> Views";
-        template += "               <div>{{ngUser.views | nearestK}}</div>";
+        template += "        	  <div class='userStat'>";
+        template += "           	<i class='fa fa-plus'></i> Posts";
+        template += "             <div>{{ngUser.posts | nearestK}}</div>";
         template += "           </div>";
+        template += "           <div class='userStat'>";
+        template += "           	<i class='fa fa-retweet'></i> Reposts";
+        template += "            	<div>{{ngUser.reposts | nearestK}}</div>";
+        template += "           </div>";        
         template += "           <div class='userStat'>";
         template += "           	<i class='fa fa-thumbs-o-up'></i> Likes";
         template += "               <div>{{ngUser.likes | nearestK}}</div>";
         template += "           </div>";	
         template += "           <div class='userStat'>";
-        template += "           	<i class='fa fa-thumbs-o-down'></i> Dislikes";
-        template += "               <div>{{ngUser.dislikes | nearestK}}</div>";
-        template += "           </div>";	
+        template += "           	<i class='fa fa-reply'></i> Replies";
+        template += "               <div>{{ngUser.replies | nearestK}}</div>";
+        template += "           </div>";	        
         template += "           <div class='userStat'>";
-        template += "           	<i class='fa fa-retweet'></i> Reposts";
-        template += "            	<div>{{ngUser.reposted | nearestK}}</div>";
-        template += "           </div>";						
+        template += "           	<i class='fa fa-comments-o'></i> Comments";
+        template += "               <div>{{ngUser.comments | nearestK}}</div>";
+        template += "           </div>";							
         template += "        </div>";	
         template += "	</div>";
         var new$ = angular.element(template);

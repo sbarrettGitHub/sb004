@@ -558,7 +558,7 @@ height:325px;*/
 }
  .ngUserHover{
     position: absolute;
-    width: 460px;
+    width: 600px;
     height: 128px;
     background: silver;
     overflow: hidden;
@@ -574,16 +574,17 @@ height:325px;*/
 	height: 64px;
 	
 }
+
 #hoverUserDetail .header .userImage{
     text-align: left;
-    float: left !important;
-    max-height: 64px !important;
+    float: left !important;   
     margin-top: 32px!important;
     margin-left: 10px!important;
     border: 1px solid darkgrey;
     padding: 5px;
     background-color: white;
-    max-width: 64px !important;
+	height: 64px !important;
+    width: 64px !important;
 }
 #hoverUserDetail .header .userName{
     font-size: large;
@@ -600,7 +601,7 @@ height:325px;*/
 
 #hoverUserDetail .userStats .userStat{
 	float:left !important;
-	width: 90px;
+	width: 100px;
 	margin-top: 5px; 
 	color:black;
 }
