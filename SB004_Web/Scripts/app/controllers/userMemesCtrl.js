@@ -14,7 +14,7 @@
 		};
 		
 		var refreshTimeline = function(){
-			$scope.memes = [];
+			$scope.items = [];
 			var currentCount = itemsIndex;
 			itemsIndex = 0;
 			
@@ -36,13 +36,15 @@
 					if(data.user){
 						$scope.user = data.user;
 					}
-					// Add the items returned to the list of items
-					for(var i=0;i<data.length;i++){   
-						$scope.items.push(data[i]);
-					}	
+					if(data.timelineEntries){
+						// Add the items returned to the list of items
+						for(var i=0;i<data.timelineEntries.length;i++){   
+							$scope.items.push(data.timelineEntries[i]);
+						}
+					}						
 										
 					// Maintain a cursor of items. 
-					itemsIndex = $scope.length;
+					itemsIndex = $scope.items.length;
 					endWaiting();
                 }).
                 error(function (e) {

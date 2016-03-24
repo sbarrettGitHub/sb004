@@ -28,40 +28,45 @@ namespace SB004.Controllers
 		public IHttpActionResult Get(string id, int skip, int take, TimeLineEntry type)
 		{
 			List<ITimeLine> timeLine = repository.GetUserTimeLine(id, skip, take, type);
-			List<TimelineModel> model = new List<TimelineModel>();
-			foreach (var item in timeLine)
+			TimelineModel model = new TimelineModel
 			{
-				TimelineModel itemModel = new TimelineModel(item);
+				User = repository.GetUser(id),
+				TimelineEntries = new List<TimelineEntryModel>()
+			};
 
-				// Resove the user object
-				itemModel.User = repository.GetUser(item.UserId);
+			foreach (var entry in timeLine)
+			{
+				TimelineEntryModel timelineEntryModel = new TimelineEntryModel(entry);
+
+				// User has to be the requested user so no need to resolve
+				timelineEntryModel.User = model.User;
 
 				// Get the meme referenced by the time line entry
-				if (item.EntryType == TimeLineEntry.Post ||
-				    item.EntryType == TimeLineEntry.Like ||
-				    item.EntryType == TimeLineEntry.Dislike ||
-				    item.EntryType == TimeLineEntry.Repost ||
-				    item.EntryType == TimeLineEntry.Reply ||
-					item.EntryType == TimeLineEntry.Comment
+				if (entry.EntryType == TimeLineEntry.Post ||
+				    entry.EntryType == TimeLineEntry.Like ||
+				    entry.EntryType == TimeLineEntry.Dislike ||
+				    entry.EntryType == TimeLineEntry.Repost ||
+				    entry.EntryType == TimeLineEntry.Reply ||
+					entry.EntryType == TimeLineEntry.Comment
 					)
 				{
-					itemModel.Meme = new MemeLiteModel(repository, repository.GetMeme(item.TimeLineRefId));
+					timelineEntryModel.Meme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefId));
 				}
 
 				// Resolve the comment
-				if (item.EntryType == TimeLineEntry.Comment)
+				if (entry.EntryType == TimeLineEntry.Comment)
 				{
-					itemModel.UserComment = repository.GetUserComment(item.TimeLineRefAlternateId);
+					timelineEntryModel.UserComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
 				}
 
 				// Resolve the alternative ref id (always a meme)
-				if (item.EntryType == TimeLineEntry.Reply)
+				if (entry.EntryType == TimeLineEntry.Reply)
 				{
-					itemModel.AlternateMeme = new MemeLiteModel(repository, repository.GetMeme(item.TimeLineRefAlternateId));
+					timelineEntryModel.AlternateMeme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefAlternateId));
 				}
 
 				// Add to time line model
-				model.Add(itemModel);
+				model.TimelineEntries.Add(timelineEntryModel);
 			}
 			return Ok(model);
 		}

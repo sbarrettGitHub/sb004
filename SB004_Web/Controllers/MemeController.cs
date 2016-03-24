@@ -206,10 +206,13 @@ namespace SB004.Controllers
         /// <summary>
         ///
         /// </summary>
-        [HttpPatch]
+		[Authorize]
+		[HttpPatch]
         [Route("{id}/reply/{replyMemeId}")]
         public HttpResponseMessage AddReply(string id, string replyMemeId)
-        {
+		{
+			string userId = User.Identity.UserId();
+
             IMeme meme = repository.GetMeme(id);
 
             if (meme == null)
@@ -445,31 +448,33 @@ namespace SB004.Controllers
             });
         }
         #region Private Methods
-        /// <summary>
-        /// Record interation with the meme. 
-        /// Increment count of likes, dislikes, views, shares 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="likesIncrement"></param>
-        /// <param name="dislikesIncrement"></param>
-        /// <param name="viewsIncrement"></param>
-        /// <param name="sharesIncrement"></param>
-        /// <param name="favouritesIncrement"></param>
-        /// <returns></returns>
-        // ReSharper disable once UnusedParameter.Local
-        private HttpResponseMessage MemeInteraction(string id, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement)
-        {
 
-            IMeme meme = repository.GetMeme(id);
+	    /// <summary>
+	    /// Record interation with the meme. 
+	    /// Increment count of likes, dislikes, views, shares 
+	    /// </summary>
+	    /// <param name="likesIncrement"></param>
+	    /// <param name="dislikesIncrement"></param>
+	    /// <param name="viewsIncrement"></param>
+	    /// <param name="sharesIncrement"></param>
+	    /// <param name="favouritesIncrement"></param>
+	    /// <param name="memeId"></param>
+	    /// <returns></returns>
+	    // ReSharper disable once UnusedParameter.Local
+        private HttpResponseMessage MemeInteraction(string memeId, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement)
+	    {
+			string userId = User.Identity.UserId(); // null if not signed in
+		    
+			IMeme meme = repository.GetMeme(memeId);
             if (meme == null)
             {
                 var responseNotFound = Request.CreateResponse(HttpStatusCode.NotFound);
-                responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + id);
+				responseNotFound.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + memeId);
                 return responseNotFound;
             } 
 
             // Update the meme
-            meme = memeBusiness.UpdateMemeInteraction(id, likesIncrement, dislikesIncrement, viewsIncrement, sharesIncrement, favouritesIncrement);
+			meme = memeBusiness.UpdateMemeInteraction(memeId, userId, likesIncrement, dislikesIncrement, viewsIncrement, sharesIncrement, favouritesIncrement);
 
             var response = Request.CreateResponse(HttpStatusCode.OK, meme);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/meme/" + meme.Id);

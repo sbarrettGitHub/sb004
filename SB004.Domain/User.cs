@@ -42,12 +42,18 @@ namespace SB004.Domain
         public string Thumbnail { get; set; }
 
         public List<string> FavouriteMemeIds { get; set; }
+		
+		public int Posts { get; set; }
         public int Likes { get; set; }
         public int Dislikes { get; set; }
         public int Favourites { get; set; }
         public int Shares { get; set; }
         public int Views { get; set; }
-        public int Reposted { get; set; }
+
+		public int Replies { get; set; }
+        public int Reposts { get; set; }
+		public int Comments { get; set; }
+		public int Reposted { get; set; }
         public IUser SetFollowing(List<IUser> following)
         {
             this.following = following;

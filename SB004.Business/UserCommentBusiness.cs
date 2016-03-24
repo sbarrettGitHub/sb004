@@ -22,7 +22,16 @@ namespace SB004.Business
 			
 			// Record on time line
 			repository.Save(new TimeLine(userComment.UserId, TimeLineEntry.Comment, userComment.MemeId, userComment.Id,null));
+			
+			// Update the number of comments added by this user
+			IUser user = repository.GetUser(userComment.UserId);
+			if (user != null)
+			{
+				user.Comments ++;
 
+				// Save commentator
+				repository.Save(user);
+			}
 			return userComment;
 		}
 	}

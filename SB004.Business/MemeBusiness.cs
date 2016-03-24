@@ -21,76 +21,80 @@
             this.trendManager = trendManager;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="likesIncrement"></param>
-        /// <param name="dislikesIncrement"></param>
-        /// <param name="viewsIncrement"></param>
-        /// <param name="sharesIncrement"></param>
-        /// <param name="favouritesIncrement"></param>
-        /// <returns></returns>
-        public IMeme UpdateMemeInteraction(string id, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement)
-        {
-            IMeme meme = repository.GetMeme(id);
-            if (meme == null)
-            {
-                throw new Exception("Object not found");
-            }
-            meme.Likes += likesIncrement;
-            meme.Dislikes += dislikesIncrement;
-            meme.Views += viewsIncrement;
-            meme.Shares += sharesIncrement;
-            meme.Favourites += favouritesIncrement;
-            
-            // Save meme
-            meme = SaveMeme(meme);
-
-			// Add like to time line
-	        if (likesIncrement > 0)
-	        {
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Like, meme.Id, null, null));
-	        }
-			// Add dislike to time line
-			if (dislikesIncrement > 0)
+		/// <summary>
+	    /// 
+	    /// </summary>
+	    /// <param name="userId"></param>
+	    /// <param name="likesIncrement"></param>
+	    /// <param name="dislikesIncrement"></param>
+	    /// <param name="viewsIncrement"></param>
+	    /// <param name="sharesIncrement"></param>
+	    /// <param name="favouritesIncrement"></param>
+	    /// <param name="memeId"></param>
+	    /// <returns></returns>
+	    public IMeme UpdateMemeInteraction(string memeId, string userId, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement)
+		{
+			IMeme meme = repository.GetMeme(memeId);
+			if (meme == null)
 			{
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Dislike, meme.Id, null, null));
+				throw new Exception("Object not found");
+			}
+			meme.Likes += likesIncrement;
+			meme.Dislikes += dislikesIncrement;
+			meme.Views += viewsIncrement;
+			meme.Shares += sharesIncrement;
+			meme.Favourites += favouritesIncrement;
+
+			// Save meme
+			meme = SaveMeme(meme);
+
+			if (userId != null)
+			{
+				// Add like to time line
+				if (likesIncrement > 0)
+				{
+					repository.Save(new TimeLine(userId, TimeLineEntry.Like, meme.Id, null, null));
+				}
+				// Add dislike to time line
+				if (dislikesIncrement > 0)
+				{
+					repository.Save(new TimeLine(userId, TimeLineEntry.Dislike, meme.Id, null, null));
+				}
+
+				IUser user = repository.GetUser(userId);
+				if (user != null)
+				{
+					user.Likes += likesIncrement;
+					user.Dislikes += dislikesIncrement;
+					user.Views += viewsIncrement;
+					user.Shares += sharesIncrement;
+					user.Favourites += favouritesIncrement;
+
+					// Save meme creator
+					repository.Save(user);
+				}
 			}
 
-	        IUser memeCreator = repository.GetUser(meme.CreatedByUserId);
-            if (memeCreator != null)
-            {
-                memeCreator.Likes += likesIncrement;
-                memeCreator.Dislikes += dislikesIncrement;
-                memeCreator.Views += viewsIncrement;
-                memeCreator.Shares += sharesIncrement;
-                memeCreator.Favourites += favouritesIncrement;
+			// What if this is a repost?
+			if (meme.RepostOfId != null)
+			{
+				IMeme original = repository.GetMeme(meme.RepostOfId);
+				if (original != null)
+				{
+					// A repost should always reference an original (not another repost)
+					if (original.RepostOfId != null)
+					{
+						throw new Exception(string.Format("Repost of a repost not allowed - {0} - {1}", meme.Id, meme.RepostOfId));
+					}
 
-                // Save meme creator
-                repository.Save(memeCreator);
-            }
+					// Recursive call of this operation to update the original
+					UpdateMemeInteraction(meme.RepostOfId, null, likesIncrement, dislikesIncrement, viewsIncrement, sharesIncrement, favouritesIncrement);
 
-            // What if this is a repost?
-            if (meme.RepostOfId != null)
-            {
-                IMeme original = repository.GetMeme(meme.RepostOfId);
-                if (original != null)
-                {
-                    // A repost should always reference an original (not another repost)
-                    if (original.RepostOfId != null)
-                    { 
-                        throw new Exception(string.Format("Repost of a repost not allowed - {0} - {1}", meme.Id, meme.RepostOfId));
-                    }
-
-                    // Recursive call of this operation to update the original
-                    UpdateMemeInteraction(meme.RepostOfId, likesIncrement, dislikesIncrement, viewsIncrement, sharesIncrement, favouritesIncrement);
-                    
-                }
-            }
-            // Update the meme
-            return meme;
-        }
+				}
+			}
+			// Update the meme
+			return meme;
+		}
         /// <summary>
         /// Calculate the trend score and save the meme
         /// </summary>
@@ -136,23 +140,31 @@
             // Save the meme
             var savedMeme = repository.Save(meme);
 
-            // Update the users time line
+            // Update the users time line and number of posts
             if (isNew)
             {
 				repository.Save(new TimeLine(savedMeme.CreatedByUserId, TimeLineEntry.Post, savedMeme.Id, null, null));
+	            var creator = repository.GetUser(savedMeme.CreatedByUserId);
+				if (creator != null)
+	            {
+					// Increment the number of posts by this user
+					creator.Posts++;
+					repository.Save(creator);
+	            }
+
             }
             // Add to the time line
             return savedMeme;
         }
 
-        /// <summary>
-        /// Adds a reply (with an id) to the replies of the supplied meme.
-        /// The reply trend and date added are calculated before appending to the meme
-        /// </summary>
-        /// <param name="meme">The meme being replied to</param>
-        /// <param name="replyMemeId">Id of the reply</param>
-        /// <returns></returns>
-        public IMeme AddReplyToMeme(IMeme meme, string replyMemeId)
+	    /// <summary>
+	    /// Adds a reply (with an id) to the replies of the supplied meme.
+	    /// The reply trend and date added are calculated before appending to the meme
+	    /// </summary>
+	    /// <param name="meme">The meme being replied to</param>
+	    /// <param name="replyMemeId">Id of the reply</param>
+	    /// <returns></returns>
+	    public IMeme AddReplyToMeme(IMeme meme, string replyMemeId)
         {
             IMeme replyMeme = repository.GetMeme(replyMemeId);
             if (replyMeme != null)
@@ -173,8 +185,13 @@
                 // Save the meme
                 meme = repository.Save(meme);
 
-				// Add reply to time line
-				repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMeme.Id, null));
+				// Add reply to time line of the replier 
+				repository.Save(new TimeLine(replyMeme.CreatedByUserId, TimeLineEntry.Reply, meme.Id, replyMeme.Id, null));
+
+				// Update the number of replies added by the replier
+	            replyMeme.Creator.Replies ++;
+
+	            repository.Save(replyMeme.Creator);
             }
 
             return meme;
@@ -209,7 +226,7 @@
         }
 
 	    /// <summary>
-	    /// Repost the specified meme to the specified user
+	    /// Repost the specified meme by the specified user
 	    /// </summary>
 	    /// <param name="meme"></param>
 	    /// <param name="user"></param>
@@ -227,13 +244,18 @@
             // Save the repost
             repository.Save(repost);
 			
-			// Add repost to time line
-			repository.Save(new TimeLine(meme.CreatedByUserId, TimeLineEntry.Repost, repost.MemeId, null, null));
-	   
             // Increment the repost count of the meme and its creator
             meme = Reposted(meme);
-            
-            // Get the 
+
+			// Add repost to time line
+			repository.Save(new TimeLine(user.Id, TimeLineEntry.Repost, repost.MemeId, null, null));
+
+			// Update the number of reposts performed by this user
+			user.Reposts++;
+
+			// Save commentator
+			repository.Save(user);
+
             return meme;
         }
         /// <summary>

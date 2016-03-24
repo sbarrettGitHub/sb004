@@ -39,37 +39,37 @@
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='feed') }" ng-click="statOptionSelected='feed'">
 				<span  title="All recent {{user.userName}} posts, reposts, likes, replies and comments">
-					<i class="fa fa-rss"></i><span class="hidden-sm hidden-xs">Feed</span>
+					<i class="fa fa-rss"></i> <span class="hidden-sm hidden-xs"> Timeline</span> ({{user.posts + user.reposts + user.likes + user.replies + user.comments | nearestK}})
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='posts') }" ng-click="statOptionSelected='posts'">
 				<span  title="Posts by {{user.userName}}">
-					<i class="fa fa-plus"></i>{{user.posts | nearestK}} <span class="hidden-sm hidden-xs">Posts</span>
+					<i class="fa fa-plus"></i><span class="hidden-sm hidden-xs"> Posts </span> ({{user.posts | nearestK}})
 				</span>
 			</div>				
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='reposts') }" ng-click="statOptionSelected='reposts'">
 				<span  title="Reposts by {{user.userName}}">
-					<i class="fa fa-retweet"></i>{{user.reposted | nearestK}} <span class="hidden-sm hidden-xs">Reposts</span>
+					<i class="fa fa-retweet"></i><span class="hidden-sm hidden-xs"> Reposts </span> ({{user.reposts | nearestK}}) 
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='likes') }" ng-click="statOptionSelected='likes'">
 				<span title="Posts that {{user.userName }} has liked">
-					<i class="fa fa-thumbs-o-up" ></i>{{user.likes | nearestK}} <span class="hidden-sm hidden-xs">Likes</span>
+					<i class="fa fa-thumbs-o-up" ></i> <span class="hidden-sm hidden-xs"> Likes</span> ({{user.likes | nearestK}})
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='replies') }">
 				<span title="Replies {{user.userName }} has made to other posts" ng-click="statOptionSelected='replies'">
-					<i class="fa fa-reply" ></i>{{user.replies | nearestK}} <span class="hidden-sm hidden-xs">Replies</span>
+					<i class="fa fa-reply" ></i> <span class="hidden-sm hidden-xs"> Replies</span> ({{user.replies | nearestK}})
 				</span>
 			</div>	
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (statOptionSelected=='comments') }" ng-click="statOptionSelected='comments'">
 				<span title="Posts that {{user.userName }} has commented on">
-					<i class="fa fa-comments-o" ></i>{{user.comments | nearestK}} <span class="hidden-sm hidden-xs">Comments</span>
+					<i class="fa fa-comments-o" ></i> <span class="hidden-sm hidden-xs"> Comments</span> ({{user.comments | nearestK}})
 				</span>
 			</div>							
 		</div>	
@@ -106,25 +106,7 @@
 						{{item.userComment.comment}} 
 					</div>
 				</div>
-				
 			</div>
-
-		</div>
-		
-		<!--div class="pull-left userCard rounded" ng-show="allowGetMoreMemes">
-			<div class="userCardContainer">          
-				<div class="userCardContainerUser">
-					<i class="fa fa-user"></i>
-					<div id="">{{user.userName}}</div>					
-					<div class="userCardContainerOptions">
-					<button class="text-center follow" title="Get more posts by {{user.userName}}"
-						 ng-click="getMoreMemes()">
-						<i class="fa fa-download"></i><span>&nbsp; More...</span>
-					</button>
-					
-					
-					</div>
-				</div>
-			</div>
-		</div-->
+		</div>	
+	</div>
 </div>

@@ -39,13 +39,19 @@ namespace SB004.Domain
         string Thumbnail { get; set; }
 
         List<string> FavouriteMemeIds { get; set; }
-
+		
+		int Posts { get; set; }
         int Likes { get; set; }
         int Dislikes { get; set; }
         int Favourites { get; set; }
         int Shares { get; set; }
         int Views { get; set; }
-        int Reposted { get; set; }
+
+		int Replies { get; set; }
+        int Reposts { get; set; }
+		int Comments { get; set; }
+
+		int Reposted { get; set; }
         IUser SetFollowing(List<IUser> following);
     }
     

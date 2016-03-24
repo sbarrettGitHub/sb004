@@ -10,14 +10,15 @@ namespace SB004.Business
     /// <param name="meme"></param>
     /// <returns></returns>
     IMeme SaveMeme(IMeme meme);
-    /// <summary>
-    /// Adds a reply (with an id) to the replies of the supplied meme.
-    /// The reply trend and date added are calculated before appending to the meme
-    /// </summary>
-    /// <param name="meme"></param>
-    /// <param name="replyMemeId"></param>
-    /// <returns></returns>
-    IMeme AddReplyToMeme(IMeme meme, string replyMemeId);
+
+	  /// <summary>
+	  /// Adds a reply (with an id) to the replies of the supplied meme.
+	  /// The reply trend and date added are calculated before appending to the meme
+	  /// </summary>
+	  /// <param name="meme"></param>
+	  /// <param name="replyMemeId"></param>
+	  /// <returns></returns>
+	  IMeme AddReplyToMeme(IMeme meme, string replyMemeId);
 
     /// <summary>
     /// Update the parent meme to reflect the new state of the supplied meme 
@@ -53,7 +54,7 @@ namespace SB004.Business
     /// <param name="sharesIncrement"></param>
     /// <param name="favouritesIncrement"></param>
     /// <returns></returns>
-    IMeme UpdateMemeInteraction(string id, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement);
+	IMeme UpdateMemeInteraction(string memeId, string userId, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement);
 
   }
 }

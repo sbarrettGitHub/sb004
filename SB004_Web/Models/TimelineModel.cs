@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using SB004.Domain;
 
 namespace SB004.Models
 {
 	public class TimelineModel
 	{
-		public TimelineModel()
+		public IUser User { get; set; }
+		public List<TimelineEntryModel> TimelineEntries { get; set; } 
+	}
+
+	public class TimelineEntryModel
+	{
+		public TimelineEntryModel()
 		{
 		}
-		public TimelineModel(ITimeLine timeLineEntry)
+		public TimelineEntryModel(ITimeLine timeLineEntry)
 		{
 			this.DateOfEntry = timeLineEntry.DateOfEntry;
 			this.UserId = timeLineEntry.UserId;
