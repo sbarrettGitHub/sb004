@@ -109,3 +109,6 @@
 #userMemes .memeLinkContainer{
     margin-bottom: 0 !important;
 }
+#userMemes .timeLineExtended{
+    margin-top: -40px;
+}

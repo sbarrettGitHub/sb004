@@ -81,14 +81,14 @@
 			</div>	
 		</div>	
 		<div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-4 col-lg-8 col-md-offset-4col-md-8 col-sm-8 col-xs-8">
-			<div class="pull-left">		
-				<div ng-memelink ng-model="item.meme" 
+			<div class="pull-left">
+				<div ng-memelink ng-model="item.meme" ng-hide="item.meme.id == items[$index-1].meme.id"
 								on-click="viewMeme(item.meme.id)" 
 								on-like="likeMeme(item.meme.id)"
 								on-dislike="dislikeMeme(item.meme.id)"
 								on-addtofavourites="addMemeToFavourites(item.meme.id)">
 				</div>
-				<div class="pull-left timeLineDescription" >
+				<div class="pull-left timeLineDescription" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}">
 					<div class="icon pull-left">
 						<i class="fa fa-quote-left" ng-show="item.entryType==1"></i>
 						<i class="fa fa-retweet" ng-show="item.entryType==2"></i>
