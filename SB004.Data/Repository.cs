@@ -520,7 +520,7 @@ namespace SB004.Data
 		    else
 		    {
 				// Bring back specific entry types
-				Query.And(
+				query =  Query.And(
 					Query<TimeLine>.EQ(e => e.UserId, userId),
 					Query<TimeLine>.EQ(e => e.EntryType, type));
 		    }

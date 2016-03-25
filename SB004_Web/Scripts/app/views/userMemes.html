@@ -7,21 +7,23 @@
 					<img class='userMainImage rounded' ng-src='api/image/user/{{userId}}'></img>
 					
 				</div>
-				<div class="userNameContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
-					<div class="userName col-lg-10 col-md-10 col-sm-6 ">{{user.userName}}</div>
-					<div class="pull-left col-lg-2 col-md-2">
-						<button type="button" class="btn btn-default following" title="Click here to follow {{user.userName}}"
-								ng-show="!isFollowing" ng-click="follow()">
-							<i class="fa fa-plus"></i>
-							Follow
-						</button>
-						<button type="button" class="btn btn-default following" title="Click here to stop following {{user.userName}}" 
-								ng-show="isFollowing" ng-click="unfollow()">
-							<i class="fa fa-minus unfollow"></i>
-							Unfollow
-						</button>
-					</div>
-				</div>  
+				<div class="userNameContainer rounded pull-left col-lg-10 col-md-10 hidden-sm hidden-xs">
+					<div class="userName col-lg-12 col-md-12 col-sm-6 ">{{user.userName}}
+						<div class="pull-right col-lg-2 col-md-2">
+							<button type="button" class="pull-right btn btn-default following" title="Click here to follow {{user.userName}}"
+									ng-show="!isFollowing" ng-click="follow()">
+								<i class="fa fa-plus"></i>
+								Follow
+							</button>
+							<button type="button" class="pull-right btn btn-default following" title="Click here to stop following {{user.userName}}" 
+									ng-show="isFollowing" ng-click="unfollow()">
+								<i class="fa fa-minus unfollow"></i>
+								Unfollow
+							</button>
+						</div>			
+					</div>					
+				</div> 
+					 
 				<div class="userQuoteContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
 					<div>
 						<span class="fa fa-quote-left"></span>
@@ -37,44 +39,48 @@
 		</div>
 		<div class="userStatOptions col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='feed') }" ng-click="statOptionSelected='feed'">
+				ng-class="{ 'selected': (entryType=='All') }" ng-click="refreshTimeline('All')">
 				<span  title="All recent {{user.userName}} posts, reposts, likes, replies and comments">
 					<i class="fa fa-clock-o"></i> <span class="hidden-sm hidden-xs"> Timeline</span> ({{user.posts + user.reposts + user.likes + user.replies + user.comments | nearestK}})
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='posts') }" ng-click="statOptionSelected='posts'">
+				ng-class="{ 'selected': (entryType=='posts') }" ng-click="refreshTimeline('posts')">
 				<span  title="Posts by {{user.userName}}">
 					<i class="fa fa-plus"></i><span class="hidden-sm hidden-xs"> Posts </span> ({{user.posts | nearestK}})
 				</span>
 			</div>				
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='reposts') }" ng-click="statOptionSelected='reposts'">
+				ng-class="{ 'selected': (entryType=='reposts') }" ng-click="refreshTimeline('reposts')">
 				<span  title="Reposts by {{user.userName}}">
 					<i class="fa fa-retweet"></i><span class="hidden-sm hidden-xs"> Reposts </span> ({{user.reposts | nearestK}}) 
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='likes') }" ng-click="statOptionSelected='likes'">
+				ng-class="{ 'selected': (entryType=='likes') }" ng-click="refreshTimeline('likes')">
 				<span title="Posts that {{user.userName }} has liked">
 					<i class="fa fa-thumbs-o-up" ></i> <span class="hidden-sm hidden-xs"> Likes</span> ({{user.likes | nearestK}})
 				</span>
 			</div>
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='replies') }">
-				<span title="Replies {{user.userName }} has made to other posts" ng-click="statOptionSelected='replies'">
+				ng-class="{ 'selected': (entryType=='replies') }">
+				<span title="Replies {{user.userName }} has made to other posts" ng-click="refreshTimeline('replies')">
 					<i class="fa fa-reply" ></i> <span class="hidden-sm hidden-xs"> Replies</span> ({{user.replies | nearestK}})
 				</span>
 			</div>	
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
-				ng-class="{ 'selected': (statOptionSelected=='comments') }" ng-click="statOptionSelected='comments'">
+				ng-class="{ 'selected': (entryType=='comments') }" ng-click="refreshTimeline('comments')">
 				<span title="Posts that {{user.userName }} has commented on">
 					<i class="fa fa-comments-o" ></i> <span class="hidden-sm hidden-xs"> Comments</span> ({{user.comments | nearestK}})
 				</span>
 			</div>							
 		</div>	
-		<div ng-repeat="item in items" class="pull-left col-lg-offset-4 col-lg-8 col-md-offset-4col-md-8 col-sm-8 col-xs-8">	
-
+		<div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-offset-3 col-lg-9 col-md-offset-3 col-md-9 col-sm-9 col-xs-9">
+			<div id="waiting" class="waitingContainer dialogWaitConainer">
+				<div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+			</div>	
+		</div>	
+		<div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-4 col-lg-8 col-md-offset-4col-md-8 col-sm-8 col-xs-8">
 			<div class="pull-left">		
 				<div ng-memelink ng-model="item.meme" 
 								on-click="viewMeme(item.meme.id)" 

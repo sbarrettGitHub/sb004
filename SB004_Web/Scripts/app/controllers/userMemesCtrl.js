@@ -4,7 +4,7 @@
     var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
         $scope.userId = $routeParams.id;
 		var itemsIndex=0;
-		var entryType = "All";
+		$scope.entryType = "All";
 		$scope.items = []
 		$scope.user = {};
 		$scope.isFollowing = false;
@@ -13,13 +13,38 @@
 			viewingBlockCount:10
 		};
 		
-		var refreshTimeline = function(){
+		$scope.refreshTimeline = function(type){
 			$scope.items = [];
 			var currentCount = itemsIndex;
 			itemsIndex = 0;
-			
+			$scope.entryType = type;
+			var timelineEntryType = 0;
+			switch (type) {
+				case "All":
+					timelineEntryType = 0;
+					break;				
+				case "posts":
+					timelineEntryType = 1;
+					break;
+				case "reposts":
+					timelineEntryType = 2;
+					break;					
+				case "likes":
+					timelineEntryType = 3;
+					break;
+				case "replies":
+					timelineEntryType = 5;
+					break;
+				case "comments":
+					timelineEntryType = 6;
+					break;
+				default:
+					timelineEntryType = 0;
+					$scope.entryType = "All";
+					break;
+			}
 			// Retrieve  all the items that are currently visible again
-			$scope.getTimeline(0, currentCount, entryType);
+			$scope.getTimeline(0, constants.viewingBlockCount, timelineEntryType);
 		}		
 		$scope.getTimeline = function(skipitems, takeitems, type){
 			startWaiting();
@@ -116,7 +141,7 @@
 				$scope.user = securityService.getCurrentUser();
 			}
 			// Refresh the users time line
-			refreshTimeline();
+			$scope.refreshTimeline("All");
 		});
 		
 		// User message updated
