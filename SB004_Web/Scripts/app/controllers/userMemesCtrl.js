@@ -61,10 +61,38 @@
 					if(data.user){
 						$scope.user = data.user;
 					}
+					var memeGroup=[];
 					if(data.timelineEntries){
-						// Add the items returned to the list of items
+						// Add the items returned to the list of items in descending order of date of entry. 
+						// Group actions on the same meme together and list in ascending order with in the group
 						for(var i=0;i<data.timelineEntries.length;i++){   
-							$scope.items.push(data.timelineEntries[i]);
+							
+							
+							var currentTimeLineEntry = data.timelineEntries[i];
+							var nextTimeLineEntry = i < data.timelineEntries.length - 2 ? data.timelineEntries[i+1]: null;
+							var currentScopeEntry = $scope.items.length > 0 ? $scope.items[$scope.items.length-1]: null;
+							var currentMemeGroupInPlace = (memeGroup.length > 0);
+							var currentMemeGroupHead = currentMemeGroupInPlace ? memeGroup[0] : null;
+							// Is the time line entry is the same meme as the previous one (or the next one when there is no current group)
+							if((currentScopeEntry && currentTimeLineEntry.meme.id == currentScopeEntry.meme.id) || 
+								(currentMemeGroupInPlace == false && nextTimeLineEntry && currentTimeLineEntry.meme.id == nextTimeLineEntry.meme.id) ||
+								currentMemeGroupInPlace == true && !currentScopeEntry && currentTimeLineEntry.meme.id == currentMemeGroupHead.meme.id){
+								// Add to a group of ascending timeline entries for the meme group
+								// ***Time line entries are displayed in descending time but when meme actions appear togehter 
+								// they are grouped and displayed in ascending order within the group ***
+								memeGroup.unshift(data.timelineEntries[i]);
+							}else{
+								
+								// The meme group has ended push the group items to the scope
+								for (var memeGroupIndex = 0; memeGroupIndex < memeGroup.length; memeGroupIndex++) {
+									$scope.items.push(memeGroup[memeGroupIndex]);									
+								}
+								// Clear the meme group
+								memeGroup=[];
+								// Add the new entry 
+								$scope.items.push(data.timelineEntries[i]);
+							}
+							
 						}
 					}						
 										
