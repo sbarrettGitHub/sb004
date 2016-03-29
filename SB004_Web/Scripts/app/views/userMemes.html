@@ -104,12 +104,20 @@
 						<span ng-show="item.entryType==2"> requoted this.</span>
 						<span ng-show="item.entryType==3"> likes this.</span>
 						<span ng-show="item.entryType==4"> dislikes this.</span>
-						<span ng-show="item.entryType==5"> replied to this.</span>
+						<span ng-show="item.entryType==5"> replied to this quote with this :.</span>
 						<span ng-show="item.entryType==6"> commented on this.</span>
 					</div>
 					
 					<div class="pull-left timeLineComment" ng-show="item.entryType==6" >
 						{{item.userComment.comment}} 
+					</div>
+					<div class="pull-left timeLineReplyMeme" ng-show="item.entryType==5" >
+						<div ng-memelink ng-model="item.alternateMeme" ng-show="item.entryType==5" 
+								on-click="viewMeme(item.alternateMeme.id)" 
+								on-like="likeMeme(item.alternateMeme.id)"
+								on-dislike="dislikeMeme(item.alternateMeme.id)"
+								on-addtofavourites="addMemeToFavourites(item.alternateMeme.id)">
+						</div>
 					</div>
 				</div>
 			</div>

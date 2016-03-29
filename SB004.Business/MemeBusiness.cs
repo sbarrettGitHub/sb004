@@ -140,8 +140,8 @@
             // Save the meme
             var savedMeme = repository.Save(meme);
 
-            // Update the users time line and number of posts
-            if (isNew)
+            // Update the users time line and number of posts (Don't count replies)
+			if (isNew && savedMeme.ResponseToId.Length==0)
             {
 				repository.Save(new TimeLine(savedMeme.CreatedByUserId, TimeLineEntry.Post, savedMeme.Id, null, null));
 	            var creator = repository.GetUser(savedMeme.CreatedByUserId);

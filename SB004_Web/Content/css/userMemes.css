@@ -105,10 +105,16 @@
     border-bottom: 1px inset;
     width: 100%;
 }
-
 #userMemes .memeLinkContainer{
     margin-bottom: 0 !important;
 }
 #userMemes .timeLineExtended{
     margin-top: -40px;
+}
+#userMemes .timeLineReplyMeme .memeLinkContainer{
+    width:300px!important;
+     margin-left: 95px;
+}
+#userMemes .timeLineReplyMeme .memeLinkCardMeta .infoFrame {
+    width: 220px!important;       
 }
