@@ -118,3 +118,19 @@
 #userMemes .timeLineReplyMeme .memeLinkCardMeta .infoFrame {
     width: 220px!important;       
 }
+#userMemes .sideBar{
+    min-height: 300px;
+}
+#userMemes .sideBarLeft{
+    margin-left: 15px;
+}
+#userMemes .sideBarRight{
+    margin-left: -30px;
+}
+#userMemes .sideBar .head{
+    margin-top:15px;
+    font-size: 1.3em;
+    color: darkgray;
+    text-align: center;
+
+}  
