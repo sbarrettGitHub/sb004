@@ -30,7 +30,7 @@ namespace SB004.Controllers
 			List<ITimeLine> timeLine = repository.GetUserTimeLine(id, skip, take, type);
 			TimelineModel model = new TimelineModel
 			{
-				User = repository.GetUser(id),
+				User = repository.GetUser(id,true),
 				TimelineEntries = new List<TimelineEntryModel>()
 			};
 

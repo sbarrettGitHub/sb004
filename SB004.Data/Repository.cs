@@ -369,22 +369,28 @@ namespace SB004.Data
                 List<IUser> following = new List<IUser>();
                 user.FollowingIds.ForEach(f => following.Add(GetUser(f.Id)));
                 user.SetFollowing(following);
+				// Resolve the followedBy
+				List<IUser> followedBy = new List<IUser>();
+				user.FollowedByIds.ForEach(f => followedBy.Add(GetUser(f.Id)));
+				user.SetFollowedBy(followedBy);
             }
 
             return user;
         }
 
-        /// <summary>
-        /// Retrieve the user id 
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public IUser GetUser(string userId, bool deep = false)
+	    /// <summary>
+	    /// Retrieve the user by id 
+	    /// </summary>
+	    /// <param name="userId">user id</param>
+		/// <param name="deep">If true resolve list of Following ids and foloowed by ids to a list of users</param>
+	    /// <returns></returns>
+	    public IUser GetUser(string userId, bool deep = false)
         {
             IUser user = userCollection.FindOne(Query<User>.EQ(e => e.Id, userId));
             if (user != null)
             {
                 List<IUser> following = new List<IUser>();
+				List<IUser> followedBy = new List<IUser>();
                 // Resolve the following
                 if(deep)
                 {
@@ -396,12 +402,19 @@ namespace SB004.Data
                             following.Add(GetUser(f.Id));
                         }
                     });
-                    
-                }
-                user.SetFollowing(following);
+					user.SetFollowing(following);
 
+					user.FollowedByIds.ForEach(f =>
+					{
+						// If following himself, don't resolve ... infinite loop!
+						if (f.Id != user.Id)
+						{
+							followedBy.Add(GetUser(f.Id));
+						}
+					});
+					user.SetFollowedBy(followedBy);
+                }
             }
-            
             return user;
         }
         

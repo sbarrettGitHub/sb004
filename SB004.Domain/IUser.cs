@@ -31,6 +31,8 @@ namespace SB004.Domain
 		string StatusMessage { get; set; }
 
         List<IUserLite> FollowingIds { get; set; }
+		
+		List<IUserLite> FollowedByIds { get; set; }
 
         List<IUser> Following { get; }
 
@@ -53,6 +55,7 @@ namespace SB004.Domain
 
 		int Reposted { get; set; }
         IUser SetFollowing(List<IUser> following);
+	    IUser SetFollowedBy(List<IUser> f);
     }
     
 }

@@ -9,9 +9,10 @@ namespace SB004.Domain
 	    }
 
 	    public TimeLine(string userId, TimeLineEntry entryType, string timeLineRefId,
-			string timeLineRefAlternateId, string message)
+			string timeLineRefAlternateId, string message, string alternateUserId)
 	    {
 		    this.UserId = userId;
+		    this.AlternateUserId = alternateUserId;
 		    this.DateOfEntry = DateTime.Now.ToUniversalTime();
 		    this.EntryType = entryType;
 		    this.TimeLineRefId = timeLineRefId;
@@ -20,6 +21,7 @@ namespace SB004.Domain
 	    }
 		public string Id { get; set; }
 	    public string UserId { get; set; }
+		public string AlternateUserId { get; set; }
         public DateTime DateOfEntry { get; set; }
         public TimeLineEntry EntryType { get; set; }
         public string TimeLineRefId { get; set; }

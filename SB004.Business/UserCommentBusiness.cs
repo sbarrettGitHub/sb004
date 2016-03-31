@@ -21,7 +21,7 @@ namespace SB004.Business
 			userComment = repository.Save(userComment);
 			
 			// Record on time line
-			repository.Save(new TimeLine(userComment.UserId, TimeLineEntry.Comment, userComment.MemeId, userComment.Id,null));
+			repository.Save(new TimeLine(userComment.UserId, TimeLineEntry.Comment, userComment.MemeId, userComment.Id, null, null));
 			
 			// Update the number of comments added by this user
 			IUser user = repository.GetUser(userComment.UserId);

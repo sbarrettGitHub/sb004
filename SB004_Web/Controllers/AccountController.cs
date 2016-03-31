@@ -73,37 +73,19 @@ namespace SB004.Controllers
 				{
 					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.PreconditionFailed));
 				}
-
-				IUser profile = repository.GetUser(id);
-
-				if (profile != null)
+				try
 				{
-					if (profile.FollowingIds == null)
-					{
-						profile.FollowingIds = new List<IUserLite>();
-					}
-
-					// Remove the id if is already there, because it is being added to the front
-					profile.FollowingIds.RemoveAll(x => x.Id == followedId);
-
-					// Insert at the beginning
-					IUser followed = repository.GetUser(followedId);
-					if (followed != null)
-					{
-						profile.FollowingIds.Insert(0, new UserLite { Id = followed.Id, UserName = followed.UserName });
-					}
-					else
-					{
-						throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-					}
-
-					// Save 
-					repository.Save(profile);
-
-					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, repository.GetUser(id, true));
-					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
-					return response;
+					accountBusiness.Follow(id, followedId);
 				}
+				catch (ArgumentException)
+				{
+					
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+				}
+
+				HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, repository.GetUser(id, true));
+				response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
+				return response;
 			}
 			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 		}
@@ -120,24 +102,18 @@ namespace SB004.Controllers
 		{
 			if (User.Identity.UserId() == id)
 			{
-				IUser profile = repository.GetUser(id);
-
-				if (profile != null)
+				try
 				{
-					if (profile.FollowingIds == null)
-					{
-						profile.FollowingIds = new List<IUserLite>();
-					}
-
-					// Remove the id 
-					profile.FollowingIds.RemoveAll(x => x.Id == followedId);
-
-					// Save 
-					repository.Save(profile);
+					accountBusiness.Unfollow(id, followedId);
 
 					HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, repository.GetUser(id, true));
 					response.Headers.Location = new Uri(Request.RequestUri, "/api/account/" + id);
 					return response;
+				}
+				catch (ArgumentException)
+				{
+
+					throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 				}
 			}
 			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));

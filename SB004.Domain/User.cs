@@ -10,9 +10,11 @@ namespace SB004.Domain
     public class User: IUser
     {
         private List<IUser> following;
+        private List<IUser> followedBy;
         public User() 
         {
             FollowingIds = new List<IUserLite>();
+            FollowedByIds = new List<IUserLite>();
             FavouriteMemeIds = new List<string>();
         }
         public string UserName { get; set; }
@@ -37,6 +39,14 @@ namespace SB004.Domain
             }
         }
 
+		public List<IUserLite> FollowedByIds { get; set; }
+		public List<IUser> FollowedBy
+		{
+			get
+			{
+				return this.followedBy;
+			}
+		}
         public bool Active { get; set; }
 
         public string Thumbnail { get; set; }
@@ -54,11 +64,16 @@ namespace SB004.Domain
         public int Reposts { get; set; }
 		public int Comments { get; set; }
 		public int Reposted { get; set; }
-        public IUser SetFollowing(List<IUser> following)
+        public IUser SetFollowing(List<IUser> f)
         {
-            this.following = following;
+            this.following = f;
             return this;
         }
+		public IUser SetFollowedBy(List<IUser> f)
+		{
+			this.followedBy = f;
+			return this;
+		}
     }
     public class Credentials : ICredentials
     {
