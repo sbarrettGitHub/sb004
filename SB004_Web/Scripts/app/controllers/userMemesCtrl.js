@@ -62,10 +62,34 @@
 						$scope.user = data.user;
 					}
 					var memeGroup=[];
+					var memeTimelineGroups={};
+					
 					if(data.timelineEntries){
+						for(var i=0;i<data.timelineEntries.length;i++){  
+							if(!memeTimelineGroups[data.timelineEntries[i].meme.id]){
+								var newGroup ={
+									id: "",
+									entries: []
+								};
+								newGroup.id = data.timelineEntries[i].meme.id;
+								newGroup.entries.unshift(data.timelineEntries[i]);
+								memeTimelineGroups[data.timelineEntries[i].meme.id] = newGroup;
+							}else{
+								var existingGroup = memeTimelineGroups[data.timelineEntries[i].meme.id];
+								existingGroup.entries.unshift(data.timelineEntries[i]);
+							}
+						}
+
+						for (var memeTimelineGroup in memeTimelineGroups) {
+							if(memeTimelineGroups[memeTimelineGroup].entries){
+								for(var ii=0;ii<memeTimelineGroups[memeTimelineGroup].entries.length;ii++){  
+									$scope.items.push(memeTimelineGroups[memeTimelineGroup].entries[ii]);
+								}
+							}
+						}
 						// Add the items returned to the list of items in descending order of date of entry. 
 						// Group actions on the same meme together and list in ascending order with in the group
-						for(var i=0;i<data.timelineEntries.length;i++){   
+						/*for(var i=0;i<data.timelineEntries.length;i++){   
 							
 							
 							var currentTimeLineEntry = data.timelineEntries[i];
@@ -93,7 +117,7 @@
 								$scope.items.push(data.timelineEntries[i]);
 							}
 							
-						}
+						}*/
 					}						
 										
 					// Maintain a cursor of items. 

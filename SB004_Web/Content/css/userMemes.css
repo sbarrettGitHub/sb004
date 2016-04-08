@@ -74,7 +74,7 @@
     margin-right: 15px;
     margin-bottom: 40px;
     padding: 2px;
-    border-top: 2px solid darkgrey;
+    border-top: 1px solid darkgrey;
 }
 #userMemes .timeLineDescription .icon{
     background-color: #F8F8F8;
@@ -99,11 +99,13 @@
 }
 
 #userMemes .timeLineComment{
-    font-style: italic; 
     max-height: 75px;
     overflow: auto;
     border-bottom: 1px inset;
     width: 100%;
+    padding: 5px;
+    border-radius: 6px;
+    margin-top: 5px;
 }
 #userMemes .memeLinkContainer{
     margin-bottom: 0 !important;
