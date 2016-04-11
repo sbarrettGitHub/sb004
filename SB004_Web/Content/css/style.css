@@ -220,6 +220,17 @@ margin-left:1px !important;
 
 }
 /*-----------------------------------------------------------*/
+#navbarContainer{
+	background-color:#F8F8F8 ;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#srch-term{
+	margin-top:5px;
+}
+#navBar{
+	margin-top:5px;
+}
 .search{
 	margin-top:15px;
 	padding-left: 15px;
