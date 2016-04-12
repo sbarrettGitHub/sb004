@@ -98,7 +98,8 @@
 									on-dislike="dislikeMeme(item.meme.id)"
 									on-addtofavourites="addMemeToFavourites(item.meme.id)">
 					</div>
-					<div class="pull-left timeLineDescription" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}">
+					<div class="pull-left timeLineDescription" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}"
+						scroll-to="{{item.meme.id}}" >
 						<div class="icon pull-left">
 							<i class="fa fa-quote-left" ng-show="item.entryType==1"></i>
 							<i class="fa fa-retweet" ng-show="item.entryType==2"></i>
@@ -131,6 +132,10 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+					title="Get more items">
+				<i class="fa fa-cloud-download"></i><span>&nbsp; Show More </span>
 			</div>
 		</div>
 		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">

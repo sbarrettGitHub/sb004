@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, likeDislikeMemeService, securityService) {
+    var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, $q, likeDislikeMemeService, securityService, scrollTo) {
         $scope.userId = $routeParams.id;
 		var itemsIndex=0;
 		$scope.entryType = "All";
@@ -9,43 +9,48 @@
 		$scope.user = {};
 		$scope.isFollowing = false;
 		$scope.statOptionSelected ="feed";
+		$scope.lastMeme = "";
 		var constants = {
 			viewingBlockCount:10
 		};
 		
 		$scope.refreshTimeline = function(type){
 			$scope.items = [];
-			var currentCount = itemsIndex;
 			itemsIndex = 0;
 			$scope.entryType = type;
-			var timelineEntryType = 0;
-			switch (type) {
-				case "All":
-					timelineEntryType = 0;
-					break;				
-				case "posts":
-					timelineEntryType = 1;
-					break;
-				case "reposts":
-					timelineEntryType = 2;
-					break;					
-				case "likes":
-					timelineEntryType = 3;
-					break;
-				case "replies":
-					timelineEntryType = 5;
-					break;
-				case "comments":
-					timelineEntryType = 6;
-					break;
-				default:
-					timelineEntryType = 0;
-					$scope.entryType = "All";
-					break;
-			}
+			var timelineEntryType = getTimelineEntryType($scope.entryType);
+			
 			// Retrieve  all the items that are currently visible again
 			$scope.getTimeline(0, constants.viewingBlockCount, timelineEntryType);
-		}		
+		}	
+		var getTimelineEntryType = function(type){
+				var timelineEntryType = 0;
+				switch (type) {
+					case "All":
+						timelineEntryType = 0;
+						break;				
+					case "posts":
+						timelineEntryType = 1;
+						break;
+					case "reposts":
+						timelineEntryType = 2;
+						break;					
+					case "likes":
+						timelineEntryType = 3;
+						break;
+					case "replies":
+						timelineEntryType = 5;
+						break;
+					case "comments":
+						timelineEntryType = 6;
+						break;
+					default:
+						timelineEntryType = 0;
+						$scope.entryType = "All";
+						break;
+				}
+				return timelineEntryType;
+			}	
 		$scope.getTimeline = function(skipitems, takeitems, type){
 			startWaiting();
 			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 
@@ -56,26 +61,34 @@
 			// or a standard page worth
 			var take = takeitems ? takeitems : constants.viewingBlockCount;
 			
-			$http.get('api/timeline/' + $scope.userId + '?skip=' + skip + '&take=' + take + '&type=' + type).
+			// Use the current entry type unless secified (convert scope entry type to time line entry type)
+			var entryType = type ? type: getTimelineEntryType($scope.entryType);
+			var deferred = $q.defer();
+
+			$http.get('api/timeline/' + $scope.userId + '?skip=' + skip + '&take=' + take + '&type=' + entryType).
                 success(function (data) {
 					if(data.user){
 						$scope.user = data.user;
 					}
-					var memeGroup=[];
-					var memeTimelineGroups={};
-					
+					// Group time lin eenties by meme
+					var memeTimelineGroups={};					
 					if(data.timelineEntries){
 						for(var i=0;i<data.timelineEntries.length;i++){  
+							// Does this meme have a group already?
 							if(!memeTimelineGroups[data.timelineEntries[i].meme.id]){
+								// Create new group
 								var newGroup ={
 									id: "",
 									entries: []
 								};
 								newGroup.id = data.timelineEntries[i].meme.id;
 								newGroup.entries.unshift(data.timelineEntries[i]);
+								// Create a new group for time line entried for this meme
 								memeTimelineGroups[data.timelineEntries[i].meme.id] = newGroup;
 							}else{
+								// Get the exisitng group
 								var existingGroup = memeTimelineGroups[data.timelineEntries[i].meme.id];
+								// Add to existing group
 								existingGroup.entries.unshift(data.timelineEntries[i]);
 							}
 						}
@@ -87,47 +100,30 @@
 								}
 							}
 						}
-						// Add the items returned to the list of items in descending order of date of entry. 
-						// Group actions on the same meme together and list in ascending order with in the group
-						/*for(var i=0;i<data.timelineEntries.length;i++){   
-							
-							
-							var currentTimeLineEntry = data.timelineEntries[i];
-							var nextTimeLineEntry = i < data.timelineEntries.length - 2 ? data.timelineEntries[i+1]: null;
-							var currentScopeEntry = $scope.items.length > 0 ? $scope.items[$scope.items.length-1]: null;
-							var currentMemeGroupInPlace = (memeGroup.length > 0);
-							var currentMemeGroupHead = currentMemeGroupInPlace ? memeGroup[0] : null;
-							// Is the time line entry is the same meme as the previous one (or the next one when there is no current group)
-							if((currentScopeEntry && currentTimeLineEntry.meme.id == currentScopeEntry.meme.id) || 
-								(currentMemeGroupInPlace == false && nextTimeLineEntry && currentTimeLineEntry.meme.id == nextTimeLineEntry.meme.id) ||
-								currentMemeGroupInPlace == true && !currentScopeEntry && currentTimeLineEntry.meme.id == currentMemeGroupHead.meme.id){
-								// Add to a group of ascending timeline entries for the meme group
-								// ***Time line entries are displayed in descending time but when meme actions appear togehter 
-								// they are grouped and displayed in ascending order within the group ***
-								memeGroup.unshift(data.timelineEntries[i]);
-							}else{
-								
-								// The meme group has ended push the group items to the scope
-								for (var memeGroupIndex = 0; memeGroupIndex < memeGroup.length; memeGroupIndex++) {
-									$scope.items.push(memeGroup[memeGroupIndex]);									
-								}
-								// Clear the meme group
-								memeGroup=[];
-								// Add the new entry 
-								$scope.items.push(data.timelineEntries[i]);
-							}
-							
-						}*/
-					}						
+					}					
 										
 					// Maintain a cursor of items. 
 					itemsIndex = $scope.items.length;
+					if($scope.items){
+						$scope.lastMeme = $scope.items[itemsIndex-1].meme.id;
+					}					
 					endWaiting();
+					deferred.resolve(data);
                 }).
                 error(function (e) {
 					$window.alert(e);
                     endWaiting();
+					deferred.reject(e);
                 });
+
+			return deferred.promise;	
+		}
+		$scope.showMore = function(){
+			var lastMemeBefore = $scope.lastMeme;
+			$scope.getTimeline().then(function(){
+				scrollTo(lastMemeBefore);			
+			});
+
 		}
 		$scope.viewMeme = function(memeId)
 		{
@@ -211,6 +207,6 @@
     }
 
     // Register the controller
-    app.controller('userMemesCtrl', ["$scope", "$rootScope", "$routeParams", "$http", "$window", "$location", "likeDislikeMemeService", "securityService", userMemesCtrl]);
+    app.controller('userMemesCtrl', ["$scope", "$rootScope", "$routeParams", "$http", "$window", "$location","$q", "likeDislikeMemeService", "securityService", "scrollTo", userMemesCtrl]);
 
 })();
