@@ -77,29 +77,7 @@
 	$scope.socialSignIn = function(){
 		securityService.logInDialog(securityService.signInOptions.socialMedia, true);
 	}	
-	/*---------------------------------------------------------*/
-	$scope.viewMyPosts= function(){
-		$location.path("/usermemes/" + $scope.userId);
-	}
-	/*---------------------------------------------------------*/
-	$scope.editMyProfile = function(){
-		var profileDialog = $dialog.dialog({
-            backdrop: true,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl: "Scripts/app/views/profile.html",
-            controller: "profileCtrl" 
-        });
-		blurry("view", true);
-		// Open the user profile
-		profileDialog.open()
-		.then(function () {				
-			blurry("view", false);
-		},
-		function(){
-			blurry("view", false);								
-		});	
-	}
+
 	/*---------------------------------------------------------*/
 
 	function testAuthentication(){

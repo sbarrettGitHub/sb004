@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    var timeLineService = function ($http, $q, $window, securityService) {
+    var timeLineService = function ($http, $q, $window) {
         var userTimeline = function(userId, entryType, skip, take){
             var deferred = $q.defer();
             
@@ -16,7 +16,7 @@
             return deferred.promise;
         }	
         
-        var userAndFollowingTimeline = function(userId, entryType){
+        var userAndFollowingTimeline = function(userId, entryType, skip, take){
 			var deferred = $q.defer();
             
             $http.get('api/timeline/full/' + userId + '?skip=' + skip + '&take=' + take + '&type=' + entryType).

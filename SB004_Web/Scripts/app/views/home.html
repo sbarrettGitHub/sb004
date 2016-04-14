@@ -2,16 +2,16 @@
 
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left">
+			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='following') }"
+				ng-click="switchView('following')">
+				<i class="fa fa-home"></i>
+				My Home 
+			</button>	
 			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='trending') }"
 				ng-click="switchView('trending')">
 				<i class="fa fa-thumbs-o-up"></i>
 				trending
-			</button>
-			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='following') }"
-				ng-click="switchView('following')">
-				<i class="fa fa-users"></i>
-				following 
-			</button>			
+			</button>            		
 		</div>
 		<div class="btn-group pull-right">
 			<button type="button" class="btn btn-default" ng-click="addNew()">
@@ -22,7 +22,7 @@
 		</div>		
 	</div>
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
+		<div class="btn-group pull-left hidden" ng-repeat="user in following" ng-show="view=='following'">
 			<button type="button" class="btn btn-default "  ng-userhover ng-user="user">
 				<img class='userImageSmall' ng-src='api/image/user/{{user.id}}'></img>
 				{{user.userName}} 
@@ -40,54 +40,72 @@
 							on-userclick="openUser(meme.createdByUserId)"></div>
 		</div>
     </div>
-    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='following'">	
-        <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div id="waiting" class="waitingContainer dialogWaitConainer">
-                <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
-            </div>	
-        </div> 
-        <div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
-            <div class="pull-left">
-                <div ng-memelink ng-model="item.meme" ng-hide="item.meme.id == items[$index-1].meme.id"
-                                on-click="viewMeme(item.meme.id)" 
-                                on-like="likeMeme(item.meme.id)"
-                                on-dislike="dislikeMeme(item.meme.id)"
-                                on-addtofavourites="addMemeToFavourites(item.meme.id)">
-                </div>
-                <div class="pull-left timeLineDescription" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}"
-                    scroll-to="{{item.meme.id}}" >
-                    <div class="icon pull-left">
-                        <i class="fa fa-quote-left" ng-show="item.entryType==1"></i>
-                        <i class="fa fa-retweet" ng-show="item.entryType==2"></i>
-                        <i class="fa fa-thumbs-o-up" ng-show="item.entryType==3"></i>
-                        <i class="fa fa-thumbs-o-down" ng-show="item.entryType==4"></i>
-                        <i class="fa fa-reply" ng-show="item.entryType==5"></i>
-                        <i class="fa fa-comments-o" ng-show="item.entryType==6"></i>						
+    <div id="userMemes" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='following'">
+        <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarLeft rounded">
+            <div class="homePageOptionContainer">
+                <div class="homePageOption"><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></div>            
+                <div class="homePageOption"><a class="hot" ng-click="viewMyPosts()"><i class="fa fa-clock-o"></i> View my timeline and followers</a></div>
+                <div class="homePageOption"><a class="hot" ng-click="editMyProfile()"><i class="fa fa-user"></i> Change my profile and password</a></div>
+                <div class="homePageOption"><a class="hot" ng-click="signOut()"><i class="fa fa-lock"></i> Sign Out</a></a></div>
+            </div> 
+            <div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Sponsors</div> 
+		</div>	        
+        <div class="pull-left col-lg-6 col-md-6 col-sm-12 col-xs-12">	
+            <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div id="waiting" class="waitingContainer dialogWaitConainer">
+                    <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                </div>	
+            </div> 
+            <div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+                <div class="pull-left">
+                    <div ng-memelink ng-model="item.meme" ng-hide="item.meme.id == items[$index-1].meme.id"
+                                    on-click="viewMeme(item.meme.id)" 
+                                    on-like="likeMeme(item.meme.id)"
+                                    on-dislike="dislikeMeme(item.meme.id)"
+                                    on-addtofavourites="addMemeToFavourites(item.meme.id)">
                     </div>
-                    <div class="pull-left text">
-                        <span class="dateofEntry"> {{item.dateOfEntry | date:'short'}}</span>
-                        <span ng-click="openUser(item.user.id)" class="allowFollow ng-binding">{{item.user.userName}}</span>					 
-                        <span ng-show="item.entryType==1"> posted a new quote.</span>
-                        <span ng-show="item.entryType==2"> requoted this.</span>
-                        <span ng-show="item.entryType==3"> likes this.</span>
-                        <span ng-show="item.entryType==4"> dislikes this.</span>
-                        <span ng-show="item.entryType==5"> replied to this quote with this :.</span>
-                        <span ng-show="item.entryType==6"> commented on this.</span>
-                    </div>
-                    
-                    <div class="pull-left timeLineComment commentary" ng-show="item.entryType==6" >
-                        {{item.userComment.comment}} 
-                    </div>
-                    <div class="pull-left timeLineReplyMeme" ng-show="item.entryType==5" >
-                        <div ng-memelink ng-model="item.alternateMeme" ng-show="item.entryType==5" 
-                                on-click="viewMeme(item.alternateMeme.id)" 
-                                on-like="likeMeme(item.alternateMeme.id)"
-                                on-dislike="dislikeMeme(item.alternateMeme.id)"
-                                on-addtofavourites="addMemeToFavourites(item.alternateMeme.id)">
+                    <div class="pull-left timeLineDescription" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}"
+                        scroll-to="{{item.meme.id}}" >
+                        <div class="icon pull-left">
+                            <i class="fa fa-quote-left" ng-show="item.entryType==1"></i>
+                            <i class="fa fa-retweet" ng-show="item.entryType==2"></i>
+                            <i class="fa fa-thumbs-o-up" ng-show="item.entryType==3"></i>
+                            <i class="fa fa-thumbs-o-down" ng-show="item.entryType==4"></i>
+                            <i class="fa fa-reply" ng-show="item.entryType==5"></i>
+                            <i class="fa fa-comments-o" ng-show="item.entryType==6"></i>						
+                        </div>
+                        <div class="pull-left text">
+                            <span class="dateofEntry"> {{item.dateOfEntry | date:'short'}}</span>
+                            <span ng-click="openUser(item.user.id)" class="allowFollow ng-binding">{{item.user.userName}}</span>					 
+                            <span ng-show="item.entryType==1"> posted a new quote.</span>
+                            <span ng-show="item.entryType==2"> requoted this.</span>
+                            <span ng-show="item.entryType==3"> likes this.</span>
+                            <span ng-show="item.entryType==4"> dislikes this.</span>
+                            <span ng-show="item.entryType==5"> replied to this quote with this :.</span>
+                            <span ng-show="item.entryType==6"> commented on this.</span>
+                        </div>
+                        
+                        <div class="pull-left timeLineComment commentary" ng-show="item.entryType==6" >
+                            {{item.userComment.comment}} 
+                        </div>
+                        <div class="pull-left timeLineReplyMeme" ng-show="item.entryType==5" >
+                            <div ng-memelink ng-model="item.alternateMeme" ng-show="item.entryType==5" 
+                                    on-click="viewMeme(item.alternateMeme.id)" 
+                                    on-like="likeMeme(item.alternateMeme.id)"
+                                    on-dislike="dislikeMeme(item.alternateMeme.id)"
+                                    on-addtofavourites="addMemeToFavourites(item.alternateMeme.id)">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>               
+            </div> 
+            <div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+					title="Get more items">
+				<i class="fa fa-cloud-download"></i><span>&nbsp; Show More </span>
+			</div>
+        </div> 
+		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">
+			<div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Sponsors</div>
+		</div>                     
     </div>
 </div>

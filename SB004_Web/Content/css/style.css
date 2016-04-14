@@ -637,3 +637,11 @@ height:325px;*/
 .commentary{
 	  background-color: lavender;
 }
+.homePageOptionContainer{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.homePageOption{
+    height: 20px;
+    margin-top: 5px;
+}
