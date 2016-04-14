@@ -615,6 +615,11 @@ height:325px;*/
     margin-left: 100px;
 	color:black;
 }
+#hoverUserDetail .header .userStatus{ 
+    margin-left: 100px;
+    color: #A9A9A9;
+    font-style: italic;
+}
 #hoverUserDetail .userStats{
     background-color: whitesmoke !important;
 	height: 64px;
