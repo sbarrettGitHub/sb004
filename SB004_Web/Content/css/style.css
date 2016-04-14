@@ -15,6 +15,13 @@ height: 34px !important;
 button:hover{
 	color:cornflowerblue;
  }
+ .logo{
+    border: 2px solid;
+    padding: 2px;
+    color:cornflowerblue;
+    background-color: white;
+    font-size: 18px; 
+ }
  .allowFollow{
 	font-weight:bold;
 	cursor:pointer;
@@ -230,6 +237,9 @@ margin-left:1px !important;
 }
 #navBar{
 	margin-top:5px;
+}
+#navbarLogo{
+    margin-top: -5px;
 }
 .search{
 	margin-top:15px;

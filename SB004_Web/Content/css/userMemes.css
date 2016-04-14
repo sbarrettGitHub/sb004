@@ -121,7 +121,7 @@
     width: 220px!important;       
 }
 #userMemes .sideBar{
-    min-height: 300px;
+    min-height: 100px;
 }
 #userMemes .sideBarLeft{
     margin-left: 15px;

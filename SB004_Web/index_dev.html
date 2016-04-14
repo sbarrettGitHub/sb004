@@ -14,44 +14,45 @@
 <body>
   <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-controller="searchCtrl">
    <form class="search" role="search">
-	<div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for meme" name="srch-term" id="srch-term" />
-                <div class="input-group-btn">
-					<button type="button" class="btn btn-default " ng-click="search()">
-						<span class="fa fa-search"></span> 
-					</button>
-                    <div class="btn-group" role="group">
-
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<span>{{userName}}</span>
-								<span class="fa fa-bars"></span>
-							</button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
-									<div class="form-group" ng-show="isAuthenticated">
-										<div class="contextOption">Action</div>
-										<div class="contextOption">Another action</div>
-										<div class="contextOption">Sign Out</div>
-									</div>  
-									<div class="form-group" ng-show="!isAuthenticated">
-										<div class="contextOption"><a href="#">Sign In</a></div>
-										<div class="contextOption"><a href="#">Sign up now</a></div>
-										<div class="contextOption"><a href="#">Social Media Sign In</a></div>
-									</div> 								  
-                                </form>
-                            </div>
+		<div class="row">
+		<div class="col-md-12" id="searchContainer">
+            <div class="navbar navbar-static-top rounded" role="navigation" id="navbarContainer">    
+                <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a> 
+                <div class="navbar-header hot">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                    </button>
+                </div>                
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" href="/" title="SB004 - Homepage" ng-click="home()">
+                        <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
+                    </a>                     
+                    <ul class="nav navbar-nav" id="navBar">
+                        <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
+                        <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
+                        <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
+                        <li><a class="hot" ng-click="signUp()" ng-show="!isAuthenticated"><i class="fa fa-pencil-square-o"></i> Sign up now</a></li>
+                        <li><a class="hot" ng-click="editMyProfile()" ng-show="isAuthenticated"><i class="fa fa-user"></i> Edit my Profile</a></li>
+                        <li><a class="hot" ng-click="viewMyPosts()" ng-show="isAuthenticated"><i class="fa fa-list"></i> View my Posts</a></li>
+                        <li><a class="hot" ng-click="signOut()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign Out</a></li>
+                    </ul>
+                    <div class="col-sm-hidden col-xs-12 col-md-3 pull-right">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
                         </div>
-                        
+                        </div>
+                    </form>
                     </div>
+                
                 </div>
             </div>
-          </div>
         </div>
 
-</div>	  
+</div>
 </form>
   </div>
     <div id="view" ng-view=""></div>
@@ -83,6 +84,7 @@
     <script src="Scripts/app/services/authInterceptorService.js"></script>    
 	<script src="Scripts/app/services/memeWizardService.js"></script> 
 	<script src="Scripts/app/services/likeDislikeMemeService.js"></script> 
+    <script src="Scripts/app/services/timeLineService.js"></script>    
     <script src="Scripts/app/controllers/searchCtrl.js"></script>
     <script src="Scripts/app/controllers/homeCtrl.js"></script>
     <script src="Scripts/app/controllers/memeSelectConfirmImageCtrl.js"></script>

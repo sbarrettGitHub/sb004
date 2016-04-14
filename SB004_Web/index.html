@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="col-md-12" id="searchContainer">
             <div class="navbar navbar-static-top rounded" role="navigation" id="navbarContainer">    
-                <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a>        
+                <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a> 
                 <div class="navbar-header hot">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -25,7 +25,9 @@
                     </button>
                 </div>                
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <a class="navbar-brand hot hidden-sm hidden-xs" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a>
+                    <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" href="/" title="SB004 - Homepage" ng-click="home()">
+                        <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
+                    </a>                     
                     <ul class="nav navbar-nav" id="navBar">
                         <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
                         <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
@@ -82,6 +84,7 @@
     <script src="Scripts/app/services/authInterceptorService.js"></script>    
 	<script src="Scripts/app/services/memeWizardService.js"></script> 
 	<script src="Scripts/app/services/likeDislikeMemeService.js"></script> 
+    <script src="Scripts/app/services/timeLineService.js"></script>
     <script src="Scripts/app/controllers/searchCtrl.js"></script>
     <script src="Scripts/app/controllers/homeCtrl.js"></script>
     <script src="Scripts/app/controllers/memeSelectConfirmImageCtrl.js"></script>
