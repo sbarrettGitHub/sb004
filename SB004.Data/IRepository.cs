@@ -53,5 +53,9 @@
         ITimeLine Save(ITimeLine timeLine);
 
 		List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry type);
+
+		List<ITimeLine> GetUserTimeLine(string userId, int days);
+
+	    List<ITimeLine> GetUserMemeTimeLine(string userId, int days);
     }
 }

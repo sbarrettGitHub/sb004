@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
+using MongoDB.Driver.Linq;
 
 namespace SB004.Data
 {
@@ -544,6 +545,77 @@ namespace SB004.Data
 		    return cursor.Cast<ITimeLine>().ToList();
 	    }
 
+		/// <summary>
+		/// Get all entries to the time line for a specified user update to a number of days in the past
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <param name="days"></param>
+		/// <returns></returns>
+	    public List<ITimeLine> GetUserTimeLine(string userId, int days)
+	    {
+			DateTime dateOfEntry = DateTime.Now.AddDays(days * -1);
+
+			List<ITimeLine> activity = new List<ITimeLine>();
+
+			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+										 where entry.UserId == userId
+										 && entry.DateOfEntry >= dateOfEntry
+										 select entry;
+
+			foreach (var entry in query)
+			{
+				// Add the activity 
+				activity.Add(entry);
+			}
+
+			return activity;
+	    }
+		/// <summary>
+		/// Retrieve the time line of a particular meme
+		/// </summary>
+		/// <param name="memeId">ID of the meme</param>
+		/// <param name="days">Number of days activities to take</param>
+		/// <returns></returns>
+		public List<ITimeLine> GetMemeTimeLine(string memeId, int days)
+		{
+			DateTime dateOfEntry = DateTime.Now.AddDays(days*-1);
+
+			List<ITimeLine> activity = new List<ITimeLine>();
+
+			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+						where entry.TimeLineRefId == memeId 
+						&& entry.DateOfEntry >= dateOfEntry
+						select entry;
+
+			foreach (var entry in query)
+			{
+				// Add the activity for the meme posted by the user
+				activity.Add(entry);
+			}
+			return activity;
+		}
+		/// <summary>
+		/// Retrieve the time line of a particular user paginated if requested
+		/// </summary>
+		/// <param name="userId">ID of the user</param>
+		/// <param name="days">Number of in the past to go</param>
+		/// <returns></returns>
+		public List<ITimeLine> GetUserMemeTimeLine(string userId, int days)
+		{
+			// Get all the mems of this user
+			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+										 where entry.UserId == userId
+										 && (entry.EntryType == TimeLineEntry.Post || entry.EntryType == TimeLineEntry.Repost)
+										 select entry;
+
+			List<ITimeLine> activity = new List<ITimeLine>();
+			foreach (var post in query)
+			{
+				// Add the activity for the meme posted by the user
+				activity.AddRange(GetMemeTimeLine(post.TimeLineRefId, days));
+			}
+			return activity;
+		}
 	    #endregion
     }
 }

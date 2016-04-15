@@ -16,11 +16,12 @@ button:hover{
 	color:cornflowerblue;
  }
  .logo{
-    border: 2px solid;
+    border: 2px solid darkgray;
     padding: 2px;
-    color:cornflowerblue;
+    color: cornflowerblue;
+    font-size: 18px;
     background-color: white;
-    font-size: 18px; 
+    border-radius: 4px;
  }
  .allowFollow{
 	font-weight:bold;
@@ -229,8 +230,6 @@ margin-left:1px !important;
 /*-----------------------------------------------------------*/
 #navbarContainer{
 	background-color:#F8F8F8 ;
-	margin-left: 10px;
-	margin-right: 10px;
 }
 #srch-term{
 	margin-top:5px;
@@ -551,6 +550,8 @@ height:325px;*/
     margin-bottom: 15px;
     padding-left: 0px;
     padding-right: 5px !important;
+	max-height: 50px;
+    overflow: auto;
 }
 .followUser{
     white-space: normal !important;
@@ -640,7 +641,7 @@ height:325px;*/
 	padding-left: 10px;
 }
 .commentary{
-	  background-color: lavender;
+	background-color: lightgray;
 }
 .homePageOptionContainer{
     margin-top: 15px;
