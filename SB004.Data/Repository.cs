@@ -557,11 +557,10 @@ namespace SB004.Data
 
 			List<ITimeLine> activity = new List<ITimeLine>();
 
-			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+			IQueryable<TimeLine> query = (from entry in timeLineCollection.AsQueryable<TimeLine>()
 										 where entry.UserId == userId
 										 && entry.DateOfEntry >= dateOfEntry
-										 select entry;
-
+										 select entry).OrderByDescending(x=>x.DateOfEntry);
 			foreach (var entry in query)
 			{
 				// Add the activity 

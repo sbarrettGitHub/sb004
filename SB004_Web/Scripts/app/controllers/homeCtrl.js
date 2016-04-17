@@ -11,8 +11,10 @@
         $scope.userId = "";
         $scope.isAuthenticated=false;
         var itemsIndex=0;
+		var daysIndex=1;
         var constants = {
-			viewingBlockCount:100
+			viewingBlockCount:100,
+			dayblock : 5
 		};
         
         $scope.addNew = function () {
@@ -73,24 +75,41 @@
 				if(securityService.getCurrentUser().profile.following){
 					$scope.following = securityService.getCurrentUser().profile.following;
 				}
-                $scope.items = [];
-                itemsIndex = 0;
-                $scope.entryType = "All";
-                var timelineEntryType = timeLineService.resolveTimelineEntryType($scope.entryType);
                 
-                // Retrieve  all the items that are currently visible again
                 startWaiting();
-                $scope.getFullTimeline(0,  constants.viewingBlockCount / (1 + $scope.following.length), timelineEntryType).
+                $scope.getTimeline(daysIndex).
                 then(function(){
                     endWaiting();
                 },
-                function(){
+                function(e){
+					$window.alert(e);
                     endWaiting();
                 });            	                
 			}	
            
 		}
-        
+        $scope.getTimeline = function(days){
+			
+			var deferred = $q.defer();
+            
+            // Get user and follower time lines
+            timeLineService.userComprehensiveTimeline($scope.userId, days * constants.dayblock)
+            .then(function (data) {
+					if(data.user){
+						$scope.user = data.user;
+					}
+					
+					$scope.items = data.timelineGroups;
+
+					deferred.resolve(data);
+                },
+                function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+
+			return deferred.promise;
+		}
         $scope.getFullTimeline = function(skipitems, takeitems, type){
 			
 			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 

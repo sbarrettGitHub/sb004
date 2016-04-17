@@ -30,6 +30,20 @@
 			
 			return deferred.promise;
 		}	
+        var userComprehensiveTimeline = function(userId, days){
+			var deferred = $q.defer();
+            
+            $http.get('api/timeline/comprehensive/' + userId + '?days=' + days).
+                 success(function (data) {									
+					deferred.resolve(data);
+                }).
+                error(function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+			
+			return deferred.promise;
+		}	        
         //-----------------------------------------
         // Group time line entries by meme
         //-----------------------------------------
@@ -95,6 +109,7 @@
         return {
             userTimeline:userTimeline,
             userAndFollowingTimeline: userAndFollowingTimeline,
+            userComprehensiveTimeline: userComprehensiveTimeline,
             resolveTimelineEntryType: resolveTimelineEntryType,
             organize: organize
         }

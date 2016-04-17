@@ -156,6 +156,12 @@ namespace SB004.Controllers
 					AddActivitytoTimeLineGroups(ref timelineGroupModel, entry);
 				}
 			}
+            
+            // Ensure the timeline entries in each group are ordered descending by date of entry
+            timelineGroupModel.TimelineGroups.ForEach(x =>
+            {
+                x.TimelineEntries = x.TimelineEntries.OrderByDescending(y => y.DateOfEntry).ToList();
+            });
 
 			// Order by date descending
 			timelineGroupModel.TimelineGroups = timelineGroupModel.TimelineGroups.OrderByDescending(x => x.TimeStamp).ToList();
@@ -170,6 +176,7 @@ namespace SB004.Controllers
 		/// <param name="activityOnUserPostedMeme"></param>
 		private void AddActivitytoTimeLineGroups(ref TimelineGroupModel timelineGroupModel, ITimeLine activityOnUserPostedMeme)
 		{
+            
 			// Find a time line group has has activity on thie meme already
 			TimelineGroup existingTimelineGroup =
 				timelineGroupModel.TimelineGroups.FirstOrDefault(x => x.Meme.Id == activityOnUserPostedMeme.TimeLineRefId);
@@ -181,7 +188,7 @@ namespace SB004.Controllers
 					// Don't re-add an timeline entry that is already there 
 					if (existingTimelineGroup.TimelineEntries.Any(x => x.TimelineId == activityOnUserPostedMeme.Id) == false)
 					{
-						existingTimelineGroup.TimelineEntries.Add(new TimelineEntryModel(activityOnUserPostedMeme));
+                        existingTimelineGroup.TimelineEntries.Add(GetTimelineEntryModel(activityOnUserPostedMeme));
 					}
 				}
 				else
@@ -195,7 +202,7 @@ namespace SB004.Controllers
 				var timeLineGroup = new TimelineGroup();
 				timeLineGroup.TimeStamp = activityOnUserPostedMeme.DateOfEntry;
 				timeLineGroup.Meme = new MemeLiteModel(repository, repository.GetMeme(activityOnUserPostedMeme.TimeLineRefId));
-				timeLineGroup.TimelineEntries = new List<TimelineEntryModel> { new TimelineEntryModel(activityOnUserPostedMeme) };
+                timeLineGroup.TimelineEntries = new List<TimelineEntryModel> { GetTimelineEntryModel(activityOnUserPostedMeme) };
 
 				timelineGroupModel.TimelineGroups.Add(timeLineGroup);
 			}

@@ -11,7 +11,7 @@
 		$scope.statOptionSelected ="feed";
 		$scope.lastMeme = "";
 		var constants = {
-			viewingBlockCount:3
+			viewingBlockCount:10
 		};
 		
 		$scope.refreshTimeline = function(type){
