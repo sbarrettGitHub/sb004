@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
 using SB004.Data;
@@ -120,12 +121,13 @@ namespace SB004.Controllers
 		/// </summary>
 		/// <param name="id">user id</param>
 		/// <param name="days"></param>
+		/// <param name="maxCount"></param>
 		/// <returns></returns>
 		[Route("comprehensive/{id}")]
-		public IHttpActionResult GetComprehensive(string id, int days)
+		public IHttpActionResult GetComprehensive(string id, int days, int maxCount)
 		{
 			// Get all memes posted or reposted by the user with any activite in the last X days
-			List<ITimeLine> activityOnUserPostedMemes = repository.GetUserMemeTimeLine(id, days);
+			List<ITimeLine> activityOnUserPostedMemes = repository.GetUserMemeTimeLine(id, days).OrderByDescending(x => x.DateOfEntry).ToList(); 
 
 			TimelineGroupModel timelineGroupModel = new TimelineGroupModel
 			{
@@ -134,7 +136,7 @@ namespace SB004.Controllers
 			};
 			foreach (ITimeLine activityOnUserPostedMeme in activityOnUserPostedMemes)
 			{
-				AddActivitytoTimeLineGroups(ref timelineGroupModel, activityOnUserPostedMeme);
+				AddActivitytoTimeLineGroups(ref timelineGroupModel, activityOnUserPostedMeme, maxCount);
 			}
 
 			TimelineModel model = new TimelineModel
@@ -150,10 +152,10 @@ namespace SB004.Controllers
 			foreach (string userId in userIds)
 			{
 				// Get the activity of the user for the last x number of days
-				List<ITimeLine> activity = repository.GetUserTimeLine(userId, days);
+				List<ITimeLine> activity = repository.GetUserTimeLine(userId, days).OrderByDescending(x => x.DateOfEntry).ToList(); 
 				foreach (ITimeLine entry in activity)
 				{
-					AddActivitytoTimeLineGroups(ref timelineGroupModel, entry);
+					AddActivitytoTimeLineGroups(ref timelineGroupModel, entry, maxCount);
 				}
 			}
             
@@ -168,27 +170,62 @@ namespace SB004.Controllers
 
 			return Ok(timelineGroupModel);
 		}
+		/// <summary>
+		/// Return the combined time line of the specified user those he follows
+		/// </summary>
+		/// <param name="id">user id</param>
+		/// <param name="days"></param>
+		/// <param name="maxCount"></param>
+		/// <returns></returns>
+		[Route("meme/{id}")]
+		public IHttpActionResult GetMemeTimeline(string id, int days, int maxCount)
+		{
+			// Get all memes posted or reposted by the user with any activite in the last X days
+			List<ITimeLine> memeActivities = repository.GetMemeTimeLine(id, days).OrderByDescending(x=>x.DateOfEntry).ToList();
 
+			TimelineGroupModel timelineGroupModel = new TimelineGroupModel
+			{
+				User = null,
+				TimelineGroups = new List<TimelineGroup>()
+			};
+			foreach (ITimeLine memeActivity in memeActivities)
+			{
+				AddActivitytoTimeLineGroups(ref timelineGroupModel, memeActivity, maxCount);
+			}
+			Debug.Assert(timelineGroupModel.TimelineGroups.Count<=1, "Activity on single meme should only render one time line group!!!");
+
+			// Ensure the timeline entries in each group are ordered descending by date of entry ... there should be only 1 group
+			timelineGroupModel.TimelineGroups.ForEach(x =>
+			{
+				x.TimelineEntries = x.TimelineEntries.OrderByDescending(y => y.DateOfEntry).ToList();
+			});
+
+			// Order by date descending
+			timelineGroupModel.TimelineGroups = timelineGroupModel.TimelineGroups.OrderByDescending(x => x.TimeStamp).ToList();
+
+			return Ok(timelineGroupModel);
+		}
 		/// <summary>
 		/// Add the supplied time line activity to the time lien groups
 		/// </summary>
 		/// <param name="timelineGroupModel">timline group model updated</param>
-		/// <param name="activityOnUserPostedMeme"></param>
-		private void AddActivitytoTimeLineGroups(ref TimelineGroupModel timelineGroupModel, ITimeLine activityOnUserPostedMeme)
+		/// <param name="activityOnMeme"></param>
+		/// <param name="maxCount"></param>
+		private void AddActivitytoTimeLineGroups(ref TimelineGroupModel timelineGroupModel, ITimeLine activityOnMeme, int maxCount)
 		{
             
 			// Find a time line group has has activity on thie meme already
 			TimelineGroup existingTimelineGroup =
-				timelineGroupModel.TimelineGroups.FirstOrDefault(x => x.Meme.Id == activityOnUserPostedMeme.TimeLineRefId);
+				timelineGroupModel.TimelineGroups.FirstOrDefault(x => x.Meme.Id == activityOnMeme.TimeLineRefId);
 			if (existingTimelineGroup != null)
 			{
 				// Don't add more than 10
-				if (existingTimelineGroup.TimelineEntries.Count < 10)
+				if (existingTimelineGroup.TimelineEntries.Count < maxCount)
 				{
 					// Don't re-add an timeline entry that is already there 
-					if (existingTimelineGroup.TimelineEntries.Any(x => x.TimelineId == activityOnUserPostedMeme.Id) == false)
+					if (existingTimelineGroup.TimelineEntries.Any(x => x.TimelineId == activityOnMeme.Id) == false)
 					{
-                        existingTimelineGroup.TimelineEntries.Add(GetTimelineEntryModel(activityOnUserPostedMeme));
+                        existingTimelineGroup.TimelineEntries.Add(GetTimelineEntryModel(activityOnMeme));
 					}
 				}
 				else
@@ -200,9 +237,9 @@ namespace SB004.Controllers
 			else
 			{
 				var timeLineGroup = new TimelineGroup();
-				timeLineGroup.TimeStamp = activityOnUserPostedMeme.DateOfEntry;
-				timeLineGroup.Meme = new MemeLiteModel(repository, repository.GetMeme(activityOnUserPostedMeme.TimeLineRefId));
-                timeLineGroup.TimelineEntries = new List<TimelineEntryModel> { GetTimelineEntryModel(activityOnUserPostedMeme) };
+				timeLineGroup.TimeStamp = activityOnMeme.DateOfEntry;
+				timeLineGroup.Meme = new MemeLiteModel(repository, repository.GetMeme(activityOnMeme.TimeLineRefId));
+                timeLineGroup.TimelineEntries = new List<TimelineEntryModel> { GetTimelineEntryModel(activityOnMeme) };
 
 				timelineGroupModel.TimelineGroups.Add(timeLineGroup);
 			}

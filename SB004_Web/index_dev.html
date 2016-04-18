@@ -25,22 +25,20 @@
                     </button>
                 </div>                
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" href="/" title="SB004 - Homepage" ng-click="home()">
-                        <i class="fa fa-quote-left logo rounded"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
+                    <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" title="SB004 - Homepage" ng-click="home()">
+                        <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
                     </a>                     
                     <ul class="nav navbar-nav" id="navBar">
                         <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
                         <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
                         <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
                         <li><a class="hot" ng-click="signUp()" ng-show="!isAuthenticated"><i class="fa fa-pencil-square-o"></i> Sign up now</a></li>
-                        <li><a class="hot" ng-click="editMyProfile()" ng-show="isAuthenticated"><i class="fa fa-user"></i> Edit my Profile</a></li>
-                        <li><a class="hot" ng-click="viewMyPosts()" ng-show="isAuthenticated"><i class="fa fa-list"></i> View my Posts</a></li>
                         <li><a class="hot" ng-click="signOut()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign Out</a></li>
                     </ul>
                     <div class="col-sm-hidden col-xs-12 col-md-3 pull-right">
                     <form class="navbar-form" role="search">
                         <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
                         </div>
@@ -94,8 +92,7 @@
 	<script src="Scripts/app/directives/ngFocus.js"></script>	
     <script src="Scripts/app/directives/ngBlurry.js"></script>
     <script src="Scripts/app/directives/ngUserHover.js"></script>
-    <script src="Scripts/app/directives/ngScrollTo.js"></script>    
-    <script src="Scripts/app/directives/ngEnter.js"></script>
+    <script src="Scripts/app/directives/ngScrollTo.js"></script>   
     <script src="Scripts/app/services/upload.js"></script>
     <script src="Scripts/app/controllers/memeApplyTextCtrl.js"></script>
     <script src="Scripts/app/controllers/memePublishAndShareCtrl.js"></script>

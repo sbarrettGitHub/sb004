@@ -30,10 +30,10 @@
 			
 			return deferred.promise;
 		}	
-        var userComprehensiveTimeline = function(userId, days){
+        var userComprehensiveTimeline = function(userId, days, max){
 			var deferred = $q.defer();
             
-            $http.get('api/timeline/comprehensive/' + userId + '?days=' + days).
+            $http.get('api/timeline/comprehensive/' + userId + '?days=' + days + '&maxCount='+ max).
                  success(function (data) {									
 					deferred.resolve(data);
                 }).
@@ -43,7 +43,21 @@
                 });
 			
 			return deferred.promise;
-		}	        
+		}	      
+        var memeTimeline = function(memeId, days, max){
+			var deferred = $q.defer();
+            
+            $http.get('api/timeline/meme/' + memeId + '?days=' + days+ '&maxCount='+ max).
+                 success(function (data) {									
+					deferred.resolve(data);
+                }).
+                error(function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+			
+			return deferred.promise;
+		}          
         //-----------------------------------------
         // Group time line entries by meme
         //-----------------------------------------
@@ -111,6 +125,7 @@
             userAndFollowingTimeline: userAndFollowingTimeline,
             userComprehensiveTimeline: userComprehensiveTimeline,
             resolveTimelineEntryType: resolveTimelineEntryType,
+            memeTimeline:memeTimeline,
             organize: organize
         }
     }

@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, sharedDataService, memeWizardService, securityService, blurry, timeLineService) {
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService) {
         $scope.memes = sharedDataService.data.quoteSearch.results;
         $scope.searchTerm = "";
         $scope.searchCategory = "";
@@ -9,6 +9,7 @@
         $scope.following = [];
 		$scope.viewing = [];
         $scope.userId = "";
+		$scope.newUserComment = "";
         $scope.isAuthenticated=false;
         var itemsIndex=0;
 		var daysIndex=1;
@@ -71,11 +72,10 @@
 		}
         //-------------------------------------------------------------------------------------------
 		function showFollowing(){
-			if(securityService.getCurrentUser()){
+			if($scope.isAuthenticated){
 				if(securityService.getCurrentUser().profile.following){
 					$scope.following = securityService.getCurrentUser().profile.following;
 				}
-                
                 startWaiting();
                 $scope.getTimeline(daysIndex).
                 then(function(){
@@ -93,7 +93,7 @@
 			var deferred = $q.defer();
             
             // Get user and follower time lines
-            timeLineService.userComprehensiveTimeline($scope.userId, days * constants.dayblock)
+            timeLineService.userComprehensiveTimeline($scope.userId, days * constants.dayblock, constants.maxEntryCount)
             .then(function (data) {
 					if(data.user){
 						$scope.user = data.user;
@@ -110,50 +110,63 @@
 
 			return deferred.promise;
 		}
-        $scope.getFullTimeline = function(skipitems, takeitems, type){
+        $scope.refreshMemeTimeline = function(memeId, days, max, maxPlus){
 			
-			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 
-			// or skip the current number of items to get the next page worth
-			var skip = skipitems ? skipitems : itemsIndex;
-			
-			// Take the explicitly specified number of items (used during a refresh as the number of previously retrieved items)
-			// or a standard page worth
-			var take = takeitems ? takeitems : constants.viewingBlockCount / (1 + $scope.following.length);
-			
-			// Use the current entry type unless specified (convert scope entry type to time line entry type)
-			var entryType = type ? type: timeLineService.resolveTimelineEntryType($scope.entryType);
 			var deferred = $q.defer();
+			var maxCount = max;
+            var currentMemeGroup;
+			var currentMemeGroupIndex;
+			for (var i = 0; i < $scope.items.length; i++) {
+				if($scope.items[i].meme.id == memeId){
+					currentMemeGroup = $scope.items[i];
+					currentMemeGroupIndex = i;
+				}
+			}
+			if(currentMemeGroup){
+				maxCount = constants.maxEntryCount;
+				if(max){
+					maxCount = max;
+				}
+				if(!max){
+					// Unless specified refresh teh same number of items as the meme is currently dislaying
+					maxCount = currentMemeGroup.timelineEntries.length;
+				}
+				if(maxPlus){
+					// If maxPlus is specified then get back the same number as the meme is currently dislaying
+					// PLUS the maxPlus
+					 maxCount = currentMemeGroup.timelineEntries.length + maxPlus;
+				}
+				// Get meme time line
+				timeLineService.memeTimeline(memeId, days * constants.dayblock, maxCount)
+				.then(function (data) {
+						if(data && data.timelineGroups && data.timelineGroups.length>0){
+							$scope.items[currentMemeGroupIndex] = data.timelineGroups[0];
+						}		
+						deferred.resolve(data);
+					},
+					function (e) {
+						$window.alert(e);
+						deferred.reject(e);
+					});
+			}
             
-            // Get user and follower time lines
-            timeLineService.userAndFollowingTimeline($scope.userId, entryType, skip, take)
-            .then(function (data) {
-					if(data.user){
-						$scope.user = data.user;
-					}
-                    
-                    // Add new time line entries						
-					if(data.timelineEntries && data.timelineEntries.length>0){
-                        for (var index = 0; index < data.timelineEntries.length; index++) {
-                            $scope.items.push(data.timelineEntries[index]);                            
-                        }
-                        // Group by meme
-                        $scope.items = timeLineService.organize($scope.items);
-                                    
-                        // Maintain a cursor of items. 
-                        itemsIndex = $scope.items.length;
-					}
-
-					deferred.resolve(data);
-                },
-                function (e) {
-					$window.alert(e);
-					deferred.reject(e);
-                });
-
-			return deferred.promise;	
+			return deferred.promise;
+		}		
+		$scope.addComment = function(memeId, comment){
+			$http.post('api/Comment', {
+                MemeId: memeId,
+                Comment: comment
+            }).
+			success(function (data) {
+				// Refresh the meme timline retrieving 1 extra entry
+				$scope.refreshMemeTimeline(memeId, daysIndex, null, 1);
+			}).
+			error(function (e) {
+				$window.alert(e);
+			});
 		}
         $scope.showMore = function(){
-			$scope.getFullTimeline();
+			
 		}
         /*---------------------------------------------------------*/
         $scope.viewMyPosts= function(){
@@ -224,6 +237,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", homeCtrl]);
 
 })();

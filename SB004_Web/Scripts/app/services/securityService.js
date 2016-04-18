@@ -58,7 +58,7 @@
 				if(getCurrentUser().isAuthenticated == true){
 					$timeout(function() {
 							deferred.resolve(true);
-					}, 100);
+					}, 1);
 				}else{
 					var data = $window.sessionStorage.getItem( 'SB004.authorizationData' );
 					if(data){
