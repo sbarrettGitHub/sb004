@@ -100,7 +100,7 @@
 #homeMemes .timeLineComment{
     max-height: 75px;
     overflow: auto;
-    border-bottom: 1px inset;
+    border:1px solid lightgrey;
     width: 100%;
     padding: 5px;
     border-radius: 6px;

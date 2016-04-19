@@ -15,9 +15,10 @@
 		var daysIndex=1;
         var constants = {
 			viewingBlockCount:100,
-			dayblock : 5
+			dayblock : 5,
+			maxEntryCount:10
 		};
-        
+        $scope.maxCount = constants.maxEntryCount;
         $scope.addNew = function () {
 
 			blurry("view", true);
@@ -167,6 +168,18 @@
 		}
         $scope.showMore = function(){
 			
+		}
+		$scope.showMoreEntries = function(memeId){
+			var currentMemeGroupIndex = -1;
+			for (var i = 0; i < $scope.items.length; i++) {
+				if($scope.items[i].meme.id == memeId){
+					currentMemeGroupIndex = i;
+				}
+			}
+			if(currentMemeGroupIndex>=0){
+				// Get more items
+				$scope.refreshMemeTimeline(memeId, daysIndex, null, $scope.items[currentMemeGroupIndex].timelineEntries.length + constants.maxEntryCount);
+			}
 		}
         /*---------------------------------------------------------*/
         $scope.viewMyPosts= function(){

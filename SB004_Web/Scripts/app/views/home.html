@@ -110,10 +110,10 @@
                             </div>
                         </div>
                     </div>
-                    <div id="moreEntries" scroll-to="showMore" ng-click="showMoreEntries()" ng-show="item.hasMore"
+                    <div id="moreEntries" scroll-to="showMore" ng-click="showMoreEntries(item.meme.id)" ng-show="item.hasMore"
                             class="pushDown2 option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
                             title="Get more items">
-                        <i class="fa fa-cloud-download"></i><span>&nbsp; Show more entries for this quote</span>
+                        <i class="fa fa-cloud-download"></i><span>&nbsp; Show {{$scope.maxCount}} more entries for this quote</span>
                     </div>
                 </div>
             </div> 
