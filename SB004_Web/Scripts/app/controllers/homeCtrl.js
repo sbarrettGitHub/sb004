@@ -11,6 +11,7 @@
         $scope.userId = "";
 		$scope.newUserComment = "";
         $scope.isAuthenticated=false;
+		$scope.items = [];
         var itemsIndex=0;
 		var daysIndex=1;
         var constants = {
@@ -19,7 +20,8 @@
 			maxEntryCount:10
 		};
         $scope.maxCount = constants.maxEntryCount;
-        $scope.addNew = function () {
+       
+	    $scope.addNew = function () {
 
 			blurry("view", true);
 			memeWizardService.begin()
@@ -100,7 +102,17 @@
 						$scope.user = data.user;
 					}
 					
-					$scope.items = data.timelineGroups;
+					// Merge with scope timeline group items, if there are any
+					if($scope.items.length > 0){
+						
+						// Take each new group and insert into the current list of time line groups based on timestamp.
+						// If the group is already in scope, update its timeline entries (most rescent first)
+						timeLineService.mergeTimelines(data, $scope.items);
+						
+					}else{
+						// No existing scope items. 
+						$scope.items = data.timelineGroups;
+					}
 
 					deferred.resolve(data);
                 },
@@ -111,6 +123,7 @@
 
 			return deferred.promise;
 		}
+			
         $scope.refreshMemeTimeline = function(memeId, days, max, maxPlus){
 			
 			var deferred = $q.defer();
@@ -167,7 +180,8 @@
 			});
 		}
         $scope.showMore = function(){
-			
+			daysIndex += constants.dayblock;
+			$scope.getTimeline(daysIndex);
 		}
 		$scope.showMoreEntries = function(memeId){
 			var currentMemeGroupIndex = -1;
