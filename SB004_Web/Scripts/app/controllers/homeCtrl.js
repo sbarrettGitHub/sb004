@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService) {
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService, likeDislikeMemeService) {
         $scope.memes = sharedDataService.data.quoteSearch.results;
         $scope.searchTerm = "";
         $scope.searchCategory = "";
@@ -179,6 +179,22 @@
 				$window.alert(e);
 			});
 		}
+		/*---------------------------------------------------------*/
+		$scope.likeMeme = function(meme)
+		{
+			likeDislikeMemeService.like(meme).then(function(){
+				// Refresh the meme timline retrieving 1 extra entry
+				$scope.refreshMemeTimeline(meme.id, daysIndex, null, 1);
+			});			
+		}
+		$scope.dislikeMeme = function(meme)
+		{
+			likeDislikeMemeService.dislike(meme).then(function(){
+				// Refresh the meme timline retrieving 1 extra entry
+				$scope.refreshMemeTimeline(meme.id, daysIndex, null, 1);
+			});						
+		}
+		/*---------------------------------------------------------*/
         $scope.showMore = function(){
 			daysIndex += constants.dayblock;
 			$scope.getTimeline(daysIndex);
@@ -264,6 +280,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", "likeDislikeMemeService", homeCtrl]);
 
 })();
