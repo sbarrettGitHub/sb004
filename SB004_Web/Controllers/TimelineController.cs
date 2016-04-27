@@ -117,17 +117,29 @@ namespace SB004.Controllers
 		}
 
 		/// <summary>
-		/// Return the combined time line of the specified user those he follows
+		/// 1. Get latest 10 entries from ANY user on all quotes posted or reposted by the this user. 
+		/// 2. Get latest 10 entries of the last X days of this user and all the users he/she follows on any quote. 
+		/// 
+		/// 1.	For every quote this user ever posted or reposted that has any activitiy in the last X days, retrieve the latest 
+		///		maxCount (e.g. 10) entries (regardless of date) from ANY user (even users unrelated to this user).
+		///		So if a user posted a quote last year and there a single timeline even by anyone in the last X days retrieve the last maxCount (e.g. 10) entries from the 
+		///		time line even if only one entry falls within the last X days.
+		/// 
+		/// 2.	Taking this user and all the users he/she follows:
+		///		For each 
+		///			Retrieve latest maxCount (e.g. 10) entries by this user on any quote performed in teh last X days
+		///  
 		/// </summary>
-		/// <param name="id">user id</param>
-		/// <param name="days"></param>
-		/// <param name="maxCount"></param>
-		/// <returns></returns>
-		[Route("comprehensive/{id}")]
+		/// <param name="id">id of the user</param>
+		/// <param name="days">Days to limit </param>
+		/// <param name="maxCount">max entries per quote</param>
+		/// <returns>For all of the above ensure no quote is repeated (i.e. activity is grouped by quote) and entries are orderd by date of entry ascending</returns>
+		[Authorize]
+		[Route("home/{id}")]
 		public IHttpActionResult GetComprehensive(string id, int days, int maxCount)
 		{
 			// Get all memes posted or reposted by the user with any activite in the last X days
-			List<ITimeLine> activityOnUserPostedMemes = repository.GetUserMemeTimeLine(id, days).OrderByDescending(x => x.DateOfEntry).ToList(); 
+			List<ITimeLine> activityOnUserPostedMemes = repository.GetUserMemeTimeLine(id, 30000).OrderByDescending(x => x.DateOfEntry).ToList(); 
 
 			TimelineGroupModel timelineGroupModel = new TimelineGroupModel
 			{

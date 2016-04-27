@@ -12,15 +12,16 @@
 		$scope.newUserComment = "";
         $scope.isAuthenticated=false;
 		$scope.items = [];
-        var itemsIndex=0;
-		var daysIndex=1;
+        
+		var itemsIndex=0;		
         var constants = {
 			viewingBlockCount:100,
 			dayblock : 5,
 			maxEntryCount:10
 		};
         $scope.maxCount = constants.maxEntryCount;
-       
+       	$scope.daysIndex=constants.dayblock;
+		   
 	    $scope.addNew = function () {
 
 			blurry("view", true);
@@ -80,7 +81,7 @@
 					$scope.following = securityService.getCurrentUser().profile.following;
 				}
                 startWaiting();
-                $scope.getTimeline(daysIndex).
+                $scope.getTimeline($scope.daysIndex).
                 then(function(){
                     endWaiting();
                 },
@@ -173,7 +174,7 @@
             }).
 			success(function (data) {
 				// Refresh the meme timline retrieving 1 extra entry
-				$scope.refreshMemeTimeline(memeId, daysIndex, null, 1);
+				$scope.refreshMemeTimeline(memeId, $scope.daysIndex, null, 1);
 			}).
 			error(function (e) {
 				$window.alert(e);
@@ -184,20 +185,20 @@
 		{
 			likeDislikeMemeService.like(meme).then(function(){
 				// Refresh the meme timline retrieving 1 extra entry
-				$scope.refreshMemeTimeline(meme.id, daysIndex, null, 1);
+				$scope.refreshMemeTimeline(meme.id, $scope.daysIndex, null, 1);
 			});			
 		}
 		$scope.dislikeMeme = function(meme)
 		{
 			likeDislikeMemeService.dislike(meme).then(function(){
 				// Refresh the meme timline retrieving 1 extra entry
-				$scope.refreshMemeTimeline(meme.id, daysIndex, null, 1);
+				$scope.refreshMemeTimeline(meme.id, $scope.daysIndex, null, 1);
 			});						
 		}
 		/*---------------------------------------------------------*/
         $scope.showMore = function(){
-			daysIndex += constants.dayblock;
-			$scope.getTimeline(daysIndex);
+			$scope.daysIndex += constants.dayblock;
+			$scope.getTimeline($scope.daysIndex);
 		}
 		$scope.showMoreEntries = function(memeId){
 			var currentMemeGroupIndex = -1;
@@ -208,7 +209,7 @@
 			}
 			if(currentMemeGroupIndex>=0){
 				// Get more items
-				$scope.refreshMemeTimeline(memeId, daysIndex, null, $scope.items[currentMemeGroupIndex].timelineEntries.length + constants.maxEntryCount);
+				$scope.refreshMemeTimeline(memeId, $scope.daysIndex, null, $scope.items[currentMemeGroupIndex].timelineEntries.length + constants.maxEntryCount);
 			}
 		}
         /*---------------------------------------------------------*/

@@ -33,7 +33,7 @@
         var userComprehensiveTimeline = function(userId, days, max){
 			var deferred = $q.defer();
             
-            $http.get('api/timeline/comprehensive/' + userId + '?days=' + days + '&maxCount='+ max + '&rnd='+new Date().getTime()).
+            $http.get('api/timeline/home/' + userId + '?days=' + days + '&maxCount='+ max + '&rnd='+new Date().getTime()).
                  success(function (data) {									
 					deferred.resolve(data);
                 }).
