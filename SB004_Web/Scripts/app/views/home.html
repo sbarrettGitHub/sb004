@@ -64,18 +64,25 @@
                                     on-addtofavourites="addMemeToFavourites(item.meme.id)">
                     </div>
                     <div id="addNewComment" class="pull-left" title="Type your comment and press enter or return. Maximum length 250 characters. ">
-                        <div id="addCommentImage" class="pull-left">
-                            <img class="userImageSmall" ng-src="api/image/user/{{userId}}">
-                        </div>
+                        
                         <div id="addCommentText" class="pull-left">
                             <textarea type="text" value="" placeholder="Add a new comment...hit enter to send" maxlength="250"                                 
                                 ng-model="item.newUserComment" ng-keypress="($event.which === 13)?addComment(item.meme.id, item.newUserComment):0">						
                             </textarea>
-                        </div>     
+                        </div>   
+                        <div id="addCommentImage" class="pull-right">
+                            <img class="userImageSmall" ng-src="api/image/user/{{userId}}">
+                        </div>                          
 					</div>                    
                     <div ng-repeat="entry in item.timelineEntries" class="pull-left timeLineDescription" >                        
-                        <div class="pull-left">
-                            <img class="userImageSmall" ng-src="api/image/user/{{entry.userId}}">
+                        <div class="icon pull-left">
+                            
+                            <i class="fa fa-quote-left" ng-show="entry.entryType==1"></i>
+                            <i class="fa fa-retweet" ng-show="entry.entryType==2"></i>
+                            <i class="fa fa-thumbs-o-up" ng-show="entry.entryType==3"></i>
+                            <i class="fa fa-thumbs-o-down" ng-show="entry.entryType==4"></i>
+                            <i class="fa fa-reply" ng-show="entry.entryType==5"></i>
+                            <i class="fa fa-comments-o" ng-show="entry.entryType==6"></i>
                         </div>
                         <div class="pull-left text">
                             <span class="dateofEntry"> {{entry.dateOfEntry | date:'short'}}</span>
@@ -90,13 +97,8 @@
                             <span ng-show="entry.entryType==5"> replied to {{item.meme.createdByUserId==userId?'your': 'this'}} quote:</span>
                             <span ng-show="entry.entryType==6"> commented</span>
                         </div>
-                        <div class="icon pull-right">
-                            <i class="fa fa-quote-left" ng-show="entry.entryType==1"></i>
-                            <i class="fa fa-retweet" ng-show="entry.entryType==2"></i>
-                            <i class="fa fa-thumbs-o-up" ng-show="entry.entryType==3"></i>
-                            <i class="fa fa-thumbs-o-down" ng-show="entry.entryType==4"></i>
-                            <i class="fa fa-reply" ng-show="entry.entryType==5"></i>
-                            <i class="fa fa-comments-o" ng-show="entry.entryType==6"></i>						
+                        <div class=" pull-right">
+						    <img class="userImageSmall" ng-src="api/image/user/{{entry.userId}}">
                         </div>
                         <div class="pull-left timeLineComment commentary" ng-show="entry.entryType==6" >
                             {{entry.userComment.comment}} 
@@ -113,7 +115,7 @@
                     <div id="moreEntries" scroll-to="showMore" ng-click="showMoreEntries(item.meme.id)" ng-show="item.hasMore"
                             class="pushDown2 option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
                             title="Show older activity on this quote">
-                        <i class="fa fa-cloud-download"></i><span>&nbsp; Show older entries for this quote</span>
+                        <i class="fa fa-cloud-download"></i><span>&nbsp; More</span>
                     </div>
                 </div>
             </div> 

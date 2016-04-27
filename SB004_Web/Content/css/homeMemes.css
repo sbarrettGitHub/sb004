@@ -73,6 +73,7 @@
     width: 400px;
     margin-right: 15px;    
     padding: 2px;
+    padding-bottom: 15px;
 }
 
 #homeMemes .timeLineDescription .icon{
@@ -142,8 +143,8 @@
     margin-top: 40px;
 }
 #moreEntries{
-    width:400px;
-    margin-left: 15px;
+    width:100px;
+    margin-left: 120px;
 }
 #homeMemes #addNewComment{
     width: 400px;
@@ -158,6 +159,10 @@
 #homeMemes #addNewComment #addCommentText textarea{
    width:350px; 
 }
+#homeMemes #addNewComment #addCommentImage{
+   margin-right: -4px; 
+}
+
 #homeMemes #addNewComment #addCommentImage img{
     margin-top: 10px;
     margin-left: -2px;
