@@ -64,6 +64,7 @@ namespace SB004.Models
 			Shares = meme.Shares;
 			Views = meme.Views;
 			Reposts = meme.Reposts;
+			RepostOfId = meme.RepostOfId;
 		}
 	    public string Id { get; set; }
         public string CreatedByUserId { get; set; }
@@ -79,6 +80,7 @@ namespace SB004.Models
         public int Shares { get; set; }
         public int Views { get; set; }
         public int Reposts { get; set; }
+		public string RepostOfId { get; set; }
 		
     }
     public class ReportModel 

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using MongoDB.Driver.Linq;
 
@@ -9,8 +8,6 @@ namespace SB004.Data
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using System.Linq.Expressions;
-
     using MongoDB.Bson.Serialization;
 
     using SB004.Domain;
@@ -24,7 +21,6 @@ namespace SB004.Data
         private readonly MongoCollection<Meme> memeCollection;
         private readonly MongoCollection<User> userCollection;
         private readonly MongoCollection<UserComment> userCommentCollection;
-        private readonly MongoCollection<Repost> repostCollection;
         private readonly MongoCollection<Report> reportCollection;
         private readonly MongoCollection<Credentials> userCredentialCollection;
         private readonly MongoCollection<Image> imageCollection;
@@ -45,8 +41,6 @@ namespace SB004.Data
 
             userCommentCollection = database.GetCollection<UserComment>("userComment");
             
-            repostCollection = database.GetCollection<Repost>("reposted");
-
             reportCollection = database.GetCollection<Report>("reported");
 
             userCredentialCollection = database.GetCollection<Credentials>("userCredential");
@@ -54,58 +48,48 @@ namespace SB004.Data
             imageCollection = database.GetCollection<Image>("image");
 
             timeLineCollection = database.GetCollection<TimeLine>("timeLine");
-            try
-            {
-                if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
-                {
-                    BsonClassMap.RegisterClassMap<List<IComment>>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(Comment)))
-                {
-                    BsonClassMap.RegisterClassMap<Comment>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(PositionRef)))
-                {
-                    BsonClassMap.RegisterClassMap<PositionRef>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(List<IReply>)))
-                {
-                    BsonClassMap.RegisterClassMap<List<IReply>>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(Reply)))
-                {
-                    BsonClassMap.RegisterClassMap<Reply>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(Report)))
-                {
-                    BsonClassMap.RegisterClassMap<Report>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(UserLite)))
-                {
-                    BsonClassMap.RegisterClassMap<UserLite>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(Image)))
-                {
-                    BsonClassMap.RegisterClassMap<Image>();
-                }
-                if (!BsonClassMap.IsClassMapRegistered(typeof(TimeLine)))
-                {
-                    BsonClassMap.RegisterClassMap<TimeLine>();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
+	        {
+		        BsonClassMap.RegisterClassMap<List<IComment>>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(Comment)))
+	        {
+		        BsonClassMap.RegisterClassMap<Comment>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(PositionRef)))
+	        {
+		        BsonClassMap.RegisterClassMap<PositionRef>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(List<IReply>)))
+	        {
+		        BsonClassMap.RegisterClassMap<List<IReply>>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(Reply)))
+	        {
+		        BsonClassMap.RegisterClassMap<Reply>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(Report)))
+	        {
+		        BsonClassMap.RegisterClassMap<Report>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(UserLite)))
+	        {
+		        BsonClassMap.RegisterClassMap<UserLite>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(Image)))
+	        {
+		        BsonClassMap.RegisterClassMap<Image>();
+	        }
+	        if (!BsonClassMap.IsClassMapRegistered(typeof(TimeLine)))
+	        {
+		        BsonClassMap.RegisterClassMap<TimeLine>();
+	        }
         }
 
 	    private string NewShortId()
 	    {
 		    const int maxSize = 8;
-			char[] chars = new char[62];
-			chars =
-			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+		    char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 			byte[] data = new byte[1];
 			using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
 			{
@@ -204,27 +188,18 @@ namespace SB004.Data
         /// <returns></returns>
         public List<IMeme> SearchMeme(int skip, int take)
         {
-            try
-            {
-                var query = new QueryDocument();
-                List<IMeme> memes = new List<IMeme>();
+	        List<IMeme> memes = new List<IMeme>();
 
-                var cursor =
-                      memeCollection.FindAllAs<Meme>().SetSortOrder(SortBy.Descending("DateCreated")).SetLimit(take);
+	        var cursor =
+		        memeCollection.FindAllAs<Meme>().SetSortOrder(SortBy.Descending("DateCreated")).SetLimit(take);
 
-                foreach (Meme entity in cursor)
-                {
-                    // Add meme (resolving creator user object)
-                    memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
-                }
+	        foreach (Meme entity in cursor)
+	        {
+		        // Add meme (resolving creator user object)
+		        memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
+	        }
 
-                return memes;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+	        return memes;
         }
 
         /// <summary>
@@ -235,7 +210,6 @@ namespace SB004.Data
         /// <returns></returns>
         public List<IMeme> SearchTrendingMemes(int skip, int take)
         {
-            var query = new QueryDocument();
             List<IMeme> memes = new List<IMeme>();
 
             var cursor =
@@ -273,7 +247,7 @@ namespace SB004.Data
         /// <summary>
         /// Save the report of an offensive meme
         /// </summary>
-        /// <param name="repost"></param>
+		/// <param name="report"></param>
         /// <returns></returns>
         public IReport Save(IReport report)
         {
@@ -281,39 +255,35 @@ namespace SB004.Data
             reportCollection.Save(report.ToBsonDocument());
             return report;
         }
-        /// <summary>
-        /// Search for memes by user id
-        /// </summary>
-        /// <param name="skip"></param>
-        /// <param name="take"></param>
-        /// <returns></returns>
-        public List<IMeme> SearchMemeByUser(string userId, int skip, int take, out long fullCount)
-        {
-            try
-            {
-                List<IMeme> memes = new List<IMeme>();
- 
-                var query = Query.And(
-                    Query<Meme>.EQ(e => e.CreatedByUserId, userId), 
-                    Query<Meme>.EQ(e => e.IsTopLevel,true));
-                var resultItems = new List<Meme>();
-                var cursor = memeCollection.FindAs<Meme>(query);
-                cursor.SetSortOrder(SortBy.Descending("DateCreated"));
-                cursor.SetSkip(skip).SetLimit(take);
-                resultItems.AddRange(cursor);
-                fullCount = cursor.Count();
-                foreach (Meme entity in resultItems)
-                {
-                    // Add meme (resolving creator user object)
-                    memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
-                }
 
-                return memes;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+	    /// <summary>
+	    /// Search for memes by user id
+	    /// </summary>
+	    /// <param name="userId"></param>
+	    /// <param name="skip"></param>
+	    /// <param name="take"></param>
+	    /// <param name="fullCount"></param>
+	    /// <returns></returns>
+	    public List<IMeme> SearchMemeByUser(string userId, int skip, int take, out long fullCount)
+        {
+		    List<IMeme> memes = new List<IMeme>();
+ 
+		    var query = Query.And(
+			    Query<Meme>.EQ(e => e.CreatedByUserId, userId), 
+			    Query<Meme>.EQ(e => e.IsTopLevel,true));
+		    var resultItems = new List<Meme>();
+		    var cursor = memeCollection.FindAs<Meme>(query);
+		    cursor.SetSortOrder(SortBy.Descending("DateCreated"));
+		    cursor.SetSkip(skip).SetLimit(take);
+		    resultItems.AddRange(cursor);
+		    fullCount = cursor.Count();
+		    foreach (Meme entity in resultItems)
+		    {
+			    // Add meme (resolving creator user object)
+			    memes.Add(entity.SetCreator(GetUser(entity.CreatedByUserId)));
+		    }
+
+		    return memes;
         }
         #endregion
 
@@ -424,7 +394,6 @@ namespace SB004.Data
         #region User Comment
         public long GetUserCommentCount(string memeId)
         {
-            var query = new QueryDocument();
             var cursor =
                   userCommentCollection.FindAs<UserComment>(Query<UserComment>.EQ(e => e.MemeId, memeId));
 
@@ -444,27 +413,18 @@ namespace SB004.Data
         /// <returns></returns>
         public List<IUserComment> GetUserComments(string memeId, int skip, int take)
         {
-            try
-            {
-                var query = new QueryDocument();
-                List<IUserComment> userComments = new List<IUserComment>();
-                var cursor =
-                      userCommentCollection.FindAs<UserComment>(Query<UserComment>.EQ(e => e.MemeId, memeId))
-                      .SetSortOrder(SortBy.Descending("DateCreated"))
-                      .Skip(skip).Take(take);
+	        List<IUserComment> userComments = new List<IUserComment>();
+	        var cursor =
+		        userCommentCollection.FindAs<UserComment>(Query<UserComment>.EQ(e => e.MemeId, memeId))
+			        .SetSortOrder(SortBy.Descending("DateCreated"))
+			        .Skip(skip).Take(take);
 
-                foreach (UserComment entity in cursor)
-                {
-                    userComments.Add(entity);
-                }
+	        foreach (UserComment entity in cursor)
+	        {
+		        userComments.Add(entity);
+	        }
 
-                return userComments;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+	        return userComments;
         }
         /// <summary>
         /// Add a user comment
@@ -525,7 +485,7 @@ namespace SB004.Data
 	    /// <returns></returns>
 	    public List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry type)
 	    {
-		    IMongoQuery query = null;
+		    IMongoQuery query;
 		    if (type == TimeLineEntry.All)
 		    {
 				// Bring back all entry types
@@ -557,7 +517,7 @@ namespace SB004.Data
 
 			List<ITimeLine> activity = new List<ITimeLine>();
 
-			IQueryable<TimeLine> query = (from entry in timeLineCollection.AsQueryable<TimeLine>()
+			IQueryable<TimeLine> query = (from entry in timeLineCollection.AsQueryable()
 										 where entry.UserId == userId
 										 && entry.DateOfEntry >= dateOfEntry
 										 select entry).OrderByDescending(x=>x.DateOfEntry);
@@ -581,7 +541,7 @@ namespace SB004.Data
 
 			List<ITimeLine> activity = new List<ITimeLine>();
 
-			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable()
 						where entry.TimeLineRefId == memeId 
 						&& entry.DateOfEntry >= dateOfEntry
 						select entry;
@@ -594,7 +554,8 @@ namespace SB004.Data
 			return activity;
 		}
 		/// <summary>
-		/// Retrieve the time line of a particular user paginated if requested
+		/// Retrieve the timeline activity of all memes
+		/// the user posted or reposted by the specified user for a max number of days
 		/// </summary>
 		/// <param name="userId">ID of the user</param>
 		/// <param name="days">Number of in the past to go</param>
@@ -602,7 +563,7 @@ namespace SB004.Data
 		public List<ITimeLine> GetUserMemeTimeLine(string userId, int days)
 		{
 			// Get all the mems of this user
-			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable<TimeLine>()
+			IQueryable<TimeLine> query = from entry in timeLineCollection.AsQueryable()
 										 where entry.UserId == userId
 										 && (entry.EntryType == TimeLineEntry.Post || entry.EntryType == TimeLineEntry.Repost)
 										 select entry;
@@ -610,9 +571,13 @@ namespace SB004.Data
 			List<ITimeLine> activity = new List<ITimeLine>();
 			foreach (var post in query)
 			{
+				// Determine the meme id. If a repost user the AlternateId
+				string memeId = post.EntryType == TimeLineEntry.Post ? post.TimeLineRefId : post.TimeLineRefAlternateId;
+
 				// Add the activity for the meme posted by the user
-				activity.AddRange(GetMemeTimeLine(post.TimeLineRefId, days));
+				activity.AddRange(GetMemeTimeLine(memeId, days));
 			}
+
 			return activity;
 		}
 		

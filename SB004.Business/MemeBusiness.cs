@@ -248,7 +248,7 @@
             meme = Reposted(meme);
 
 			// Add repost to time line
-			repository.Save(new TimeLine(user.Id, TimeLineEntry.Repost, repost.MemeId, null, null, null));
+			repository.Save(new TimeLine(user.Id, TimeLineEntry.Repost, repost.MemeId, meme.Id, null, null));
 
 			// Update the number of reposts performed by this user
 			user.Reposts++;

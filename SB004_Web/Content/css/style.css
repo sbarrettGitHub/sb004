@@ -517,6 +517,9 @@ height:325px;*/
 .memeLinkCardMeta .infoFrame{
 	width:335px;
 }
+.repostIcon{
+	font-size: large;
+}
  .memeLinkContainer .created{
 	margin-left: 10px;
 	margin-right: 10px;

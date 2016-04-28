@@ -4,7 +4,7 @@ app.directive('ngMemelink', function() {
     restrict: 'A',
     require: '^ngModel',  
 	scope: {
-      ngModel: '=', onClick: '&', onLike: '&', onDislike: '&', onAddtofavourites: '&'
+      ngModel: '=', onClick: '&', onLike: '&', onDislike: '&', onAddtofavourites: '&', onClickrepost: '&'
     },
     templateUrl: "Scripts/app/templates/ngMemelink.html"
   }

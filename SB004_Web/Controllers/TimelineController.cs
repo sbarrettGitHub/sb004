@@ -5,6 +5,7 @@ using System.Web.Http;
 using SB004.Data;
 using SB004.Domain;
 using SB004.Models;
+using SB004.User;
 
 namespace SB004.Controllers
 {
@@ -138,7 +139,7 @@ namespace SB004.Controllers
 		[Route("home/{id}")]
 		public IHttpActionResult GetComprehensive(string id, int days, int maxCount)
 		{
-			// Get all memes posted or reposted by the user with any activite in the last X days
+			// Get all memes posted or reposted by the user with any activity by ANY user in the last X days
 			List<ITimeLine> activityOnUserPostedMemes = repository.GetUserMemeTimeLine(id, 30000).OrderByDescending(x => x.DateOfEntry).ToList(); 
 
 			TimelineGroupModel timelineGroupModel = new TimelineGroupModel
@@ -183,26 +184,57 @@ namespace SB004.Controllers
 			return Ok(timelineGroupModel);
 		}
 		/// <summary>
-		/// Return the combined time line of the specified user those he follows
+		/// Return the time line of the specified meme
+		/// If the current user is created or reposted this then return activity for ALL users
+		/// Otherwise return only the activity on the meme of the current user and those he/she follows 
 		/// </summary>
 		/// <param name="id">user id</param>
 		/// <param name="days"></param>
 		/// <param name="maxCount"></param>
 		/// <returns></returns>
+		[Authorize]
 		[Route("meme/{id}")]
 		public IHttpActionResult GetMemeTimeline(string id, int days, int maxCount)
 		{
-			// Get all memes posted or reposted by the user with any activite in the last X days
-			List<ITimeLine> memeActivities = repository.GetMemeTimeLine(id, days).OrderByDescending(x=>x.DateOfEntry).ToList();
-
 			TimelineGroupModel timelineGroupModel = new TimelineGroupModel
 			{
 				User = null,
 				TimelineGroups = new List<TimelineGroup>()
 			};
+
+			// Get the specified meme
+			IMeme meme = repository.GetMeme(id);
+			if (meme == null)
+			{
+				// Meme has been removed or the ID was invlide. No need to error out, handle gracefully
+				return Ok(timelineGroupModel);
+			}
+
+			// Determine the current user
+			string currentUserId = User.Identity.UserId();
+			var currentUser = repository.GetUser(currentUserId);
+
+			// Restrict the activity returned to the current user and those he/she follows UNLESS THE CURRENT USER CREATED THE MEME
+			bool includeActivityOfAllUsers= meme.CreatedByUserId == currentUserId;
+
+			// Get the activity of the current user and those he/she follows (grouped by meme)
+			List<string> userIds = new List<string> { currentUserId };
+			userIds.AddRange(currentUser.FollowingIds.Select(x => x.Id));
+			
+			// Get all activity on this meme in the last X days, buy ANY user
+			List<ITimeLine> memeActivities = repository.GetMemeTimeLine(id, days).OrderByDescending(x=>x.DateOfEntry).ToList();
+
+
+			// Create the timeline group with all activity on this meme by the current user and those he/she follows
 			foreach (ITimeLine memeActivity in memeActivities)
 			{
-				AddActivitytoTimeLineGroups(ref timelineGroupModel, memeActivity, maxCount);
+				// Was this activity performed the current user or  those he/she follows?
+				if (userIds.Contains(memeActivity.UserId) || includeActivityOfAllUsers)
+				{
+					// Add to model up to a max count
+					AddActivitytoTimeLineGroups(ref timelineGroupModel, memeActivity, maxCount);
+				}
+				
 			}
 			Debug.Assert(timelineGroupModel.TimelineGroups.Count<=1, "Activity on single meme should only render one time line group!!!");
 

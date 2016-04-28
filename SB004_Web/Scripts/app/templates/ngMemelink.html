@@ -10,6 +10,8 @@
 			<div class="pull-left infoFrame">
 				<div class="created">
 					<div class="pull-left ">
+						<i class="fa fa-retweet hot repostIcon" ng-show="ngModel.repostOfId" ng-click="onClickrepost(ngModel.repostOfId)"
+						title="This is a repost. Click here to open the original."></i>
 						<span class="allowFollow"   ng-userhover ng-user="ngModel.creator" >
 							{{ngModel.createdBy}}
 						</span>

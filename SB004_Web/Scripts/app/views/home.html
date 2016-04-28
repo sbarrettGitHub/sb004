@@ -36,7 +36,8 @@
 							on-like="likeMeme(meme.id)"
 							on-dislike="dislikeMeme(meme.id)"
 							on-addtofavourites="addMemeToFavourites(meme.id)"
-							on-userclick="openUser(meme.createdByUserId)"></div>
+							on-userclick="openUser(meme.createdByUserId)"
+                            on-clickrepost="viewMeme(meme.repostOfId)" ></div>
 		</div>
     </div>
     <div id="homeMemes" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='following'">
@@ -61,7 +62,8 @@
                                     on-click="viewMeme(item.meme.id)" 
                                     on-like="likeMeme(item.meme)"
                                     on-dislike="dislikeMeme(item.meme)"
-                                    on-addtofavourites="addMemeToFavourites(item.meme.id)">
+                                    on-addtofavourites="addMemeToFavourites(item.meme.id)"
+                                    on-clickrepost="viewMeme(item.meme.repostOfId)">
                     </div>
                     <div id="addNewComment" class="pull-left" title="Type your comment and press enter or return. Maximum length 250 characters. ">
                         
