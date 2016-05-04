@@ -180,6 +180,41 @@
 				$window.alert(e);
 			});
 		}
+		$scope.likeComment = function(commentId, memeId)
+		{
+			// Don't allow multiple likes by the same user on the same comment
+			for(var i=0;i<securityService.getCurrentUser().myCommentLikes.length;i++){
+				if(securityService.getCurrentUser().myCommentLikes[i] == commentId){
+					return;
+				}
+			}
+			$http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/like/", data: {}})
+				.success(function (data) {  
+					securityService.getCurrentUser().myCommentLikes.push(data.id);// Remember that you like this comment (so you can't keep clicking like)
+					$scope.refreshMemeTimeline(memeId, $scope.daysIndex, null, 1);
+                }).error(function (e) {
+					$window.alert(e);
+					return;
+                });
+		}		
+		$scope.dislikeComment = function(commentId, memeId)
+		{
+			// Don't allow multiple dislikes by the same user on the same comment
+			for(var i=0;i<securityService.getCurrentUser().myCommentDislikes.length;i++){
+				if(securityService.getCurrentUser().myCommentDislikes[i] == commentId){
+					return;
+				}
+			}
+			 $http({ method: 'PATCH', url: 'api/Comment/' + commentId + "/dislike/" , data: {}})
+				.success(function (data) {  
+					securityService.getCurrentUser().myCommentDislikes.push(data.id); // Remember that you dislike this comment (so you can't keep clicking dislike)
+					$scope.refreshMemeTimeline(memeId, $scope.daysIndex, null, 1);	
+							
+                }).error(function (e) {
+					$window.alert(e);
+					return;
+                });
+		}		
 		/*---------------------------------------------------------*/
 		$scope.likeMeme = function(meme)
 		{

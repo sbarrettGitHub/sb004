@@ -6,8 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SB004.User;
-using Newtonsoft.Json.Serialization;
-using System.Net.Http.Formatting;
 using SB004.Models;
 namespace SB004.Controllers
 {
@@ -39,10 +37,10 @@ namespace SB004.Controllers
 		}
 
 		#region POST
+
 		/// <summary>
 		/// Post a comment 
 		/// </summary>
-		/// <param name="comment"></param>
 		/// <returns></returns>
 		// [Authorize]
 		[Route("")]
@@ -77,22 +75,23 @@ namespace SB004.Controllers
 		#region PATCH
 
 		/// <summary>
-		/// Like a comment
+		/// Like a comment. May be anonymous action. Record in user's timeline if not.
 		/// </summary>
 		/// <param name="id">Comment id</param>
 		/// <returns></returns>
-		//[Authorize]
 		[HttpPatch]
 		[Route("{id}/like/")]
 		public HttpResponseMessage LikeComment(string id)
 		{
-			IUserComment userComment = repository.GetUserComment(id);
+			string userId = User.Identity.UserId();
+
+			// Record the like of the comment
+			IUserComment userComment = userCommentBusiness.LikeComment(id, userId);
+
 			if (userComment == null)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 			}
-			userComment.Likes++;
-			userComment = repository.Save(userComment);
 
 			var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
 			response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);
@@ -100,7 +99,7 @@ namespace SB004.Controllers
 		}
 
 		/// <summary>
-		/// Dislike a comment
+		/// Dislike a comment. May be anonymous action. Record in user's timeline if not.
 		/// </summary>
 		/// <param name="id">Comment id</param>
 		/// <returns></returns>
@@ -109,13 +108,14 @@ namespace SB004.Controllers
 		[Route("{id}/dislike/")]
 		public HttpResponseMessage DislikeComment(string id)
 		{
-			IUserComment userComment = repository.GetUserComment(id);
+			string userId = User.Identity.UserId();
+
+			// Record the dislike of the comment
+			IUserComment userComment = userCommentBusiness.DislikeComment(id, userId);
 			if (userComment == null)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 			}
-			userComment.Dislikes++;
-			userComment = repository.Save(userComment);
 
 			var response = Request.CreateResponse(HttpStatusCode.Created, userComment);
 			response.Headers.Location = new Uri(Request.RequestUri, "/api/comments/" + userComment.Id);

@@ -34,5 +34,61 @@ namespace SB004.Business
 			}
 			return userComment;
 		}
+
+		/// <summary>
+		/// Record the like of a user comment on the comment and in the time line
+		/// </summary>
+		/// <param name="userCommentId"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
+		public IUserComment LikeComment(string userCommentId, string userId)
+		{
+			IUserComment userComment = repository.GetUserComment(userCommentId);
+			if (userComment == null)
+			{
+				return null;
+			}
+
+			// Increment the likes of the comment
+			userComment.Likes++;
+
+			// Record on the user comment
+			userComment = repository.Save(userComment);
+
+			// If not anonymous then record in the timeline of the user doing the action
+			if (userId != null)
+			{
+				repository.Save(new TimeLine(userId, TimeLineEntry.LikeComment, userComment.MemeId, userCommentId, null, null));
+			}
+			return userComment;
+		}
+		/// <summary>
+		/// Record the dislike of a user comment on the comment and in the time line
+		/// </summary>
+		/// <param name="userCommentId"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
+		public IUserComment DislikeComment(string userCommentId, string userId)
+		{
+			IUserComment userComment = repository.GetUserComment(userCommentId);
+			if (userComment == null)
+			{
+				return null;
+			}
+
+			// Increment the likes of the comment
+			userComment.Dislikes++;
+
+			// Record on the user comment
+			userComment = repository.Save(userComment);
+
+			// If not anonymous then record in the timeline of the user doing the action
+			if (userId != null)
+			{
+				repository.Save(new TimeLine(userId, TimeLineEntry.DislikeComment, userComment.MemeId, userCommentId, null, null));
+			}
+
+			return userComment;
+		}
 	}
 }

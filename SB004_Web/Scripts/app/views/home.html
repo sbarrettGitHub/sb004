@@ -56,7 +56,7 @@
                     <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
                 </div>	
             </div> 
-            <div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+            <div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-12  col-md-12 col-sm-12 col-xs-12">
                 <div class="pull-left">
                     <div class="pushDown4" ng-memelink ng-model="item.meme"
                                     on-click="viewMeme(item.meme.id)" 
@@ -85,6 +85,8 @@
                             <i class="fa fa-thumbs-o-down" ng-show="entry.entryType==4"></i>
                             <i class="fa fa-reply" ng-show="entry.entryType==5"></i>
                             <i class="fa fa-comments-o" ng-show="entry.entryType==6"></i>
+                            <i class="fa fa-thumbs-up" ng-show="entry.entryType==10"></i>
+                            <i class="fa fa-thumbs-down" ng-show="entry.entryType==11"></i>
                         </div>
                         <div class="pull-left text">
                             <span class="dateofEntry"> {{entry.dateOfEntry | date:'short'}}</span>
@@ -93,18 +95,43 @@
                                 {{user.id == entry.user.id? 'you' : entry.user.userName}}
                             </span>					 
                             <span ng-show="entry.entryType==1"> posted a new quote.</span>
-                            <span ng-show="entry.entryType==2"> requoted {{item.meme.createdByUserId==userId?'your': 'this'}} quote.</span>
-                            <span ng-show="entry.entryType==3"> {{user.id == entry.user.id? 'like' : 'likes'}} {{item.meme.createdByUserId==userId?'your': 'this'}} quote.</span>
-                            <span ng-show="entry.entryType==4"> {{user.id == entry.user.id? 'dislike' : 'dislikes'}} {{item.meme.createdByUserId==userId?'your': 'this'}}  quote.</span>
-                            <span ng-show="entry.entryType==5"> replied to {{item.meme.createdByUserId==userId?'your': 'this'}} quote:</span>
-                            <span ng-show="entry.entryType==6"> commented</span>
+                            <span ng-show="entry.entryType==2"> requoted this quote.</span>
+                            <span ng-show="entry.entryType==3"> {{user.id == entry.user.id? 'like' : 'likes'}} this quote.</span>
+                            <span ng-show="entry.entryType==4"> {{user.id == entry.user.id? 'dislike' : 'dislikes'}} this quote.</span>
+                            <span ng-show="entry.entryType==5"> replied to this quote.</span>
+                            <span ng-show="entry.entryType==6"> commented.</span>
+                            <span ng-show="entry.entryType==10"> liked a comment by 
+                                <span ng-click="openUser(entry.userComment.user.id)" class="allowFollow " 
+                                    ng-userhover ng-user="entry.userComment.user">
+                                    {{user.id == entry.userComment.user.id? 'you' : entry.userComment.user.userName}}
+                                </span>.
+                            </span>
+                            <span ng-show="entry.entryType==11"> disliked a comment by 
+                                <span ng-click="openUser(entry.userComment.user.id)" class="allowFollow " 
+                                    ng-userhover ng-user="entry.userComment.user">
+                                    {{user.id == entry.userComment.user.id? 'you' : entry.userComment.user.userName}}
+                                </span>.
+                            </span>
                         </div>
                         <div class=" pull-right">
 						    <img class="userImageSmall" ng-src="api/image/user/{{entry.userId}}">
                         </div>
-                        <div class="pull-left timeLineComment commentary" ng-show="entry.entryType==6" >
-                            {{entry.userComment.comment}} 
+                        <div class="pull-left timeLineComment commentary" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11" >
+                            <div class="userCommentHeading">
+                                <div class="pull-left">
+                                     {{entry.userComment.comment}}
+                                </div>                                
+                            </div>
+                           
                         </div>
+                        <div class="pull-right" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11">
+                            <span ng-click="likeComment(entry.userComment.id, item.meme.id)" title="I like this comment" class="info stat hot">
+                                <i class="fa fa-thumbs-o-up"></i><span>{{entry.userComment.likes}}</span>
+                            </span>	
+                            <span ng-click="dislikeComment(entry.userComment.id, item.meme.id)" title="I dislike this comment" class="info stat hot">
+                                <i class="fa fa-thumbs-o-down"></i><span>{{entry.userComment.dislikes}}</span>
+                            </span>	
+                        </div> 
                         <div class="pull-left timeLineReplyMeme" ng-show="entry.entryType==5" >
                             <div ng-memelink ng-model="entry.alternateMeme" ng-show="entry.entryType==5" 
                                     on-click="viewMeme(entry.alternateMeme.id)" 

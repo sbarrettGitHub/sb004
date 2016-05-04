@@ -2,7 +2,7 @@
 using System;
 namespace SB004.Domain
 {
-    public enum TimeLineEntry {All, Post, Repost, Like, Dislike, Reply, Comment, StatusMessage, Follow, Unfollow}
+    public enum TimeLineEntry {All, Post, Repost, Like, Dislike, Reply, Comment, StatusMessage, Follow, Unfollow, LikeComment, DislikeComment}
     public interface ITimeLine
     {
 		string Id { get; set; }

@@ -23,6 +23,23 @@ namespace SB004.Models
 		public List<TimelineGroup> TimelineGroups { get; set; } 
 	}
 
+	public class TimeLineUserCommentModel : UserComment
+	{
+		public TimeLineUserCommentModel(IUserComment userComment, IUser user)
+		{
+			this.Id = userComment.Id;
+			this.MemeId = userComment.MemeId;
+			this.UserId = userComment.UserId;
+			this.UserName = userComment.UserName;
+			this.DateCreated = userComment.DateCreated;
+			this.Likes = userComment.Likes;
+			this.Dislikes = userComment.Dislikes;
+			this.Comment = userComment.Comment;
+			this.User = user;
+		}
+		public IUser User { get; set; }
+	}
+
 	public class TimelineEntryModel
 	{
 		public TimelineEntryModel()
@@ -48,8 +65,8 @@ namespace SB004.Models
 		public DateTime DateOfEntry { get; set; }
 		public MemeLiteModel Meme { get; set; }
 		public MemeLiteModel AlternateMeme { get; set; }
-		public IUser User { get; set; } 
-		public IUserComment UserComment{ get; set; } 
+		public IUser User { get; set; }
+		public TimeLineUserCommentModel UserComment { get; set; } 
 
 	}
 }

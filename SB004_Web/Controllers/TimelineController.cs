@@ -55,9 +55,6 @@ namespace SB004.Controllers
 
 			// Get the meme referenced by the time line entry
 			if (entry.EntryType == TimeLineEntry.Post ||
-			    entry.EntryType == TimeLineEntry.Like ||
-			    entry.EntryType == TimeLineEntry.Dislike ||
-			    entry.EntryType == TimeLineEntry.Repost ||
 			    entry.EntryType == TimeLineEntry.Reply ||
 			    entry.EntryType == TimeLineEntry.Comment
 				)
@@ -66,9 +63,13 @@ namespace SB004.Controllers
 			}
 
 			// Resolve the comment
-			if (entry.EntryType == TimeLineEntry.Comment)
+			if (entry.EntryType == TimeLineEntry.Comment ||
+				entry.EntryType == TimeLineEntry.LikeComment ||
+				entry.EntryType == TimeLineEntry.DislikeComment)
 			{
-				timelineEntryModel.UserComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
+				IUserComment userComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
+				IUser user = userComment.UserId!=null?repository.GetUser(userComment.UserId): new Domain.User();
+				timelineEntryModel.UserComment = new TimeLineUserCommentModel(userComment, user);
 			}
 
 			// Resolve the alternative ref id (always a meme)

@@ -70,7 +70,7 @@
 #homeMemes .timeLineDescription{
     margin-left: 15px;
     background-color: white;
-    width: 400px;
+    width: 600px;
     margin-right: 15px;    
     padding: 2px;
     padding-bottom: 15px;
@@ -141,14 +141,14 @@
 }  
 #homeMemes #moreTimeLine{
     margin-top: 40px;
-    margin-left: 60px;
+    margin-left: 20px;
 }
 #moreEntries{
     width:100px;
-    margin-left: 120px;
+    margin-left: 15px;
 }
 #homeMemes #addNewComment{
-    width: 400px;
+    width: 600px;
     margin-left:15px;
     padding: 5px;
     background-color: white;
@@ -158,7 +158,7 @@
    margin-left: 5px; 
 }
 #homeMemes #addNewComment #addCommentText textarea{
-   width:350px; 
+   width:550px; 
 }
 #homeMemes #addNewComment #addCommentImage{
    margin-right: -4px; 
@@ -167,4 +167,10 @@
 #homeMemes #addNewComment #addCommentImage img{
     margin-top: 10px;
     margin-left: -2px;
+}
+#homeMemes .memeLinkContainer{
+    width: 600px;
+}
+#homeMemes .memeLinkCard{
+    padding-left:90px;
 }
