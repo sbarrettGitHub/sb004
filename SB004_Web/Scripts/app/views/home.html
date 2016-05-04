@@ -28,8 +28,7 @@
 			</button>
 		</div>
 	</div>
-    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">	
-
+    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">
 		<div ng-repeat="meme in memes" class="pull-left">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
@@ -65,6 +64,16 @@
                                     on-addtofavourites="addMemeToFavourites(item.meme.id)"
                                     on-clickrepost="viewMeme(item.meme.repostOfId)">
                     </div>
+                    <div  class="memeOptions pull-left col-lg-12 col-md-12 hidden-sm hidden-xs">					
+                        <div id="respond" ng-click="respond(item.meme)" class="option text-center section col-lg-3 col-md-3 hidden-sm hidden-xs"
+                            title="Respond to this with a new quote.">
+                            <i class="fa fa-reply"></i><span>&nbsp; Respond</span>
+                        </div>								
+                        <div id="repost" ng-click="repostMeme(item.meme.id)" class="option pull-right text-center section col-lg-3 col-md-3 hidden-sm hidden-xs" 
+                                title="Requote this on your time line, and begin a new discussion among your followers.">
+                            <i class="fa fa-retweet"></i><span>&nbsp; Requote</span>
+                        </div>
+                    </div>	
                     <div id="addNewComment" class="pull-left" title="Type your comment and press enter or return. Maximum length 250 characters. ">
                         
                         <div id="addCommentText" class="pull-left">

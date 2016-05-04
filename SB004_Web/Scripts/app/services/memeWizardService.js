@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    var memeWizardService = function ($q, $dialog, $timeout) {
+    var memeWizardService = function ($q, $dialog, $timeout, $http) {
 		var memeApplyTextDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
@@ -176,13 +176,28 @@
 			});
 			return deferred.promise;
 		}
+        var beginWithMemeId = function(memeId, respondingToMemeId){
+			var deferred = $q.defer();
+			$http.get('api/Meme/' + memeId).
+                success(function (data) {
+					beginWithMeme(data,respondingToMemeId)
+                    .then(function(data){
+                        deferred.resolve(data);
+                    })                    
+                }).
+                error(function (e) {					
+                    deferred.reject(e);
+                });
+			return deferred.promise;
+		}
         return {			
 			begin: begin,
-			beginWithMeme: beginWithMeme
+			beginWithMeme: beginWithMeme,
+            beginWithMemeId: beginWithMemeId
         }
     };
 
     // Register the service
-    app.factory('memeWizardService', ["$q", "$dialog", "$timeout", memeWizardService]);
+    app.factory('memeWizardService', ["$q", "$dialog", "$timeout", "$http", memeWizardService]);
 
 })();

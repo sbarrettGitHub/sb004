@@ -154,9 +154,7 @@
     background-color: white;
     border-bottom: 1px solid #C8C8C8;
 }
-#homeMemes #addNewComment #addCommentText{
-   margin-left: 5px; 
-}
+
 #homeMemes #addNewComment #addCommentText textarea{
    width:550px; 
 }
@@ -173,4 +171,11 @@
 }
 #homeMemes .memeLinkCard{
     padding-left:90px;
+}
+#homeMemes .memeOptions{
+    width: 600px;
+    margin-left: 15px;
+    margin-top: 5px;
+    background-color: white;
+    padding: 5px;
 }

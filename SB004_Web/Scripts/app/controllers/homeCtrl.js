@@ -21,7 +21,14 @@
 		};
         $scope.maxCount = constants.maxEntryCount;
        	$scope.daysIndex=constants.dayblock;
-		   
+		var repostDialogOpts ={
+            backdrop: true,
+            keyboard: true,
+            backdropClick: false,
+            templateUrl: "Scripts/app/views/repost.html",
+            controller: "repostCtrl" 
+        };
+				   
 	    $scope.addNew = function () {
 
 			blurry("view", true);
@@ -229,6 +236,54 @@
 				// Refresh the meme timline retrieving 1 extra entry
 				$scope.refreshMemeTimeline(meme.id, $scope.daysIndex, null, 1);
 			});						
+		}
+		// -------------------------------------------------------------------
+		// Respond
+		// -------------------------------------------------------------------
+		$scope.respond = function (meme) {
+			memeWizardService.beginWithMemeId(meme.id, meme.id)
+			.then(function(newMemeId){				
+				$http({ method: 'PATCH', url: 'api/Meme/' + meme.id + "/reply/" + newMemeId, data: {}})
+				.success(function (data) {  
+					// Refresh the meme timline
+					$scope.refreshMemeTimeline(meme.id, $scope.daysIndex, null, 1);				
+                }).error(function (e) {
+					$window.alert(e);
+					return;
+                });					
+			},
+			function(){
+				$window.alert("Rejected");
+			});
+         
+        };		
+		// -------------------------------------------------------------------
+		// Repost
+		// -------------------------------------------------------------------
+		// Repost
+		$scope.repostMeme = function(memeId){
+			if(securityService.getCurrentUser().isAuthenticated==false){
+				securityService.logInDialog()
+					.then(function(){
+						repost(memeId);
+						
+					});
+			}else{
+				repost(memeId);
+			}
+		}
+		var repost = function(memeId){
+			var deferred = $q.defer();
+			repostDialogOpts.resolve = {memeId : function() {return memeId;}};
+			$dialog.dialog(repostDialogOpts).open().then(function (dialogResult) {	
+				if(dialogResult.action == "repost"){
+					$scope.meme.reposts++;
+					// Refresh the meme timline
+					$scope.refreshMemeTimeline(meme.id, $scope.daysIndex, null, 1);	
+				}
+				deferred.resolve();
+			});	
+			return deferred.promise;
 		}
 		/*---------------------------------------------------------*/
         $scope.showMore = function(){
