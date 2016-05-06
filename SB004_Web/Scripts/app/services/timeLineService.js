@@ -73,14 +73,14 @@
                         entries: []
                     };
                     newGroup.id = timelineEntries[i].meme.id;
-                    newGroup.entries.unshift(timelineEntries[i]);
+                    newGroup.entries.push(timelineEntries[i]);
                     // Create a new group for time line entried for this meme
                     memeTimelineGroups[timelineEntries[i].meme.id] = newGroup;
                 }else{
                     // Get the exisitng group
                     var existingGroup = memeTimelineGroups[timelineEntries[i].meme.id];
                     // Add to existing group
-                    existingGroup.entries.unshift(timelineEntries[i]);
+                    existingGroup.entries.push(timelineEntries[i]);
                 }
             }
 
