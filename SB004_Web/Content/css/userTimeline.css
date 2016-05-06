@@ -114,6 +114,9 @@
 #userTimeline .timeLineExtended{
     margin-top: -40px;
 }
+#userTimeline .timeLineReplyMeme{
+    margin-left:100px;
+}
 #userTimeline .timeLineReplyMeme .memeLinkContainer{
     width:300px!important;
      margin-left: 95px;
@@ -169,8 +172,11 @@
 #userTimeline .memeLinkContainer{
     width: 600px;
 }
-#userTimeline .memeLinkCard{
+#userTimeline  .memeLinkCard{
     padding-left:90px;
+}
+#userTimeline .timeLineReplyMeme .memeLinkCard{
+    padding-left:0;
 }
 #userTimeline .memeOptions{
     width: 600px;
