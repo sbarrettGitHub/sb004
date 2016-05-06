@@ -54,14 +54,8 @@ namespace SB004.Controllers
 			timelineEntryModel.User = repository.GetUser(entry.UserId);
 
 			// Get the meme referenced by the time line entry
-			if (entry.EntryType == TimeLineEntry.Post ||
-			    entry.EntryType == TimeLineEntry.Reply ||
-			    entry.EntryType == TimeLineEntry.Comment
-				)
-			{
-				timelineEntryModel.Meme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefId));
-			}
-
+			timelineEntryModel.Meme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefId));
+			
 			// Resolve the comment
 			if (entry.EntryType == TimeLineEntry.Comment ||
 				entry.EntryType == TimeLineEntry.LikeComment ||

@@ -1,14 +1,14 @@
-#homeMemes .userCardContainer{  	
+#userTimeline .userCardContainer{  	
     height: 300px;
 }
-#homeMemes .following{
+#userTimeline .following{
     width:100px;
     margin-top: 25px;
 }
-#homeMemes .unfollow{
+#userTimeline .unfollow{
     color: darkred;
 }
-#homeMemes .userImageContainer{
+#userTimeline .userImageContainer{
     margin-top: 50px;
     background-color:white;
     width: 200px;
@@ -16,22 +16,22 @@
     padding:37px;
     border:3px solid #F8F8F8;
 }
-#homeMemes .userMainImage{
+#userTimeline .userMainImage{
 
     max-width: 125px;
     max-height: 125px;
     min-height: 125px;
     min-width: 125px;
 }
-#homeMemes .userNameContainer{
+#userTimeline .userNameContainer{
     margin-top: 35px;
     height: 100px;
     margin-left:15px;
 }
-#homeMemes .userName{
+#userTimeline .userName{
     font-size: 4em;     
 }
-#homeMemes .userQuoteContainer{
+#userTimeline .userQuoteContainer{
     font-size: 1.5em;
     height: 110px;
     margin-left:15px;
@@ -39,22 +39,22 @@
     font-style: italic;
     color: darkgray;
 }
-#homeMemes .userStatOptions{
+#userTimeline .userStatOptions{
     margin-top: -45px;
     font-size: 1.3em;
     color: darkgray;
     text-align: center;
 }
-#homeMemes .userStatOptions div{
+#userTimeline .userStatOptions div{
     border-bottom: 4px solid white ; 
 }
-#homeMemes .userStatOptions div:hover{
+#userTimeline .userStatOptions div:hover{
     border-bottom: 4px solid cornflowerblue ; 
 }
-#homeMemes .userStatOptions .selected{
+#userTimeline .userStatOptions .selected{
     color: black !important; 
 }
-#homeMemes .userCard {
+#userTimeline .userCard {
     width: 98%;
     height: 300px;
     margin-bottom: 15px;
@@ -67,7 +67,7 @@
 	font-size: smaller;
 	margin-top:15px;
 }
-#homeMemes .timeLineDescription{
+#userTimeline .timeLineDescription{
     margin-left: 15px;
     background-color: white;
     width: 600px;
@@ -76,7 +76,7 @@
     padding-bottom: 15px;
 }
 
-#homeMemes .timeLineDescription .icon{
+#userTimeline .timeLineDescription .icon{
     background-color: #F8F8F8;
     width: 32px;
     border: 1px solid darkgrey;
@@ -84,21 +84,21 @@
     font-size: large;
     
 }
-#homeMemes .timeLineDescription .icon i{
+#userTimeline .timeLineDescription .icon i{
     margin-left: 6px;
     margin-top: 6px;
 }
-#homeMemes .timeLineDescription .text{
-    width: 330px;
+#userTimeline .timeLineDescription .text{
+    width: 530px;
     height: 32px;
     padding-top: 6px;   
 }
-#homeMemes .timeLineDescription .dateofEntry{
+#userTimeline .timeLineDescription .dateofEntry{
     margin-left: 2px;
     font-weight: bold;   
 }
 
-#homeMemes .timeLineComment{
+#userTimeline .timeLineComment{
     max-height: 75px;
     overflow: auto;
     border:1px solid lightgrey;
@@ -107,39 +107,39 @@
     border-radius: 6px;
     margin-top: 5px;
 }
-#homeMemes .memeLinkContainer{
+#userTimeline .memeLinkContainer{
     margin-bottom: 0 !important;
     border-top: 1px solid darkgrey;
 }
-#homeMemes .timeLineExtended{
+#userTimeline .timeLineExtended{
     margin-top: -40px;
 }
-#homeMemes .timeLineReplyMeme .memeLinkContainer{
+#userTimeline .timeLineReplyMeme .memeLinkContainer{
     width:300px!important;
      margin-left: 95px;
 }
-#homeMemes .timeLineReplyMeme .memeLinkCardMeta .infoFrame {
+#userTimeline .timeLineReplyMeme .memeLinkCardMeta .infoFrame {
     width: 220px!important;       
 }
-#homeMemes .sideBar{
+#userTimeline .sideBar{
     min-height: 100px;
 }
-#homeMemes .sideBarLeft{
+#userTimeline .sideBarLeft{
     margin-left: 15px;
     margin-top: 25px;
 }
-#homeMemes .sideBarRight{
+#userTimeline .sideBarRight{
     margin-left: -30px;
     margin-top: 25px;
 }
-#homeMemes .sideBar .head{
+#userTimeline .sideBar .head{
     margin-top:15px;
     font-size: 1.3em;
     color: darkgray;
     text-align: center;
 
 }  
-#homeMemes #moreTimeLine{
+#userTimeline #moreTimeLine{
     margin-top: 40px;
     margin-left: 20px;
 }
@@ -147,7 +147,7 @@
     width:100px;
     margin-left: 15px;
 }
-#homeMemes #addNewComment{
+#userTimeline #addNewComment{
     width: 600px;
     margin-left:15px;
     padding: 5px;
@@ -155,24 +155,24 @@
     border-bottom: 1px solid #C8C8C8;
 }
 
-#homeMemes #addNewComment #addCommentText textarea{
+#userTimeline #addNewComment #addCommentText textarea{
    width:550px; 
 }
-#homeMemes #addNewComment #addCommentImage{
+#userTimeline #addNewComment #addCommentImage{
    margin-right: -4px; 
 }
 
-#homeMemes #addNewComment #addCommentImage img{
+#userTimeline #addNewComment #addCommentImage img{
     margin-top: 10px;
     margin-left: -2px;
 }
-#homeMemes .memeLinkContainer{
+#userTimeline .memeLinkContainer{
     width: 600px;
 }
-#homeMemes .memeLinkCard{
+#userTimeline .memeLinkCard{
     padding-left:90px;
 }
-#homeMemes .memeOptions{
+#userTimeline .memeOptions{
     width: 600px;
     margin-left: 15px;
     margin-top: 5px;

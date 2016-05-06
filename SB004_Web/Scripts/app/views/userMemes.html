@@ -90,7 +90,7 @@
 					<div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
 				</div>	
 			</div>			
-			<div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+			<div id="userTimeline" ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="pull-left">
 					<div ng-memelink ng-model="item.meme" ng-hide="item.meme.id == items[$index-1].meme.id"
 									on-click="viewMeme(item.meme.id)" 
@@ -105,7 +105,9 @@
 							<i class="fa fa-thumbs-o-up" ng-show="item.entryType==3"></i>
 							<i class="fa fa-thumbs-o-down" ng-show="item.entryType==4"></i>
 							<i class="fa fa-reply" ng-show="item.entryType==5"></i>
-							<i class="fa fa-comments-o" ng-show="item.entryType==6"></i>						
+							<i class="fa fa-comments-o" ng-show="item.entryType==6"></i>
+                            <i class="fa fa-thumbs-up" ng-show="item.entryType==10"></i>
+                            <i class="fa fa-thumbs-down" ng-show="item.entryType==11"></i>						
 						</div>
 						<div class="pull-left text">
 							<span class="dateofEntry"> {{item.dateOfEntry | date:'short'}}</span>
@@ -116,9 +118,16 @@
 							<span ng-show="item.entryType==4"> dislikes this.</span>
 							<span ng-show="item.entryType==5"> replied to this quote:</span>
 							<span ng-show="item.entryType==6"> commented on this.</span>
+							<span ng-show="item.entryType==10"> liked a comment on this by 
+                                <span ng-click="openUser(item.userComment.user.id)" class="allowFollow " 
+                                    ng-userhover ng-user="item.userComment.user">
+                                    {{item.userComment.user.userName}}
+                                </span>.
+							</span>
+							<span ng-show="item.entryType==11"> disliked a comment on this.</span>
 						</div>
 						
-						<div class="pull-left timeLineComment commentary" ng-show="item.entryType==6" >
+						<div class="pull-left timeLineComment commentary" ng-show="item.entryType==6||item.entryType==10||item.entryType==11" >
 							{{item.userComment.comment}} 
 						</div>
 						<div class="pull-left timeLineReplyMeme" ng-show="item.entryType==5" >

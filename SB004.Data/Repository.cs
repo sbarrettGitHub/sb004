@@ -485,24 +485,40 @@ namespace SB004.Data
 	    /// <returns></returns>
 	    public List<ITimeLine> GetUserTimeLine(string userId, int skip, int take, TimeLineEntry type)
 	    {
-		    IMongoQuery query;
+			List<ITimeLine> activity = new List<ITimeLine>();
+		    IQueryable<TimeLine> queryTimeline;
+
 		    if (type == TimeLineEntry.All)
 		    {
 				// Bring back all entry types
-				query = Query<TimeLine>.EQ(e => e.UserId, userId);
+				queryTimeline = (from entry in timeLineCollection.AsQueryable()
+								 where entry.UserId == userId
+								 select entry).OrderByDescending(x => x.DateOfEntry).Skip(skip).Take(take);
 		    }
+			else if (type == TimeLineEntry.Like)
+			{
+				queryTimeline = (from entry in timeLineCollection.AsQueryable()
+											  where entry.UserId == userId
+											  && (entry.EntryType == TimeLineEntry.Like || entry.EntryType == TimeLineEntry.LikeComment)
+											  select entry).OrderByDescending(x => x.DateOfEntry).Skip(skip).Take(take);
+			}
 		    else
 		    {
 				// Bring back specific entry types
-				query =  Query.And(
-					Query<TimeLine>.EQ(e => e.UserId, userId),
-					Query<TimeLine>.EQ(e => e.EntryType, type));
+				queryTimeline = (from entry in timeLineCollection.AsQueryable()
+								 where entry.UserId == userId
+								 && entry.EntryType == type
+								 select entry).OrderByDescending(x => x.DateOfEntry).Skip(skip).Take(take);
 		    }
-		    
-		    var cursor =
-				  timeLineCollection.FindAs<TimeLine>(query).SetSortOrder(SortBy.Descending("DateOfEntry")).SetSkip(skip).SetLimit(take);
 
-		    return cursor.Cast<ITimeLine>().ToList();
+			foreach (var entry in queryTimeline)
+			{
+				// Add the activity 
+				activity.Add(entry);
+			}
+
+			return activity;
+
 	    }
 
 		/// <summary>
