@@ -29,6 +29,7 @@
                         <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
                     </a>                     
                     <ul class="nav navbar-nav" id="navBar">
+                        <li><a class="hot" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>
                         <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
                         <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
                         <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
