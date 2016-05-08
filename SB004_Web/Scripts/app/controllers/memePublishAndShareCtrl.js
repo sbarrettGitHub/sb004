@@ -7,6 +7,8 @@
 		$scope.waitHeading = "Please wait...";
 		$scope.waitingMessage = "";
 		$scope.memeData = memeData;
+        $scope.hashTags = [];
+        $scope.hashTagInput="";
         // Wait for the view load the render the meme
         $timeout(function () {
             renderingService.render("canvas", "image", memeData.seedImage.width, memeData.seedImage.height, sharedDataService.data.rawImage);
@@ -82,6 +84,9 @@
                 });
             return deferred.promise;
         };
+        $scope.setHashTags = function(){
+            $scope.hashTags = str.split($scope.hashTagInput, " ");
+        }
 		function startWaiting(heading, message){
 			$scope.waiting = true;
 			$scope.waitHeading = !heading ? "Please wait..." : heading;

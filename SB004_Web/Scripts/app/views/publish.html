@@ -9,6 +9,16 @@
             <img id="image" class="image"/>
         </div>
     </div>
+	<div>
+		<div>
+			<div ng-repeat="hashTag in hashTags">
+				{{hashTag}}
+			</div>
+		</div>
+		<div>
+			<input type="text" ng-change="setHashTags()" ng-model="hashTagInput"/>
+		</div>
+	</div>
 	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>		
 		<input type="button" value="<< Back" ng-click="changeMeme()" title="Return to the page where you can update the text of the Meme."/>		
