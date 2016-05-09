@@ -9,14 +9,20 @@
             <img id="image" class="image"/>
         </div>
     </div>
-	<div>
-		<div>
-			<div ng-repeat="hashTag in hashTags">
-				{{hashTag}}
+	<div id="hashTags" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="tagSection tags">			
+			<div ng-repeat="hashTag in hashTags" class="btn-group">				
+				
+					<span type="button" class="btn btn-default " style="background-color: #428bca;color: white;">
+						#{{hashTag}}
+					</span>	
+					<span type="button" class="btn btn-default">
+						<i class="fa fa-close"></i>
+					</span>     
 			</div>
 		</div>
-		<div>
-			<input type="text" ng-change="setHashTags()" ng-model="hashTagInput"/>
+		<div  class="tagSection">
+			<i class="fa fa-slack" aria-hidden="true"></i> Hash tags: <input type="text" ng-model="hashTagInput" ng-keyup="($event.keyCode == 32) ? setHashTags() : ''" ng-blur="setHashTags()"/>
 		</div>
 	</div>
 	<div class="buttons dialogFoot" ng-hide="waiting">				

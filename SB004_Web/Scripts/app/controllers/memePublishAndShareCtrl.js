@@ -85,7 +85,23 @@
             return deferred.promise;
         };
         $scope.setHashTags = function(){
-            $scope.hashTags = str.split($scope.hashTagInput, " ");
+            var htags = $scope.hashTagInput.split(" ");
+            
+            // Add all new hash tags
+            for (var i = 0; i < htags.length; i++) {
+                var htag = htags[i].trim();
+                var alreadyAdded = false;
+                for (var ii = $scope.hashTags.length -1; ii >=0 ; ii--) {
+                    if(htag == $scope.hashTags[ii].trim()){
+                        alreadyAdded=true;
+                        break;
+                    }                    
+                }
+                if(alreadyAdded != true){
+                    $scope.hashTags.push(htag);
+                }
+            }
+            $scope.hashTagInput = "";
         }
 		function startWaiting(heading, message){
 			$scope.waiting = true;
