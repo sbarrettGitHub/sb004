@@ -5,35 +5,35 @@
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/spawn.html",
+            templateUrl: "Scripts/app/views/spawn.html?t=" + new Date().getTime(),
             controller: "memeApplyTextCtrl"
         });
         var memeApplyTextDialogOpts = {
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/spawn.html",
+            templateUrl: "Scripts/app/views/spawn.html?t=" + new Date().getTime(),
             controller: "memeApplyTextCtrl"
         };		
         var memePublishAndShareDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/publish.html",
+            templateUrl: "Scripts/app/views/publish.html?t=" + new Date().getTime(),
             controller: "memePublishAndShareCtrl"
         });
 		var memePublishAndShareDialogOpts ={
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/publish.html",
+            templateUrl: "Scripts/app/views/publish.html?t=" + new Date().getTime(),
             controller: "memePublishAndShareCtrl"
         };
         var loginDialog = $dialog.dialog({
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/logIn.html",
+            templateUrl: "Scripts/app/views/logIn.html?t=" + new Date().getTime(),
             controller: "logInCtrl"
         });
 	
