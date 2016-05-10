@@ -84,6 +84,8 @@
                 });
             return deferred.promise;
         };
+        //------------------------------------------------------
+        // Add the inputted hash tag to the hash tag if not already there 
         $scope.setHashTags = function(){
             var htags = $scope.hashTagInput.split(" ");
             
@@ -97,11 +99,19 @@
                         break;
                     }                    
                 }
-                if(alreadyAdded != true){
+                if(alreadyAdded != true && htag.length>0){
                     $scope.hashTags.push(htag);
                 }
             }
             $scope.hashTagInput = "";
+        }
+        $scope.removeHashTag = function(htag){
+            for (var ii = $scope.hashTags.length -1; ii >=0 ; ii--) {
+                    if(htag == $scope.hashTags[ii].trim()){
+                        $scope.hashTags.splice(ii, 1);
+                        break;
+                    }                    
+                }
         }
 		function startWaiting(heading, message){
 			$scope.waiting = true;
