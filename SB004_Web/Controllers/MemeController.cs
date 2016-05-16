@@ -71,7 +71,8 @@ namespace SB004.Controllers
                           seed.Width,
                           seed.Height,
                           image = "data:image/jpeg;base64," + imageManager.GetImageData(seed.ImageData)
-                      }
+                      },
+					  meme.HashTags
                 });
         }
 

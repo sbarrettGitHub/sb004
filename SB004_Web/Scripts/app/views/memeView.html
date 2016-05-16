@@ -68,6 +68,13 @@
 			<div id="currentMemeContainer" class="imageContainer section col-md-12 col-lg-12 col-sm-12 col-xs-12">	
 				<div id="frame">
 					<img ng-src="api/image/{{meme.id}}" class="image"/>	
+					<div id="hashTags" class="col-md-12 col-lg-12 pushDown1  text-center">
+						<div ng-repeat="hashTag in meme.hashTags" class="btn-group">
+							<button type="button" class="btn btn-default hashTagbutton">
+								#{{hashTag}}
+							</button>	
+						</div>
+					</div>
 					<div id="currentMemeStats" class="col-md-12 col-lg-12">
 						<div class="pull-left">
 							<div ng-click="likeMeme(meme.id)" title="I like this" class="info stat hot">
