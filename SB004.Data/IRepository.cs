@@ -59,5 +59,11 @@
 	    List<ITimeLine> GetUserMemeTimeLine(string userId, int days);
 	    
 		List<ITimeLine> GetMemeTimeLine(string memeId, int days);
+
+	    IHashTag GetHashTag(string hashTagName);
+
+	    IHashTag Save(IHashTag hashTag);
+
+	    IHashTagMeme Save(IHashTagMeme hashTagMeme);
     }
 }

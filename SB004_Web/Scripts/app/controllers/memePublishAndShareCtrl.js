@@ -71,7 +71,8 @@
                 SeedId: $scope.memeData.seedImage.id,
                 Comments: $scope.memeData.comments,
                 ImageData: $scope.memeData.imageData,
-				ResponseToId: respondingToMemeId
+				ResponseToId: respondingToMemeId,
+                HashTags: $scope.hashTags
             }).
                 success(function (data) {
                     sharedDataService.data.currentMeme = data;

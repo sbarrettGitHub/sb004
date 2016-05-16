@@ -6,6 +6,8 @@ namespace SB004.Business
 	public class UserCommentBusiness : IUserCommentBusiness
 	{
 		readonly IRepository repository;
+		readonly IMemeBusiness memeBusiness;
+
 		public UserCommentBusiness(IRepository repository)
 		{
 		  this.repository = repository;
@@ -31,6 +33,16 @@ namespace SB004.Business
 
 				// Save commentator
 				repository.Save(user);
+			}
+
+			// Update the number of comments on the meme
+			IMeme meme = repository.GetMeme(userComment.MemeId);
+			if (meme != null)
+			{
+				meme.UserCommentCount++;
+
+				// Save comment count
+				memeBusiness.Save(meme);
 			}
 			return userComment;
 		}

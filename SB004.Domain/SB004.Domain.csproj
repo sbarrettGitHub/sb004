@@ -40,11 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions.cs" />
+    <Compile Include="HashTag.cs" />
+    <Compile Include="IHashTag.cs" />
     <Compile Include="IImage.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="IReport.cs" />
     <Compile Include="IRepost.cs" />
     <Compile Include="ITimeLine.cs" />
+    <Compile Include="ITrendFactors.cs" />
     <Compile Include="IUserComment.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="IMeme.cs" />

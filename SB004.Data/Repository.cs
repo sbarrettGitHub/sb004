@@ -25,6 +25,8 @@ namespace SB004.Data
         private readonly MongoCollection<Credentials> userCredentialCollection;
         private readonly MongoCollection<Image> imageCollection;
         private readonly MongoCollection<TimeLine> timeLineCollection;
+		private readonly MongoCollection<HashTag> hashTagCollection;
+		private readonly MongoCollection<HashTagMeme> hashTagMemeCollection;
         public Repository()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -48,6 +50,11 @@ namespace SB004.Data
             imageCollection = database.GetCollection<Image>("image");
 
             timeLineCollection = database.GetCollection<TimeLine>("timeLine");
+
+			hashTagCollection = database.GetCollection<HashTag>("hashtag");
+			
+			hashTagMemeCollection = database.GetCollection<HashTagMeme>("hashtagMeme");
+
 	        if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
 	        {
 		        BsonClassMap.RegisterClassMap<List<IComment>>();
@@ -84,6 +91,13 @@ namespace SB004.Data
 	        {
 		        BsonClassMap.RegisterClassMap<TimeLine>();
 	        }
+			if (!BsonClassMap.IsClassMapRegistered(typeof(HashTag)))
+	        {
+				BsonClassMap.RegisterClassMap<HashTag>();
+	        }
+
+			// Create index on hash tag in hashtag meme
+			hashTagMemeCollection.CreateIndex(IndexKeys<HashTagMeme>.Ascending(_ => _.HashTag));
         }
 
 	    private string NewShortId()
@@ -155,7 +169,7 @@ namespace SB004.Data
 
         #region Meme
         /// <summary>
-        /// Persist the supplied seed and assign an ID
+        /// Persist the supplied meme and assign an ID
         /// </summary>
         /// <param name="meme"></param>
         /// <returns></returns>
@@ -598,5 +612,39 @@ namespace SB004.Data
 		}
 		
 	    #endregion
-    }
+		#region HashTags
+		/// <summary>
+		/// Get a hashtag by name (ID is hash tag name)
+		/// </summary>
+		/// <param name="hashTagName"></param>
+		/// <returns></returns>
+		public IHashTag GetHashTag(string hashTagName)
+		{
+			IHashTag hashTag = hashTagCollection.FindOne(Query<HashTag>.EQ(e => e.Id, hashTagName));
+			return hashTag;
+		}
+		/// <summary>
+		/// Save the hashtag
+		/// </summary>
+		/// <param name="hashTag"></param>
+		/// <returns></returns>
+	    public IHashTag Save(IHashTag hashTag)
+	    {
+			hashTagCollection.Save(hashTag.ToBsonDocument());
+			return hashTag;
+	    }	
+    	/// <summary>
+    	/// Save the link between an hashtag and a meme
+    	/// </summary>
+    	/// <param name="hashTagMeme"></param>
+    	/// <returns></returns>
+		public IHashTagMeme Save(IHashTagMeme hashTagMeme)
+    	{
+			hashTagMeme.Id = hashTagMeme.Id ?? hashTagMeme.HashTag + hashTagMeme.MemeId;
+			hashTagMemeCollection.Save(hashTagMeme.ToBsonDocument());
+			return hashTagMeme;
+	    }
+		#endregion
+
+	}
 }

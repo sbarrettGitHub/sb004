@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountBusiness.cs" />
+    <Compile Include="HashTagBusiness.cs" />
+    <Compile Include="IHashTagBusiness.cs" />
     <Compile Include="IUserCommentBusiness.cs" />
     <Compile Include="UserCommentBusiness.cs" />
     <Compile Include="IAccountBusiness.cs" />

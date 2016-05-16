@@ -29,7 +29,7 @@ namespace SB004.Domain
     string TextShadow { get; set; }
 
   }
-  public interface IMeme
+  public interface IMeme: ITrendFactors
   {
     string Id { get; set; }
     string RepostOfId { get; set; }
@@ -38,20 +38,14 @@ namespace SB004.Domain
     IUser Creator { get; }   
     string SeedId { get; set; }
     byte[] ImageData { get; set; }
-    DateTime DateCreated { get; set; }
     string CreatedBy { get; set; }
     List<IComment> Comments { get; set; }
     string ResponseToId { get; set; }
     List<IReply> ReplyIds { get; set; }
-    int Likes { get; set; }
-    int Dislikes { get; set; }
-    int Favourites { get; set; }
-    int Shares { get; set; }
-    int Views { get; set; }
-    int Reposts { get; set; }
     bool IsTopLevel { get; set;}
     double TrendScore { get; set; }
     IMeme SetCreator(IUser creator);
+	List<string> HashTags { get; set; }
   }
 
   public interface IReply

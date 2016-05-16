@@ -45,10 +45,10 @@ namespace SB004.Domain
         /// <summary>
         /// Resolve the creator. Not persisted
         /// </summary>
-        /// <param name="creator"></param>
-        public IMeme SetCreator(IUser creator) 
+		/// <param name="crtor"></param>
+        public IMeme SetCreator(IUser crtor) 
         {
-            this.creator = creator;
+			this.creator = crtor;
             return this;
         }
         public string SeedId { get; set; }
@@ -58,14 +58,18 @@ namespace SB004.Domain
         public List<IComment> Comments { get; set; }
         public string ResponseToId { get; set; }
         public List<IReply> ReplyIds { get; set; }
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
-        public int Favourites { get; set; }
-        public int Shares { get; set; }
-        public int Views { get; set; }
-        public int Reposts { get; set; }
+		public long Likes { get; set; }
+		public long Dislikes { get; set; }
+		public long Favourites { get; set; }
+		public long Shares { get; set; }
+		public long Views { get; set; }
+		public long Reposts { get; set; }
         public bool IsTopLevel { get; set; }
         public double TrendScore { get; set; }
+		public long ReportCount { get; set; }
+		public long UserCommentCount { get; set; }
+		public long ReplyCount { get; set; }
+		public List<string> HashTags { get; set; }
 
     }
     public class Reply:IReply

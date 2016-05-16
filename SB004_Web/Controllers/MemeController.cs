@@ -192,6 +192,7 @@ namespace SB004.Controllers
                 ImageData = Convert.FromBase64String(memeModel.ImageData),
                 ResponseToId = memeModel.ResponseToId,
                 ReplyIds = new List<IReply>(),
+				HashTags = memeModel.HashTags ?? new List<string>()
 
             };
 

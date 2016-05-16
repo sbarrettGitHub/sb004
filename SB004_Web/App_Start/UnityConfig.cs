@@ -15,10 +15,11 @@ namespace SB004
             container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             container.RegisterType<IImageManager, ImageManager>();
             container.RegisterType<IDownloader, Downloader>();
-            container.RegisterType<ITrendManager, TrendManager>();
             container.RegisterType<IMemeBusiness, MemeBusiness>();
             container.RegisterType<IAccountBusiness, AccountBusiness>();
 			container.RegisterType<IUserCommentBusiness, UserCommentBusiness>();
+			container.RegisterType<IHashTagBusiness, HashTagBusiness>();
+
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

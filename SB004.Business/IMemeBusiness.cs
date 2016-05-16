@@ -56,5 +56,11 @@ namespace SB004.Business
     /// <returns></returns>
 	IMeme UpdateMemeInteraction(string memeId, string userId, int likesIncrement, int dislikesIncrement, int viewsIncrement, int sharesIncrement, int favouritesIncrement);
 
+	/// <summary>
+	/// Save the meme
+	/// </summary>
+	/// <param name="meme"></param>
+	/// <returns></returns>
+	IMeme Save(IMeme meme);
   }
 }

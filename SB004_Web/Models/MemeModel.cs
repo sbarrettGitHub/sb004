@@ -40,6 +40,7 @@ namespace SB004.Models
         public string ImageData { get; set; }
         public string ResponseToId { get; set; }
         public List<string> ReplyIds { get; set; }
+        public List<string> HashTags { get; set; }
     }
     public class UserCommentModel
     {
@@ -73,13 +74,13 @@ namespace SB004.Models
         public string CreatedBy { get; set; }
         public long userCommentCount { get; set; }
         public string ResponseToId { get; set; }
-        public int replyCount { get; set; }
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
-        public int Favourites { get; set; }
-        public int Shares { get; set; }
-        public int Views { get; set; }
-        public int Reposts { get; set; }
+		public long replyCount { get; set; }
+		public long Likes { get; set; }
+		public long Dislikes { get; set; }
+		public long Favourites { get; set; }
+		public long Shares { get; set; }
+		public long Views { get; set; }
+		public long Reposts { get; set; }
 		public string RepostOfId { get; set; }
 		
     }
