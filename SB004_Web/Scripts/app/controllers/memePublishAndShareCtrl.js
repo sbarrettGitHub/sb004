@@ -9,6 +9,9 @@
 		$scope.memeData = memeData;
         $scope.hashTags = [];
         $scope.hashTagInput="";
+        var constants = {
+            maxNumberOfTags:5
+        }
         // Wait for the view load the render the meme
         $timeout(function () {
             renderingService.render("canvas", "image", memeData.seedImage.width, memeData.seedImage.height, sharedDataService.data.rawImage);
@@ -89,9 +92,9 @@
         // Add the inputted hash tag to the hash tag if not already there 
         $scope.setHashTags = function(){
             var htags = $scope.hashTagInput.split(" ");
-            
+            var totalTags =  htags.length > constants.maxNumberOfTags ? constants.maxNumberOfTags :  htags.length;
             // Add all new hash tags
-            for (var i = 0; i < htags.length; i++) {
+            for (var i = 0; i < totalTags; i++) {
                 var htag = htags[i].trim();
                 var alreadyAdded = false;
                 for (var ii = $scope.hashTags.length -1; ii >=0 ; ii--) {

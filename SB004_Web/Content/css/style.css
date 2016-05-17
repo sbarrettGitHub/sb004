@@ -688,9 +688,17 @@ height:325px;*/
 	/*display: table-cell;*/
 	padding-left: 5px;
 }
+.memeLinkHashTags{
+	margin-left: -45px;
+}
 .hashTagbutton{
 	background-color: #428bca;
 	color: white;
+}
+.hashTagbuttonSmall{
+    height: 20px;
+    font-size: 8pt!important;
+    padding-top: 2px !important;
 }
 #publish .dialogBody{
 	height:260px;

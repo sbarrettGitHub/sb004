@@ -7,6 +7,7 @@
 			<div class="pull-left userImageFrame">
 				<img class='userImageSmall' ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
 			</div>
+		
 			<div class="pull-left infoFrame">
 				<div class="created">
 					<div class="pull-left ">
@@ -42,5 +43,12 @@
 				</div>
 			</div>		
 		</div>
+		<div class="pull-left col-lg-12 col-md-12 col-sm-12 memeLinkHashTags">
+			<div ng-repeat="hashTag in ngModel.hashTags" class="btn-group hashTags">	
+					<button type="button" class="btn hashTagbutton hashTagbuttonSmall" title="#{{hashTag}}">
+						#{{hashTag}}
+					</button>
+			</div>
+		</div>		
 	</div>
 </div>

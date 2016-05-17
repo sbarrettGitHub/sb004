@@ -66,6 +66,7 @@ namespace SB004.Models
 			Views = meme.Views;
 			Reposts = meme.Reposts;
 			RepostOfId = meme.RepostOfId;
+			HashTags = meme.HashTags;
 		}
 	    public string Id { get; set; }
         public string CreatedByUserId { get; set; }
@@ -82,6 +83,7 @@ namespace SB004.Models
 		public long Views { get; set; }
 		public long Reposts { get; set; }
 		public string RepostOfId { get; set; }
+		public List<string> HashTags { get; set; }
 		
     }
     public class ReportModel 
