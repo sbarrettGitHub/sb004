@@ -505,7 +505,7 @@ height:325px;*/
 	height:32px;
 	border-radius: 16px;
 }
- .memeLinkCardMeta .userImageSmall{
+.memeLinkCardMeta .userImageSmall{
 	margin-top: 16px !important;	 
 }
  .memeLinkContainer img{
@@ -516,6 +516,9 @@ height:325px;*/
 }
 .memeLinkCardMeta .infoFrame{
 	width:335px;
+}
+.memeLinkCardMeta .infoFrameExtended{
+	width:400px!important;
 }
 .repostIcon{
 	font-size: large;
@@ -702,4 +705,12 @@ height:325px;*/
 }
 #publish .dialogBody{
 	height:260px;
+}
+.memeLinkCard .userImageLarge{
+	margin-left: -90px;
+	margin-top: 10px;
+}
+.memeLinkCard .userImageLarge img{
+	width: 64px;
+	height: 64px;
 }

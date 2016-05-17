@@ -96,7 +96,8 @@
 									on-click="viewMeme(item.meme.id)" 
 									on-like="likeMeme(item.meme.id)"
 									on-dislike="dislikeMeme(item.meme.id)"
-									on-addtofavourites="addMemeToFavourites(item.meme.id)">
+									on-addtofavourites="addMemeToFavourites(item.meme.id)"
+									ng-largeuserimage='true'>
 					</div>
 					<div class="pull-left timeLineDescription pushDown" ng-class="{timeLineExtended: item.meme.id == items[$index-1].meme.id}">
 						<div class="icon pull-left">

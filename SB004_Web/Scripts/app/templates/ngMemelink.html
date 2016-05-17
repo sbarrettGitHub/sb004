@@ -1,14 +1,16 @@
 <div class="memeLinkContainer pull-left rounded col-md-12 col-lg-12 col-sm-12">
 	<div class="memeLinkCard">
+		<div class="pull-left userImageLarge" ng-show="ngLargeuserimage" ng-userhover ng-user="ngModel.creator">
+			<img class="rounded" ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
+		</div>
 		<div class="memeLinkCardImage">
 			<img ng-src="api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image"/>
 		</div>
 		<div class="memeLinkCardMeta pull-down">
 			<div class="pull-left userImageFrame">
-				<img class='userImageSmall' ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
+				<img class='userImageSmall' ng-hide="ngLargeuserimage" ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
 			</div>
-		
-			<div class="pull-left infoFrame">
+			<div class="pull-left infoFrame" ng-class="{infoFrameExtended: ngLargeuserimage}">
 				<div class="created">
 					<div class="pull-left ">
 						<i class="fa fa-retweet hot repostIcon" ng-show="ngModel.repostOfId" ng-click="onClickrepost(ngModel.repostOfId)"
@@ -26,8 +28,6 @@
 					<div ng-click="onDislike(meme.id)" title="I dislike this post" class="hot pull-left info stat">
 						<i class="fa fa-thumbs-o-down"></i><span>{{ngModel.dislikes | nearestK}}</span>
 					</div>	
-				
-	
 					<div title="The number of comments" class="pull-right info stat">
 						<i class="fa fa-comments-o"></i><span>{{ngModel.userCommentCount | nearestK}}</span>
 					</div>
