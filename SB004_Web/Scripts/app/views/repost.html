@@ -1,14 +1,13 @@
 <div id="repost" class="dialogPage">
 	<div class="heading dialogHead" ng-hide="waiting">		
-		<h3><i class="fa fa-recycle"></i> Repost this</h3>	
+		<h3><i class="fa fa-retweet"></i> Requote this</h3>	
 		<div class="closeMe closeIcon"  ng-click="closeMe()"><span class="fa fa-times"></span></div>				
 	</div>	
     <div class="dialogBody" ng-hide="waiting" class="pull-left col-md-12 col-lg-12 col-sm-12">									
-		<div ng-memelink 
+		<div id="repostLink" ng-memelink 
 				ng-model="meme"
 				on-like="likeMeme(meme.id)"	
-				on-dislike="dislikeMeme(meme.id)"
-		></div>
+				on-dislike="dislikeMeme(meme.id)"></div>
     </div>	
 	<div class="buttons dialogFoot" ng-hide="waiting">				
 		<input type="button" value="Cancel" ng-click="closeMe()" title="Close this page"/>

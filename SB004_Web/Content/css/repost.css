@@ -1,3 +1,9 @@
-#repost.dialogBody{    
+#repost .dialogBody{    
     height: auto !important;
 }
+#repost #repostLink
+{
+    margin-left: auto;
+    display: table;
+    margin-right: auto;
+    margin-bottom: 15px;}

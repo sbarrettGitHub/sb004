@@ -35,14 +35,14 @@
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/repost.html",
+            templateUrl: "Scripts/app/views/repost.html?t="  + new Date().getTime(),
             controller: "repostCtrl" 
         };
 		var reportDialogOpts ={
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/report.html",
+            templateUrl: "Scripts/app/views/report.html?t="  + new Date().getTime(),
             controller: "reportCtrl" 
         };
         /*Control buttons*/
