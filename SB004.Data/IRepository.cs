@@ -65,5 +65,8 @@
 	    IHashTag Save(IHashTag hashTag);
 
 	    IHashTagMeme Save(IHashTagMeme hashTagMeme);
+
+	    List<IHashTag> SearchTrendingHashTags(int take);
+		List<string> SearchHashTagMemes(string hashTag, int take);
     }
 }

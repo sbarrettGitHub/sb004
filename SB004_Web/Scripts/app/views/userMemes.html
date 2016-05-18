@@ -113,7 +113,7 @@
 						<div class="pull-left text">
 							<span class="dateofEntry"> {{item.dateOfEntry | date:'short'}}</span>
 							<span ng-click="openUser(item.user.id)" class="allowFollow ng-binding">{{item.user.userName}}</span>					 
-							<span ng-show="item.entryType==1"> posted a new quote.</span>
+							<span ng-show="item.entryType==1"> posted this quote.</span>
 							<span ng-show="item.entryType==2"> requoted this.</span>
 							<span ng-show="item.entryType==3"> likes this.</span>
 							<span ng-show="item.entryType==4"> dislikes this.</span>

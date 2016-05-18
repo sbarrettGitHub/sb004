@@ -2,16 +2,20 @@
 
 	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="btn-group pull-left">
-			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='following') }"
-				ng-click="switchView('following')">
+			<button type="button" class="btn btn-default " ng-class="{ 'active': (view=='timeline') }"
+				ng-click="switchView('timeline')">
 				<i class="fa fa-home"></i>
 				My Home 
 			</button>	
 			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='trending') }"
 				ng-click="switchView('trending')">
-				<i class="fa fa-hashtag" aria-hidden="true"></i>
-				<b># </b>Trending
-			</button>            		
+				<i class="fa fa-line-chart" aria-hidden="true"></i>
+				Trending Now
+			</button>   
+			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='search') }" 
+				ng-click="switchView('search')">
+				<i class="fa fa-slack" aria-hidden="true"></i> Hashtags
+			</button>                        		
 		</div>
 		<div class="btn-group pull-right">
 			<button type="button" class="btn btn-default" ng-click="addNew()">
@@ -20,15 +24,27 @@
 			</button>
 		</div>		
 	</div>
-	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="btn-group pull-left" ng-repeat="user in following" ng-show="view=='following'">
+	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12"  ng-show="view=='timeline'">
+		<div class="btn-group pull-left" ng-repeat="user in following">
 			<button type="button" class="btn btn-default "  ng-userhover ng-user="user">
 				<img class='userImageSmall' ng-src='api/image/user/{{user.id}}'></img>
 				{{user.userName}} 
 			</button>
 		</div>
 	</div>
-    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">
+    <div id="trendingToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='trending'">
+		<div ng-repeat="hashTag in trendingHashTags" class="btn-group toggleHashTag">	
+            <button type="button" class="btn btn-default" ng-click="toggleTrendingHashTag(hashTag.hashTag)">
+                <i class="fa fa-check-square-o" ng-show="hashTag.include"></i>
+                <i class="fa fa-square-o" ng-show="!hashTag.include"></i>
+            </button> 
+            <button type="button" class="btn btn-default hashTagbutton">
+                #{{hashTag.hashTag}}
+            </button>	
+    
+        </div>
+	</div>
+    <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
 		<div ng-repeat="meme in memes" class="pull-left">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
@@ -39,7 +55,23 @@
                             on-clickrepost="viewMeme(meme.repostOfId)" ></div>
 		</div>
     </div>
-    <div id="userTimeline" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='following'">
+    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">
+        <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="trendWaiting" class="waitingContainer dialogWaitConainer">
+                <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+            </div>	
+        </div>         
+		<div ng-repeat="meme in trendingHashTagMemes" class="pull-left">			
+			<div ng-memelink ng-model="meme" 
+							on-click="viewMeme(meme.id)" 
+							on-like="likeMeme(meme.id)"
+							on-dislike="dislikeMeme(meme.id)"
+							on-addtofavourites="addMemeToFavourites(meme.id)"
+							on-userclick="openUser(meme.createdByUserId)"
+                            on-clickrepost="viewMeme(meme.repostOfId)" ></div>
+		</div>
+    </div>    
+    <div id="userTimeline" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='timeline'">
         <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarLeft rounded">
             <div class="homePageOptionContainer">
                 <div class="homePageOption"><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></div>            
@@ -104,7 +136,7 @@
                                 ng-userhover ng-user="entry.user">
                                 {{user.id == entry.user.id? 'you' : entry.user.userName}}
                             </span>					 
-                            <span ng-show="entry.entryType==1"> posted a new quote.</span>
+                            <span ng-show="entry.entryType==1"> posted this quote.</span>
                             <span ng-show="entry.entryType==2"> requoted this quote.</span>
                             <span ng-show="entry.entryType==3"> {{user.id == entry.user.id? 'like' : 'likes'}} this quote.</span>
                             <span ng-show="entry.entryType==4"> {{user.id == entry.user.id? 'dislike' : 'dislikes'}} this quote.</span>

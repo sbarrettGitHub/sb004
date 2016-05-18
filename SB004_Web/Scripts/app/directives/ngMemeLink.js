@@ -6,6 +6,6 @@ app.directive('ngMemelink', function() {
 	scope: {
       ngModel: '=', onClick: '&', onLike: '&', onDislike: '&', onAddtofavourites: '&', onClickrepost: '&', ngLargeuserimage:'='
     },
-    templateUrl: "Scripts/app/templates/ngMemelink.html"
+    templateUrl: "Scripts/app/templates/ngMemelink.html?t=" + new Date().getTime()
   }
 });

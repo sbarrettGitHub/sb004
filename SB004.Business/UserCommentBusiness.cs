@@ -8,10 +8,12 @@ namespace SB004.Business
 		readonly IRepository repository;
 		readonly IMemeBusiness memeBusiness;
 
-		public UserCommentBusiness(IRepository repository)
+		public UserCommentBusiness(IRepository repository, IMemeBusiness memeBusiness)
 		{
-		  this.repository = repository;
+			this.repository = repository;
+			this.memeBusiness = memeBusiness;
 		}
+
 		/// <summary>
 		/// Inser the comment and record on user time line
 		/// </summary>

@@ -160,6 +160,7 @@
     <Compile Include="Controllers\SeedController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\HashTagMemeModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\MemeModel.cs" />
     <Compile Include="Models\SeedModel.cs" />

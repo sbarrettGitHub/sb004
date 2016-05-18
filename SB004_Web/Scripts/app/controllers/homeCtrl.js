@@ -1,13 +1,15 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService, likeDislikeMemeService) {
-        $scope.memes = sharedDataService.data.quoteSearch.results;
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService, likeDislikeMemeService, hashTagService) {
+        $scope.memes = sharedDataService.data.quoteSearch.results;		
         $scope.searchTerm = "";
         $scope.searchCategory = "";
 		$scope.view = "trending";
         $scope.following = [];
 		$scope.viewing = [];
+		$scope.trendingHashTagMemes= [];
+		$scope.trendingHashTags = [];
         $scope.userId = "";
 		$scope.newUserComment = "";
         $scope.isAuthenticated=false;
@@ -17,7 +19,10 @@
         var constants = {
 			viewingBlockCount:100,
 			dayblock : 5,
-			maxEntryCount:10
+			maxEntryCount:10,
+			takeTrendingHashTags:20,
+			defaultTakeMemes: 5
+			
 		};
         $scope.maxCount = constants.maxEntryCount;
        	$scope.daysIndex=constants.dayblock;
@@ -65,24 +70,116 @@
         $scope.init();
 		$scope.switchView = function(view)
 		{
-			if(view=="following"){
-				if (securityService.getCurrentUser().isAuthenticated) {
-					$scope.view = "following";
-					showFollowing();
-				} else {					
-					securityService.logInDialog()
-					.then(function () {
-						$scope.view = "following";
-						showFollowing();
-					});                
-				}
-			}else{
-				$scope.view = view;
+			switch (view) {
+				case "timeline":
+					if (securityService.getCurrentUser().isAuthenticated) {
+						$scope.view = "timeline";
+						showTimeline();
+					} else {					
+						securityService.logInDialog()
+						.then(function () {
+							$scope.view = "timeline";
+							showTimeline();
+						});                
+					}					
+					break;
+				case "trending":
+					$scope.view = view;
+					showTrending();
+					break;
+					
+				case "search":
+					$scope.view = view;
+					break;					
+				default:
+					$scope.view = view;
+					break;
 			}
 			
+			
 		}
+		//-------------------------------------------------------------------------------------------
+		// Trending
+		function showTrending(){
+			startWaiting();
+			hashTagService.trendingHashTagMemes(constants.takeTrendingHashTags,constants.defaultTakeMemes)
+			.then(function(data){
+				if(data){
+					$scope.trendingHashTags = [];
+					$scope.trendingHashTagMemes= [];
+					for (var i = 0; i < data.length; i++) {
+						var hashTagMeme = data[i];
+						$scope.trendingHashTags.push({
+							hashTag:hashTagMeme.hashTag,
+							include:true
+						});
+						if(hashTagMeme.memeLiteModels){
+							for (var ii = 0; ii < hashTagMeme.memeLiteModels.length; ii++) {
+								$scope.trendingHashTagMemes.push(hashTagMeme.memeLiteModels[ii]);								
+							}							
+						}
+
+					}					
+				}
+				endWaiting();
+			},
+			function(e){
+				$window.alert(e);
+				endWaiting();
+			});
+		}
+		$scope.toggleTrendingHashTag = function(hashTag){
+			for (var i = 0; i < $scope.trendingHashTags.length; i++) {
+				if($scope.trendingHashTags[i].hashTag == hashTag){
+					$scope.trendingHashTags[i].include = !$scope.trendingHashTags[i].include;
+					break;
+				}							
+			}
+			// Refresh (with or without the toggled hash tag)
+			startWaiting();
+			var takeHashTags = constants.takeTrendingHashTags;
+			var takeMemes =  constants.defaultTakeMemes;			
+			var hashTagFilter = [];
+			// Build the hash tag filter from selected hash tags
+			for (var ihashTagIndex = 0; ihashTagIndex < $scope.trendingHashTags.length; ihashTagIndex++) {
+				if($scope.trendingHashTags[ihashTagIndex].include){
+					includedHashTags++;
+					hashTagFilter.push($scope.trendingHashTags[ihashTagIndex].hashTag);
+				}
+			}
+			var includedHashTags = hashTagFilter.length;
+			if(includedHashTags>0){
+				takeMemes = Math.floor((constants.takeTrendingHashTags * constants.defaultTakeMemes)/includedHashTags);
+			}
+			
+			hashTagService.trendingHashTagMemes(takeHashTags,takeMemes, hashTagFilter)
+			.then(function(data){
+				if(data){
+					$scope.trendingHashTagMemes= [];
+					for (var i = 0; i < data.length; i++) {
+						var hashTagMeme = data[i];
+						// Is the hash tag marked as included?
+						for (var ihashTagIndex = 0; ihashTagIndex < $scope.trendingHashTags.length; ihashTagIndex++) {
+							if(hashTagMeme.hashTag == $scope.trendingHashTags[ihashTagIndex].hashTag && $scope.trendingHashTags[ihashTagIndex].include){
+								if(hashTagMeme.memeLiteModels){
+									for (var ii = 0; ii < hashTagMeme.memeLiteModels.length; ii++) {
+										$scope.trendingHashTagMemes.push(hashTagMeme.memeLiteModels[ii]);								
+									}							
+								}
+							}
+						}
+					}
+				}
+				endWaiting();
+			},
+			function(e){
+				$window.alert(e);
+				endWaiting();
+			});
+		}		
         //-------------------------------------------------------------------------------------------
-		function showFollowing(){
+		// Homepage Timeline
+		function showTimeline(){
 			if($scope.isAuthenticated){
 				if(securityService.getCurrentUser().profile.following){
 					$scope.following = securityService.getCurrentUser().profile.following;
@@ -337,7 +434,7 @@
                 $scope.isAuthenticated = isAuthenticated;
 				if(isAuthenticated===true){
                     $scope.userId = securityService.getCurrentUser().userId;
-					$scope.switchView("following");                    
+					$scope.switchView("timeline");                    
 				}else{
 					$scope.switchView("trending");
 				}
@@ -371,6 +468,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", "likeDislikeMemeService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", "likeDislikeMemeService", "hashTagService", homeCtrl]);
 
 })();

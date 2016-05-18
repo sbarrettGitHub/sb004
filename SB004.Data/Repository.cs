@@ -644,7 +644,36 @@ namespace SB004.Data
 			hashTagMemeCollection.Save(hashTagMeme.ToBsonDocument());
 			return hashTagMeme;
 	    }
-		#endregion
+
+		public List<IHashTag> SearchTrendingHashTags(int take)
+	    {
+			IQueryable<HashTag> query = (from entry in hashTagCollection.AsQueryable()
+										 select entry).OrderByDescending(x => x.TrendScoreOfAllMemes).Take(take);
+
+			List<IHashTag> hashTags = new List<IHashTag>();
+			foreach (var hashTag in query)
+			{
+				hashTags.Add(hashTag);
+			}
+
+			return hashTags;
+	    }
+
+	    public List<string> SearchHashTagMemes(string hashTag, int take)
+	    {
+			IQueryable<HashTagMeme> query = (from entry in hashTagMemeCollection.AsQueryable()
+											 where entry.HashTag == hashTag
+										 select entry).OrderByDescending(x => x.TrendScore).Take(take);
+
+			List<string> memeIds = new List<string>();
+			foreach (var hashTagMeme in query)
+			{
+				memeIds.Add(hashTagMeme.MemeId);
+			}
+
+			return memeIds;
+	    }
+	    #endregion
 
 	}
 }
