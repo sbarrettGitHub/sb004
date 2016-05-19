@@ -20,8 +20,19 @@
 			
 			return deferred.promise;
         } 
-        var trendingHashTags = function(){
+        var trendingHashTags = function(take){
+            var deferred = $q.defer();
             
+            $http.get('api/meme/trending/tags?take=' + take + '&rnd='+new Date().getTime()).
+                 success(function (data) {									
+					deferred.resolve(data);
+                }).
+                error(function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+			
+			return deferred.promise;         
         }   
         var trendingUserHashTags = function(){
             

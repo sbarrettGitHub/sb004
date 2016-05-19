@@ -43,6 +43,10 @@
             </button>	
     
         </div>
+        <button id="moreTrendingHashTags" ng-click="increaseTrendingHashTags()" class="option" 
+                title="Show more hash tags">
+            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more. </span>
+        </button>
 	</div>
     <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
 		<div ng-repeat="meme in memes" class="pull-left">			
@@ -61,7 +65,7 @@
                 <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
             </div>	
         </div>         
-		<div ng-repeat="meme in trendingHashTagMemes" class="pull-left">			
+		<div ng-repeat="meme in trendingHashTagMemes" class="pull-left" ng-hide="waiting">			
 			<div ng-memelink ng-model="meme" 
 							on-click="viewMeme(meme.id)" 
 							on-like="likeMeme(meme.id)"
@@ -70,6 +74,10 @@
 							on-userclick="openUser(meme.createdByUserId)"
                             on-clickrepost="viewMeme(meme.repostOfId)" ></div>
 		</div>
+        <div id="moreTrendingQuotes" ng-click="increaseTrendingMemesPerHashTag()" class="option text-center section col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                title="Show more quotes per hash tag">
+            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more quotes. Currently {{trendingHashTagMemes.length}}. </span>
+        </div>        
     </div>    
     <div id="userTimeline" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='timeline'">
         <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarLeft rounded">

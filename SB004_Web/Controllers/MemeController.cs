@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.UI.WebControls;
 
 namespace SB004.Controllers
 {
@@ -457,12 +456,13 @@ namespace SB004.Controllers
 		}
 		/// <summary>
 		/// Get: api/meme/trending
-		/// 
+		/// Retrieve a list of the highest trending hash tags and the highest trneding memeis with in them
+		/// A filter list is used to limit the hash tags returned
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
 		[Route("trending")]
-		public IHttpActionResult TrendingHashTags([FromBody] TrendingHashTagRequestModel requestModel)
+		public IHttpActionResult TrendingHashTagMemes([FromBody] TrendingHashTagRequestModel requestModel)
 		{
 			List<HashTagMemeModel> model = new List<HashTagMemeModel>();
 
@@ -497,6 +497,14 @@ namespace SB004.Controllers
 			}
 			return Ok(model);
 		}
+		[HttpGet]
+		[Route("trending/tags")]
+		public IHttpActionResult TrendingHashTags(int take)
+		{
+			List<string> model = repository.SearchTrendingHashTags(take).Select(x => x.Id).ToList();
+			return Ok(model);
+		}
+
 		#region Private Methods
 
 		/// <summary>

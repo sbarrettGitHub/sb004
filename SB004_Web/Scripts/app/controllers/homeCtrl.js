@@ -20,10 +20,13 @@
 			viewingBlockCount:100,
 			dayblock : 5,
 			maxEntryCount:10,
-			takeTrendingHashTags:20,
-			defaultTakeMemes: 5
-			
+			defaultTakeTrendingHashTags:20,
+			trendingMemeBlockSize:20,
+			trendingHashTagBlockSize:5
 		};
+		var takeTrendingHashTags = constants.defaultTakeTrendingHashTags;		
+		var maxTrendingMemes = 100;	
+		
         $scope.maxCount = constants.maxEntryCount;
        	$scope.daysIndex=constants.dayblock;
 		var repostDialogOpts ={
@@ -85,7 +88,7 @@
 					break;
 				case "trending":
 					$scope.view = view;
-					showTrending();
+					refreshTrendingView();
 					break;
 					
 				case "search":
@@ -95,66 +98,43 @@
 					$scope.view = view;
 					break;
 			}
-			
-			
 		}
 		//-------------------------------------------------------------------------------------------
 		// Trending
-		function showTrending(){
-			startWaiting();
-			hashTagService.trendingHashTagMemes(constants.takeTrendingHashTags,constants.defaultTakeMemes)
-			.then(function(data){
-				if(data){
-					$scope.trendingHashTags = [];
-					$scope.trendingHashTagMemes= [];
-					for (var i = 0; i < data.length; i++) {
-						var hashTagMeme = data[i];
-						$scope.trendingHashTags.push({
-							hashTag:hashTagMeme.hashTag,
-							include:true
-						});
-						if(hashTagMeme.memeLiteModels){
-							for (var ii = 0; ii < hashTagMeme.memeLiteModels.length; ii++) {
-								$scope.trendingHashTagMemes.push(hashTagMeme.memeLiteModels[ii]);								
-							}							
-						}
-
-					}					
-				}
-				endWaiting();
-			},
-			function(e){
-				$window.alert(e);
-				endWaiting();
-			});
-		}
-		$scope.toggleTrendingHashTag = function(hashTag){
-			for (var i = 0; i < $scope.trendingHashTags.length; i++) {
-				if($scope.trendingHashTags[i].hashTag == hashTag){
-					$scope.trendingHashTags[i].include = !$scope.trendingHashTags[i].include;
-					break;
-				}							
-			}
-			// Refresh (with or without the toggled hash tag)
-			startWaiting();
-			var takeHashTags = constants.takeTrendingHashTags;
-			var takeMemes =  constants.defaultTakeMemes;			
+		var refreshTrendingView = function(){
+			
+			startWaiting();		
+			
 			var hashTagFilter = [];
-			// Build the hash tag filter from selected hash tags
+			// Build the hash tag filter from selected hash tags ( if there are any as there won't be on the initial call)
 			for (var ihashTagIndex = 0; ihashTagIndex < $scope.trendingHashTags.length; ihashTagIndex++) {
 				if($scope.trendingHashTags[ihashTagIndex].include){
-					includedHashTags++;
 					hashTagFilter.push($scope.trendingHashTags[ihashTagIndex].hashTag);
 				}
 			}
-			var includedHashTags = hashTagFilter.length;
-			if(includedHashTags>0){
-				takeMemes = Math.floor((constants.takeTrendingHashTags * constants.defaultTakeMemes)/includedHashTags);
-			}
+			var includedHashTags = hashTagFilter.length == 0? takeTrendingHashTags:hashTagFilter.length ;
+						
+			// Calculate how many mmes per hash tag to be retrieved
+			// The less hash tag s selected the more memes per hash tag
+			var takeMemes = Math.floor(maxTrendingMemes/includedHashTags);
 			
-			hashTagService.trendingHashTagMemes(takeHashTags,takeMemes, hashTagFilter)
+			// Retrieve the trending hash tag memes
+			hashTagService.trendingHashTagMemes(takeTrendingHashTags,takeMemes, hashTagFilter)
 			.then(function(data){
 				if(data){
+					// If there are no existing trending hash tags (as per inital state) build from the returned data 
+					if($scope.trendingHashTags.length == 0){
+						for (var i = 0; i < data.length; i++) {
+							var hashTagMeme = data[i];
+							$scope.trendingHashTags.push({
+								hashTag:hashTagMeme.hashTag,
+								include:true
+							});						
+
+						}
+					} 
+					
+					// Add the trending memes
 					$scope.trendingHashTagMemes= [];
 					for (var i = 0; i < data.length; i++) {
 						var hashTagMeme = data[i];
@@ -176,7 +156,50 @@
 				$window.alert(e);
 				endWaiting();
 			});
-		}		
+		}
+		// Switch on/off the supplied hash tag and refresh the trend view
+		$scope.toggleTrendingHashTag = function(hashTag){
+			for (var i = 0; i < $scope.trendingHashTags.length; i++) {
+				if($scope.trendingHashTags[i].hashTag == hashTag){
+					$scope.trendingHashTags[i].include = !$scope.trendingHashTags[i].include;
+					break;
+				}							
+			}
+			// Refresh (with or without the toggled hash tag)
+			refreshTrendingView();
+		}	
+		$scope.increaseTrendingMemesPerHashTag = function(){
+			maxTrendingMemes+=constants.trendingMemeBlockSize;
+			refreshTrendingView();
+		}
+		$scope.increaseTrendingHashTags = function(){
+			takeTrendingHashTags+=constants.trendingHashTagBlockSize;
+			hashTagService.trendingHashTags(takeTrendingHashTags)
+			.then(function(data){
+				if(data){
+					for (var i = 0; i < data.length; i++) {
+						var alreadyIncluded=false;
+						for (var ihashTagIndex = 0; ihashTagIndex < $scope.trendingHashTags.length; ihashTagIndex++) {
+							if(data[i] == $scope.trendingHashTags[ihashTagIndex].hashTag){
+								alreadyIncluded = true;
+							}
+						}
+						if(!alreadyIncluded){
+							$scope.trendingHashTags.push({
+								hashTag:data[i],
+								include:true
+							});
+						}
+					}
+					refreshTrendingView();
+				}
+			},
+			function(e){
+				$window.alert(e);
+				endWaiting();
+			})
+			
+		}				
         //-------------------------------------------------------------------------------------------
 		// Homepage Timeline
 		function showTimeline(){
