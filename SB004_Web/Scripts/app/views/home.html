@@ -24,7 +24,7 @@
 			</button>
 		</div>		
 	</div>
-	<div class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12"  ng-show="view=='timeline'">
+	<div id="userTimelineToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12"  ng-show="view=='timeline'">
 		<div class="btn-group pull-left" ng-repeat="user in following">
 			<button type="button" class="btn btn-default "  ng-userhover ng-user="user">
 				<img class='userImageSmall' ng-src='api/image/user/{{user.id}}'></img>
@@ -32,53 +32,6 @@
 			</button>
 		</div>
 	</div>
-    <div id="trendingToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='trending'">
-		<div ng-repeat="hashTag in trendingHashTags" class="btn-group toggleHashTag">	
-            <button type="button" class="btn btn-default" ng-click="toggleTrendingHashTag(hashTag.hashTag)">
-                <i class="fa fa-check-square-o" ng-show="hashTag.include"></i>
-                <i class="fa fa-square-o" ng-show="!hashTag.include"></i>
-            </button> 
-            <button type="button" class="btn btn-default hashTagbutton">
-                #{{hashTag.hashTag}}
-            </button>	
-    
-        </div>
-        <button id="moreTrendingHashTags" ng-click="increaseTrendingHashTags()" class="option" 
-                title="Show more hash tags">
-            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more. </span>
-        </button>
-	</div>
-    <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
-		<div ng-repeat="meme in memes" class="pull-left">			
-			<div ng-memelink ng-model="meme" 
-							on-click="viewMeme(meme.id)" 
-							on-like="likeMeme(meme.id)"
-							on-dislike="dislikeMeme(meme.id)"
-							on-addtofavourites="addMemeToFavourites(meme.id)"
-							on-userclick="openUser(meme.createdByUserId)"
-                            on-clickrepost="viewMeme(meme.repostOfId)" ></div>
-		</div>
-    </div>
-    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">
-        <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div id="trendWaiting" class="waitingContainer dialogWaitConainer">
-                <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
-            </div>	
-        </div>         
-		<div ng-repeat="meme in trendingHashTagMemes" class="pull-left" ng-hide="waiting">			
-			<div ng-memelink ng-model="meme" 
-							on-click="viewMeme(meme.id)" 
-							on-like="likeMeme(meme.id)"
-							on-dislike="dislikeMeme(meme.id)"
-							on-addtofavourites="addMemeToFavourites(meme.id)"
-							on-userclick="openUser(meme.createdByUserId)"
-                            on-clickrepost="viewMeme(meme.repostOfId)" ></div>
-		</div>
-        <div id="moreTrendingQuotes" ng-click="increaseTrendingMemesPerHashTag()" class="option text-center section col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-                title="Show more quotes per hash tag">
-            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more quotes. Currently {{trendingHashTagMemes.length}}. </span>
-        </div>        
-    </div>    
     <div id="userTimeline" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='timeline'">
         <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarLeft rounded">
             <div class="homePageOptionContainer">
@@ -206,5 +159,68 @@
 		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">
 			<div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Sponsors</div>
 		</div>                     
+    </div>    
+    <div id="trendingToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='trending'">
+		<div ng-repeat="hashTag in trendingHashTags" class="btn-group toggleHashTag">	
+            <button type="button" class="btn btn-default" ng-click="toggleTrendingHashTag(hashTag.hashTag)">
+                <i class="fa fa-check-square-o" ng-show="hashTag.include"></i>
+                <i class="fa fa-square-o" ng-show="!hashTag.include"></i>
+            </button> 
+            <button type="button" class="btn btn-default hashTagbutton">
+                #{{hashTag.hashTag}}
+            </button>	
+    
+        </div>
+        <button id="moreTrendingHashTags" ng-click="increaseTrendingHashTags()" class="option" 
+                title="Show more hash tags">
+            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more. </span>
+        </button>
+	</div>
+    <div class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='trending'">
+        <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="trendWaiting" class="waitingContainer dialogWaitConainer">
+                <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+            </div>	
+        </div>         
+		<div ng-repeat="meme in trendingHashTagMemes" class="pull-left" ng-hide="waiting">			
+			<div ng-memelink ng-model="meme" 
+							on-click="viewMeme(meme.id)" 
+							on-like="likeMeme(meme.id)"
+							on-dislike="dislikeMeme(meme.id)"
+							on-addtofavourites="addMemeToFavourites(meme.id)"
+							on-userclick="openUser(meme.createdByUserId)"
+                            on-clickrepost="viewMeme(meme.repostOfId)" ></div>
+		</div>
+        <div id="moreTrendingQuotes" ng-click="increaseTrendingMemesPerHashTag()" class="option text-center section col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                title="Show more quotes per hash tag">
+            <i class="fa fa-cloud-download"></i><span>&nbsp; Show more quotes. Currently {{trendingHashTagMemes.length}}. </span>
+        </div>        
+    </div>  
+    
+    <div id="searchToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='search'">
+		<div ng-repeat="hashTag in searchHashTags" class="btn-group toggleHashTag">	
+            <button type="button" class="btn btn-default hashTagbutton">
+                #{{hashTag.hashTag}}
+            </button>	
+    
+        </div>
+
+	</div>
+    <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
+        <!--div ng-show="memes.length>0">
+            <div ng-repeat="meme in memes" class="pull-left">			
+                <div ng-memelink ng-model="meme" 
+                                on-click="viewMeme(meme.id)" 
+                                on-like="likeMeme(meme.id)"
+                                on-dislike="dislikeMeme(meme.id)"
+                                on-addtofavourites="addMemeToFavourites(meme.id)"
+                                on-userclick="openUser(meme.createdByUserId)"
+                                on-clickrepost="viewMeme(meme.repostOfId)" ></div>
+            </div>
+        </div-->
+        <jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="1000" height="500" delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
+       <!--jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="800" height="800" colors="{{colors}}" delay="10" steps="100" font-size="{from:0.12, to:0.04}"></jqcloud-->
     </div>
+       
+    
 </div>

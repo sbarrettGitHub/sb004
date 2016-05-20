@@ -1,4 +1,4 @@
-var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello'])
+var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'angular-jqcloud'])
     .config(function ($routeProvider, $httpProvider, helloProvider, $locationProvider) {
         helloProvider.init({
             facebook: 224433161069107,
