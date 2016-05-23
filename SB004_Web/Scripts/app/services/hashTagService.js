@@ -36,11 +36,34 @@
         }   
         var trendingUserHashTags = function(){
             
+        }  
+        var hashTagMemes = function(filterList, takeMemes){   
+            var deferred = $q.defer();
+            var request = {
+               takeHashTags: filterList.length,
+               takeMemes:takeMemes,
+               filterList: filterList
+            };
+            $http.post('api/meme/hashtag/memes?rnd='+new Date().getTime(),request).
+                 success(function (data) {									
+					deferred.resolve(data);
+                }).
+                error(function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+			
+			return deferred.promise;
         }   
+        var hashTagSearch = function(criteria){
+            
+        }       
         return {
             trendingHashTagMemes: trendingHashTagMemes,
             trendingHashTags: trendingHashTags,
-            trendingUserHashTags: trendingUserHashTags
+            trendingUserHashTags: trendingUserHashTags,
+            hashTagMemes: hashTagMemes,
+            hashTagSearch: hashTagSearch
         }
     }
     // Register the service

@@ -8,7 +8,7 @@ namespace SB004.Models
 		public List<MemeLiteModel> MemeLiteModels { get; set; }
 	}
 
-	public class TrendingHashTagRequestModel
+	public class HashTagRequestModel
 	{
 		public int TakeHashTags { get; set; }
 		public int TakeMemes { get; set; }

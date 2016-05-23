@@ -196,18 +196,25 @@
             <i class="fa fa-cloud-download"></i><span>&nbsp; Show more quotes. Currently {{trendingHashTagMemes.length}}. </span>
         </div>        
     </div>  
-    
     <div id="searchToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='search'">
-		<div ng-repeat="hashTag in searchHashTags" class="btn-group toggleHashTag">	
+		<div ng-repeat="hashTag in hashTags" class="btn-group">	
             <button type="button" class="btn btn-default hashTagbutton">
-                #{{hashTag.hashTag}}
-            </button>	
-    
+                #{{hashTag}}
+            </button>
+            <button type="button" class="btn btn-default" ng-click="removeHashTag(hashTag)">
+			    <i class="fa fa-close"></i>
+			</button>  	    
         </div>
 
-	</div>
+	</div>    
     <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
-        <!--div ng-show="memes.length>0">
+       <jqcloud ng-show="hashTags.length==0" id="hashtagWordCloud" width="1000" height="500"words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
+       <!--jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="800" height="800" colors="{{colors}}" delay="10" steps="100" font-size="{from:0.12, to:0.04}"></jqcloud-->
+                  
+        <div class="memeLinkContainer pull-left rounded" ng-show="hashTags.length>0">
+            <jqcloud id="hashtagWordCloud" words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
+        </div>    
+        <div ng-show="hashTags.length>0">
             <div ng-repeat="meme in memes" class="pull-left">			
                 <div ng-memelink ng-model="meme" 
                                 on-click="viewMeme(meme.id)" 
@@ -217,9 +224,8 @@
                                 on-userclick="openUser(meme.createdByUserId)"
                                 on-clickrepost="viewMeme(meme.repostOfId)" ></div>
             </div>
-        </div-->
-        <jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="1000" height="500" delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
-       <!--jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="800" height="800" colors="{{colors}}" delay="10" steps="100" font-size="{from:0.12, to:0.04}"></jqcloud-->
+        </div>
+
     </div>
        
     

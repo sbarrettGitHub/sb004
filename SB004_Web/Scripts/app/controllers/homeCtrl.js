@@ -15,6 +15,7 @@
         $scope.isAuthenticated=false;
 		$scope.items = [];
         $scope.words = [];
+		$scope.hashTags = [];
 		//$scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"];
 		
 		var itemsIndex=0;		
@@ -67,7 +68,6 @@
             $scope.memes = sharedDataService.data.quoteSearch.results;
 
         });
-
         $scope.init = function () {
             $scope.handle = $dialog.dialog({});
         };
@@ -203,11 +203,42 @@
 			})
 			
 		}	
-		$scope.wordCloudClick = function(id){
-			alert('You clicked a  word :' + id);
-		}
+
 		//-------------------------------------------------------------------------------------------	
-		var refreshHashTagView = function(){			
+		// #HashTags
+		var initiateHashTagSearch=function(criteria){
+			$scope.switchView("search");
+			$scope.hashTags=[];
+			var hashTags = criteria.q.replace(/#/g, '').split(' ');
+			if( hashTags.length > 0){
+				for (var index = 0; index < hashTags.length; index++) {
+					var hashTag = hashTags[index];
+					if(!$scope.hashTags.contains(hashTag)){
+						$scope.hashTags.push(hashTag);					
+					}
+				}
+				hashTagSearch();	
+			}
+		}
+		$scope.wordCloudClick = function(id){
+			
+			var hashTag = id.replace(/#/g, '');
+			if(!$scope.hashTags.contains(hashTag)){
+				$scope.hashTags.push(hashTag);
+				hashTagSearch();
+			}
+
+			
+		}
+		$scope.removeHashTag = function(hashTag){
+			var i = $scope.hashTags.indexOf(hashTag);
+			if (i > -1) {
+				$scope.hashTags.splice(i, 1);
+				hashTagSearch();
+			}
+		}
+		var refreshHashTagView = function(){	
+			$scope.words = [];		
 			hashTagService.trendingHashTags(50)
 			.then(function(data){
 				if(data){
@@ -216,8 +247,7 @@
 						$scope.words.push({text: "#" + data[i], weight: data.length-i,handlers: {
 							click: function(e) {		
 								console.log(e);	
-								$scope.wordCloudClick(this.innerHTML);											
-								//alert('You clicked the word !' + $scope.words[2].text + this.id);
+								$scope.wordCloudClick(this.innerHTML);
 							}
 						}});						
 					}							
@@ -227,8 +257,28 @@
 				$window.alert(e);
 				endWaiting();
 			})
-		}
+		}	
 
+		var hashTagSearch = function(){
+			startWaiting();
+			$scope.memes=[];
+			hashTagService.hashTagMemes($scope.hashTags, 50)
+			.then(function(data){
+				if(data){
+					for (var i = 0; i < data.length; i++) {
+						for (var ii = 0; ii < data[i].memeLiteModels.length; ii++) {
+							$scope.memes.push( data[i].memeLiteModels[ii]);
+							
+						} 											
+					}							
+				}
+				endWaiting();
+			},
+			function(e){
+				$window.alert(e);
+				endWaiting();
+			})
+		}
         //-------------------------------------------------------------------------------------------
 		// Homepage Timeline
 		function showTimeline(){
@@ -504,7 +554,14 @@
 		});
 
 		// Check if the user is authenticated, if so swap between trending and following
-		testAuthentication();
+		var criteria = $location.search();
+		if(criteria && criteria.q){
+			initiateHashTagSearch(criteria);
+			  
+		}else{
+			testAuthentication();
+		}
+		
 		/*-----------------------------------------------------------------*/
 		
 		function startWaiting(heading, message) {

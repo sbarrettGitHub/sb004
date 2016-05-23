@@ -721,7 +721,6 @@ height:325px;*/
 }
 #trendingToolbar{
 	max-height: 250px;
-	margin-left: -10px;
 }
 #trendWaiting{
 	margin-left: 40%;
@@ -733,7 +732,7 @@ height:325px;*/
 	margin-left: auto;
 }
 .toggleHashTag{
-	margin:10px;
+	margin-bottom:10px;
 }
 #searchResults{
 	display: table;
@@ -750,6 +749,10 @@ height:325px;*/
     color: black !important;
 	
 	border-radius: 6px;
+}
+#hashtagWordCloud .shrunken{
+	width:400px!important;
+	height: 350px!important;
 }
 /* fonts */
 

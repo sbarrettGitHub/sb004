@@ -5,6 +5,7 @@ namespace SB004.Domain
 	public interface IHashTag
 	{
 		string Id { get; set; }
+		string Name { get; set; }
 		double TrendScoreOfAllMemes { get; set; }
 	}
 

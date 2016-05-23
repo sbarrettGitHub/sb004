@@ -23,8 +23,9 @@ namespace SB004.Business
 		/// <returns></returns>
 		public IHashTag SaveMemeTags(string hashTag, string memeId, double previousMemeTrendScore, double newMemeTrendScore)
 		{
+			string id = hashTag.ToLower();
 			// Get from repository or create new if doesn't exist
-			IHashTag tag = repository.GetHashTag(hashTag) ?? new HashTag{Id = hashTag};
+			IHashTag tag = repository.GetHashTag(id) ?? new HashTag { Id = id, Name = hashTag };
 
 			// Update the score of the hash tag to account for the memes new score
 			tag.TrendScoreOfAllMemes += newMemeTrendScore - previousMemeTrendScore;

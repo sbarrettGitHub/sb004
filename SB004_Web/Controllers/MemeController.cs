@@ -462,7 +462,7 @@ namespace SB004.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("trending")]
-		public IHttpActionResult TrendingHashTagMemes([FromBody] TrendingHashTagRequestModel requestModel)
+		public IHttpActionResult TrendingHashTagMemes([FromBody] HashTagRequestModel requestModel)
 		{
 			List<HashTagMemeModel> model = new List<HashTagMemeModel>();
 
@@ -472,28 +472,13 @@ namespace SB004.Controllers
 				// If the list of hashtags is filtered then only include the tags in the filter
 				if (requestModel.FilterList != null && requestModel.FilterList.Count > 0)
 				{
-					if (!requestModel.FilterList.Contains(trendingHashTag.Id))
+					if (!requestModel.FilterList.Contains(trendingHashTag.Name))
 					{
 						continue;
 					}
 				}
-				List<string> memeIds = repository.SearchHashTagMemes(trendingHashTag.Id, requestModel.TakeMemes);
-				if (memeIds.Count > 0)
-				{
-					HashTagMemeModel hashTagMemeModel = new HashTagMemeModel
-					{
-						HashTag = trendingHashTag.Id,
-						MemeLiteModels = new List<MemeLiteModel>()
-					};
-					foreach (string memeId in memeIds)
-					{
-						if (!model.Any(x => x.MemeLiteModels.Any(m => m.Id == memeId)))
-						{
-							hashTagMemeModel.MemeLiteModels.Add(new MemeLiteModel(repository, repository.GetMeme(memeId)));
-						}
-					}
-					model.Add(hashTagMemeModel);
-				}
+				// Retrieve the hmemes of the hash tag and add to the model
+				model = AddHashTagMemes(trendingHashTag.Name, requestModel.TakeMemes, model);
 			}
 			return Ok(model);
 		}
@@ -501,9 +486,22 @@ namespace SB004.Controllers
 		[Route("trending/tags")]
 		public IHttpActionResult TrendingHashTags(int take)
 		{
-			List<string> model = repository.SearchTrendingHashTags(take).Select(x => x.Id).ToList();
+			List<string> model = repository.SearchTrendingHashTags(take).Select(x => x.Name).ToList();
 			return Ok(model);
 		}
+		[HttpPost]
+		[Route("hashtag/memes")]
+		public IHttpActionResult HashTagsMemes([FromBody] HashTagRequestModel requestModel)
+		{
+			List<HashTagMemeModel> model = new List<HashTagMemeModel>();
+
+			foreach (string hashTag in requestModel.FilterList)
+			{
+				model = AddHashTagMemes(hashTag, requestModel.TakeMemes, model);
+			}
+			return Ok(model);
+		}
+		
 
 		#region Private Methods
 
@@ -561,6 +559,41 @@ namespace SB004.Controllers
 		private MemeLiteModel ToMemeLiteModel(IMeme meme)
 		{
 			return new MemeLiteModel(repository, meme);
+		}
+
+		/// <summary>
+		/// Add the memes associated with teh specified hash tag to the supplied model
+		/// </summary>
+		/// <param name="hashTag"></param>
+		/// <param name="take"></param>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		private List<HashTagMemeModel> AddHashTagMemes(string hashTag, int take, List<HashTagMemeModel> model)
+		{
+			HashTagMemeModel hashTagMemeModel = new HashTagMemeModel
+			{
+				HashTag = hashTag,
+				MemeLiteModels = new List<MemeLiteModel>()
+			};
+
+			// Get the memes of the hash tag
+			List<string> memeIds = repository.SearchHashTagMemes(hashTag, take);
+			if (memeIds.Count > 0)
+			{
+				foreach (string memeId in memeIds)
+				{
+					// Only add to the model if the meme is not already in the model
+					if (!model.Any(x => x.MemeLiteModels.Any(m => m.Id == memeId)))
+					{
+						hashTagMemeModel.MemeLiteModels.Add(new MemeLiteModel(repository, repository.GetMeme(memeId)));
+					}
+				}
+
+				// Add to the model
+				model.Add(hashTagMemeModel);
+			}
+
+			return model;
 		}
 		#endregion
 	}

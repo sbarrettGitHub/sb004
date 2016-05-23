@@ -39,7 +39,8 @@
                     <div class="col-sm-hidden col-xs-12 col-md-3 pull-right">
                     <form class="navbar-form" role="search">
                         <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
+                            ng-model="searchTerm">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
                         </div>

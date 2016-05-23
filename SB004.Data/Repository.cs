@@ -661,8 +661,9 @@ namespace SB004.Data
 
 	    public List<string> SearchHashTagMemes(string hashTag, int take)
 	    {
+		    string hashTagToLower = hashTag.ToLower();
 			IQueryable<HashTagMeme> query = (from entry in hashTagMemeCollection.AsQueryable()
-											 where entry.HashTag == hashTag
+											 where entry.HashTag == hashTagToLower
 										 select entry).OrderByDescending(x => x.TrendScore).Take(take);
 
 			List<string> memeIds = new List<string>();

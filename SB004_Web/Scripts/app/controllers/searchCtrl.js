@@ -5,47 +5,17 @@
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
 	$scope.userId = "";
-	
+	$scope.searchTerm = "";
 	$scope.home = function() {
 		$location.path("home");
 	}
 	/*---------------------------------------------------------*/
     $scope.search = function() {
-      $rootScope.$broadcast('quoteSearch.begin', null);
-	  search().then(function (quotes) {
-				   // Hold the quotes in shared data 
-				  sharedDataService.data.quoteSearch.results = quotes;
-				  
-				  // Search is complete
-				  $rootScope.$broadcast('quoteSearch.complete',quotes);
-				  
-				  // redirect to home
-				  $location.path("home");
-			})
-			.catch(function (e) {
-				alert(e);
-			});
+		if($scope.searchTerm.length>0){
+			$location.path("home").search({q: $scope.searchTerm});
 		}
-	var search = function () {
-		var deferred = $q.defer();
-		startWaiting();
-		$http.get('api/Meme').
-			success(function (data) {
-				endWaiting();
-				deferred.resolve(data);
-			}).
-			error(function (e) {
-				endWaiting();
-				deferred.reject(e);
-			});
-		return deferred.promise;
-	};
-	function startWaiting(){
-		
 	}
-	function endWaiting(){
-		
-	}
+
 	/*---------------------------------------------------------*/
 	$scope.addNew = function () {
 			
