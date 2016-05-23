@@ -70,9 +70,7 @@
 					<img ng-src="api/image/{{meme.id}}" class="image"/>	
 					<div id="hashTags" class="col-md-12 col-lg-12 pushDown1  text-center">
 						<div ng-repeat="hashTag in meme.hashTags" class="btn-group">
-							<button type="button" class="btn btn-default hashTagbutton">
-								#{{hashTag}}
-							</button>	
+							<ng-hashtag ng-tag="hashTag" ng-large="true"/>
 						</div>
 					</div>
 					<div id="currentMemeStats" class="col-md-12 col-lg-12">

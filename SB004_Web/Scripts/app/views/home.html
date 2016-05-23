@@ -166,10 +166,7 @@
                 <i class="fa fa-check-square-o" ng-show="hashTag.include"></i>
                 <i class="fa fa-square-o" ng-show="!hashTag.include"></i>
             </button> 
-            <button type="button" class="btn btn-default hashTagbutton">
-                #{{hashTag.hashTag}}
-            </button>	
-    
+            <ng-hashtag ng-tag="hashTag.hashTag" ng-large="true"/>    
         </div>
         <button id="moreTrendingHashTags" ng-click="increaseTrendingHashTags()" class="option" 
                 title="Show more hash tags">

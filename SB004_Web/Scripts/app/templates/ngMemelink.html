@@ -45,9 +45,7 @@
 		</div>
 		<div class="pull-left col-lg-12 col-md-12 col-sm-12 " ng-class="{memeLinkHashTags: ngLargeuserimage}">
 			<div ng-repeat="hashTag in ngModel.hashTags" class="btn-group hashTags">	
-					<button type="button" class="btn hashTagbutton hashTagbuttonSmall" title="#{{hashTag}}">
-						#{{hashTag}}
-					</button>
+					<ng-hashtag ng-tag="hashTag"/>
 			</div>
 		</div>		
 	</div>
