@@ -1,4 +1,4 @@
-app.directive('ngHashtag', function($compile, $timeout, $location) {
+app.directive('ngHashtag', function($compile, $timeout, $location, $rootScope, hashTagService) {
   return {
     restrict: 'E',
     replace: true,
@@ -14,7 +14,7 @@ app.directive('ngHashtag', function($compile, $timeout, $location) {
         
       });
       scope.openHashtag = function(){        
-        $location.path("home").search({q: scope.ngTag});
+			  hashTagService.hashTagSearch(scope.ngTag);
       }
     },
     templateUrl: "Scripts/app/templates/ngHashTag.html?t=" + new Date().getTime()

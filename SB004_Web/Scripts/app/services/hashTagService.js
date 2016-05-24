@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    var hashTagService = function ($http, $q, $window) {
+    var hashTagService = function ($http, $q, $window, $location, $rootScope) {
         
         var trendingHashTagMemes = function(takeHashTags, takeMemes, filterList){
             var deferred = $q.defer();
@@ -56,7 +56,13 @@
 			return deferred.promise;
         }   
         var hashTagSearch = function(criteria){
-            
+            if(criteria.length>0){
+                // Open teh home page is search mode
+                $location.path("home").search({q: criteria});
+                // Notify the home page to show the search. REQUIRED IF THE HOMPAGE IS ALREADY OPEN
+                $rootScope.$broadcast('home.viewSearch');  
+            }
+
         }       
         return {
             trendingHashTagMemes: trendingHashTagMemes,
@@ -67,6 +73,6 @@
         }
     }
     // Register the service
-    app.factory('hashTagService', ['$http', '$q', '$window', hashTagService]);
+    app.factory('hashTagService', ['$http', '$q', '$window', '$location', '$rootScope', hashTagService]);
 
 })();

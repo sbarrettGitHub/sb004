@@ -1,7 +1,7 @@
 'use strict'; 
 (function() {
 
-  var searchCtrl = function($scope,$rootScope, $location, $http, $q, $dialog, sharedDataService, securityService, memeWizardService, blurry ) {
+  var searchCtrl = function($scope,$rootScope, $location, $http, $q, $dialog, sharedDataService, securityService, memeWizardService, blurry, hashTagService ) {
 	$scope.userName = "";
 	$scope.isAuthenticated = false;
 	$scope.userId = "";
@@ -11,11 +11,11 @@
 	}
 	/*---------------------------------------------------------*/
     $scope.search = function() {
-		if($scope.searchTerm.length>0){
-			$location.path("home").search({q: $scope.searchTerm});
+		if($scope.searchTerm.length>0){			
+			// Open the home page is search mode and search for the specified search terms
+			hashTagService.hashTagSearch($scope.searchTerm);
 		}
 	}
-
 	/*---------------------------------------------------------*/
 	$scope.addNew = function () {
 			
@@ -79,6 +79,6 @@
 	/*-----------------------------------------------------------------*/
   }
   // Register the controller
-  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","$dialog","sharedDataService", "securityService","memeWizardService", "blurry", searchCtrl]);
+  app.controller('searchCtrl', ["$scope","$rootScope","$location", "$http", "$q","$dialog","sharedDataService", "securityService","memeWizardService", "blurry", "hashTagService", searchCtrl]);
 
 })();

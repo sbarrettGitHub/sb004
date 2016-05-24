@@ -544,6 +544,7 @@
 		}
 		
 		/*-----------------------------------------------------------------*/
+		// Listeners
 		// Set up the context when the user logs in
 		$rootScope.$on('account.signIn', function (event, data) {
 			testAuthentication();
@@ -552,7 +553,13 @@
 		$rootScope.$on('account.signOut', function (event, data) {
 			testAuthentication();
 		});
-
+		
+		// Performed by search for hash tag to force the hompage to show the search. Neccessary of the home page is already visible
+		$rootScope.$on('home.viewSearch', function (event, data) {			
+			$scope.switchView("search");
+		});
+		/*-----------------------------------------------------------------*/
+		
 		// Check if the user is authenticated, if so swap between trending and following
 		var criteria = $location.search();
 		if(criteria && criteria.q){
