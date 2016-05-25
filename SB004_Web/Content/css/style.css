@@ -678,6 +678,13 @@ height:325px;*/
 .pushDown7{
 	margin-top: 100px;
 }
+/*-----------------------------------------------------------------------------*/
+#searchResultsLabel{
+	margin-left: -400px;
+	max-width: 375px;
+	overflow: hidden;
+	color: dimgray;
+}
 #hashTags .tagSection{
 	text-align: center;
     margin-left: auto;

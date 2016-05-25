@@ -206,9 +206,9 @@
 	</div>    
     <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
        <jqcloud ng-show="hashTags.length==0" id="hashtagWordCloud" width="1000" height="500"words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
-       <!--jqcloud id="hashtagWordCloud" words="words" auto-resize="true" width="800" height="800" colors="{{colors}}" delay="10" steps="100" font-size="{from:0.12, to:0.04}"></jqcloud-->
-                  
-        <div class="memeLinkContainer pull-left rounded" ng-show="hashTags.length>0">
+        
+        <span id="searchResultsLabel" ng-show="hashTags.length>0"><i class="fa fa-search"></i> Search results for similar tags</span>        
+        <div class="memeLinkContainer pull-left rounded" ng-show="hashTags.length>0">            
             <jqcloud id="hashtagWordCloud" words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
         </div>    
         <div ng-show="hashTags.length>0">

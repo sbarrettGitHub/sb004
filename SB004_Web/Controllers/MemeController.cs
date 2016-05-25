@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 
 namespace SB004.Controllers
@@ -493,13 +494,23 @@ namespace SB004.Controllers
 		[Route("hashtag/memes")]
 		public IHttpActionResult HashTagsMemes([FromBody] HashTagRequestModel requestModel)
 		{
-			List<HashTagMemeModel> model = new List<HashTagMemeModel>();
+			List<IHashTag> similarHashTags = new List<IHashTag>();
+			List<HashTagMemeModel> memes = new List<HashTagMemeModel>();
 
 			foreach (string hashTag in requestModel.FilterList)
 			{
-				model = AddHashTagMemes(hashTag, requestModel.TakeMemes, model);
+				// Add the hashtag memes to the model
+				memes = AddHashTagMemes(hashTag, requestModel.TakeMemes, memes);
+				// Add other hash tags that are similar to this one to the model
+				similarHashTags.AddRange(repository.SearchHashTags(hashTag, requestModel.TakeMemes));
 			}
-			return Ok(model);
+			// Sort similar HashTags descending by meme trend score
+			similarHashTags = similarHashTags.OrderByDescending(x => x.TrendScoreOfAllMemes).ToList();
+			return Ok(new
+			{
+				memes,
+				similarHashTags =similarHashTags.Select(x=>x.Name).Distinct().ToList() // Return only the string of the hash tag
+			});
 		}
 		
 

@@ -674,6 +674,20 @@ namespace SB004.Data
 
 			return memeIds;
 	    }
+		public List<IHashTag> SearchHashTags(string hashTag, int take)
+		{
+			IQueryable<HashTag> query = (from entry in hashTagCollection.AsQueryable()
+										 where entry.Id.Contains(hashTag.ToLower())
+										 select entry).OrderByDescending(x => x.TrendScoreOfAllMemes).Take(take);
+
+			List<IHashTag> hashTags = new List<IHashTag>();
+			foreach (var tag in query)
+			{
+				hashTags.Add(tag);
+			}
+
+			return hashTags;
+		}
 	    #endregion
 
 	}

@@ -16,7 +16,6 @@
 		$scope.items = [];
         $scope.words = [];
 		$scope.hashTags = [];
-		//$scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"];
 		
 		var itemsIndex=0;		
         var constants = {
@@ -234,23 +233,23 @@
 			var i = $scope.hashTags.indexOf(hashTag);
 			if (i > -1) {
 				$scope.hashTags.splice(i, 1);
-				hashTagSearch();
+				if($scope.hashTags.length>0){
+					hashTagSearch();
+				}else{
+					refreshHashTagView();
+				}
+				
 			}
+		}
+		var openHashTagView = function(){
+			$scope.view = "search";
 		}
 		var refreshHashTagView = function(){	
 			$scope.words = [];		
 			hashTagService.trendingHashTags(50)
 			.then(function(data){
 				if(data){
-					for (var i = 0; i < data.length; i++) {
-						 
-						$scope.words.push({text: "#" + data[i], weight: data.length-i,handlers: {
-							click: function(e) {		
-								console.log(e);	
-								$scope.wordCloudClick(this.innerHTML);
-							}
-						}});						
-					}							
+					populateWordCloud(data);							
 				}
 			},
 			function(e){
@@ -265,19 +264,48 @@
 			hashTagService.hashTagMemes($scope.hashTags, 50)
 			.then(function(data){
 				if(data){
-					for (var i = 0; i < data.length; i++) {
-						for (var ii = 0; ii < data[i].memeLiteModels.length; ii++) {
-							$scope.memes.push( data[i].memeLiteModels[ii]);
-							
-						} 											
+					if( data.memes){						
+						// Populate the memes returned by the search
+						populateMemes(data.memes);						
+					}
+					$scope.words = [];
+					if(data.similarHashTags){
+						// Populate the word cloud with similar hash tags to the one(s) searched for
+						populateWordCloud(data.similarHashTags);
 					}							
-				}
+				}				
 				endWaiting();
 			},
 			function(e){
 				$window.alert(e);
 				endWaiting();
 			})
+		}
+		function populateWordCloud(data){
+			if(data){
+				$scope.words = [];
+				for (var i = 0; i < data.length; i++) {		
+					if(!$scope.words.contains(data[i]))	{
+						$scope.words.push({text: "#" + data[i], weight: data.length-i,handlers: {
+							click: function(e) {		
+								console.log(e);	
+								$scope.wordCloudClick(this.innerHTML);
+							}
+						}});
+					}						
+				}							
+			}
+		}
+		function populateMemes(data){
+			if(data){
+				$scope.memes=[];
+				for (var i = 0; i < data.length; i++) {
+					for (var ii = 0; ii < data[i].memeLiteModels.length; ii++) {
+						$scope.memes.push( data[i].memeLiteModels[ii]);
+						
+					} 											
+				}
+			}
 		}
         //-------------------------------------------------------------------------------------------
 		// Homepage Timeline
@@ -556,7 +584,7 @@
 		
 		// Performed by search for hash tag to force the hompage to show the search. Neccessary of the home page is already visible
 		$rootScope.$on('home.viewSearch', function (event, data) {			
-			$scope.switchView("search");
+			openHashTagView();
 		});
 		/*-----------------------------------------------------------------*/
 		
