@@ -4,7 +4,7 @@
 			<img class="rounded" ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
 		</div>
 		<div class="memeLinkCardImage">
-			<img ng-src="api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image"/>
+			<img ng-src="api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image" />
 		</div>
 		<div class="memeLinkCardMeta pull-down">
 			<div class="pull-left userImageFrame">
@@ -13,13 +13,12 @@
 			<div class="pull-left infoFrame" ng-class="{infoFrameExtended: ngLargeuserimage}">
 				<div class="created">
 					<div class="pull-left ">
-						<i class="fa fa-retweet hot repostIcon" ng-show="ngModel.repostOfId" ng-click="onClickrepost(ngModel.repostOfId)"
-						title="This is a repost. Click here to open the original."></i>
-						<span class="allowFollow"   ng-userhover ng-user="ngModel.creator" >
+						<i class="fa fa-retweet hot repostIcon" ng-show="ngModel.repostOfId" ng-click="onClickrepost(ngModel.repostOfId)" title="This is a repost. Click here to open the original."></i>
+						<span class="allowFollow" ng-userhover ng-user="ngModel.creator">
 							{{ngModel.createdBy}}
 						</span>
 					</div>
-					<div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div> 
+					<div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div>
 				</div>
 				<div class="stats">
 					<div ng-click="onLike(ngModel.id)" title="I like this post." class="hot pull-left info stat">
@@ -27,7 +26,7 @@
 					</div>
 					<div ng-click="onDislike(meme.id)" title="I dislike this post" class="hot pull-left info stat">
 						<i class="fa fa-thumbs-o-down"></i><span>{{ngModel.dislikes | nearestK}}</span>
-					</div>	
+					</div>
 					<div title="The number of comments" class="pull-right info stat">
 						<i class="fa fa-comments-o"></i><span>{{ngModel.userCommentCount | nearestK}}</span>
 					</div>
@@ -36,17 +35,19 @@
 					</div>
 					<div title="The number of reposts" class="pull-right info stat">
 						<i class="fa fa-retweet"></i><span>{{ngModel.reposts | nearestK}}</span>
-					</div>	
+					</div>
 					<div title="The number times this meme has been viewed" class="pull-right info stat">
 						<i class="fa fa-eye"></i><span>{{ngModel.views | nearestK}}</span>
-					</div>		
+					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
 		<div class="pull-left col-lg-12 col-md-12 col-sm-12 " ng-class="{memeLinkHashTags: ngLargeuserimage}">
-			<div ng-repeat="hashTag in ngModel.hashTags" class="btn-group hashTags">	
-					<ng-hashtag ng-tag="hashTag"/>
+			<div ng-repeat="hashTag in ngModel.hashTags" class="btn-group hashTags">
+				<span ng-if="!hasHashtagselectedCallback"><ng-hashtag ng-tag="hashTag" /></span>
+				<span ng-if="hasHashtagselectedCallback"><ng-hashtag ng-tag="hashTag" on-hashtagselected="onHashtagselected()" /></span>
+				
 			</div>
-		</div>		
+		</div>
 	</div>
 </div>

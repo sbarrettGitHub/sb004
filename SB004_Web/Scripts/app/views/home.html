@@ -205,13 +205,13 @@
 
 	</div>    
     <div id="searchResults" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='search'">
-       <jqcloud ng-show="hashTags.length==0" id="hashtagWordCloud" width="1000" height="500"words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
+       <jqcloud ng-if="hashTags.length==0" id="hashtagWordCloud" width="1000" height="500"words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
         
         <span id="searchResultsLabel" ng-show="hashTags.length>0"><i class="fa fa-search"></i> Search results for similar tags</span>        
         <div class="memeLinkContainer pull-left rounded" ng-show="hashTags.length>0">            
-            <jqcloud id="hashtagWordCloud" words="words" auto-resize="true"  delay="10" steps="5" font-size="{from:0.06, to:0.01} "></jqcloud>
+            <jqcloud id="hashtagWordCloud" words="words" auto-resize="true"  delay="10" steps="10" font-size="{from:0.06, to:0.01} "></jqcloud>
         </div>    
-        <div ng-show="hashTags.length>0">
+        <div ng-if="hashTags.length>0">
             <div ng-repeat="meme in memes" class="pull-left">			
                 <div ng-memelink ng-model="meme" 
                                 on-click="viewMeme(meme.id)" 
@@ -219,7 +219,8 @@
                                 on-dislike="dislikeMeme(meme.id)"
                                 on-addtofavourites="addMemeToFavourites(meme.id)"
                                 on-userclick="openUser(meme.createdByUserId)"
-                                on-clickrepost="viewMeme(meme.repostOfId)" ></div>
+                                on-clickrepost="viewMeme(meme.repostOfId)" 
+                                on-hashtagselected="appendToHashtagsAndSearch"></div>
             </div>
         </div>
 

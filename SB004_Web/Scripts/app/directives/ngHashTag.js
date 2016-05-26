@@ -1,20 +1,24 @@
-app.directive('ngHashtag', function($compile, $timeout, $location, $rootScope, hashTagService) {
+app.directive('ngHashtag', function ($timeout,hashTagService) {
   return {
     restrict: 'E',
     replace: true,
-	scope: {
-      ngTag: '=', ngLarge:'='
+    scope: {
+      ngTag: '=', ngLarge: '=', onHashtagselected: '&'
     },
-	link: function(scope, elem, attrs) {
-     
-     elem.bind('click', function() {
+    link: function (scope, elem, attrs) {
+      elem.bind('click', function () {
         $timeout(function () {
           scope.openHashtag();
-        },250);
-        
+        }, 1);
       });
-      scope.openHashtag = function(){        
-			  hashTagService.hashTagSearch(scope.ngTag);
+
+      scope.openHashtag = function () {
+        // If a method is supplied then call that, otherwise open the hash tag
+        if (angular.isDefined(attrs.onHashtagselected)) {
+          scope.$apply(scope.onHashtagselected());
+        } else {
+          hashTagService.hashTagSearch(scope.ngTag);
+        }
       }
     },
     templateUrl: "Scripts/app/templates/ngHashTag.html?t=" + new Date().getTime()

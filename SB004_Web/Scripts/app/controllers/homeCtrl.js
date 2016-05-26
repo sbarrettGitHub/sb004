@@ -24,7 +24,8 @@
 			maxEntryCount:10,
 			defaultTakeTrendingHashTags:20,
 			trendingMemeBlockSize:20,
-			trendingHashTagBlockSize:5
+			trendingHashTagBlockSize:5,
+			wordCloudMaxWeight:10
 		};
 		var takeTrendingHashTags = constants.defaultTakeTrendingHashTags;		
 		var maxTrendingMemes = 100;	
@@ -281,12 +282,17 @@
 				endWaiting();
 			})
 		}
+		$scope.appendToHashtagsAndSearch = function(hashTag){
+			if(hashTag && hashTag.ngTag){
+				$scope.wordCloudClick(hashTag.ngTag);
+			}
+		}  
 		function populateWordCloud(data){
 			if(data){
 				$scope.words = [];
 				for (var i = 0; i < data.length; i++) {		
 					if(!$scope.words.contains(data[i]))	{
-						$scope.words.push({text: "#" + data[i], weight: data.length-i,handlers: {
+						$scope.words.push({text: "#" + data[i], weight: ( data.length) - i + 1,handlers: {
 							click: function(e) {		
 								console.log(e);	
 								$scope.wordCloudClick(this.innerHTML);
@@ -608,7 +614,8 @@
             $scope.waiting = false;
             $scope.waitHeading = "";
             $scope.waitingMessage = "";
-        }        	
+        }   
+		   	
     }
 
     // Register the controller
