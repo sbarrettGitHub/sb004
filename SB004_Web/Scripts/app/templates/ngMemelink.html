@@ -4,7 +4,7 @@
 			<img class="rounded" ng-src='api/image/user/{{ngModel.createdByUserId}}'></img>
 		</div>
 		<div class="memeLinkCardImage">
-			<img ng-src="api/image/{{ngModel.id}}" ng-click="onClick(ngModel.id)" class="image" />
+			<img ng-src="api/image/{{ngModel.id}}" data-ng-click="onClick({id:ngModel.id})" class="image" />
 		</div>
 		<div class="memeLinkCardMeta pull-down">
 			<div class="pull-left userImageFrame">
@@ -21,10 +21,10 @@
 					<div class="pull-right">{{ngModel.dateCreated | date:'short'}} </div>
 				</div>
 				<div class="stats">
-					<div ng-click="onLike(ngModel.id)" title="I like this post." class="hot pull-left info stat">
+					<div data-ng-click="onLike({id:ngModel.id})" title="I like this post." class="hot pull-left info stat">
 						<i class="fa fa-thumbs-o-up"></i><span>{{ngModel.likes | nearestK}}</span>
 					</div>
-					<div ng-click="onDislike(meme.id)" title="I dislike this post" class="hot pull-left info stat">
+					<div data-ng-click="onDislike({id:ngModel.id})" title="I dislike this post" class="hot pull-left info stat">
 						<i class="fa fa-thumbs-o-down"></i><span>{{ngModel.dislikes | nearestK}}</span>
 					</div>
 					<div title="The number of comments" class="pull-right info stat">

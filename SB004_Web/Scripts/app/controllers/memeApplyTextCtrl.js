@@ -186,7 +186,7 @@
         $scope.out = function (el, target) {
             target.removeClass("hoverOver");
         };
-        $scope.dropped = function (left, top, relLeft, relTop, el) {
+        $scope.dropped = function (left, top, relLeft, relTop) {
             var x = relLeft;
             $scope.memeData.comments[$scope.comment.id].position.align = "none";
             $scope.memeData.comments[$scope.comment.id].position.x = relLeft;
