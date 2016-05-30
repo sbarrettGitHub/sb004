@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 
 namespace SB004.Controllers
@@ -55,7 +54,11 @@ namespace SB004.Controllers
 					Creator = repository.GetUser(meme.CreatedByUserId),
 					DateCreated = meme.DateCreated.ToLocalTime(),
 					meme.Title,
-					meme.Comments,
+					Comments = meme.Comments.Select(x =>
+					{
+						x.Text = WebUtility.HtmlEncode(x.Text);
+						return x;
+					}).ToList(),
 					meme.ResponseToId,
 					replyCount = meme.ReplyIds.Count,
 					userCommentCount = repository.GetUserCommentCount(id),
@@ -479,7 +482,7 @@ namespace SB004.Controllers
 					}
 				}
 				// Retrieve the hmemes of the hash tag and add to the model
-				model = AddHashTagMemes(trendingHashTag.Name, requestModel.TakeMemes, model);
+				model = AddHashTagMemes(WebUtility.HtmlEncode(trendingHashTag.Name), requestModel.TakeMemes, model);
 			}
 			return Ok(model);
 		}
@@ -487,7 +490,7 @@ namespace SB004.Controllers
 		[Route("trending/tags")]
 		public IHttpActionResult TrendingHashTags(int take)
 		{
-			List<string> model = repository.SearchTrendingHashTags(take).Select(x => x.Name).ToList();
+			List<string> model = repository.SearchTrendingHashTags(take).Select(x => WebUtility.HtmlEncode(x.Name)).ToList();
 			return Ok(model);
 		}
 		[HttpPost]
@@ -502,7 +505,12 @@ namespace SB004.Controllers
 				// Add the hashtag memes to the model
 				memes = AddHashTagMemes(hashTag, requestModel.TakeMemes, memes);
 				// Add other hash tags that are similar to this one to the model
-				similarHashTags.AddRange(repository.SearchHashTags(hashTag, requestModel.TakeMemes));
+				similarHashTags.AddRange(repository.SearchHashTags(hashTag, requestModel.TakeMemes).Select(x =>
+				{
+					x.Id = WebUtility.HtmlEncode(x.Id);
+					x.Name = WebUtility.HtmlEncode(x.Name);
+					return x;
+				}));
 			}
 			// Sort similar HashTags descending by meme trend score
 			similarHashTags = similarHashTags.OrderByDescending(x => x.TrendScoreOfAllMemes).ToList();

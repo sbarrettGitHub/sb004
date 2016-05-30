@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using SB004.Data;
 using SB004.Domain;
@@ -62,6 +63,7 @@ namespace SB004.Controllers
 				entry.EntryType == TimeLineEntry.DislikeComment)
 			{
 				IUserComment userComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
+				userComment.Comment = WebUtility.HtmlEncode(userComment.Comment);
 				IUser user = userComment.UserId!=null?repository.GetUser(userComment.UserId): new Domain.User();
 				timelineEntryModel.UserComment = new TimeLineUserCommentModel(userComment, user);
 			}

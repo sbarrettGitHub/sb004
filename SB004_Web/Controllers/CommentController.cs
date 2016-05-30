@@ -1,4 +1,8 @@
-﻿using SB004.Business;
+﻿using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Web.Services.Protocols;
+using SB004.Business;
 using SB004.Data;
 using SB004.Domain;
 using System;
@@ -31,7 +35,14 @@ namespace SB004.Controllers
 		public IHttpActionResult Get(string id, int skip, int take)
 		{
 			long fullCommentCount = repository.GetUserCommentCount(id);
-			var userComments = repository.GetUserComments(id, skip, take);
+			List<IUserComment> userComments = repository.GetUserComments(id, skip, take);
+
+			// Encode all comments before returning to client
+			userComments = userComments.Select(x =>
+			{
+				x.Comment = WebUtility.HtmlEncode(x.Comment);
+				return x;
+			}).ToList();
 
 			return this.Ok(new { fullCommentCount, userComments });
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using SB004.Domain;
 
 namespace SB004.Models
@@ -34,7 +35,7 @@ namespace SB004.Models
 			this.DateCreated = userComment.DateCreated;
 			this.Likes = userComment.Likes;
 			this.Dislikes = userComment.Dislikes;
-			this.Comment = userComment.Comment;
+			this.Comment = WebUtility.HtmlEncode(userComment.Comment);
 			this.User = user;
 		}
 		public IUser User { get; set; }

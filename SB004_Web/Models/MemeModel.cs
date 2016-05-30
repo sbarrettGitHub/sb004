@@ -1,4 +1,6 @@
-﻿using SB004.Data;
+﻿using System.Linq;
+using System.Net;
+using SB004.Data;
 
 namespace SB004.Models
 {
@@ -66,7 +68,7 @@ namespace SB004.Models
 			Views = meme.Views;
 			Reposts = meme.Reposts;
 			RepostOfId = meme.RepostOfId;
-			HashTags = meme.HashTags;
+			HashTags = meme.HashTags.Select(WebUtility.HtmlEncode).ToList();
 		}
 	    public string Id { get; set; }
         public string CreatedByUserId { get; set; }
