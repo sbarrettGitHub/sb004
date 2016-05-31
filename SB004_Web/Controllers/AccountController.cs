@@ -49,6 +49,10 @@ namespace SB004.Controllers
 
 				if (profile != null)
 				{
+					profile.Email = WebUtility.HtmlEncode(profile.Email);
+					profile.StatusMessage = WebUtility.HtmlEncode(profile.StatusMessage);
+					profile.UserName = WebUtility.HtmlEncode(profile.UserName);
+					
 					return Ok(profile);
 				}
 			}
