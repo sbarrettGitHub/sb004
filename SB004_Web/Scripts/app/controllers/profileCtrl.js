@@ -162,17 +162,17 @@
         /*-----------------------------------------------------------------*/        
         $scope.saveProfileEmail = function(){
             $scope.changeProfileEmailValid = true;
-            if($scope.changeProfileEmail.length == 0 ){
+            if(!$scope.changeProfileEmail || $scope.changeProfileEmail.length == 0 ){
                 $scope.changeProfileEmailValid = false;
                 $scope.changeProfileEmailError = "Please supply a new email address";
                 return;
             }
-            if($scope.confirmChangeProfileEmail.length == 0 ){
+            if(!$scope.confirmChangeProfileEmail || $scope.confirmChangeProfileEmail.length == 0 ){
                 $scope.changeProfileEmailValid = false;
                 $scope.changeProfileEmailError = "Please confirm new email address";
                 return;
             }
-            if($scope.changeProfileEmailPasswordVerification.length == 0 ){
+            if(!$scope.changeProfileEmailPasswordVerification || $scope.changeProfileEmailPasswordVerification.length == 0 ){
                 $scope.changeProfileEmailValid = false;
                 $scope.changeProfileEmailError = "Please enter your password to confirm new email address";
                 return;
@@ -195,10 +195,14 @@
                     $window.alert("Your email address has been changed!");       
                     $scope.showChangeEmail = false;
                     $scope.profileEmail = $scope.changeProfileEmail;
+                    $scope.changeProfileEmail = "";
+                    $scope.confirmChangeProfileEmail= "";
+                    $scope.changeProfileEmailPasswordVerification = "";
                     return;
                 }).error(function (e) {
                     $scope.changeProfileEmailValid = false;
                     $scope.changeProfileEmailError = "Could not change email. Invalid credentials or unknown user!";
+                    $scope.changeProfileEmailPasswordVerification = "";
                     return;
                 });
             
@@ -206,8 +210,9 @@
         $scope.resetProfileEmail = function(){
             $scope.changeProfileEmailValid = true;
             $scope.showChangeEmail = false;
-            $scope.changeProfileEmail = currentUser.profile.email;
-            $scope.confirmChangeProfileEmail= currentUser.profile.email;
+            $scope.changeProfileEmail = "";
+            $scope.confirmChangeProfileEmail= "";
+            $scope.changeProfileEmailPasswordVerification = "";
         }
         /*-----------------------------------------------------------------*/       
         $scope.saveProfilePassword = function(){

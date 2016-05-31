@@ -134,7 +134,7 @@ namespace SB004.Controllers
 		[Route("{id}/name")]
 		public HttpResponseMessage UpdateProfileName(string id, [FromBody] AccountDetailsModel details)
 		{
-			if ((details.UserName ?? "").Length == 0)
+			if ((details.UserName ?? "").Length == 0 || ModelState.IsValid == false)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
 			}
@@ -200,7 +200,7 @@ namespace SB004.Controllers
 		[Route("{id}/email")]
 		public HttpResponseMessage UpdateProfileEmail(string id, [FromBody] AccountDetailsModel details)
 		{
-			if ((details.Email ?? "").Length == 0)
+			if ((details.Email ?? "").Length == 0 || ModelState.IsValid == false)
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
 			}

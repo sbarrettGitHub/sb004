@@ -18,6 +18,7 @@ namespace SB004.Models
   public class NewAccountModel
   {
       [Required(ErrorMessage = "UserName is required")]
+	  [StringLength(20, ErrorMessage = "The UserName cannot be more than 20 characters long")]
       public string UserName { get; set; }
 
       [Required(ErrorMessage = "Email is required")]
@@ -41,7 +42,9 @@ namespace SB004.Models
 
 	public class AccountDetailsModel
 	{
+		[StringLength(20, ErrorMessage = "The UserName cannot be more than 20 characters long")]
 		public string UserName { get; set; }
+		[EmailAddress(ErrorMessage = "Invalid Email Address")]
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public string NewPassword { get; set; }
