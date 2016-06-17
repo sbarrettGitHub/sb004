@@ -16,8 +16,8 @@
 	border-radius: 6px;
 }
 #leftSpace{
-width:100px;
-height:300px;
+	width:75px;
+	height:300px;
 }
 #main{
   float: left;
@@ -134,13 +134,16 @@ margin-top:2px;
 	font-weight:bold;
 	
 }
+#addComment textarea{
+	height: 150px;
+	overflow: auto;
+}
 #commentsContainer #comments{
 	min-height: 647px;
 	width: 100%;
 }
 #commentsContainer #comments textarea{
 	width: 100%;
-	margin-bottom: 15px;
 }
 #commentsContainer #comments  .userComment{
 	width:100%;  
@@ -154,7 +157,10 @@ margin-top:2px;
 width: 100%;
 }
 #commentsContainer #comments  .userCommentText{
-width: 100%;
+	padding-top: 5px;
+	width: 100%;
+	max-height: 300px;
+    overflow: auto;
 }
 #memeResponses #repliesContainer{
 overflow:auto;

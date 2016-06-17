@@ -72,12 +72,13 @@
                         
                         <div id="addCommentText" class="pull-left">
                             <textarea type="text" value="" placeholder="Add a new comment...hit enter to send" maxlength="250"                                 
-                                ng-model="item.newUserComment" ng-keypress="($event.which === 13)?addComment(item.meme.id, item.newUserComment):0">						
+                                ng-model="item.newUserComment">						
                             </textarea>
-                        </div>   
-                        <div id="addCommentImage" class="pull-right">
-                            <img class="userImageSmall" ng-src="api/image/user/{{userId}}">
-                        </div>                          
+                        </div> 
+                        <button class="option text-center section col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
+                                ng-click="addComment(item.meme.id, item.newUserComment)">
+                            Post Comment
+                         </button>                      
 					</div>                    
                     <div ng-repeat="entry in item.timelineEntries" class="pull-left timeLineDescription" >                        
                         <div class="icon pull-left">
@@ -121,8 +122,7 @@
                         </div>
                         <div class="pull-left timeLineComment commentary" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11" >
                             <div class="userCommentHeading">
-                                <div class="pull-left">
-                                     {{entry.userComment.comment}}
+                                <div class="pull-left" ng-bind-html="entry.userComment.comment">
                                 </div>                                
                             </div>
                            

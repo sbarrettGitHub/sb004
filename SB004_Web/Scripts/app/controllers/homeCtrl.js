@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService, likeDislikeMemeService, hashTagService) {
+    var homeCtrl = function ($scope, $location, $rootScope, $dialog, $timeout, $q, $window, $http, sharedDataService, memeWizardService, securityService, blurry, timeLineService, likeDislikeMemeService, hashTagService, markdownService) {
         $scope.memes = sharedDataService.data.quoteSearch.results;		
         $scope.searchTerm = "";
         $scope.searchCategory = "";
@@ -351,6 +351,13 @@
 						timeLineService.mergeTimelines(data, $scope.items);
 						
 					}else{
+						if(data && data.timelineGroups && data.timelineGroups.length>0){
+							
+							for (var ii = 0; ii < data.timelineGroups.length; ii++) {
+								var timeLineGroup = data.timelineGroups[ii];
+								convertTimelineEntryCommentsMarkdown(timeLineGroup);								
+							}
+						}							
 						// No existing scope items. 
 						$scope.items = data.timelineGroups;
 					}
@@ -395,7 +402,9 @@
 				timeLineService.memeTimeline(memeId, days * constants.dayblock, maxCount)
 				.then(function (data) {
 						if(data && data.timelineGroups && data.timelineGroups.length>0){
-							$scope.items[currentMemeGroupIndex] = data.timelineGroups[0];
+							var timeLineGroup = data.timelineGroups[0];
+							convertTimelineEntryCommentsMarkdown(timeLineGroup);
+							$scope.items[currentMemeGroupIndex] = timeLineGroup;
 						}		
 						deferred.resolve(data);
 					},
@@ -406,7 +415,18 @@
 			}
             
 			return deferred.promise;
-		}		
+		}	
+		function convertTimelineEntryCommentsMarkdown(timeLineGroup){
+			if(timeLineGroup && timeLineGroup.timelineEntries){
+				for (var i = 0; i < timeLineGroup.timelineEntries.length; i++) {
+					var entry = timeLineGroup.timelineEntries[i];
+					// Convert markdown
+					if(entry.userComment && entry.userComment.comment){
+						entry.userComment.comment = markdownService.makeHtml(entry.userComment.comment);
+					}									
+				}
+			}			
+		}	
 		$scope.addComment = function(memeId, comment){
 			$http.post('api/Comment', {
                 MemeId: memeId,
@@ -619,6 +639,6 @@
     }
 
     // Register the controller
-    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", "likeDislikeMemeService", "hashTagService", homeCtrl]);
+    app.controller('homeCtrl', ["$scope", "$location", "$rootScope", "$dialog", "$timeout", "$q", "$window","$http", "sharedDataService", "memeWizardService", "securityService", "blurry", "timeLineService", "likeDislikeMemeService", "hashTagService", "markdownService", homeCtrl]);
 
 })();

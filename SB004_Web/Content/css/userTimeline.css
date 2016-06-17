@@ -99,7 +99,7 @@
 }
 
 #userTimeline .timeLineComment{
-    max-height: 75px;
+    max-height: 250px;
     overflow: auto;
     border:1px solid lightgrey;
     width: 100%;
@@ -159,7 +159,9 @@
 }
 
 #userTimeline #addNewComment #addCommentText textarea{
-   width:550px; 
+   width:590px; 
+   height: 150px;
+   overflow: auto;
 }
 #userTimeline #addNewComment #addCommentImage{
    margin-right: -4px; 

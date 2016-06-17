@@ -165,53 +165,7 @@
 						</button>
 					</div>
 				</div>					
-			</div>				
-			<div id="commentsContainer" class="pull-left col-lg-12 col-md-12 col-sm-12 hidden">
-				<div id="commentsHeading" class="rounded sectionHeading">
-					<i class="fa fa-comments-o"></i><span >&nbsp; Comments ({{meme.userCommentCount}})</span>
-					<div class="pull-right" ng-click="refreshComments()" title="Click here to Refresh">
-						<i class="fa fa-refresh hot"></i>
-					</div>
-				</div>
-				<div id="comments" class="rounded section">			
-					<div id="addComment">
-						<div ><i class="fa fa-user"></i><span >&nbsp; {{userName}}</span></div>
-						<div>
-							<textarea type="text" value="" placeholder="Enter you comment here...max characters 1000" maxlength="1000"
-								ng-model="userComment" 
-								ng-keypress="($event.which === 13)?addComment():0">
-							</textarea>
-						</div>
-					</div>
-
-					<div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left userComment commentary">
-						
-						<div class="userCommentHeading">
-							<div class="pull-left">
-								<i ng-hide="userComment.userName.length==0" class="fa fa-user"></i>
-								<span ng-class="{'allowFollow': userComment.userName.length>0, 'noFollow': userComment.userName.length==0}">{{userComment.userName.length>0?userComment.userName :"Anonymous"}}</span>
-								&nbsp;
-								<span >{{userComment.dateCreated | date:'short'}}</span>
-							</div>
-							<div class="pull-right">
-								<span ng-click="likeComment(userComment.id)" title="I like this" class="info stat hot">
-									<i class="fa fa-thumbs-o-up"></i><span>{{userComment.likes}}</span>
-								</span>	
-								<span ng-click="dislikeComment(userComment.id)" title="I dislike this" class="info stat hot">
-									<i class="fa fa-thumbs-o-down"></i><span>{{userComment.dislikes}}</span>
-								</span>	
-							</div>
-						</div>
-						<div class="userCommentText pull-left ">					
-							{{userComment.comment}}
-						</div>
-					</div>
-					<div id="moreComments" ng-click="getMoreComments()" ng-show="allowGetMoreComments" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
-							title="Get more comments">
-						<i class="fa fa-cloud-download"></i><span>&nbsp; Show More Comments</span>
-					</div>
-				</div>
-			</div>			
+			</div>						
 			<div id="repliesContainer" class="pull-left col-lg-12 col-md-12 col-sm-12">
 				<div id="repliesHeading" class="rounded sectionHeading col-lg-12 col-md-12">
 					<i class="fa fa-inbox"></i><span>&nbsp; Responses ({{meme.replyCount}})</span>
@@ -258,14 +212,14 @@
             </div>
             <div id="comments" class="rounded section">
                 <div id="addComment">
-                    <div><i class="fa fa-user"></i><span>&nbsp; {{userName}}</span></div>
-                    <div>
-                        <textarea type="text" value="" placeholder="Enter you comment here...max characters 1000" maxlength="1000"
-                                  ng-model="userComment"
-                                  ng-keypress="($event.which === 13)?addComment():0"></textarea>
-                    </div>
+                    <textarea type="text" value="" placeholder="Enter you comment here...max characters 1000" maxlength="1000"
+                                  ng-model="userComment">
+					</textarea>                    
                 </div>
-
+				<button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
+						ng-click="addComment(item.meme.id, item.newUserComment)">
+					Post Comment
+				</button> 
                 <div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left userComment commentary">
 
                     <div class="userCommentHeading">
@@ -285,7 +239,7 @@
                         </div>
                     </div>
                     <div class="userCommentText pull-left ">
-                        {{userComment.comment}}
+                        <span ng-bind-html="userComment.comment"></span>
                     </div>
                 </div>
                 <div id="moreComments" ng-click="getMoreComments()" ng-show="allowGetMoreComments" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
@@ -294,41 +248,5 @@
                 </div>
             </div>
         </div>	
-	    <div id="repliesContainer" class="hidden-sm hidden-xs hidden-md hidden">
-            <div id="repliesHeading" class="rounded sectionHeading col-lg-12 col-md-12">
-                <i class="fa fa-inbox"></i><span>&nbsp; Responses ({{meme.replyCount}})</span>
-                <div class="pull-right" ng-click="refreshReplies()" title="Click here to Refresh">
-                    <i class="fa fa-refresh hot"></i>
-                </div>
-            </div>
-            <div id="replies" class="rounded section col-lg-12 col-md-12">
-                <div class="text-center col-lg-12 col-md-12">
-                    <div id="respond" ng-click="respond()" class="option text-center col-lg-5 col-md-5"
-                         title="Respond to this with a new post.">
-                        <i class="fa fa-reply"></i><span>&nbsp; Respond</span>
-                    </div>
-                    <div id="respondFromFavourites" ng-click="respondFromFavourites()" class="option text-center col-lg-5 col-md-5 pull-right"
-                         title="Respond to this with an existing post from your list of favourites.">
-                        <i class="fa fa-reply"></i><span>&nbsp; Favorites </span>
-                    </div>
-                </div>
-                <div id="noReplies" class="rounded sectionHeading text-center  col-lg-12 col-md-12"
-                     ng-hide="replies.length>0">
-                    No reponses yet. Be the first!
-                </div>
-                <div ng-repeat="reply in replies" class="pull-left col-md-12 col-lg-12 col-sm-12">
-                    <div ng-memelink ng-model="reply"
-                         on-click="viewMeme(reply.id)"
-                         on-like="likeMeme(reply.id)"
-                         on-dislike="dislikeMeme(reply.id)"
-                         on-addtofavourites="addMemeToFavourites(reply.id)"
-                         on-userclick="openUser(reply.createdByUserId)"></div>
-                </div>
-                <div id="moreReplies" ng-click="getMoreReplies()" ng-show="allowGetMoreReplies" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs"
-                     title="Get more responses">
-                    <i class="fa fa-cloud-download"></i><span>&nbsp; Show More Responses</span>
-                </div>
-            </div>
-        </div>
 	</div>
 </div>

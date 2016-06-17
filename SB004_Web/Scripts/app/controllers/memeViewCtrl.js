@@ -1,7 +1,7 @@
 ﻿'use strict';
 (function () {
 
-    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog,$window, memeWizardService, securityService, likeDislikeMemeService) {
+    var memeViewCtrl = function ($scope,$location, $http,$q, $routeParams,$dialog,$window, $sanitize, memeWizardService, securityService, likeDislikeMemeService, markdownService) {
 
         $scope.waiting = false;
         $scope.waitHeading = "Please wait...";
@@ -216,6 +216,7 @@
                 Comment: $scope.userComment
             }).
 			success(function (data) {
+				data.comment = markdownService.makeHtml(data.comment);
 				$scope.userComments.push(data);
 				$scope.userComment = "";
 				$scope.meme.userCommentCount++;
@@ -244,7 +245,9 @@
                 success(function (data) {
 					// Add the comments returned to the list of comments
 					for(var i=0;i<data.userComments.length;i++){   
-						$scope.userComments.push(data.userComments[i]);
+						var userComment = data.userComments[i];
+						userComment.comment = markdownService.makeHtml(userComment.comment);
+						$scope.userComments.push(userComment);
 					}
 					// The Get More Comments button should be available if there are more comments out there than are displayed
 					$scope.allowGetMoreComments = (data.fullCommentCount > $scope.userComments.length) ? true : false;
@@ -405,6 +408,7 @@
                     
                 });
 		}
+
 		function startWaiting(heading, message) {
             $scope.waiting = true;
             $scope.waitHeading = !heading ? "Please wait..." : heading;
@@ -440,6 +444,6 @@
 	}
 
     // Register the controller
-    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","$window", "memeWizardService", "securityService", "likeDislikeMemeService", memeViewCtrl]);
+    app.controller('memeViewCtrl', ["$scope", "$location", "$http", "$q", "$routeParams","$dialog","$window", "$sanitize", "memeWizardService", "securityService", "likeDislikeMemeService","markdownService", memeViewCtrl]);
 
 })();
