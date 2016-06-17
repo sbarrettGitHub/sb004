@@ -108,12 +108,11 @@ margin-top:2px;
 	
  }
 #memeViewCurrent #repliesContainer{
-	margin-left:5px;
-	width: auto;
-	overflow:auto;
+	padding-left:0;
+	padding-right:0;
 }
 #memeViewCurrent #repliesContainer #replies{
-  min-height: 647px;
+  min-height: 208px;
   height: 100%;
 }
 #memeViewCurrent #repliesContainer #replies #noReplies{
@@ -126,16 +125,17 @@ margin-top:2px;
 	padding: 10px;
 	border-radius: 6px;
 }
-#commentsContainer{
-	margin-right:5px;
-	padding: 0;
+#memeViewCurrent #commentsContainer{
+	margin-left:5px;
+	width: auto;
+	overflow:auto;
 }
 #commentsContainer #commentsHeading{
 	font-weight:bold;
 	
 }
 #commentsContainer #comments{
-	min-height: 270px;
+	min-height: 647px;
 	width: 100%;
 }
 #commentsContainer #comments textarea{
