@@ -216,12 +216,32 @@
                                   ng-model="userComment">
 					</textarea>                    
                 </div>
-				<button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
+				<button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pull-right"
 						ng-click="addComment(item.meme.id, item.newUserComment)">
 					Post Comment
 				</button> 
-                <div ng-repeat="userComment in userComments | orderBy: '-dateCreated'" class="pull-left userComment commentary">
-
+				<div ng-repeat="userComment in userCommentsJustAdded | orderBy: 'dateCreated'" class="pull-left userComment commentary">
+					<div class="userCommentHeading">
+                        <div class="pull-left">
+                            <i ng-hide="userComment.userName.length==0" class="fa fa-clock-o"></i>
+                            <span ng-class="{'allowFollow': userComment.userName.length>0, 'noFollow': userComment.userName.length==0}">Added by you just now!</span>
+                            &nbsp;
+                            <span>{{userComment.dateCreated | date:'short'}}</span>
+                        </div>
+                        <div class="pull-right">
+                            <span ng-click="likeComment(userComment.id)" title="I like this" class="info stat hot">
+                                <i class="fa fa-thumbs-o-up"></i><span>{{userComment.likes}}</span>
+                            </span>
+                            <span ng-click="dislikeComment(userComment.id)" title="I dislike this" class="info stat hot">
+                                <i class="fa fa-thumbs-o-down"></i><span>{{userComment.dislikes}}</span>
+                            </span>
+                        </div>
+                    </div>					
+					<div class="userCommentText pull-left ">
+						<span ng-bind-html="userComment.comment"></span>
+					</div>
+				</div>				
+                <div ng-repeat="userComment in userComments | orderBy: 'dateCreated'" class="pull-left userComment commentary">
                     <div class="userCommentHeading">
                         <div class="pull-left">
                             <i ng-hide="userComment.userName.length==0" class="fa fa-user"></i>

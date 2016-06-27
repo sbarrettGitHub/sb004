@@ -14,6 +14,7 @@
 		$scope.myReplies = [];
 		$scope.userComments = [];
 		$scope.userComment = "";
+		$scope.userCommentsJustAdded = [];
 		$scope.allowGetMoreComments = true;
 		$scope.isUserFavourite = false;
 		var userCommentsIndex = 0;
@@ -220,6 +221,7 @@
 				$scope.userComments.push(data);
 				$scope.userComment = "";
 				$scope.meme.userCommentCount++;
+				$scope.userCommentsJustAdded.push(data);
 			}).
 			error(function (e) {
 				$window.alert(e);
@@ -253,7 +255,7 @@
 					$scope.allowGetMoreComments = (data.fullCommentCount > $scope.userComments.length) ? true : false;
 					
 					// Maintain a cursor of comments. Push out by the number of comments retieved (less 1 because zero based index :))
-					userCommentsIndex += $scope.userComments.length;	
+					userCommentsIndex = $scope.userComments.length;	
 
 					// Refresh the comment count on the meme 
 					$scope.meme.userCommentCount = data.fullCommentCount;					
