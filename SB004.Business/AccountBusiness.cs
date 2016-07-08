@@ -1,21 +1,22 @@
-﻿using SB004.Data;
-using SB004.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PasswordHash;
-
-namespace SB004.Business
+﻿namespace SB004.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using SB004.Data;
+    using SB004.Domain;
     public class AccountBusiness :IAccountBusiness
     {
         readonly IRepository repository;
-        public AccountBusiness(IRepository repository)
+        readonly INotification notificationService;
+        private readonly IConfiguration configuration;
+
+        public AccountBusiness(IRepository repository, INotification notificationService, IConfiguration configuration)
         {
             this.repository = repository;
+            this.notificationService = notificationService;
+            this.configuration = configuration;
         }
+
         public IUser CreateNewUser(IUser newUser) 
         {
             if (newUser.AuthenticationProvider == null && newUser.Email != null)
@@ -25,9 +26,18 @@ namespace SB004.Business
                     throw new UserAlreadyRegisteredException();
                 }
             }
+
             newUser.Active = true;
+
             return repository.Save(newUser);
         }
+
+        /// <summary>
+        /// Signs a new user up. Adds new user to repository, creates hased password and notifies the user by mail
+        /// </summary>
+        /// <param name="newUser">The new user.</param>
+        /// <param name="newUserCredentials">The new user credentials.</param>
+        /// <returns></returns>
         public IUser SignUp(IUser newUser, ICredentials newUserCredentials)
         {
             // Save the user
@@ -40,6 +50,9 @@ namespace SB004.Business
 			// Save the credentials
 			repository.Save(newUserCredentials);
 			
+            // Notify the user and welcome
+            notificationService.NotifyWelcome(newUser.Id, newUser.Email, newUser.UserName);
+
             return newUser;
         }
         /// <summary>
@@ -155,5 +168,33 @@ namespace SB004.Business
 			}
 			throw new ArgumentException("User does not exist");
 		}
+
+        /// <summary>
+        /// Flag password of the user as identified by email address for reset
+        /// </summary>
+        /// <param name="emailAddress">The email address.</param>
+        /// <exception cref="InvalidEmailOrPasswordException"></exception>
+        public IUser ForgotPassword(string emailAddress)
+        {
+            // Get the credentials record of the user identified by the email adddress
+            ICredentials userCredentials = repository.GetCredentials(emailAddress);
+            
+            // Raise exception if email address unrecognized
+            if (userCredentials == null)
+            {
+                throw new UnrecognizedEmailAddress();    
+            }
+            
+            // Set the password reset token on the credentials
+            userCredentials = repository.SetResetToken(userCredentials, configuration.ResetTokenDaysToExpire);
+
+            // Get the user 
+            IUser user = repository.GetUser(userCredentials.Id);
+
+            // Notify the user of how to reset his/her password
+            notificationService.NotifyResetPassword(user.Id,user.Email,user.UserName,userCredentials.ResetToken);
+
+            return user;
+        }
     }
 }

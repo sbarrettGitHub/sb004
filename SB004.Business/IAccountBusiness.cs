@@ -10,5 +10,6 @@ namespace SB004.Business
 	    void ChangePassword(IUser user, ICredentials newCredentials);
 	    IUser Follow(string userId, string followedId);
 	    IUser Unfollow(string userId, string followedId);
+        IUser ForgotPassword(string emailAddress);
     }
 }

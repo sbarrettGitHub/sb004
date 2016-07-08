@@ -299,8 +299,38 @@ namespace SB004.Controllers
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
 			}
 			throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.Forbidden));
-		}		
-		/// <summary>
+		}
+
+        /// <summary>
+        /// Set the user 
+        /// </summary>
+        /// <param name="details"></param>
+        /// <returns>OK or an exception if the email is not registered</returns>
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("forgotpassword")]
+        public HttpResponseMessage ForgotPassword([FromBody] AccountDetailsModel details)
+        {
+            if ((details.Email ?? "").Length == 0)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+            }
+            IUser user;
+            try
+            {
+                user = accountBusiness.ForgotPassword(details.Email);
+            }
+            catch (UnrecognizedEmailAddress)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+            }
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
+            response.Headers.Location = new Uri(Request.RequestUri, "/api/acount/" + user.Id);
+            return response;
+        }
+
+        /// <summary>
 		/// Update the current users profile email
 		/// </summary>
 		/// <param name="id"></param>

@@ -105,7 +105,14 @@
 			
 		}
 		$scope.resetPassword = function(){
-			$scope.submitted = true;
+			if(!$scope.email){
+				return;
+			}
+			securityService.forgotPassword($scope.email)
+			.then(function(){
+				$scope.submitted = true;
+			});
+			
 		}
 		$scope.signUpError = function(){
 			return (!$scope.nameSignUp || !!$scope.emailSignUp || !$scope.passwordSignUp 

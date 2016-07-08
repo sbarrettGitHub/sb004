@@ -328,6 +328,24 @@
 			// Broadcast that the user has updated his image
 			$rootScope.$broadcast('account.newUserImage', null);
 		}	
+		var forgotPassword = function(emailAddress){
+			var deferred = $q.defer();
+			$http( { 
+					method: 'POST', 
+					url: 'api/account/forgotpassword', 
+					data: {
+							email:emailAddress
+					}
+				})
+			.success(function (data) {
+                deferred.resolve();
+            }).
+            error(function (e) {
+                deferred.reject(e);
+            });
+
+            return deferred.promise;
+		}
         return {
             logInDialog:showLogInDialog,			
 			signIn:signIn,
@@ -343,7 +361,8 @@
 			signInOptions:signInOptions,
 			updateUserName:updateUserName,
 			updateUserMessage:updateUserMessage,
-			updateUserImage:updateUserImage
+			updateUserImage:updateUserImage,
+			forgotPassword: forgotPassword
         }
     }
 

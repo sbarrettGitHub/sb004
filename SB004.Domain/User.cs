@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace SB004.Domain
 {
     public class UserLite: IUserLite
@@ -82,7 +83,11 @@ namespace SB004.Domain
         public string Email{ get; set; }
 
         public string Password { get; set; }
+
         public string Salt { get; set; }
 
+        public string ResetToken { get; set; }
+
+        public DateTime ResetTokenExpiryDate { get; set; }
     }
 }

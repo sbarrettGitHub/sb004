@@ -1,3 +1,5 @@
+using SB004.Domain;
+
 namespace SB004
 {
     using Microsoft.Practices.Unity;
@@ -19,7 +21,8 @@ namespace SB004
             container.RegisterType<IAccountBusiness, AccountBusiness>();
 			container.RegisterType<IUserCommentBusiness, UserCommentBusiness>();
 			container.RegisterType<IHashTagBusiness, HashTagBusiness>();
-
+			container.RegisterType<IConfiguration, Configuration>();
+            container.RegisterType<INotification, Notification>();
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

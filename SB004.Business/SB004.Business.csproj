@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,7 +43,14 @@
     <Compile Include="AccountBusiness.cs" />
     <Compile Include="HashTagBusiness.cs" />
     <Compile Include="IHashTagBusiness.cs" />
+    <Compile Include="INotification.cs" />
     <Compile Include="IUserCommentBusiness.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="Properties\MailTemplates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailTemplates.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserCommentBusiness.cs" />
     <Compile Include="IAccountBusiness.cs" />
     <Compile Include="IMemeBusiness.cs" />
@@ -63,6 +71,18 @@
       <Project>{DD714333-70C8-4DE7-B3BB-64101165028E}</Project>
       <Name>SB004.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MailTemplates\forgotPassword.subject.html" />
+    <Content Include="MailTemplates\forgotPassword.body.html" />
+    <Content Include="MailTemplates\welcome.body.html" />
+    <Content Include="MailTemplates\welcome.subject.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\MailTemplates.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailTemplates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

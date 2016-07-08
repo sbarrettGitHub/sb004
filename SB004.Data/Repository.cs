@@ -27,6 +27,7 @@ namespace SB004.Data
         private readonly MongoCollection<TimeLine> timeLineCollection;
 		private readonly MongoCollection<HashTag> hashTagCollection;
 		private readonly MongoCollection<HashTagMeme> hashTagMemeCollection;
+		private readonly MongoCollection<Mail> mailCollection;
         public Repository()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
@@ -54,6 +55,8 @@ namespace SB004.Data
 			hashTagCollection = database.GetCollection<HashTag>("hashtag");
 			
 			hashTagMemeCollection = database.GetCollection<HashTagMeme>("hashtagMeme");
+			
+            mailCollection = database.GetCollection<Mail>("mail");
 
 	        if (!BsonClassMap.IsClassMapRegistered(typeof(List<IComment>)))
 	        {
@@ -94,6 +97,10 @@ namespace SB004.Data
 			if (!BsonClassMap.IsClassMapRegistered(typeof(HashTag)))
 	        {
 				BsonClassMap.RegisterClassMap<HashTag>();
+	        }			
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Mail)))
+	        {
+				BsonClassMap.RegisterClassMap<Mail>();
 	        }
 
 			// Create index on hash tag in hashtag meme
@@ -338,6 +345,20 @@ namespace SB004.Data
 
             return credentialsEntity;                        
         }
+
+        /// <summary>
+        /// Sets the reset token on a user crenetial record and saves.
+        /// </summary>
+        /// <param name="credentials">The credentials.</param>
+        /// <param name="daysToExpire">Number of days before the reset token expires.</param>
+        /// <returns></returns>
+        public ICredentials SetResetToken(ICredentials credentials, int daysToExpire)
+        {
+            credentials.ResetToken = NewShortId();
+            credentials.ResetTokenExpiryDate = DateTime.Now.AddDays(daysToExpire);
+            return Save(credentials);
+        }
+
         /// <summary>
         /// Retrieve the user by authentication provider user id and provider name
         /// </summary>
@@ -688,7 +709,26 @@ namespace SB004.Data
 
 			return hashTags;
 		}
-	    #endregion
 
-	}
+
+
+        #endregion
+
+        #region Mail
+
+        /// <summary>
+        /// Saves the specified mail message. A service will pick it up and deliver it
+        /// </summary>
+        /// <param name="mailMessage">The mail message.</param>
+        /// <returns></returns>
+        public IMail Save(IMail mailMessage)
+        {
+            mailMessage.Id = mailMessage.Id ?? NewLongId();
+            mailMessage.DateAdded = DateTime.Now;
+            mailCollection.Save(mailMessage.ToBsonDocument());
+            return mailMessage;
+        }
+
+        #endregion
+    }
 }

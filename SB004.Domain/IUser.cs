@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace SB004.Domain
 {
     public interface IUserLite 
@@ -15,6 +16,10 @@ namespace SB004.Domain
 
         // Store as hash
         string Password { get; set; }
+
+        string ResetToken { get; set; }
+
+        DateTime ResetTokenExpiryDate { get; set; }
     }
     public interface IUser
     {

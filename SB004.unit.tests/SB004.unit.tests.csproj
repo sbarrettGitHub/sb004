@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,11 +54,28 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AccountBusiness\WhenUserForgetsPassword.cs" />
+    <Compile Include="AccountBusiness\WhenSigningUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedTests\WhenAddingASeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SB004.Business\SB004.Business.csproj">
+      <Project>{B53B56B9-5396-4F3E-A4C9-05B405EEE132}</Project>
+      <Name>SB004.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SB004.Data\SB004.Data.csproj">
+      <Project>{0ACB081F-1997-45F7-AB42-A7706790DEA1}</Project>
+      <Name>SB004.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SB004.Domain\SB004.Domain.csproj">
+      <Project>{2FADAAEF-7D05-4EA2-A3FC-568DD5E367F0}</Project>
+      <Name>SB004.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

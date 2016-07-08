@@ -266,6 +266,15 @@
                      title="Get more comments">
                     <i class="fa fa-cloud-download"></i><span>&nbsp; Show More Comments</span>
                 </div>
+                <div id="addComment">
+                    <textarea type="text" value="" placeholder="Enter you comment here...max characters 1000" maxlength="1000"
+                                  ng-model="userComment">
+					</textarea>                    
+                </div>
+				<button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pull-right"
+						ng-click="addComment(item.meme.id, item.newUserComment)">
+					Post Comment
+				</button> 				
             </div>
         </div>	
 	</div>
