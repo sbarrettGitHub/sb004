@@ -1,7 +1,6 @@
-﻿
-namespace SB004.Unit.Tests.AccountBusiness
+﻿namespace SB004.Unit.Tests.Business.AccountBusiness
 {
-    using Business;
+    using SB004.Business;
     using Data;
     using Domain;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,12 +10,13 @@ namespace SB004.Unit.Tests.AccountBusiness
     /// Test the rules around signing a new user up
     /// </summary>
     [TestClass]
-    public class WhenSigningUp
+    public class When_Signing_Up
     {
         private IRepository repository;
         private INotification notification;
         private IAccountBusiness accountBusiness;
         private IConfiguration configuration;
+        private IPasswordBusiness passwordBusiness;
 
         [TestInitialize]
         public void Initialize()
@@ -24,15 +24,32 @@ namespace SB004.Unit.Tests.AccountBusiness
             repository = Substitute.For<IRepository>();
             notification = Substitute.For<INotification>();
             configuration = Substitute.For<IConfiguration>();
+            passwordBusiness = Substitute.For<IPasswordBusiness>();
 
-            accountBusiness = new Business.AccountBusiness(repository, notification, configuration);
+            accountBusiness = new AccountBusiness(repository, notification, configuration, passwordBusiness);
         }
 
         /// <summary>
-        /// Test that a user is added to repository.
+        /// Test that a new user with a duplicate email address is rejected.
         /// </summary>
         [TestMethod]
-        public void UserIsAddedToRepository()
+        [ExpectedException(typeof(UserAlreadyRegisteredException))]
+        public void Should_Reject_Duplicate_EmailAddress()
+        {
+            // Arrange
+            repository.GetCredentials(Arg.Any<string>()).Returns(new Credentials { Email = "test@email.com" });
+            IUser newUser = NewTestUser();
+            ICredentials credentials = NewTestCredentials();
+
+            // Act
+            accountBusiness.SignUp(newUser, credentials);
+        }
+
+        /// <summary>
+        /// Test that the new user is sent a welcome email.
+        /// </summary>
+        [TestMethod]
+        public void Should_Send_New_User_A_Welcome_Email()
         {
             // Arrange
             repository.GetCredentials(Arg.Any<string>()).Returns((ICredentials)null);
@@ -43,14 +60,14 @@ namespace SB004.Unit.Tests.AccountBusiness
             accountBusiness.SignUp(newUser, credentials);
 
             // Assert
-            repository.Received().Save(Arg.Any<IUser>());
+            notification.Received().NotifyWelcome(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
         }
 
         /// <summary>
         /// Test that credentials are added to repository.
         /// </summary>
         [TestMethod]
-        public void CredentialsAddedToRepository()
+        public void Should_Add_Credentials_To_Repository()
         {
             // Arrange
             repository.GetCredentials(Arg.Any<string>()).Returns((ICredentials)null);
@@ -65,10 +82,10 @@ namespace SB004.Unit.Tests.AccountBusiness
         }
 
         /// <summary>
-        /// Test that the new user is sent a welcome email.
+        /// Test that a user is added to repository.
         /// </summary>
         [TestMethod]
-        public void NewUserIsSentAWelcomeEmail()
+        public void Should_Add_User_To_Repository()
         {
             // Arrange
             repository.GetCredentials(Arg.Any<string>()).Returns((ICredentials)null);
@@ -77,25 +94,9 @@ namespace SB004.Unit.Tests.AccountBusiness
 
             // Act
             accountBusiness.SignUp(newUser, credentials);
-            
+
             // Assert
-            notification.Received().NotifyWelcome(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
-        }
-
-        /// <summary>
-        /// Test that a new user with a duplicate email address is rejected.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UserAlreadyRegisteredException))]
-        public void DuplicateEmailAddressIsRejected()
-        {
-            // Arrange
-            repository.GetCredentials(Arg.Any<string>()).Returns(new Credentials { Email = "test@email.com" });
-            IUser newUser = NewTestUser();
-            ICredentials credentials = NewTestCredentials();
-
-            // Act
-            accountBusiness.SignUp(newUser, credentials);
+            repository.Received().Save(Arg.Any<IUser>());
         }
 
         /// <summary>

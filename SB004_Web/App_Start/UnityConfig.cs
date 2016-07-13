@@ -23,6 +23,7 @@ namespace SB004
 			container.RegisterType<IHashTagBusiness, HashTagBusiness>();
 			container.RegisterType<IConfiguration, Configuration>();
             container.RegisterType<INotification, Notification>();
+            container.RegisterType<IPasswordBusiness, PasswordBusiness>();
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

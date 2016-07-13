@@ -8,15 +8,23 @@
     {
         readonly IRepository repository;
         readonly INotification notificationService;
-        private readonly IConfiguration configuration;
+        readonly IConfiguration configuration;
+        private readonly IPasswordBusiness passwordBusiness;
 
-        public AccountBusiness(IRepository repository, INotification notificationService, IConfiguration configuration)
+        public AccountBusiness(IRepository repository, INotification notificationService, IConfiguration configuration, IPasswordBusiness passwordBusiness)
         {
             this.repository = repository;
             this.notificationService = notificationService;
             this.configuration = configuration;
+            this.passwordBusiness = passwordBusiness;
         }
 
+        /// <summary>
+        /// Creates the new user.
+        /// </summary>
+        /// <param name="newUser">The new user.</param>
+        /// <returns></returns>
+        /// <exception cref="UserAlreadyRegisteredException">Thrown if the user is already registered</exception>
         public IUser CreateNewUser(IUser newUser) 
         {
             if (newUser.AuthenticationProvider == null && newUser.Email != null)
@@ -40,11 +48,14 @@
         /// <returns></returns>
         public IUser SignUp(IUser newUser, ICredentials newUserCredentials)
         {
+            // Ensure password is strong enough
+            passwordBusiness.EnforcePasswordStengthRules(newUserCredentials.Password);
+
             // Save the user
             newUser = CreateNewUser(newUser);
 
             // Create a Hash and unique salt for the new password
-            newUserCredentials.Password = PasswordHash.PasswordHash.CreateHash(newUserCredentials.Password);
+            newUserCredentials.Password = passwordBusiness.Hash(newUserCredentials.Password);
             newUserCredentials.Id = newUser.Id;
 			
 			// Save the credentials
@@ -64,7 +75,7 @@
         public IUser SignIn(string email, string password)
         {
             ICredentials userCredentials = repository.GetCredentials(email);
-            if (userCredentials != null && PasswordHash.PasswordHash.ValidatePassword(password, userCredentials.Password))
+            if (userCredentials != null && passwordBusiness.ValidatePassword(password, userCredentials.Password))
             {
                 IUser user = repository.GetUser(userCredentials.Id, true);
 	            if (user.Active)
@@ -82,8 +93,11 @@
 		/// <param name="newCredentials"></param>
 		public void ChangePassword(IUser user, ICredentials newCredentials)
 	    {
+            // Ensure password is strong enough
+            passwordBusiness.EnforcePasswordStengthRules(newCredentials.Password);
+
 			// Create a Hash and unique salt for the new password
-			newCredentials.Password = PasswordHash.PasswordHash.CreateHash(newCredentials.Password);
+            newCredentials.Password = passwordBusiness.Hash(newCredentials.Password);
 			newCredentials.Id = user.Id;
 
 			// Save the credentials
@@ -182,7 +196,7 @@
             // Raise exception if email address unrecognized
             if (userCredentials == null)
             {
-                throw new UnrecognizedEmailAddress();    
+                throw new UnrecognizedEmailAddressException();    
             }
             
             // Set the password reset token on the credentials
@@ -193,6 +207,58 @@
 
             // Notify the user of how to reset his/her password
             notificationService.NotifyResetPassword(user.Id,user.Email,user.UserName,userCredentials.ResetToken);
+
+            return user;
+        }
+
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="newPassword">The new password.</param>
+        /// <param name="resetToken">The reset token.</param>
+        public IUser ResetPassword(string newPassword, string resetToken)
+        {
+            // Get the credentials record for the given reset token and email address
+            ICredentials credentials = repository.GetCredentialsByResetToken(resetToken);
+
+            // Are the reset token and email address valid?
+            if (credentials == null)
+            {
+                throw new InvalidPasswordResetTokenException();
+            }
+
+            // Is the reset token expired?
+            if (credentials.ResetTokenExpiryDate.CompareTo(DateTime.Now) < 0)
+            {
+                throw new ExpiredPasswordResetTokenException();
+            }
+
+            // Get the user
+            IUser user = repository.GetUser(credentials.Id);
+
+            // Verify that the user exists 
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            // Verify that the user is active
+            if (user.Active == false)
+            {
+                throw new UserNotActiveException();
+            }
+
+            // Ensure password is strong enough
+            passwordBusiness.EnforcePasswordStengthRules(newPassword);
+
+            // Create password hash for new password
+            credentials.Password = passwordBusiness.Hash(newPassword);
+
+            // Remove the reset token
+            credentials.ResetToken = null;
+
+            // Save the credentials
+            repository.Save(credentials);
 
             return user;
         }

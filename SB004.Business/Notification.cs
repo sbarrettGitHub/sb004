@@ -58,7 +58,7 @@ namespace SB004.Business
             body = transformPlaceholders(body, name: name, 
                                                 homePageUrl: this.configuration.RootUrl, 
                                                 systemName: this.configuration.SystemName, 
-                                                resetPassordAction: "api/account/resetpassword", 
+                                                resetPassordAction: "resetpassword", 
                                                 userId: userId, 
                                                 resetToken: resetToken);
 

@@ -50,4 +50,13 @@ namespace SB004.Models
 		public string NewPassword { get; set; }
 		public string StatusMessage { get; set; }
 	}
+
+    public class ResetPasswordModel
+    {
+        [Required]
+        public string NewPassword { get; set; }
+        
+        [Required]
+        public string ResetToken { get; set; }
+    }
 }

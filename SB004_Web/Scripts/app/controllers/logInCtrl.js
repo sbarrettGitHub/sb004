@@ -13,6 +13,8 @@
 		$scope.conformPasswordSignUp="";
 		$scope.termsAcceptedSignUp=false;
 		
+		$scope.resetSuccess = false;
+
 		$scope.submitError = "";
 		
         /*Control buttons*/
@@ -31,6 +33,7 @@
 					focus('SignUp');
 				break;				
 				case securityService.signInOptions.forgotPassword:
+					$scope.resetSuccess = false;
 					focus('ForgotPassword');
 				break;
 				default:
@@ -62,7 +65,7 @@
         });
 		$scope.signUp = function(){
 			$scope.submitted = true;
-			if(!$scope.emailSignUp || !$scope.passwordSignUp || !$scope.nameSignUp){
+			if(!$scope.emailSignUp || !$scope.passwordSignUp || !$scope.nameSignUp || $scope.passwordTooWeak()){
 				return;
 			}
 			securityService.signUp($scope.nameSignUp, $scope.emailSignUp, $scope.passwordSignUp)
@@ -76,19 +79,12 @@
 		// --------------------------------------------------------------
 		// Validate password strength
 		$scope.passwordTooWeak = function(){
-			return $scope.passwordTooShort() || $scope.passwordNeedsOneDigit();
-		}
-		$scope.passwordTooShort = function(){
-			if($scope.submitted && $scope.passwordSignUp){
-				if($scope.passwordSignUp.length < 6){
-					return true;
-				}
+			if($scope.submitted){
+				return !securityService.isPasswordStrongEnough($scope.passwordSignUp);
 			}
+			return false;
+			
 		}
-		$scope.passwordNeedsOneDigit = function(){
-			return $scope.submitted && $scope.passwordSignUp.length >= 6 && $scope.passwordSignUp.match(/\d+/g) == null;
-		}
-
 		// --------------------------------------------------------------
 		$scope.signIn = function(){
 			$scope.submitted = true;
@@ -111,6 +107,7 @@
 			securityService.forgotPassword($scope.email)
 			.then(function(){
 				$scope.submitted = true;
+				$scope.resetSuccess = true;
 			});
 			
 		}

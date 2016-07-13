@@ -26,6 +26,8 @@
         
         ICredentials GetCredentials(string email);
 
+        ICredentials GetCredentialsByResetToken(string resetToken);
+
         ICredentials SetResetToken(ICredentials credentials, int daysToExpire);
 
         IUser GetUser(string authenticationUserId, string authenticationProvider);
@@ -75,6 +77,8 @@
 	    List<IHashTag> SearchHashTags(string hashTag, int take);
 
         IMail Save(IMail mailMessage);
-        
+
+
+       
     }
 }

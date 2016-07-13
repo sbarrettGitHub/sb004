@@ -44,8 +44,10 @@
     <Compile Include="HashTagBusiness.cs" />
     <Compile Include="IHashTagBusiness.cs" />
     <Compile Include="INotification.cs" />
+    <Compile Include="IPasswordBusiness.cs" />
     <Compile Include="IUserCommentBusiness.cs" />
     <Compile Include="Notification.cs" />
+    <Compile Include="PasswordBusiness.cs" />
     <Compile Include="Properties\MailTemplates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

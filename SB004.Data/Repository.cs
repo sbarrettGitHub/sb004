@@ -347,6 +347,17 @@ namespace SB004.Data
         }
 
         /// <summary>
+        /// Retrieve the credentials for the given reset token
+        /// </summary>
+        /// <param name="resetToken">the reset token of the credentials record</param>
+        /// <returns>The credentials record</returns>
+        public ICredentials GetCredentialsByResetToken(string resetToken)
+        {
+            // Find the credentials record with the reset token
+            return userCredentialCollection.FindOne(Query<Credentials>.EQ(e => e.ResetToken, resetToken));
+        }
+
+        /// <summary>
         /// Sets the reset token on a user crenetial record and saves.
         /// </summary>
         /// <param name="credentials">The credentials.</param>

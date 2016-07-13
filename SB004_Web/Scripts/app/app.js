@@ -21,12 +21,15 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'angula
           }).when('/publish/:id', {
               templateUrl: 'views/publish.html',
               controller: 'memePublishAndShareCtrl'
+          }).when('/resetpassword/:id', {
+              templateUrl: 'Scripts/app/views/resetPassword.html',
+              controller: 'resetPasswordCtrl'
           }).
           otherwise({
               redirectTo: '/home'
           });
 		  //$locationProvider.html5Mode(true);
-        $httpProvider.interceptors.push('authInterceptorService');
+        $httpProvider.interceptors.push('authInterceptorService');       
 
     })
 	.filter('nearestK', function() {

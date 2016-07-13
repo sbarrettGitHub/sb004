@@ -12,7 +12,25 @@ namespace SB004.Domain
     public class InvalidEmailOrPasswordException : Exception
     {
     }
-    public class UnrecognizedEmailAddress : Exception
+    public class UnrecognizedEmailAddressException : Exception
+    {
+    }
+    public class InvalidPasswordResetTokenException : Exception
+    {
+    }
+    public class ExpiredPasswordResetTokenException : Exception
+    {
+    }
+    public class UserNotActiveException : Exception
+    {
+    }
+    public class UserNotFoundException : Exception
+    {
+    }
+    public class PasswordTooShortException : Exception
+    {
+    }
+    public class PasswordRequiresNumberException : Exception
     {
     }
 }

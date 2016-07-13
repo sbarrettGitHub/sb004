@@ -11,5 +11,6 @@ namespace SB004.Business
 	    IUser Follow(string userId, string followedId);
 	    IUser Unfollow(string userId, string followedId);
         IUser ForgotPassword(string emailAddress);
+        IUser ResetPassword(string newPassword, string resetToken);
     }
 }

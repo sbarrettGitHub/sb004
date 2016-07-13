@@ -57,10 +57,10 @@
 				</div>			
 			</div>
 			<div id="forgotPassword" class="signInMethod" ng-show="view=='ForgotPassword'">
-				<label class="text-center">
+				<label class="text-center" ng-hide="submitted && resetSuccess">
 					Enter your email address here and we will mail you a reset password link
 				</label>
-				<div class="form-group" ng-class="{'has-error':submitted && !email}">
+				<div class="form-group" ng-class="{'has-error':submitted && !email}" ng-hide="submitted && resetSuccess">
 					<br/>
 					<label for="email" class="control-label">
 						* Email address:
@@ -75,6 +75,11 @@
 							Back to Sign In
 						</a>
 					</div>
+				</div>
+				<div class="form-group" ng-show="submitted && resetSuccess">
+					<label class="text-center" ng-hide="submitted && success">
+						A mail with a reset password link has been sent to your email address. <br/><br/>Don't forget to check your Junk mail folder in case it is mistaken for spam!  
+					</label>					
 				</div>												
 			</div>
 			<div id="signUp" class="signInMethod" ng-show="view=='SignUp'">
@@ -104,9 +109,7 @@
 						* Password:
 					</label>
 					<div class="pull-right col-lg-9 col-md-9 col-sm-9 ">		
-						<span class="pull-right help-block" ng-show="submitted && !passwordSignUp">A password is required</span>
-						<span class="pull-right help-block" ng-show="submitted && passwordTooShort()">Too short (at least 6)</span>
-						<span class="pull-right help-block" ng-show="submitted && passwordNeedsOneDigit()">Must have at least 1 number</span>
+						<span class="pull-right help-block" ng-show="submitted && !passwordSignUp">A password is required</span>						
 					</div>
 					<input type="password" id="passwordSignUp"class="form-control" ng-model="passwordSignUp" title="Password must be at least 6 characters long and contain at least one number and one letter!"/>					
 				</div>	
@@ -120,6 +123,9 @@
 					</div>
 					<input type="password" id="confirmPasswordSignUp" class="form-control"ng-model="confirmPasswordSignUp">					
 				</div>	
+				<div class="form-group has-error" ng-show="submitted && passwordTooWeak()">
+					<strong><span class="help-block text-center">Password must be at least 6 characters long and contain at least 1 number!</span></strong>
+				</div>
 				<div id="termsAcceptedSignUpContainer" class="checkOption" 
 						ng-class="{'has-error':submitted && !termsAcceptedSignUp}">					
 					<input type="checkbox" id="termsAcceptedSignUp" 
@@ -153,7 +159,7 @@
 			<input type="button" value="Sign Up" ng-show="view=='SignUp'" ng-click="signUp()" 
 				title="To sign up please first read and accept our terms and conditions."
 				ng-disabled="!termsAcceptedSignUp"/>
-			<input type="button" value="Reset Passord" ng-show="view=='ForgotPassword'" ng-click="resetPassword()"/>
+			<input type="button" value="Reset Passord" ng-show="view=='ForgotPassword' && resetSuccess==false" ng-click="resetPassword()"/>
             <input type="button" value="No Thanks" ng-click="closeMe()"/>
         </div>	
   

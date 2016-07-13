@@ -1,6 +1,6 @@
 ﻿
 
-using System.Linq;
+
 
 namespace SB004.Controllers
 {
@@ -22,6 +22,8 @@ namespace SB004.Controllers
 	using System.Net.Http.Formatting;
 	using System.Collections.Generic;
 	using SB004.Business;
+    using System.Linq;
+
 	[RoutePrefix("api/account")]
 	public class AccountController : ApiController
 	{
@@ -320,12 +322,54 @@ namespace SB004.Controllers
             {
                 user = accountBusiness.ForgotPassword(details.Email);
             }
-            catch (UnrecognizedEmailAddress)
+            catch (UnrecognizedEmailAddressException)
             {
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
+            response.Headers.Location = new Uri(Request.RequestUri, "/api/acount/" + user.Id);
+            return response;
+        }
+
+        /// <summary>
+        /// Resets the user password.with a giben email address, and reset token
+        /// </summary>
+        /// <param name="resetPasswordModel">The reset password model.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("resetpassword")]
+        public HttpResponseMessage ResetPassword([FromBody]ResetPasswordModel resetPasswordModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+            }
+            HttpResponseMessage response;
+            IUser user;
+
+            // Reset the password
+            try
+            {
+                user = accountBusiness.ResetPassword(resetPasswordModel.NewPassword, resetPasswordModel.ResetToken);
+
+            }
+            catch (InvalidPasswordResetTokenException ex)
+            {
+
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+                response.Headers.Location = new Uri(Request.RequestUri, "/api/acount/resetpassword");
+                return response;
+            }
+            catch (ExpiredPasswordResetTokenException ex)
+            {
+                response = Request.CreateResponse(HttpStatusCode.Gone);
+                response.Headers.Location = new Uri(Request.RequestUri, "/api/acount/resetpassword");
+                return response;
+            }
+
+            response = Request.CreateResponse(HttpStatusCode.OK, user);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/acount/" + user.Id);
             return response;
         }
@@ -591,5 +635,7 @@ namespace SB004.Controllers
 
 			return tokenResponse;
 		}
+
+
 	}
 }

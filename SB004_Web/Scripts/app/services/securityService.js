@@ -25,7 +25,7 @@
             backdrop: true,
             keyboard: true,
             backdropClick: false,
-            templateUrl: "Scripts/app/views/logIn.html",
+            templateUrl: "Scripts/app/views/logIn.html?t="  + new Date().getTime(),
             controller: "logInCtrl"
         };		
         var loginDialog = $dialog.dialog({
@@ -346,6 +346,32 @@
 
             return deferred.promise;
 		}
+		var resetPassword = function(newPassword, resetToken){
+			var deferred = $q.defer();
+			$http( { 
+					method: 'POST', 
+					url: 'api/account/resetpassword', 
+					data: {
+							newPassword: newPassword,
+							resetToken: resetToken
+					}
+				})
+			.success(function (data) {
+                deferred.resolve(data);
+            }).
+            error(function (e, status) {
+                deferred.reject(status);
+            });
+
+            return deferred.promise;
+		}
+		var isPasswordStrongEnough = function(password){
+			if(password && password.length>=6 && password.match(/.*[0-9]+.*/)){
+				return true;
+			}
+
+			return false;
+		}
         return {
             logInDialog:showLogInDialog,			
 			signIn:signIn,
@@ -362,7 +388,9 @@
 			updateUserName:updateUserName,
 			updateUserMessage:updateUserMessage,
 			updateUserImage:updateUserImage,
-			forgotPassword: forgotPassword
+			forgotPassword: forgotPassword,
+			resetPassword: resetPassword,
+			isPasswordStrongEnough: isPasswordStrongEnough
         }
     }
 
