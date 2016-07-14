@@ -29,6 +29,7 @@
                 $scope.serverError = "New password must be at least 6 characters long and contain at least 1 number!";
                  return;
              }
+             startWaiting();
              securityService.resetPassword($scope.newPassword, resetToken)
              .then(function(data){
                 $window.alert("Password successfully changed!");
@@ -41,6 +42,7 @@
                 });
              },
              function(status) {
+                 endWaiting();
                  switch (status) {
                      case 404:
                           $scope.serverError = "The password reset link you are using is invalid.";

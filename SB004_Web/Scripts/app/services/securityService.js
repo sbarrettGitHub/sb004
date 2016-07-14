@@ -340,8 +340,8 @@
 			.success(function (data) {
                 deferred.resolve();
             }).
-            error(function (e) {
-                deferred.reject(e);
+            error(function (e, status) {
+                deferred.reject(status);
             });
 
             return deferred.promise;

@@ -327,6 +327,7 @@ namespace SB004.Data
         /// <returns></returns>
         public ICredentials Save(ICredentials credentials)
         {
+            credentials.Email = credentials.Email.ToLower();
             userCredentialCollection.Save(credentials.ToBsonDocument());
             return credentials;
         }
@@ -337,7 +338,7 @@ namespace SB004.Data
         /// <returns></returns>
         public ICredentials GetCredentials(string email) 
         {
-            Credentials credentialsEntity = userCredentialCollection.FindOne(Query<Credentials>.EQ(e => e.Email, email));
+            Credentials credentialsEntity = userCredentialCollection.FindOne(Query<Credentials>.EQ(e => e.Email, email.ToLower()));
             if (credentialsEntity == null)
             {
                 return null;

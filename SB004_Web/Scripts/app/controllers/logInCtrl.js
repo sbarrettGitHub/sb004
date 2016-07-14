@@ -16,7 +16,7 @@
 		$scope.resetSuccess = false;
 
 		$scope.submitError = "";
-		
+		$scope.forgotPasswordError = "";
         /*Control buttons*/
         $scope.closeMe = function () {
             dialog.close("Fail");
@@ -100,14 +100,30 @@
                     });			
 			
 		}
-		$scope.resetPassword = function(){
+		$scope.forgotPassword = function(){
+			$scope.forgotPasswordError = "";
+			$scope.resetSuccess = false;
 			if(!$scope.email){
+				$scope.forgotPasswordError = "Invalid email address.";
 				return;
 			}
+			startWaiting();
 			securityService.forgotPassword($scope.email)
 			.then(function(){
+				endWaiting();
 				$scope.submitted = true;
 				$scope.resetSuccess = true;
+			},function(status){
+				 endWaiting();
+				switch (status) {
+					case 404:
+						$scope.forgotPasswordError = "Email address entered is not registered. Please review and try again";
+						break;
+				
+					default:
+						$scope.forgotPasswordError = "Unable to issue reset password link at this time. Please try again later.";
+						break;
+				}
 			});
 			
 		}
@@ -118,8 +134,19 @@
 		$scope.showTerms = function(){
 					
 		}
+		function startWaiting(heading, message) {
+            $scope.waiting = true;
+            $scope.waitHeading = !heading ? "Please wait..." : heading;
+            $scope.waitingMessage = !message ? "" : message;
+        }
+        function endWaiting() {
+            $scope.waiting = false;
+            $scope.waitHeading = "";
+            $scope.waitingMessage = "";
+        }
 		// Set focus based on the supplied intial view
 		$scope.switchView($scope.view);
+
     }
   
 
