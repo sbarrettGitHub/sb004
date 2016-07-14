@@ -557,7 +557,7 @@
 		}
         /*---------------------------------------------------------*/
         $scope.viewMyPosts= function(){
-            $location.path("/usermemes/" + $scope.userId);
+            $location.path("/timeline/" + $scope.userId);
         }
         /*---------------------------------------------------------*/
         $scope.editMyProfile = function(){

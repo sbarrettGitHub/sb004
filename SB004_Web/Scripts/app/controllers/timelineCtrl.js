@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var userMemesCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, $q, likeDislikeMemeService, securityService, scrollTo, timeLineService) {
+    var timelineCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, $q, likeDislikeMemeService, securityService, scrollTo, timeLineService) {
         $scope.userId = $routeParams.id;
 		var itemsIndex=0;
 		$scope.entryType = "All";
@@ -96,7 +96,7 @@
 		}
 		$scope.openUser = function(userId)
 		{
-			$location.path("/usermemes/" + userId);		
+			$location.path("/timeline/" + userId);		
 		}
 		function findMeme(memeId){
 			// Find the meme in scope with the given id
@@ -160,6 +160,6 @@
     }
 
     // Register the controller
-    app.controller('userMemesCtrl', ["$scope", "$rootScope", "$routeParams", "$http", "$window", "$location","$q", "likeDislikeMemeService", "securityService", "scrollTo", "timeLineService", userMemesCtrl]);
+    app.controller('timelineCtrl', ["$scope", "$rootScope", "$routeParams", "$http", "$window", "$location","$q", "likeDislikeMemeService", "securityService", "scrollTo", "timeLineService", timelineCtrl]);
 
 })();

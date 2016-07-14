@@ -1,14 +1,14 @@
-#userMemes .userCardContainer{  	
+#timeline .userCardContainer{  	
     height: 300px;
 }
-#userMemes .following{
+#timeline .following{
     width:100px;
     margin-top: 25px;
 }
-#userMemes .unfollow{
+#timeline .unfollow{
     color: darkred;
 }
-#userMemes .userImageContainer{
+#timeline .userImageContainer{
     margin-top: 50px;
     background-color:white;
     width: 200px;
@@ -16,22 +16,22 @@
     padding:37px;
     border:3px solid #F8F8F8;
 }
-#userMemes .userMainImage{
+#timeline .userMainImage{
 
     max-width: 125px;
     max-height: 125px;
     min-height: 125px;
     min-width: 125px;
 }
-#userMemes .userNameContainer{
+#timeline .userNameContainer{
     margin-top: 35px;
     height: 100px;
     margin-left:15px;
 }
-#userMemes .userName{
+#timeline .userName{
     font-size: 4em;     
 }
-#userMemes .userQuoteContainer{
+#timeline .userQuoteContainer{
     font-size: 1.5em;
     height: 110px;
     margin-left:15px;
@@ -39,22 +39,22 @@
     font-style: italic;
     color: darkgray;
 }
-#userMemes .userStatOptions{
+#timeline .userStatOptions{
     margin-top: -45px;
     font-size: 1.3em;
     color: darkgray;
     text-align: center;
 }
-#userMemes .userStatOptions div{
+#timeline .userStatOptions div{
     border-bottom: 4px solid white ; 
 }
-#userMemes .userStatOptions div:hover{
+#timeline .userStatOptions div:hover{
     border-bottom: 4px solid cornflowerblue ; 
 }
-#userMemes .userStatOptions .selected{
+#timeline .userStatOptions .selected{
     color: black !important; 
 }
-#userMemes .userCard {
+#timeline .userCard {
     width: 98%;
     height: 300px;
     margin-bottom: 15px;
@@ -67,22 +67,22 @@
 	font-size: smaller;
 	margin-top:15px;
 }
-#userMemes .timeLineDescription{
+#timeline .timeLineDescription{
 
     margin-bottom: 40px;
 }
 
 
-#userMemes .sideBar{
+#timeline .sideBar{
     min-height: 100px;
 }
-#userMemes .sideBarLeft{
+#timeline .sideBarLeft{
     margin-left: 15px;
 }
-#userMemes .sideBarRight{
+#timeline .sideBarRight{
     margin-left: -30px;
 }
-#userMemes .sideBar .head{
+#timeline .sideBar .head{
     margin-top:15px;
     font-size: 1.3em;
     color: darkgray;

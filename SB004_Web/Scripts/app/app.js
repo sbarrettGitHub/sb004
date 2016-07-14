@@ -12,9 +12,9 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'angula
           }).when('/meme/:id', {
               templateUrl: 'Scripts/app/views/memeView.html',
               controller: 'memeViewCtrl'
-          }).when('/usermemes/:id', {
-              templateUrl: 'Scripts/app/views/userMemes.html',
-              controller: 'userMemesCtrl'
+          }).when('/timeline/:id', {
+              templateUrl: 'Scripts/app/views/timeline.html',
+              controller: 'timelineCtrl'
           }).when('/spawn/:id', {
               templateUrl: 'views/spawn.html',
               controller: 'memeApplyTextCtrl'

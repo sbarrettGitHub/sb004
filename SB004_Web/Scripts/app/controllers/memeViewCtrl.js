@@ -342,7 +342,7 @@
 			return deferred.promise;
 		}
 		$scope.openUser = function(userId){
-			$location.path("/usermemes/" + userId);
+			$location.path("/timeline/" + userId);
 		}
 		function getMeme(id){
 			var deferred = $q.defer();

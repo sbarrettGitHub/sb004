@@ -47,12 +47,12 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         inElement = false; 
         angular.element(elem).children(".ngUserHover").fadeOut();
         $timeout(function () {
-          scope.openUserMemes();
+          scope.openTimeline();
         },250);
         
       });
-      scope.openUserMemes = function(){
-        $location.path("/usermemes/" + scope.ngUser.id);
+      scope.openTimeline = function(){
+        $location.path("/timeline/" + scope.ngUser.id);
       }
       
         var template = "";
@@ -61,10 +61,10 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         template += "       	    <img class='userImage rounded'";
         template += "           	    src='api/image/user/{{ngUser.id}}'>";
         template += "               </img>";
-        template += "               <div class='userName hot' ng-click='openUserMemes()'>";
+        template += "               <div class='userName hot' ng-click='openTimeline()'>";
         template += "           	    {{ngUser.userName}}  ";
         template += "               </div>	";
-        template += "               <div class='userStatus' ng-click='openUserMemes()'>";
+        template += "               <div class='userStatus' ng-click='openTimeline()'>";
         template += "           	   <i class='fa fa-quote-left'></i> <span>{{ngUser.statusMessage}}</span> <i class='fa fa-quote-right'></i> ";
         template += "               </div>	";        
         template += "           </div>";
