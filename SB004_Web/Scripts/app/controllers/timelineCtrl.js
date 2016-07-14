@@ -3,6 +3,9 @@
 
     var timelineCtrl = function ($scope, $rootScope, $routeParams, $http, $window, $location, $q, likeDislikeMemeService, securityService, scrollTo, timeLineService) {
         $scope.userId = $routeParams.id;
+		$scope.timelineItemId = $routeParams.itemid;
+		$scope.individualItemMode = ($scope.timelineItemId?true:false);
+
 		var itemsIndex=0;
 		$scope.entryType = "All";
 		$scope.items = []
@@ -14,6 +17,9 @@
 			viewingBlockCount:10
 		};
 		
+		$scope.switchToFullTimeline = function(){
+			$location.path("/timeline/" + $scope.userId);	
+		}
 		$scope.refreshTimeline = function(type){
 			$scope.items = [];
 			itemsIndex = 0;
@@ -30,7 +36,17 @@
                 endWaiting();
             });
 		}	
-                    
+
+        $scope.refreshTimelineItem = function(){
+			timeLineService.userTimelineItem($scope.userId, $scope.timelineItemId)
+			.then(function (data) {
+					buildTimeline(data);
+				},
+				function (e) {
+					$window.alert(e);
+				});
+		}    
+
 		$scope.getTimeline = function(skipitems, takeitems, type){
 			
 			// Skip the explicitly specified number of items (used during a refresh as 0 so all previously retrieved items are refreshed) 
@@ -48,22 +64,8 @@
             // Get user time line
             timeLineService.userTimeline($scope.userId, entryType, skip, take)
             .then(function (data) {
-					if(data.user){
-						$scope.user = data.user;
-					}
-                    
-                    // Add new time line entries						
-					if(data.timelineEntries){
-                        for (var index = 0; index < data.timelineEntries.length; index++) {
-                            $scope.items.push(data.timelineEntries[index]);                            
-                        }
-					}
-                    					
-					// Group by meme
-                    $scope.items = timeLineService.organize($scope.items);
-                    			
-					// Maintain a cursor of items. 
-					itemsIndex = $scope.items.length;
+
+					buildTimeline(data);
 
 					deferred.resolve(data);
                 },
@@ -73,6 +75,24 @@
                 });
 
 			return deferred.promise;	
+		}
+		function buildTimeline(data){
+			if(data.user){
+				$scope.user = data.user;
+			}
+			
+			// Add new time line entries						
+			if(data.timelineEntries){
+				for (var index = 0; index < data.timelineEntries.length; index++) {
+					$scope.items.push(data.timelineEntries[index]);                            
+				}
+			}
+								
+			// Group by meme
+			$scope.items = timeLineService.organize($scope.items);
+						
+			// Maintain a cursor of items. 
+			itemsIndex = $scope.items.length;
 		}
 		$scope.showMore = function(){
 			var lastMemeBefore = $scope.lastMeme;
@@ -141,8 +161,15 @@
 				$scope.isFollowing = securityService.isFollowing($scope.userId);
 				$scope.user = securityService.getCurrentUser();
 			}
-			// Refresh the users time line
-			$scope.refreshTimeline("All");
+
+			if($scope.individualItemMode){
+				// Refresh the users individual time line item
+				$scope.refreshTimelineItem();
+			}else{
+				// Refresh the users time line
+				$scope.refreshTimeline("All");
+			}
+
 		});
 		
 		// User message updated

@@ -4,8 +4,7 @@
 			<div class="userCardContainer">
 				<div class="userName pull-left hidden-lg hidden-md col-sm-12 col-xs-12">{{user.userName}}</div>
 				<div class="userImageContainer rounded pull-left">
-					<img class='userMainImage rounded' ng-src='api/image/user/{{userId}}'></img>
-					
+					<img class='userMainImage rounded' ng-src='api/image/user/{{userId}}'></img>					
 				</div>
 				<div class="userNameContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
 					<div class="userName col-lg-12 col-md-12 col-sm-6 ">{{user.userName}}
@@ -22,22 +21,17 @@
 							</button>
 						</div>			
 					</div>					
-				</div> 
-					 
+				</div> 					 
 				<div class="userQuoteContainer rounded pull-left col-lg-9 col-md-9 hidden-sm hidden-xs">
 					<div>
 						<span class="fa fa-quote-left"></span>
-						<!--Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 	
-						voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
-						anim id est laborum.-->
 						{{user.statusMessage?user.statusMessage: user.userName + ' has yet to set a status :('}}
 						<span class="fa fa-quote-right"></span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="userStatOptions col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="userStatOptions col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="individualItemMode==false">
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hot" 
 				ng-class="{ 'selected': (entryType=='All') }" ng-click="refreshTimeline('All')">
 				<span  title="All recent {{user.userName}} posts, reposts, likes, replies and comments">
@@ -142,10 +136,14 @@
 					</div>
 				</div>
 			</div>
-			<div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" class="option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
-					title="Get more items">
+			<div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" ng-hide="individualItemMode"
+				class="option text-center section col-lg-9 col-md-9" title="Get more items">
 				<i class="fa fa-cloud-download"></i><span>&nbsp; Show More </span>
 			</div>
+			<div id="moreTimeLine" scroll-to="showMore" ng-click="switchToFullTimeline()" ng-show="individualItemMode"
+				class="option text-center section col-lg-9 col-md-9" title="Get more items">
+				<i class="fa fa-cloud-download"></i><span>&nbsp; Show full timeline for {{user.userName}} </span>
+			</div>			
 		</div>
 		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">
 			<div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Followed by</div>

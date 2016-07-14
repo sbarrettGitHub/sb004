@@ -15,7 +15,20 @@
             
             return deferred.promise;
         }	
-        
+        var userTimelineItem = function(userId, itemId){
+            var deferred = $q.defer();
+            
+            $http.get('api/timeline/' + userId + '/item/' + itemId).
+                success(function (data) {									
+					deferred.resolve(data);
+                }).
+                error(function (e) {
+					$window.alert(e);
+					deferred.reject(e);
+                });
+            
+            return deferred.promise;
+        }
         var userAndFollowingTimeline = function(userId, entryType, skip, take){
 			var deferred = $q.defer();
             
@@ -211,6 +224,7 @@
 		}	        
         return {
             userTimeline:userTimeline,
+            userTimelineItem:userTimelineItem,
             userAndFollowingTimeline: userAndFollowingTimeline,
             userComprehensiveTimeline: userComprehensiveTimeline,
             resolveTimelineEntryType: resolveTimelineEntryType,

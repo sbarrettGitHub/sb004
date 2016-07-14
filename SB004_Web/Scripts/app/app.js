@@ -15,6 +15,9 @@ var app = angular.module('sb004', ['ngRoute', 'ui.bootstrap', 'ngHello', 'angula
           }).when('/timeline/:id', {
               templateUrl: 'Scripts/app/views/timeline.html',
               controller: 'timelineCtrl'
+          }).when('/timeline/:id/:itemid', {
+              templateUrl: 'Scripts/app/views/timeline.html',
+              controller: 'timelineCtrl'
           }).when('/spawn/:id', {
               templateUrl: 'views/spawn.html',
               controller: 'memeApplyTextCtrl'

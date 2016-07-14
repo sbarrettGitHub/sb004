@@ -32,49 +32,26 @@ namespace SB004.Controllers
 		public IHttpActionResult Get(string id, int skip, int take, TimeLineEntry type)
 		{
 			List<ITimeLine> timeLine = repository.GetUserTimeLine(id, skip, take, type);
-			TimelineModel model = new TimelineModel
-			{
-				User = repository.GetUser(id,true),
-				TimelineEntries = new List<TimelineEntryModel>()
-			};
-
-			foreach (ITimeLine entry in timeLine)
-			{
-				var timelineEntryModel = GetTimelineEntryModel(entry);
-
-				// Add to time line model
-				model.TimelineEntries.Add(timelineEntryModel);
-			}
-			return Ok(model);
+			TimelineModel model = ConstructTimelineModel(id, timeLine);
+		    return Ok(model);
 		}
+        
+        /// <summary>
+        /// Return the time line of the specified user for a given time line entry
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <param name="itemId">id of time line enrty</param>
+        /// <returns></returns>
+        [Route("{id}/item/{itemId}")]
+        public IHttpActionResult Get(string id, string itemId)
+        {
+            List<ITimeLine> timeLine = repository.GetUserTimeLine(id, itemId);
+            TimelineModel model = ConstructTimelineModel(id, timeLine);
+           
+            return Ok(model);
+        }
 
-		private TimelineEntryModel GetTimelineEntryModel(ITimeLine entry)
-		{
-			TimelineEntryModel timelineEntryModel = new TimelineEntryModel(entry);
-
-			timelineEntryModel.User = repository.GetUser(entry.UserId);
-
-			// Get the meme referenced by the time line entry
-			timelineEntryModel.Meme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefId));
-			
-			// Resolve the comment
-			if (entry.EntryType == TimeLineEntry.Comment ||
-				entry.EntryType == TimeLineEntry.LikeComment ||
-				entry.EntryType == TimeLineEntry.DislikeComment)
-			{
-				IUserComment userComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
-				userComment.Comment = WebUtility.HtmlEncode(userComment.Comment);
-				IUser user = userComment.UserId!=null?repository.GetUser(userComment.UserId): new Domain.User();
-				timelineEntryModel.UserComment = new TimeLineUserCommentModel(userComment, user);
-			}
-
-			// Resolve the alternative ref id (always a meme)
-			if (entry.EntryType == TimeLineEntry.Reply)
-			{
-				timelineEntryModel.AlternateMeme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefAlternateId));
-			}
-			return timelineEntryModel;
-		}
+		
 
 		/// <summary>
 		/// Return the combined time line of the specified user those he follows
@@ -246,6 +223,64 @@ namespace SB004.Controllers
 
 			return Ok(timelineGroupModel);
 		}
+
+        /// <summary>
+        /// Constructs the timeline model from a list of time line entrires.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="timeLine">The time line.</param>
+        /// <returns></returns>
+        private TimelineModel ConstructTimelineModel(string id, List<ITimeLine> timeLine)
+        {
+            TimelineModel model = new TimelineModel
+            {
+                User = repository.GetUser(id, true),
+                TimelineEntries = new List<TimelineEntryModel>()
+            };
+
+            foreach (ITimeLine entry in timeLine)
+            {
+                var timelineEntryModel = GetTimelineEntryModel(entry);
+
+                // Add to time line model
+                model.TimelineEntries.Add(timelineEntryModel);
+            }
+            return model;
+        }
+
+        /// <summary>
+        /// Gets the timeline entry model from an idividual timeline enrty.
+        /// </summary>
+        /// <param name="entry">The entry.</param>
+        /// <returns></returns>
+        private TimelineEntryModel GetTimelineEntryModel(ITimeLine entry)
+        {
+            TimelineEntryModel timelineEntryModel = new TimelineEntryModel(entry);
+
+            timelineEntryModel.User = repository.GetUser(entry.UserId);
+
+            // Get the meme referenced by the time line entry
+            timelineEntryModel.Meme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefId));
+
+            // Resolve the comment
+            if (entry.EntryType == TimeLineEntry.Comment ||
+                entry.EntryType == TimeLineEntry.LikeComment ||
+                entry.EntryType == TimeLineEntry.DislikeComment)
+            {
+                IUserComment userComment = repository.GetUserComment(entry.TimeLineRefAlternateId);
+                userComment.Comment = WebUtility.HtmlEncode(userComment.Comment);
+                IUser user = userComment.UserId != null ? repository.GetUser(userComment.UserId) : new Domain.User();
+                timelineEntryModel.UserComment = new TimeLineUserCommentModel(userComment, user);
+            }
+
+            // Resolve the alternative ref id (always a meme)
+            if (entry.EntryType == TimeLineEntry.Reply)
+            {
+                timelineEntryModel.AlternateMeme = new MemeLiteModel(repository, repository.GetMeme(entry.TimeLineRefAlternateId));
+            }
+            return timelineEntryModel;
+        }
+
 		/// <summary>
 		/// Add the supplied time line activity to the time lien groups
 		/// </summary>

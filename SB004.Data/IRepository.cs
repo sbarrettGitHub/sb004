@@ -60,6 +60,8 @@
 
 		List<ITimeLine> GetUserTimeLine(string userId, int days);
 
+        List<ITimeLine> GetUserTimeLine(string userId, string itemId);
+
 	    List<ITimeLine> GetUserMemeTimeLine(string userId, int days);
 	    
 		List<ITimeLine> GetMemeTimeLine(string memeId, int days);

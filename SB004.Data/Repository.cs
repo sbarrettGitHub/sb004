@@ -592,7 +592,31 @@ namespace SB004.Data
 
 			return activity;
 	    }
-		/// <summary>
+        /// <summary>
+        /// Get all entries to the time line for a specified user update to a number of days in the past
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<ITimeLine> GetUserTimeLine(string userId, string itemId)
+        {
+
+            List<ITimeLine> activity = new List<ITimeLine>();
+
+            IQueryable<TimeLine> query = (from entry in timeLineCollection.AsQueryable()
+                                          where entry.UserId == userId
+                                          && entry.Id == itemId
+                                          select entry).OrderByDescending(x => x.DateOfEntry);
+            foreach (var entry in query)
+            {
+                // Add the activity 
+                activity.Add(entry);
+            }
+
+            return activity;
+        }
+
+        /// <summary>
 		/// Retrieve the time line of a particular meme
 		/// </summary>
 		/// <param name="memeId">ID of the meme</param>
