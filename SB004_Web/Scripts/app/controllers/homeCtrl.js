@@ -292,7 +292,7 @@
 				$scope.words = [];
 				for (var i = 0; i < data.length; i++) {		
 					if(!$scope.words.contains(data[i]))	{
-						$scope.words.push({text: "#" + data[i], weight: ( data.length) - i + 1,handlers: {
+						$scope.words.push({text:  data[i], weight: ( data.length) - i + 1,handlers: {
 							click: function(e) {		
 								console.log(e);	
 								$scope.wordCloudClick(this.innerHTML);

@@ -14,7 +14,7 @@
 			</button>   
 			<button type="button" class="btn btn-default" ng-class="{ 'active': (view=='search') }" 
 				ng-click="switchView('search')">
-				<i class="fa fa-slack" aria-hidden="true"></i> Hashtags
+				<i class="fa fa-quote-left" aria-hidden="true"></i> Tags
 			</button>                        		
 		</div>
 		<div class="btn-group pull-right">
@@ -196,7 +196,7 @@
     <div id="searchToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='search'">
 		<div ng-repeat="hashTag in hashTags" class="btn-group">	
             <button type="button" class="btn btn-default hashTagbutton">
-                #{{hashTag}}
+                <i class="fa fa-quote-left" aria-hidden="true"></i> {{hashTag}}
             </button>
             <button type="button" class="btn btn-default" ng-click="removeHashTag(hashTag)">
 			    <i class="fa fa-close"></i>
