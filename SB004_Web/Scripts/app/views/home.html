@@ -59,11 +59,11 @@
                                     ng-largeuserimage='true'>
                     </div>
                     <div  class="memeOptions pull-left col-lg-12 col-md-12 hidden-sm hidden-xs">					
-                        <div id="respond" ng-click="respond(item.meme)" class="option text-center section col-lg-3 col-md-3 hidden-sm hidden-xs"
+                        <div id="respond" ng-click="respond(item.meme)" class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs"
                             title="Respond to this with a new quote.">
                             <i class="fa fa-reply"></i><span>&nbsp; Respond</span>
                         </div>								
-                        <div id="repost" ng-click="repostMeme(item.meme.id)" class="option pull-right text-center section col-lg-3 col-md-3 hidden-sm hidden-xs" 
+                        <div id="repost" ng-click="repostMeme(item.meme.id)" class="option pull-right text-center col-lg-3 col-md-3 hidden-sm hidden-xs" 
                                 title="Requote this on your time line, and begin a new discussion among your followers.">
                             <i class="fa fa-retweet"></i><span>&nbsp; Requote</span>
                         </div>
@@ -75,7 +75,7 @@
                                 ng-model="item.newUserComment">						
                             </textarea>
                         </div> 
-                        <button class="option text-center section col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
+                        <button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
                                 ng-click="addComment(item.meme.id, item.newUserComment)">
                             Post Comment
                          </button>                      
@@ -145,13 +145,13 @@
                         </div>
                     </div>
                     <div id="moreEntries" scroll-to="showMore" ng-click="showMoreEntries(item.meme.id)" ng-show="item.hasMore"
-                            class="pushDown2 option text-center section col-lg-12 col-md-12 hidden-sm hidden-xs" 
+                            class="pushDown2 option text-center col-lg-12 col-md-12 hidden-sm hidden-xs" 
                             title="Show older activity on this quote">
                         <i class="fa fa-cloud-download"></i><span>&nbsp; More</span>
                     </div>
                 </div>
             </div> 
-            <div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" class="option text-center section col-lg-10 col-md-12 hidden-sm hidden-xs" 
+            <div id="moreTimeLine" scroll-to="showMore" ng-click="showMore()" class="option text-center  col-lg-10 col-md-12 hidden-sm hidden-xs" 
 					title="Get more items">
 				<i class="fa fa-cloud-download"></i><span>&nbsp; Show activity older than {{daysIndex}} days</span>
 			</div>
