@@ -74,6 +74,9 @@
     margin-right: 15px;    
     padding: 2px;
     padding-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;    
 }
 
 #userTimeline .timeLineDescription .icon{
@@ -156,6 +159,9 @@
     padding: 5px;
     background-color: white;
     border-bottom: 1px solid #C8C8C8;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #userTimeline #addNewComment #addCommentText textarea{
@@ -186,4 +192,7 @@
     margin-top: 5px;
     background-color: white;
     padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
 }
