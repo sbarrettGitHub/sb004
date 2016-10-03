@@ -65,7 +65,7 @@ app.directive('ngUserhover', function($compile, $timeout, $location) {
         template += "           	    {{ngUser.userName}}  ";
         template += "               </div>	";
         template += "               <div class='userStatus' ng-click='openTimeline()'>";
-        template += "           	   <i class='fa fa-quote-left'></i> <span>{{ngUser.statusMessage}}</span> <i class='fa fa-quote-right'></i> ";
+        template += "           	   <i class='fa fa-hashtag'></i> <span>{{ngUser.statusMessage}}</span> <i class='fa fa-quote-right'></i> ";
         template += "               </div>	";        
         template += "           </div>";
         template += "        <div class='userStats'>";

@@ -26,7 +26,8 @@
             keyboard: true,
             backdropClick: false,
             templateUrl: "Scripts/app/views/logIn.html?t="  + new Date().getTime(),
-            controller: "logInCtrl"
+            controller: "logInCtrl",
+            dialogClass: 'loginModal modal'
         };		
         var loginDialog = $dialog.dialog({
             backdrop: true,
@@ -92,6 +93,7 @@
 			}
             var deferred = $q.defer();
 			loginDialogOpts.resolve = {view : function() {return view?view:"SignIn";}};
+			
             $dialog.dialog(loginDialogOpts).open()
                 .then(function (action) {
                     if (action == "Success") {                        
@@ -109,6 +111,7 @@
                         return;
                     }
                 });
+
             return deferred.promise;
         }
 		

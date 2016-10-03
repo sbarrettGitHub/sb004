@@ -463,7 +463,7 @@ namespace SB004.Data
 	        List<IUserComment> userComments = new List<IUserComment>();
 	        var cursor =
 		        userCommentCollection.FindAs<UserComment>(Query<UserComment>.EQ(e => e.MemeId, memeId))
-			        .SetSortOrder(SortBy.Ascending("DateCreated"))
+			        .SetSortOrder(SortBy.Descending("DateCreated"))
 			        .Skip(skip).Take(take);
 
 	        foreach (UserComment entity in cursor)

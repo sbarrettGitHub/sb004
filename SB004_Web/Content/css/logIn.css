@@ -1,3 +1,7 @@
+.loginModal{
+	/* Use this update the syle of the login Modal
+	width:750px !important;*/
+}
 #logIn .signInMethods{
 	display: table;
 	height:250px;

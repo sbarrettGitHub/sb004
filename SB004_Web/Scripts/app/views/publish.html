@@ -13,7 +13,7 @@
 		<div class="tagSection tags">			
 			<div ng-repeat="hashTag in hashTags" class="btn-group">	
 					<button type="button" class="btn btn-default hashTagbutton">
-						<i class="fa fa-quote-left" aria-hidden="true"></i> {{hashTag}}
+						<i class="fa fa-hashtag" aria-hidden="true"></i> {{hashTag}}
 					</button>	
 					<button type="button" class="btn btn-default" ng-click="removeHashTag(hashTag)">
 						<i class="fa fa-close"></i>
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div  class="tagSection">
-			<i class="fa fa-quote-left" aria-hidden="true"></i> Add tags: 
+			<i class="fa fa-hashtag" aria-hidden="true"></i> Add tags: 
 			<input type="text" ng-model="hashTagInput" ng-keyup="($event.keyCode == 32) ? setHashTags() : ''" ng-blur="setHashTags()"
 			placeholder="Add hash tags...max 5"/>
 		</div>

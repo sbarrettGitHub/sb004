@@ -14,7 +14,6 @@
 		$scope.myReplies = [];
 		$scope.userComments = [];
 		$scope.userComment = "";
-		$scope.userCommentsJustAdded = [];
 		$scope.allowGetMoreComments = true;
 		$scope.isUserFavourite = false;
 		var userCommentsIndex = 0;
@@ -218,10 +217,9 @@
             }).
 			success(function (data) {
 				data.comment = markdownService.makeHtml(data.comment);
-				$scope.userComments.push(data);
+				$scope.userComments.unshift(data);
 				$scope.userComment = "";
-				$scope.meme.userCommentCount++;
-				$scope.userCommentsJustAdded.push(data);
+				$scope.meme.userCommentCount++;				
 			}).
 			error(function (e) {
 				$window.alert(e);

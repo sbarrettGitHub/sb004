@@ -147,6 +147,7 @@
 		// Set focus based on the supplied intial view
 		$scope.switchView($scope.view);
 
+		
     }
   
 
