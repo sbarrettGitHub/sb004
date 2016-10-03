@@ -485,6 +485,8 @@ height:325px;*/
    margin-bottom: 15px;
     margin-left: 15px;
 	display: table;
+	 margin-left: auto;
+    margin-right: auto;
 }
  .memeLinkCard{
    text-align: center;
