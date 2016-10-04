@@ -107,8 +107,18 @@
     border:1px solid lightgrey;
     width: 100%;
     padding: 5px;
-    border-radius: 6px;
     margin-top: 5px;
+    border-bottom: none;
+}
+#userTimeline .timeLineDescription .feedback{
+        background-color: white;
+    text-align: right;
+    height: 32px;
+    padding-top: 5px;
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;    
 }
 #userTimeline .memeLinkContainer{
     margin-bottom: 0 !important;
