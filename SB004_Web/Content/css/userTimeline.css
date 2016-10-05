@@ -76,7 +76,7 @@
     padding-bottom: 15px;
     margin-left: auto;
     margin-right: auto;
-    height: 40px;    
+    border-bottom: 5px solid #F8F8F8;
 }
 
 #userTimeline .timeLineDescription .icon{
@@ -92,7 +92,7 @@
     margin-top: 6px;
 }
 #userTimeline .timeLineDescription .text{
-    width: 530px;
+    max-width: 500px;
     height: 32px;
     padding-top: 6px;   
 }
@@ -127,12 +127,21 @@
 #userTimeline .timeLineExtended{
     margin-top: -40px;
 }
-#userTimeline .timeLineReplyMeme{
-    margin-left:100px;
-}
+
 #userTimeline .timeLineReplyMeme .memeLinkContainer{
-    width:300px!important;
-     margin-left: 95px;
+    width:350px!important;
+    border-top: none;
+}
+#userTimeline .timeLineReplyMeme .memeLinkContainer .memeLinkCardMeta .userImageFrame{
+   display:none;
+}
+#userTimeline .timeLineReplyMeme .memeLinkContainer .memeLinkCardMeta .created{
+     display:none;
+}
+#userTimeline .timeLineReplyMeme .memeLinkContainer .memeLinkCardMeta .stats{
+    width: 350px;
+    margin-top: -15px;
+    margin-bottom: 15px;
 }
 #userTimeline .timeLineReplyMeme .memeLinkCardMeta .infoFrame {
     width: 220px!important;       
@@ -159,24 +168,25 @@
     margin-top: 40px;
     margin-left: 20px;
 }
-#moreEntries{
-    width:100px;
-    margin-left: 15px;
+#userTimeline #moreEntries{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
 }
 #userTimeline #addNewComment{
     width: 600px;
     margin-left:15px;
     padding: 5px;
     background-color: white;
-    border-bottom: 1px solid #C8C8C8;
-    height: 250px;
+    height: 125px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #userTimeline #addNewComment #addCommentText textarea{
    width:590px; 
-   height: 150px;
+   height: 75px;
    overflow: auto;
 }
 #userTimeline #addNewComment #addCommentImage{
@@ -205,4 +215,11 @@
     margin-left: auto;
     margin-right: auto;
     height: 40px;
+}
+#userTimeline .timelineItemSpacer{
+    border-bottom: 5px solid #F8F8F8;
+}
+
+#userTimeline .timelineGroupSpacer{
+    border-bottom: 30px solid #F8F8F8;
 }

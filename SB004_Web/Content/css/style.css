@@ -795,5 +795,8 @@ div.jqcloud span.w3 { color: #a0ddff; }
 div.jqcloud span.w2 { color: #99ccee; }
 div.jqcloud span.w1 { color: #aab5f0; }
 
-
+/*Common*/
+.inlineBlock{
+	display: inline-block;
+}
 

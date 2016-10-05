@@ -42,13 +42,13 @@
             </div> 
             <div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12"># Our trends</div> 
 		</div>	        
-        <div class="pull-left col-lg-6 col-md-6 col-sm-12 col-xs-12">	
-            <div id="waitingFrame" ng-show="waiting" class="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">	
+            <div id="waitingFrame" ng-show="waiting" class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div id="waiting" class="waitingContainer dialogWaitConainer">
                     <div class="waitGraphic dialogWaitGraphic  col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
                 </div>	
             </div> 
-            <div ng-repeat="item in items" ng-hide="waiting" class="pull-left col-lg-12  col-md-12 col-sm-12 col-xs-12">
+            <div ng-repeat="item in items" ng-hide="waiting" class=" col-lg-12  col-md-12 col-sm-12 col-xs-12">
                 <div class="">
                     <div class="pushDown4" ng-memelink ng-model="item.meme"
                                     on-click="viewMeme(item.meme.id)" 
@@ -68,20 +68,20 @@
                             <i class="fa fa-retweet"></i><span>&nbsp; Requote</span>
                         </div>
                     </div>	
-                    <div id="addNewComment" class="" title="Type your comment and press enter or return. Maximum length 250 characters. ">
+                    <div id="addNewComment" class="timelineItemSpacer" title="Type your comment and press enter or return. Maximum length 250 characters. ">
                         
-                        <div id="addCommentText" class="pull-left">
+                        <div id="addCommentText" class="">
                             <textarea type="text" value="" placeholder="Add a new comment...hit enter to send" maxlength="250"                                 
                                 ng-model="item.newUserComment">						
                             </textarea>
                         </div> 
-                        <button class="option text-center col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 pull-right"
+                        <button class="option pull-right text-center col-lg-3 col-md-3 hidden-sm hidden-xs pushDown1 "
                                 ng-click="addComment(item.meme.id, item.newUserComment)">
                             Post Comment
                          </button>                      
 					</div>                    
-                    <div ng-repeat="entry in item.timelineEntries" class="timeLineDescription" >                        
-                        <div class="icon pull-left">
+                    <div ng-repeat="entry in item.timelineEntries" class="timeLineDescription timelineItemSpacer" >                        
+                        <div class="icon inlineBlock">
                             
                             <i class="fa fa-quote-left" ng-show="entry.entryType==1"></i>
                             <i class="fa fa-retweet" ng-show="entry.entryType==2"></i>
@@ -92,7 +92,7 @@
                             <i class="fa fa-thumbs-up" ng-show="entry.entryType==10"></i>
                             <i class="fa fa-thumbs-down" ng-show="entry.entryType==11"></i>
                         </div>
-                        <div class="pull-left text">
+                        <div class="text inlineBlock">
                             <span class="dateofEntry"> {{entry.dateOfEntry | date:'short'}}</span>
                             <span ng-click="openUser(entry.user.id)" class="allowFollow " 
                                 ng-userhover ng-user="entry.user">
@@ -117,17 +117,17 @@
                                 </span>.
                             </span>
                         </div>
-                        <div class=" pull-right">
+                        <div class="inlineBlock pull-right ">
 						    <img class="userImageSmall" ng-src="api/image/user/{{entry.userId}}">
                         </div>
-                        <div class="pull-left timeLineComment commentary" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11" >
+                        <div class=" timeLineComment commentary" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11" >
                             <div class="userCommentHeading">
-                                <div class="pull-left" ng-bind-html="entry.userComment.comment">
+                                <div class="" ng-bind-html="entry.userComment.comment">
                                 </div>                                
                             </div>
                            
                         </div>
-                        <div class="feedback pull-right" ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11">
+                        <div class="feedback " ng-show="entry.entryType==6 || entry.entryType==10 || entry.entryType==11">
                             <span ng-click="likeComment(entry.userComment.id, item.meme.id)" title="I like this comment" class="info stat hot">
                                 <i class="fa fa-thumbs-o-up"></i><span>{{entry.userComment.likes}}</span>
                             </span>	
@@ -135,7 +135,7 @@
                                 <i class="fa fa-thumbs-o-down"></i><span>{{entry.userComment.dislikes}}</span>
                             </span>	
                         </div> 
-                        <div class="pull-left timeLineReplyMeme" ng-show="entry.entryType==5" >
+                        <div class=" timeLineReplyMeme" ng-show="entry.entryType==5" >
                             <div ng-memelink ng-model="entry.alternateMeme" ng-show="entry.entryType==5" 
                                     on-click="viewMeme(entry.alternateMeme.id)" 
                                     on-like="likeMeme(entry.alternateMeme)"
@@ -145,9 +145,12 @@
                         </div>
                     </div>
                     <div id="moreEntries" scroll-to="showMore" ng-click="showMoreEntries(item.meme.id)" ng-show="item.hasMore"
-                            class="pushDown2 option text-center col-lg-12 col-md-12 hidden-sm hidden-xs" 
+                            class="option text-center hidden-sm hidden-xs" 
                             title="Show older activity on this quote">
                         <i class="fa fa-cloud-download"></i><span>&nbsp; More</span>
+                    </div>
+                    <div class="timelineGroupSpacer">
+                       
                     </div>
                 </div>
             </div> 
@@ -155,6 +158,7 @@
 					title="Get more items">
 				<i class="fa fa-cloud-download"></i><span>&nbsp; Show activity older than {{daysIndex}} days</span>
 			</div>
+
         </div> 
 		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">
 			<div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Sponsors</div>
