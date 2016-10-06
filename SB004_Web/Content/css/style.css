@@ -1,4 +1,6 @@
-
+body .modal{
+	border-radius: 0;
+}
 /* Put your css in here */
 input[type="button"]:disabled{
 border: 1px rgb(221, 221, 221) solid;
@@ -94,22 +96,20 @@ opacity: 0.6 !important;
 	float: right;
 	margin-top: -55px;
 	margin-right: 3px;
-	color: #A9A9A9;
+	
 	cursor: pointer;
 	font-size: 1.25em;
-	text-shadow: -1px 0px #000, 0px 1px #000, 1px 0px #000, 0px -1px #000;
+	text-shadow: -1px 0px darkslategray, 0px 1px darkslategray, 1px 0px darkslategray, 0px -1px darkslategray;
 }
-.closeIcon {
-
-	/*background-color: #F8F8F8;*/
-	border-radius: 8px;
+.closeIcon {	
 	width: 32px;
 	height: 32px;
 	padding-top: 3px;
-	color: #FFF;
+	color: darkslategray;
 }
 .closeIcon:hover{
-	background-color: #8B0000;
+	background-color: darkslategray;
+	color: #FFF;
 }
 .dropComment{
 	float: right;
@@ -472,7 +472,7 @@ height:325px;*/
 	padding-bottom:5px;
 }
 .option:hover{	
-	background-color:cornflowerblue;	
+	background-color:darkslategray;	
 	color:white;
 }
 /*---------------------------------------------------------*/
