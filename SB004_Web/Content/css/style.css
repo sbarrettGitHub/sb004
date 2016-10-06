@@ -14,12 +14,12 @@ input
 height: 34px !important;
 }
 button:hover{
-	color:cornflowerblue;
+	color:darkslategray;
  }
  .logo{
     border: 2px solid darkgray;
     padding: 2px;
-    color: cornflowerblue;
+    color: darkslategray;
     font-size: 18px;
     background-color: white;
     border-radius: 4px;
@@ -27,11 +27,11 @@ button:hover{
  .allowFollow{
 	font-weight:bold;
 	cursor:pointer;
-	color:cornflowerblue;
+	color:darkslategray;
 	padding:3px;
  }
 .allowFollow:hover {
-    background-color: cornflowerblue;
+    background-color: darkslategray;
     color: white;
 	border-radius: 3px;
     border: 1px solid rgb(200,200,200);
@@ -41,11 +41,12 @@ button:hover{
 	color:dark-grey;
  }
  .hot{	
-	
+	color:darkslategray !important;
  }
  .hot:hover{
 	cursor: pointer;
-	color:cornflowerblue !important;
+	color:navy;
+	text-decoration: underline!important;
  }
  .isFavourite{
 	color:gold
@@ -706,7 +707,7 @@ height:325px;*/
 	color: dimgray;
 }
 .hashTagbutton:hover{
-	background-color: cornflowerblue;
+	background-color: darkslategray;
 	color: white;
 }
 .hashTagbuttonSmall{
