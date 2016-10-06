@@ -122,7 +122,7 @@
 }
 #userTimeline .memeLinkContainer{
     margin-bottom: 0 !important;
-    border-top: 1px solid darkgrey;
+    border-top: 10px solid darkgrey;
 }
 #userTimeline .timeLineExtended{
     margin-top: -40px;
@@ -165,8 +165,11 @@
 
 }  
 #userTimeline #moreTimeLine{
-    margin-top: 40px;
     margin-left: 20px;
+    background-color: white;
+}
+#userTimeline #moreTimeLine .option:hover{
+    color: cornflowerblue;
 }
 #userTimeline #moreEntries{
     width: 600px;
@@ -221,5 +224,5 @@
 }
 
 #userTimeline .timelineGroupSpacer{
-    border-bottom: 30px solid #F8F8F8;
+    border-bottom: 20px solid #F8F8F8;
 }
