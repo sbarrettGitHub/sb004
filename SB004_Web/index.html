@@ -14,45 +14,45 @@
 <body>
   <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-controller="searchCtrl">
     <form class="search" role="search">
-	<div class="row">
-		<div class="col-md-12" id="searchContainer">
-            <div class="navbar navbar-static-top rounded" role="navigation" id="navbarContainer">    
-                <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a> 
-                <div class="navbar-header hot">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="fa fa-bars"></span>
-                    </button>
-                </div>                
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" title="SB004 - Homepage" ng-click="home()">
-                        <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
-                    </a>                     
-                    <ul class="nav navbar-nav" id="navBar">
-                        <li><a class="hot" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>
-                        <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
-                        <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
-                        <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
-                        <li><a class="hot" ng-click="signUp()" ng-show="!isAuthenticated"><i class="fa fa-pencil-square-o"></i> Sign up now</a></li>
-                        <li><a class="hot" ng-click="signOut()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign Out</a></li>
-                    </ul>
-                    <div class="col-sm-hidden col-xs-12 col-md-3 pull-right">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
-                            ng-model="searchTerm">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
+        <div class="row">
+            <div class="col-md-12" id="searchContainer">
+                <div class="navbar navbar-static-top rounded" role="navigation" id="navbarContainer">    
+                    <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a> 
+                    <div class="navbar-header hot">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="fa fa-bars"></span>
+                        </button>
+                    </div>                
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" title="SB004 - Homepage" ng-click="home()">
+                            <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
+                        </a>                     
+                        <ul class="nav navbar-nav" id="navBar">
+                            <li><a class="hot" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>
+                            <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
+                            <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
+                            <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
+                            <li><a class="hot" ng-click="signUp()" ng-show="!isAuthenticated"><i class="fa fa-pencil-square-o"></i> Sign up now</a></li>
+                            <li><a class="hot" ng-click="signOut()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign Out</a></li>
+                        </ul>
+                        <div class="searchBox col-sm-hidden col-xs-12 col-md-3 pull-right">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
+                                ng-model="searchTerm">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
+                            </div>
+                            </div>
+                        </form>
                         </div>
-                        </div>
-                    </form>
+                    
                     </div>
-                
                 </div>
             </div>
-        </div>
 
-</div>	  
+    </div>	  
 </form>
   </div>
     <div id="view" ng-view="" blurry="view"></div>

@@ -122,7 +122,7 @@
 }
 #userTimeline .memeLinkContainer{
     margin-bottom: 0 !important;
-    border-top: 10px solid darkslategrey;
+    border-top: 10px solid darkslateblue;
 }
 #userTimeline .timeLineExtended{
     margin-top: -40px;
@@ -148,6 +148,7 @@
 }
 #userTimeline .sideBar{
     min-height: 100px;
+    border: 1px solid darkslateblue;
 }
 #userTimeline .sideBarLeft{
     margin-left: 15px;
@@ -160,7 +161,7 @@
 #userTimeline .sideBar .head{
     margin-top:15px;
     font-size: 1.3em;
-    color: darkslategray;
+    color: darkslateblue;
     text-align: center;
 
 }  

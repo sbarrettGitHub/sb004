@@ -1,6 +1,9 @@
 body .modal{
 	border-radius: 0;
 }
+a{
+	text-shadow: none;
+}
 /* Put your css in here */
 input[type="button"]:disabled{
 border: 1px rgb(221, 221, 221) solid;
@@ -16,12 +19,12 @@ input
 height: 34px !important;
 }
 button:hover{
-	color:darkslategray;
+	color:darkslateblue;
  }
  .logo{
     border: 2px solid darkgray;
     padding: 2px;
-    color: darkslategray;
+    color: darkslateblue;
     font-size: 18px;
     background-color: white;
     border-radius: 4px;
@@ -29,11 +32,11 @@ button:hover{
  .allowFollow{
 	font-weight:bold;
 	cursor:pointer;
-	color:darkslategray;
+	color:darkslateblue;
 	padding:3px;
  }
 .allowFollow:hover {
-    background-color: darkslategray;
+    background-color: darkslateblue;
     color: white;
 	border-radius: 3px;
     border: 1px solid rgb(200,200,200);
@@ -43,11 +46,10 @@ button:hover{
 	color:dark-grey;
  }
  .hot{	
-	color:darkslategray !important;
+	color:darkslateblue;
  }
  .hot:hover{
 	cursor: pointer;
-	color:navy;
 	text-decoration: underline!important;
  }
  .isFavourite{
@@ -99,16 +101,16 @@ opacity: 0.6 !important;
 	
 	cursor: pointer;
 	font-size: 1.25em;
-	text-shadow: -1px 0px darkslategray, 0px 1px darkslategray, 1px 0px darkslategray, 0px -1px darkslategray;
+	text-shadow: -1px 0px darkslateblue, 0px 1px darkslateblue, 1px 0px darkslateblue, 0px -1px darkslateblue;
 }
 .closeIcon {	
 	width: 32px;
 	height: 32px;
 	padding-top: 3px;
-	color: darkslategray;
+	color: darkslateblue;
 }
 .closeIcon:hover{
-	background-color: darkslategray;
+	background-color: darkslateblue;
 	color: #FFF;
 }
 .dropComment{
@@ -228,7 +230,11 @@ margin-left:1px !important;
 }
 /*-----------------------------------------------------------*/
 #navbarContainer{
-	background-color:#F8F8F8 ;
+	background-color:darkslateblue ;
+}
+#navbarContainer .hot{
+	color:white !important ;
+	text-shadow: none;
 }
 #srch-term{
 	margin-top:5px;
@@ -463,16 +469,17 @@ height:325px;*/
 	background-color: white;
 }
 
-.option{
-	border-radius:3px;
+.option{	
 	border: 1px solid rgb(200,200,200);
 	background-color:whitesmoke;
 	cursor: pointer;
 	padding-top:5px;
 	padding-bottom:5px;
+	border-radius: 0 !important;
+	text-shadow: none;
 }
 .option:hover{	
-	background-color:darkslategray;	
+	background-color:darkslateblue;	
 	color:white;
 }
 /*---------------------------------------------------------*/
@@ -647,6 +654,9 @@ height:325px;*/
 #searchContainer{
 	padding-left: 10px;
 }
+#searchContainer .searchBox{
+	margin-top:3px;
+}
 .commentary{
 	background-color: white;
 }
@@ -707,7 +717,7 @@ height:325px;*/
 	color: dimgray;
 }
 .hashTagbutton:hover{
-	background-color: darkslategray;
+	background-color: darkslateblue;
 	color: white;
 }
 .hashTagbuttonSmall{
