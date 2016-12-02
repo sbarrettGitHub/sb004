@@ -149,6 +149,7 @@
 #userTimeline .sideBar{
     min-height: 100px;
     border: 1px solid darkslateblue;
+    height: 520px;
 }
 #userTimeline .sideBarLeft{
     margin-left: 15px;
