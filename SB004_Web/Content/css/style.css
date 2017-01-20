@@ -231,6 +231,8 @@ margin-left:1px !important;
 /*-----------------------------------------------------------*/
 #navbarContainer{
 	background-color:darkslateblue ;
+	height: 75px;
+	padding-top: 15px;
 }
 #navbarContainer .hot{
 	color:white !important ;
@@ -245,10 +247,12 @@ margin-left:1px !important;
 #navbarLogo{
     margin-top: -5px;
 }
+#searchContainer{
+	padding-left: 0;
+	padding-right: 0;
+}
 .search{
-	margin-top:15px;
-	padding-left: 15px;
-	padding-right: 15px;  
+
 }
 .searchResultsContainer{
   background-color:#F8F8F8 ;
@@ -656,6 +660,7 @@ height:325px;*/
 }
 #searchContainer .searchBox{
 	margin-top:3px;
+    margin-right: 20px;
 }
 .commentary{
 	background-color: white;
