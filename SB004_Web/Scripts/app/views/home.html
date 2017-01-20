@@ -33,8 +33,14 @@
 		</div>
 	</div>
     <div id="userTimeline" class="container searchResultsContainer rounded col-md-12 col-sm-12" ng-show="view=='timeline'">
-        <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarLeft rounded">
-            <div class="homePageOptionContainer">
+        <div id="leftSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs sideBar sideBarLeft rounded">
+            
+            
+            <div class="homePageOptionContainer pushDown4 ">
+                <div id="currentUser" class="card homePageOption ">
+                    <img class='userImageSmall' ng-src='api/image/user/{{user.id}}'></img>
+                    {{user.userName}} 
+                </div>
                 <div class="homePageOption"><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></div>            
                 <div class="homePageOption"><a class="hot" ng-click="viewMyPosts()"><i class="fa fa-clock-o"></i> View my timeline and followers</a></div>
                 <div class="homePageOption"><a class="hot" ng-click="editMyProfile()"><i class="fa fa-user"></i> Change my profile and password</a></div>
@@ -161,7 +167,6 @@
 
         </div> 
 		<div id="rightSideBar" class="col-lg-3 col-md-3 hidden-sm hidden-xs card sideBar sideBarRight rounded">
-			<div class="head col-lg-12 col-md-12 col-sm-12 col-xs-12">Sponsors</div>
 		</div>                     
     </div>    
     <div id="trendingToolbar" class="toolbar col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="view=='trending'">

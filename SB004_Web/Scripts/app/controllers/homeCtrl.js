@@ -11,6 +11,7 @@
 		$scope.trendingHashTagMemes= [];
 		$scope.trendingHashTags = [];
         $scope.userId = "";
+		$scope.user = {};
 		$scope.newUserComment = "";
         $scope.isAuthenticated=false;
 		$scope.items = [];
@@ -590,6 +591,7 @@
                 $scope.isAuthenticated = isAuthenticated;
 				if(isAuthenticated===true){
                     $scope.userId = securityService.getCurrentUser().userId;
+					$scope.user =  securityService.getCurrentUser();
 					$scope.switchView("timeline");                    
 				}else{
 					$scope.switchView("trending");
