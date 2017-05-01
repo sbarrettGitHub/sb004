@@ -1,0 +1,85 @@
+.themedBackground{
+    background-color:darkslateblue;
+}
+.themedForeColor{
+    color:white !important;
+}
+.secondaryBackground{
+    background-color: rgb(100, 149, 237);
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+/************************************************************************************************/
+/*Nav bar*/
+    .navbar .nav{
+        margin: auto;
+    }
+    /**Nav bar height*/
+    .navbar-static-top{
+        height:75px;
+    }
+    /**Center Nav bar inner -- gives margins left and right**/
+    #navbarContainer > div.collapse.navbar-collapse.navbar-ex1-collapse{
+        width:75%;
+        margin: 0 auto;
+        padding-top: 23px;
+    }
+    
+    /**navbar menu links **/
+    #navbarContainer ul li a{
+        text-shadow: initial;
+        padding-left: 5px;
+        padding-right: 15px;
+    }
+     
+    /**Logo and the Add Quote button combined**/
+    #navbarContainer #logoAddContainer{
+        float: left;
+    }
+        /***Logo***/
+        #navbarContainer .logo{
+            background-color: white;
+            color:darkslateblue;
+            padding: 5px 5px;
+            height: 30px;
+            border: 1px solid silver;
+            border-radius: 4px;
+        }
+        
+        /***Logo Collapsed for mobile device***/
+        #navbarContainer #deviceNav a{
+            margin-left: 50px;
+            margin-top: 23px;
+        }
+        #navbarContainer #deviceNav .fa.fa-bars{
+            font-size: x-large;
+            margin-top: 5px;
+        }
+        /***Add Quote button ***/
+        #navbarContainer #logoAddContainer button{
+            height: 30px;
+            margin-left: 10px;
+            border: 1px solid silver;
+        }
+    
+    /**Menu**/
+    #navbarContainer #menuContainer{
+        float: left;
+        margin-top: -5px;
+    }        
+        /***Search bar***/
+        #navbarContainer #menuContainer #srch-term
+        {
+            margin-top: 5px;
+            height: 34px
+        }
+    /**Identity**/
+    #navbarContainer #identity .nav{
+        margin-top: -5px;
+        float: right;
+    }
+
+/************************************************************************************************/

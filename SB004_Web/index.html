@@ -1,60 +1,66 @@
 ﻿<!DOCTYPE html>
 <html ng-app="sb004">
-
 <head>
 	<meta charset="utf-8" />
 	<title>SB004</title>
 	<link data-require="bootstrap-css@*" data-semver="2.3.2" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
 	<link data-require="bootstrap@*" data-semver="3.2.0" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" />
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 	
 </head>
-
 <body>
-  <div id="searchContainer" class="container col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-controller="searchCtrl">
-    <form class="search" role="search">
-        <div class="row">
-            <div class="col-md-12" id="searchContainer">
-                <div class="navbar navbar-static-top rounded" role="navigation" id="navbarContainer">    
-                    <a class="navbar-brand hot hidden-md hidden-lg" rel="home" href="/" title="SB004 - Homepage" ng-click="home()"><i class="fa fa-home"></i>SB004</a> 
-                    <div class="navbar-header hot">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="fa fa-bars"></span>
-                        </button>
-                    </div>                
+    <div id="searchContainer" class="" ng-controller="searchCtrl">
+        <form role="search">
+            <div class="row">        
+                <div class="navbar navbar-static-top themedBackground" role="navigation" id="navbarContainer">    
+                    <div id="deviceNav" class="">
+                        <a class="navbar-brand hidden-sm hidden-md hidden-lg logo" rel="home" href="/" title="Quote the Raven" ng-click="home()">
+                            <i class="fa fa-quote-left"></i>
+                            
+                        </a>                
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars themedForeColor"></span>
+                            </button>
+                        </div>  
+                    </div>              
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <a id="navbarLogo" class="navbar-brand hot hidden-sm hidden-xs" rel="home" title="SB004 - Homepage" ng-click="home()">
-                            <i class="fa fa-quote-left logo"></i> SB004 <span ng-show="isAuthenticated"> - {{userName}}</span>
-                        </a>                     
-                        <ul class="nav navbar-nav" id="navBar">
-                            <li><a class="hot" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>
-                            <li><a class="hot" ng-click="addNew()"><i class="fa fa-plus"></i> Add a new Post</a></li>
-                            <li><a class="hot" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-unlock"></i> Sign In</a></li>
-                            <li><a class="hot" ng-click="socialSignIn()" ng-show="!isAuthenticated"><i class="fa fa-users"></i> Social Media Sign In</a></li>      
-                            <li><a class="hot" ng-click="signUp()" ng-show="!isAuthenticated"><i class="fa fa-pencil-square-o"></i> Sign up now</a></li>
-                            <li><a class="hot" ng-click="signOut()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign Out</a></li>
-                        </ul>
-                        <div class="searchBox col-sm-hidden col-xs-12 col-md-3 pull-right">
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
-                                ng-model="searchTerm">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
-                            </div>
-                            </div>
-                        </form>
-                        </div>
-                    
+                        <div id="logoAddContainer" class="col-lg-3">
+                            <a id="navbarLogo" class="navbar-brand hidden-xs logo" rel="home" title="SB004 - Homepage" ng-click="home()">
+                                <i class="fa fa-quote-left"></i>                            
+                            </a>  
+                            <button ng-click="addNew()" class="clickable secondaryBackground themedForeColor"><i class="fa fa-plus"></i> <span class="hidden-sm">Add Quote</span></button> 
+                        </div> 
+                        <div id="menuContainer" class="col-lg-7 col-md-7 col-sm-7">                
+                            <ul class="nav navbar-nav" id="navBar">
+                                <li><a class="clickable themedForeColor" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>                                
+                                <li> <a class="clickable themedForeColor" ng-click="search()"><i class="fa fa-line-chart"></i> <span class="hidden-sm">Trending Now</span></a></li>
+                            </ul>
+                            <form class="navbar-form" role="search" id="Search">
+                                <div class="input-group">
+                                <input type="text" class="form-control " placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
+                                    ng-model="searchTerm">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default secondaryBackground themedForeColor" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
+                                </div>
+                                </div>
+                            </form>
+                        </div>  
+                        <div id="identity" class="col-lg-2">
+                            <span class="hidden-md hidden-sm hidden-xs themedForeColor">lg</span>
+                                    <span class="hidden-lg hidden-sm hidden-xs themedForeColor">md</span>
+                                    <span class="hidden-md hidden-lg hidden-xs themedForeColor">sm</span>
+                                    <span class="hidden-md hidden-sm hidden-lg themedForeColor">xs</span>
+                            <ul class="nav navbar-nav" id="">
+                                <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-lock"></i> Sign In</a></li>
+                            </ul>
+                        </div>                
                     </div>
                 </div>
-            </div>
-
-    </div>	  
-</form>
-  </div>
+            </div>	  
+        </form>
+    </div>
     <div id="view" ng-view="" blurry="view"></div>
     <script data-require="jquery@*" data-semver="2.1.1" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -64,23 +70,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script data-require="ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>
-    
+
     <script>
         document.write('<base href="' + document.location + '" />');
     </script>
-    <link rel="stylesheet" href="Content/css/style.css" />
-	<link rel="stylesheet" href="Content/css/memeView.css" />
-	<link rel="stylesheet" href="Content/css/favourites.css" />
-	<link rel="stylesheet" href="Content/css/repost.css" />
-	<link rel="stylesheet" href="Content/css/report.css" />
-	<link rel="stylesheet" href="Content/css/timeline.css" />
+    <!--link rel="stylesheet" href="Content/css/style.css" />
+    <link rel="stylesheet" href="Content/css/memeView.css" />
+    <link rel="stylesheet" href="Content/css/favourites.css" />
+    <link rel="stylesheet" href="Content/css/repost.css" />
+    <link rel="stylesheet" href="Content/css/report.css" />
+    <link rel="stylesheet" href="Content/css/timeline.css" />
     <link rel="stylesheet" href="Content/css/userTimeline.css" />
-	<link rel="stylesheet" href="Content/css/logIn.css" />
+    <link rel="stylesheet" href="Content/css/logIn.css" />
     <link rel="stylesheet" href="Content/css/profile.css" /> 
-     <link rel="stylesheet" href="Content/css/resetPassword.css" /> 
-     <script src="Scripts/jqcloud.min.js"></script>
-     <script src="Scripts/angular-jqcloud.js"></script>
-     
+        <link rel="stylesheet" href="Content/css/resetPassword.css" /--> 
+        <link rel="stylesheet" href="Content/css/styles.css" />
+        <script src="Scripts/jqcloud.min.js"></script>
+        <script src="Scripts/angular-jqcloud.js"></script>
+        
     <script src="Scripts/html2canvas.js"></script>
     <script src="Scripts/hello.js"></script>
     <script src="Scripts/app/app.js"></script>
@@ -90,8 +97,8 @@
     <script src="Scripts/app/services/helloService.js"></script>
     <script src="Scripts/app/services/securityService.js"></script>
     <script src="Scripts/app/services/authInterceptorService.js"></script>    
-	<script src="Scripts/app/services/memeWizardService.js"></script> 
-	<script src="Scripts/app/services/likeDislikeMemeService.js"></script> 
+    <script src="Scripts/app/services/memeWizardService.js"></script> 
+    <script src="Scripts/app/services/likeDislikeMemeService.js"></script> 
     <script src="Scripts/app/services/timeLineService.js"></script>
     <script src="Scripts/app/services/hashTagService.js"></script>
     <script src="Scripts/app/services/markdownService.js"></script>            
@@ -99,8 +106,8 @@
     <script src="Scripts/app/controllers/homeCtrl.js"></script>
     <script src="Scripts/app/controllers/memeSelectConfirmImageCtrl.js"></script>
     <script src="Scripts/app/directives/dropZoneDirective.js"></script>
-	<script src="Scripts/app/directives/ngMemeLink.js"></script>
-	<script src="Scripts/app/directives/ngFocus.js"></script>	
+    <script src="Scripts/app/directives/ngMemeLink.js"></script>
+    <script src="Scripts/app/directives/ngFocus.js"></script>	
     <script src="Scripts/app/directives/ngBlurry.js"></script>
     <script src="Scripts/app/directives/ngUserHover.js"></script>
     <script src="Scripts/app/directives/ngScrollTo.js"></script>
@@ -109,11 +116,11 @@
     <script src="Scripts/app/controllers/memeApplyTextCtrl.js"></script>
     <script src="Scripts/app/controllers/memePublishAndShareCtrl.js"></script>
     <script src="Scripts/app/controllers/logInCtrl.js"></script>
-	<script src="Scripts/app/controllers/memeViewCtrl.js"></script>
-	<script src="Scripts/app/controllers/favouritesCtrl.js"></script>
-	<script src="Scripts/app/controllers/repostCtrl.js"></script>
-	<script src="Scripts/app/controllers/reportCtrl.js"></script>	
-	<script src="Scripts/app/controllers/timelineCtrl.js"></script>
+    <script src="Scripts/app/controllers/memeViewCtrl.js"></script>
+    <script src="Scripts/app/controllers/favouritesCtrl.js"></script>
+    <script src="Scripts/app/controllers/repostCtrl.js"></script>
+    <script src="Scripts/app/controllers/reportCtrl.js"></script>	
+    <script src="Scripts/app/controllers/timelineCtrl.js"></script>
     <script src="Scripts/app/controllers/profileCtrl.js"></script>
     <script src="Scripts/app/controllers/resetPasswordCtrl.js"></script>
     <script src="Scripts/domvas.js"></script>
