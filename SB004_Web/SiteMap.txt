@@ -1,15 +1,42 @@
 
-Home - Signed In	
-Trending Now	(Home - when Not signed in)
+Trending now   
+	|__View Quote
+	|__Add comment
+	|__Like, Dislike
+
+Home (Signed In)
+	|__View Quote
+	|__Add comment
+	|__Like, Dislike
+	
+New Quote
+	|__Select Image
+	|__Apply text
+	|__Categorize, add tags and Publish
+
 Search results
-User timeline - Signed In	
-View Quote	
-	View Quote adding comment
-New Quote	
-	Select Image
-	Apply text
-	Categorize, add tags and Publish
+	|__View Quote
+
+User timeline (Signed In)
+	|__View Quote
+
+View Quote
+	|__Add comment
+	|__Like, Dislike
+	|__Reply to Quote
+
 Sign In
+	|__Standard
+	|__Social Media
+
 Sign Up
-My Profile	
+	|__Standard
+	|__Social Media
+
+My Profile
+	|__Change password
+	|__Change email
+	|__Change Image
+
 Terms and Conditions	
+
