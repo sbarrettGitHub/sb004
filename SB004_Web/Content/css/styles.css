@@ -21,6 +21,7 @@
     .navbar-static-top{
         height:75px;
     }
+    
     /**Center Nav bar inner -- gives margins left and right**/
     #navbarContainer > div.collapse.navbar-collapse.navbar-ex1-collapse{
         width:75%;
@@ -34,7 +35,9 @@
         padding-left: 5px;
         padding-right: 15px;
     }
-     
+    #navbarContainer ul li a:hover{
+        color: rgb(100, 149, 237)!important;
+    }
     /**Logo and the Add Quote button combined**/
     #navbarContainer #logoAddContainer{
         float: left;

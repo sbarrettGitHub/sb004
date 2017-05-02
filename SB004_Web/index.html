@@ -24,7 +24,8 @@
                             <span class="fa fa-bars themedForeColor"></span>
                             </button>
                         </div>  
-                    </div>              
+                    </div>   
+          
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <div id="logoAddContainer" class="col-lg-3">
                             <a id="navbarLogo" class="navbar-brand hidden-xs logo" rel="home" title="SB004 - Homepage" ng-click="home()">
@@ -34,12 +35,12 @@
                         </div> 
                         <div id="menuContainer" class="col-lg-7 col-md-7 col-sm-7">                
                             <ul class="nav navbar-nav" id="navBar">
-                                <li><a class="clickable themedForeColor" ng-click="home()"><i class="fa fa-home"></i> Home</a></li>                                
+                                <li><a class="clickable themedForeColor" ng-click="home()"><i class="fa fa-lock" ng-show="!isAuthenticated"></i> <i class="fa fa-home" ng-show="isAuthenticated"></i>Home</a></li>                                
                                 <li> <a class="clickable themedForeColor" ng-click="search()"><i class="fa fa-line-chart"></i> <span class="hidden-sm">Trending Now</span></a></li>
                             </ul>
                             <form class="navbar-form" role="search" id="Search">
                                 <div class="input-group">
-                                <input type="text" class="form-control " placeholder="Search" name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
+                                <input type="text" class="form-control " placeholder="Quote the Raven..." name="srch-term" id="srch-term" ng-keypress="($event.which === 13)?search():0"
                                     ng-model="searchTerm">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default secondaryBackground themedForeColor" type="submit" ng-click="search()"><i class="fa fa-search"></i></button>
@@ -48,12 +49,8 @@
                             </form>
                         </div>  
                         <div id="identity" class="col-lg-2">
-                            <span class="hidden-md hidden-sm hidden-xs themedForeColor">lg</span>
-                                    <span class="hidden-lg hidden-sm hidden-xs themedForeColor">md</span>
-                                    <span class="hidden-md hidden-lg hidden-xs themedForeColor">sm</span>
-                                    <span class="hidden-md hidden-sm hidden-lg themedForeColor">xs</span>
                             <ul class="nav navbar-nav" id="">
-                                <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-lock"></i> Sign In</a></li>
+                                <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-pencil"></i> Register</a></li>
                             </ul>
                         </div>                
                     </div>
