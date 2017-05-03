@@ -14,19 +14,52 @@
 
 /************************************************************************************************/
 /*Nav bar*/
+
+    /*Force nav bar collapse for sm */
+    @media (max-width: 991px) {
+        .navbar-header {
+            float: none;
+        }
+        .navbar-left,.navbar-right {
+            float: none !important;
+        }
+        .navbar-toggle {
+            display: block;
+        }
+        .navbar-collapse {
+            border-top: 1px solid transparent;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .navbar-fixed-top {
+            top: 0;
+            border-width: 0 0 1px;
+        }
+        .navbar-collapse.collapse {
+            display: none!important;
+        }
+        .navbar-nav {
+            float: none!important;
+            margin-top: 7.5px;
+        }
+        .navbar-nav>li {
+            float: none;
+        }
+        .navbar-nav>li>a {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .collapse.in{
+            display:block !important;
+        }
+    }
     .navbar .nav{
         margin: auto;
     }
-    /**Nav bar height*/
-    .navbar-static-top{
-        height:75px;
-    }
-    
+
     /**Center Nav bar inner -- gives margins left and right**/
     #navbarContainer > div.collapse.navbar-collapse.navbar-ex1-collapse{
-        width:75%;
-        margin: 0 auto;
         padding-top: 23px;
+        padding-bottom: 23px;
     }
     
     /**navbar menu links **/
@@ -38,51 +71,70 @@
     #navbarContainer ul li a:hover{
         color: rgb(100, 149, 237)!important;
     }
-    /**Logo and the Add Quote button combined**/
-    #navbarContainer #logoAddContainer{
-        float: left;
+    /**Container for logo Menu & Identity */
+    #logoMenuIdentity{
+        width:65%;
+        margin: 0 auto;
     }
-        /***Logo***/
-        #navbarContainer .logo{
-            background-color: white;
-            color:darkslateblue;
-            padding: 5px 5px;
-            height: 30px;
-            border: 1px solid silver;
-            border-radius: 4px;
+        /***Logo and the Add Quote button combined***/
+        #navbarContainer #logoAddContainer{
+            float: left;
         }
-        
-        /***Logo Collapsed for mobile device***/
-        #navbarContainer #deviceNav a{
-            margin-left: 50px;
-            margin-top: 23px;
-        }
-        #navbarContainer #deviceNav .fa.fa-bars{
-            font-size: x-large;
-            margin-top: 5px;
-        }
-        /***Add Quote button ***/
-        #navbarContainer #logoAddContainer button{
-            height: 30px;
-            margin-left: 10px;
-            border: 1px solid silver;
-        }
+            /***Logo***/
+            #navbarContainer .logo{
+                background-color: white;
+                color:darkslateblue;
+                padding: 5px 5px;
+                height: 30px;
+                border: 1px solid silver;
+                border-radius: 4px;
+            }
+            
+            /****Logo Collapsed for mobile device****/
+            #navbarContainer #deviceNav #toggleNavigation{
+                float: left;margin-left: 25px;
+            }
+            #navbarContainer #deviceNav #SearchDevice{
+                margin-left: 5%;margin-right: 5%;
+            }
+            #navbarContainer #deviceNav #srch-term-device{
+                margin-top: 15px;height: 40px;
+            }
+            #navbarContainer #deviceNav #searchButtonDevice{
+                top: 5px;height: 40px;
+            }
+            #navbarContainer #deviceNav a{
+                margin-left: 50px;
+                margin-top: 23px;
+            }
+            #navbarContainer #deviceNav .fa.fa-bars{
+                font-size: x-large;
+                margin-top: 5px;
+            }
+            #navbarContainer #deviceNav #SearchDevice{
+
+            }
+            /****Add Quote button ****/
+            #navbarContainer #logoAddContainer button{
+                height: 30px;
+                margin-left: 10px;
+                border: 1px solid silver;
+            }
     
-    /**Menu**/
-    #navbarContainer #menuContainer{
-        float: left;
-        margin-top: -5px;
-    }        
-        /***Search bar***/
-        #navbarContainer #menuContainer #srch-term
-        {
-            margin-top: 5px;
-            height: 34px
+        /***Menu***/
+        #navbarContainer #menuContainer{
+            float: left;
+            margin-top: -5px;
+        }        
+            /****Search bar****/
+            #navbarContainer #menuContainer #srch-term
+            {
+                margin-top: 5px;
+                height: 34px
+            }
+        /***Identity***/
+        #navbarContainer #identity .nav{
+            margin-top: -5px;
         }
-    /**Identity**/
-    #navbarContainer #identity .nav{
-        margin-top: -5px;
-        float: right;
-    }
 
 /************************************************************************************************/
