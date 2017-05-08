@@ -1,3 +1,4 @@
+
 .themedBackground{
     background-color:darkslateblue;
 }
@@ -60,6 +61,7 @@
     #navbarContainer > div.collapse.navbar-collapse.navbar-ex1-collapse{
         padding-top: 23px;
         padding-bottom: 23px;
+        overflow: hidden;
     }
     
     /**navbar menu links **/
@@ -98,7 +100,10 @@
                 margin-left: 5%;margin-right: 5%;
             }
             #navbarContainer #deviceNav #srch-term-device{
-                margin-top: 15px;height: 40px;
+                margin-top: 15px;
+                height: 40px;
+                font-size: large;
+                text-align: center;
             }
             #navbarContainer #deviceNav #searchButtonDevice{
                 top: 5px;height: 40px;
@@ -108,8 +113,8 @@
                 margin-top: 23px;
             }
             #navbarContainer #deviceNav .fa.fa-bars{
-                font-size: x-large;
-                margin-top: 5px;
+                font-size: xx-large;
+                margin-top: 1px;
             }
             #navbarContainer #deviceNav #SearchDevice{
 
@@ -136,5 +141,12 @@
         #navbarContainer #identity .nav{
             margin-top: -5px;
         }
-
+    /** Dropdown nav**/
+    #navbarContainer ul#dropdownNav li {
+        margin-left: 30px;
+        font-size: large;
+    }
+    #navbarContainer ul#dropdownNav .fa {
+        width: 32px;
+    }
 /************************************************************************************************/
