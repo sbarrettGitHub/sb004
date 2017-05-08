@@ -33,13 +33,20 @@
                         </div>  
                     </div>            
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul id="dropdownNav" class="nav navbar-nav hidden-md hidden-lg">
-                            <li><a class="clickable themedForeColor" ng-click="home()"><div class="hidden-xs" style="width:15px;"></div><i class="fa fa-home"></i>Home</a></li>
+                        <ul id="dropdownNavSm" class="nav navbar-nav hidden-md hidden-lg hidden-xs">
+                            <li><a class="clickable themedForeColor" ng-click="home()"><i class="fa fa-home"></i>Home</a></li>
                             <li><a class="clickable themedForeColor" ng-click="addNew()"><i class="fa fa-plus"></i> Add Quote</a></li>                            
                             <li> <a class="clickable themedForeColor" ng-click="search()"><i class="fa fa-line-chart"></i> <span>Trending Now</span></a></li>
                             <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-pencil"></i> Register</a></li>
                             <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign out</a></li>
                         </ul>
+                        <ul id="dropdownNavXs" class="nav navbar-nav hidden-md hidden-lg hidden-sm">
+                            <li><a class="clickable themedForeColor" ng-click="home()"><i class="fa fa-home"></i>Home</a></li>
+                            <li><a class="clickable themedForeColor" ng-click="addNew()"><i class="fa fa-plus"></i> Add Quote</a></li>                            
+                            <li> <a class="clickable themedForeColor" ng-click="search()"><i class="fa fa-line-chart"></i> <span>Trending Now</span></a></li>
+                            <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="!isAuthenticated"><i class="fa fa-pencil"></i> Register</a></li>
+                            <li><a class="clickable themedForeColor" ng-click="signIn()" ng-show="isAuthenticated"><i class="fa fa-lock"></i> Sign out</a></li>
+                        </ul>                        
                         <div id="logoMenuIdentity" class="hidden-xs hidden-sm">
                             <div id="logoAddContainer" class="col-lg-3 hidden-xs">
                                 <a id="navbarLogo" class="navbar-brand hidden-xs logo" rel="home" title="SB004 - Homepage" ng-click="home()">

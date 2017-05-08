@@ -142,9 +142,17 @@
             margin-top: -5px;
         }
     /** Dropdown nav**/
-    #navbarContainer ul#dropdownNav li {
-        margin-left: 30px;
+    #navbarContainer ul#dropdownNavSm {
+        display: table;
+    }
+    #navbarContainer ul#dropdownNavSm li {
+        margin-left: 75px;
         font-size: large;
+    }
+    #navbarContainer ul#dropdownNavXs li {
+        margin-left: 15px;
+        font-size: large;
+        width: 100%;
     }
     #navbarContainer ul#dropdownNav .fa {
         width: 32px;
